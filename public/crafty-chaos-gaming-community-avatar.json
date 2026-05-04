@@ -1,0 +1,111 @@
+{
+  "version": "2.3.0",
+  "id": "crafty-chaos-gaming-community-avatar",
+  "input": {
+    "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\CraftyChaosGaming.png",
+    "format": "png",
+    "bytes": 8569
+  },
+  "output": {
+    "mode": "generated",
+    "fit_mode": "cover",
+    "main": {
+      "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\crafty-chaos-gaming-community-avatar.webp",
+      "src": "/crafty-chaos-gaming-community-avatar.webp",
+      "format": "webp",
+      "width": 70,
+      "height": 70,
+      "bytes": 1142
+    },
+    "variants": [],
+    "focus": {
+      "framing": "balanced",
+      "preset": "center",
+      "x": 0.5,
+      "y": 0.5
+    }
+  },
+  "recipe": {
+    "name": "profile-avatar",
+    "description": "Square avatar or thumbnail image.",
+    "aspect_ratio": "1:1",
+    "fit_mode": "cover",
+    "default_accessibility_mode": "descriptive",
+    "default_framing": "balanced",
+    "default_dimensions": {
+      "width": 1200,
+      "height": 1200
+    },
+    "responsive_by_default": true,
+    "responsive_widths": [
+      256,
+      512,
+      768,
+      1200
+    ],
+    "default_loading": "lazy",
+    "default_fetch_priority": null,
+    "emit_snippets_by_default": true
+  },
+  "metadata": {
+    "inputs": {
+      "subject": "CraftingChaosGaming creator avatar",
+      "context": "Brin Shadewater community page",
+      "purpose": "Chaos Pals profile avatar",
+      "visible_text": null,
+      "framing": "balanced"
+    },
+    "accessibility_mode": "descriptive",
+    "provenance": "heuristic",
+    "generated": {
+      "slug": "crafty-chaos-gaming-community-avatar",
+      "alt": "CraftingChaosGaming creator avatar for Brin Shadewater community page",
+      "title": "CraftingChaosGaming creator avatar - Chaos Pals profile avatar",
+      "caption": "CraftingChaosGaming creator avatar used as a Chaos Pals profile avatar for Brin Shadewater community page"
+    },
+    "usage_overrides": {
+      "community.chaos-pals.crafty.avatar": {
+        "alt": "Portrait avatar for CraftingChaosGaming on the Brin Shadewater community page.",
+        "title": "CraftingChaosGaming creator avatar - Chaos Pals profile avatar",
+        "caption": "CraftingChaosGaming creator avatar used as a Chaos Pals profile avatar for Brin Shadewater community page",
+        "accessibility_mode": "descriptive",
+        "provenance": "manual"
+      }
+    }
+  },
+  "snippets": {
+    "enabled": true,
+    "src": "/crafty-chaos-gaming-community-avatar.webp",
+    "srcset": null,
+    "sizes": null,
+    "loading": "lazy",
+    "fetch_priority": null,
+    "usage_key": "community.chaos-pals.crafty.avatar",
+    "targets": {
+      "astro": {
+        "markup": "<img src=\"/crafty-chaos-gaming-community-avatar.webp\" alt=\"Portrait avatar for CraftingChaosGaming on the Brin Shadewater community page.\" width=\"70\" height=\"70\" title=\"CraftingChaosGaming creator avatar - Chaos Pals profile avatar\" loading=\"lazy\" decoding=\"async\" />"
+      },
+      "html": {
+        "markup": "<img src=\"/crafty-chaos-gaming-community-avatar.webp\" alt=\"Portrait avatar for CraftingChaosGaming on the Brin Shadewater community page.\" width=\"70\" height=\"70\" title=\"CraftingChaosGaming creator avatar - Chaos Pals profile avatar\" loading=\"lazy\" decoding=\"async\" />"
+      },
+      "next": {
+        "markup": "import Image from \"next/image\";\n\n<Image src={\"/crafty-chaos-gaming-community-avatar.webp\"} alt={\"Portrait avatar for CraftingChaosGaming on the Brin Shadewater community page.\"} width={70} height={70} title={\"CraftingChaosGaming creator avatar - Chaos Pals profile avatar\"} loading={\"lazy\"} decoding={\"async\"} />"
+      },
+      "react": {
+        "markup": "<img src={\"/crafty-chaos-gaming-community-avatar.webp\"} alt={\"Portrait avatar for CraftingChaosGaming on the Brin Shadewater community page.\"} width={70} height={70} title={\"CraftingChaosGaming creator avatar - Chaos Pals profile avatar\"} loading={\"lazy\"} decoding={\"async\"} />"
+      }
+    }
+  },
+  "analysis": {
+    "compression": {
+      "source_bytes": 8569,
+      "output_bytes": 1142,
+      "reduction_percent": 86.6728906523515
+    },
+    "lints": {
+      "blocking": [],
+      "warnings": []
+    },
+    "status": "ok"
+  }
+}

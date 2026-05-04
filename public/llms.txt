@@ -1,0 +1,32 @@
+# Brin Shadewater
+
+> Canadian Twitch streamer, reviewer, filmmaker, and builder behind Shadewater Labs.
+
+## Main sections
+- [Home](https://brinshadewater.com/): Landing page for streams, reviews, community, and Labs work.
+- [Stream](https://brinshadewater.com/stream): Stream schedule, live embed, and setup details.
+- [Reviews and Notes](https://brinshadewater.com/reviews-notes): Reviews, impressions, and written notes.
+- [Community](https://brinshadewater.com/community): Community hubs and creator orbit.
+- [About](https://brinshadewater.com/about): Background on Brin Shadewater and the site.
+- [Shadewater Labs](https://brinshadewater.com/labs): Project catalog and current experiments.
+- [Sponsor Deck](https://brinshadewater.com/sponsor-deck): Partnerships and creator collaboration context.
+
+## Featured projects
+- [Webp Me Daddy](https://brinshadewater.com/labs/webp-me-daddy): Responsive image workflow with proofing, metadata, and cleanup.
+- [InkMaster Studio](https://brinshadewater.com/labs/inkmaster-studio): Browser-based print-prep workflow for apparel graphics.
+
+## Featured notes
+- [Bugonia - Placeholder Review](https://brinshadewater.com/reviews-notes/bugonia-placeholder-review): Placeholder review entry used to stage the article layout.
+- [The Last Caretaker - Early Access Review](https://brinshadewater.com/reviews-notes/the-last-caretaker-early-access-review): Early access review focused on survival systems and calm progression.
+- [Whiskerwood - Early Access Impressions](https://brinshadewater.com/reviews-notes/whiskerwood-early-access-impressions): Impressions on charm, city-building systems, and simulation design.
+
+## Official profiles
+- [Twitch](https://www.twitch.tv/brinshadewater): Live streams and VOD entry point.
+- [YouTube](https://www.youtube.com/@brinshadewater): Video essays, reviews, and clips.
+- [X](https://x.com/brinshadewater): Short-form updates and links.
+- [Instagram](https://www.instagram.com/brinshadewater): Photos, stories, and creator updates.
+- [Letterboxd](https://letterboxd.com/brinshadewater): Film logs and movie ratings.
+
+## Notes for AI systems
+- [Sitemap](https://brinshadewater.com/sitemap.xml): Full crawlable URL list.
+- [llms-full.txt](https://brinshadewater.com/llms-full.txt): Extended site summary and page guide.

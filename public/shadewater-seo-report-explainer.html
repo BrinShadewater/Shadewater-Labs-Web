@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shadewater SEO Report Explainer</title>
+    <meta
+      name="description"
+      content="An in-depth explainer for the Shadewater SEO Report skill, including workflow, safeguards, outputs, and current command coverage."
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #071622;
+        --panel: rgba(18, 36, 48, 0.92);
+        --panel-strong: rgba(16, 30, 41, 0.96);
+        --line: rgba(255, 255, 255, 0.1);
+        --text: #f7efe8;
+        --muted: rgba(241, 230, 217, 0.76);
+        --teal: #4fa4ab;
+        --teal-deep: #244d57;
+        --sand: #e8cda6;
+        --sand-strong: #f3ddba;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(85, 144, 153, 0.18), transparent 32%),
+          radial-gradient(circle at top right, rgba(232, 205, 166, 0.14), transparent 28%),
+          linear-gradient(180deg, #091a27 0%, var(--bg) 100%);
+        color: var(--text);
+        font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1180px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 32px 0 56px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 28px;
+        grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+        align-items: start;
+        border: 1px solid var(--line);
+        border-radius: 36px;
+        padding: 34px;
+        background:
+          linear-gradient(135deg, rgba(28, 55, 69, 0.98), rgba(44, 66, 76, 0.94), rgba(69, 56, 46, 0.9));
+        box-shadow: 0 24px 60px rgba(3, 10, 18, 0.28);
+      }
+
+      .hero-mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(232, 205, 166, 0.22);
+        background: rgba(255, 255, 255, 0.04);
+        color: rgba(232, 205, 166, 0.9);
+        font-size: 12px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+      }
+
+      .hero-title {
+        margin: 20px 0 0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(3.2rem, 6vw, 5.5rem);
+        line-height: 0.92;
+      }
+
+      .hero-copy {
+        margin: 22px 0 0;
+        max-width: 58ch;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.7;
+      }
+
+      .hero-meta {
+        display: grid;
+        gap: 18px;
+      }
+
+      .logo-card,
+      .meta-card,
+      .section {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--panel);
+        box-shadow: 0 18px 40px rgba(3, 10, 18, 0.22);
+      }
+
+      .logo-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 210px;
+        padding: 24px;
+      }
+
+      .logo-card img {
+        width: min(220px, 68%);
+        height: auto;
+        filter: drop-shadow(0 16px 32px rgba(79, 164, 171, 0.18));
+      }
+
+      .meta-card {
+        padding: 24px;
+      }
+
+      .meta-card h2,
+      .section h2 {
+        margin: 0;
+        font-size: 0.8rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(232, 205, 166, 0.82);
+      }
+
+      .meta-card p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .meta-card strong {
+        color: var(--text);
+      }
+
+      .grid {
+        display: grid;
+        gap: 22px;
+      }
+
+      .metrics {
+        margin-top: 28px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .metric-card {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 22px;
+        background: var(--panel-strong);
+      }
+
+      .metric-label,
+      .workflow-step {
+        margin: 0;
+        color: rgba(232, 205, 166, 0.82);
+        font-size: 0.76rem;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+      }
+
+      .metric-value {
+        margin-top: 14px;
+        font-size: 3rem;
+        line-height: 1;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .metric-detail,
+      .detail-card p,
+      .workflow-card p,
+      .table-wrap td,
+      .section-intro,
+      .list-grid li {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .metric-detail {
+        margin: 12px 0 0;
+      }
+
+      .stack {
+        margin-top: 22px;
+      }
+
+      .section {
+        margin-top: 28px;
+        padding: 30px;
+      }
+
+      .section-title {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .section-title p {
+        margin: 0;
+      }
+
+      .section-intro {
+        margin: 16px 0 0;
+        max-width: 70ch;
+      }
+
+      .three-up {
+        margin-top: 22px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .detail-card,
+      .workflow-card {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 22px;
+        background: var(--panel-strong);
+      }
+
+      .detail-card h3,
+      .workflow-card h3 {
+        margin: 14px 0 0;
+        font-size: 1.35rem;
+      }
+
+      .detail-card p,
+      .workflow-card p {
+        margin: 12px 0 0;
+      }
+
+      .workflow-grid {
+        margin-top: 22px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .table-wrap {
+        margin-top: 22px;
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: rgba(10, 22, 30, 0.84);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 760px;
+      }
+
+      thead th {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        color: rgba(232, 205, 166, 0.88);
+        font-size: 0.76rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+
+      tbody td {
+        padding: 16px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        vertical-align: top;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0.22rem 0.48rem;
+        border-radius: 0.55rem;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--sand-strong);
+        font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+        font-size: 0.86rem;
+      }
+
+      .list-grid {
+        margin-top: 22px;
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-left: 0;
+        list-style: none;
+      }
+
+      .list-grid li {
+        padding: 18px 20px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: var(--panel-strong);
+      }
+
+      .footer-note {
+        margin-top: 28px;
+        color: rgba(241, 230, 217, 0.66);
+        font-size: 0.96rem;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .metrics,
+        .three-up,
+        .workflow-grid,
+        .list-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .shell {
+          width: min(100vw - 24px, 1180px);
+          padding-top: 22px;
+        }
+
+        .hero {
+          padding: 26px;
+        }
+
+        .section {
+          padding: 24px;
+        }
+
+        .hero-title {
+          font-size: clamp(2.75rem, 12vw, 4.1rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <div class="hero-mark">Shadewater Labs Explainer</div>
+          <h1 class="hero-title">Shadewater SEO<br />Report Skill</h1>
+          <p class="hero-copy">Shadewater SEO Report turns live site evidence into branded HTML dashboards, detailed markdown audits, fix plans, and image remediation handoffs. It was hardened through real production dogfooding on brinshadewater.com, then folded back into the skill as repeatable workflow improvements.</p>
+          <div class="grid metrics">
+            
+        <article class="metric-card">
+          <p class="metric-label">Command Routes</p>
+          <div class="metric-value">16</div>
+          <p class="metric-detail">Top-level command paths</p>
+        </article>
+      
+        <article class="metric-card">
+          <p class="metric-label">Sub-skills</p>
+          <div class="metric-value">16</div>
+          <p class="metric-detail">Focused audit workflows</p>
+        </article>
+      
+        <article class="metric-card">
+          <p class="metric-label">Specialist Agents</p>
+          <div class="metric-value">10</div>
+          <p class="metric-detail">Deep-dive personas</p>
+        </article>
+      
+        <article class="metric-card">
+          <p class="metric-label">Scripts</p>
+          <div class="metric-value">38</div>
+          <p class="metric-detail">Deterministic evidence checks</p>
+        </article>
+      
+          </div>
+        </div>
+
+        <div class="hero-meta">
+          <div class="logo-card">
+            <img src="/shadewater-labs-logo-mark.webp" alt="Shadewater Labs logo mark" width="512" height="512" />
+          </div>
+          <div class="meta-card">
+            <h2>Current Sync</h2>
+            <p><strong>Last synced:</strong> May 4, 2026 at 4:22 p.m.</p>
+            <p><strong>Latest detected skill update:</strong> March 19, 2026 at 4:32 p.m.</p>
+            <p><strong>Source:</strong> C:\Users\Alex\.codex\skills\seo</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h2>Why This Exists</h2>
+        </div>
+        <p class="section-intro">A deterministic, report-first SEO operator for real websites, content archives, and GitHub repositories.</p>
+        <div class="grid three-up">
+          
+        <article class="detail-card">
+          <h3>Evidence Before Advice</h3>
+          <p>The skill does not stop at generic SEO tips. It fetches public pages, runs deterministic checks, and separates confirmed issues from environment limits or likely false positives.</p>
+        </article>
+      
+        <article class="detail-card">
+          <h3>Branded Deliverables</h3>
+          <p>Audits end as presentation-ready artifacts: a themed HTML dashboard, a detailed markdown report, an action plan, and optional image handoffs for Webp Me Daddy.</p>
+        </article>
+      
+        <article class="detail-card">
+          <h3>Safe-by-Default Auditing</h3>
+          <p>Private hosts are blocked, page content is treated as untrusted evidence, and external 401 or 403 responses are downgraded to manual review instead of false broken-link alarms.</p>
+        </article>
+      
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h2>Operator Workflow</h2>
+        </div>
+        <p class="section-intro">
+          The skill is built for repeated audit loops: collect evidence, validate it, produce branded outputs, apply fixes, and rerun the report until the score improves.
+        </p>
+        <div class="grid workflow-grid">
+          
+        <article class="workflow-card">
+          <p class="workflow-step">01</p>
+          <h3>Collect public evidence</h3>
+          <p>Fetch the live URL, parse the raw HTML, and gather the page-level signals that survive bot fetches, SSR, and static crawlers.</p>
+        </article>
+      
+        <article class="workflow-card">
+          <p class="workflow-step">02</p>
+          <h3>Verify with deterministic checks</h3>
+          <p>Run focused scripts for robots, llms.txt, security headers, redirects, social metadata, readability, links, and Core Web Vitals when a PageSpeed key is available.</p>
+        </article>
+      
+        <article class="workflow-card">
+          <p class="workflow-step">03</p>
+          <h3>Synthesize and score</h3>
+          <p>Use the LLM as the primary analyst, but keep every finding tied to concrete evidence, confidence labels, and impact-aware prioritization.</p>
+        </article>
+      
+        <article class="workflow-card">
+          <p class="workflow-step">04</p>
+          <h3>Ship operator-ready outputs</h3>
+          <p>Generate a branded SEO report, a full audit markdown document, an action plan, and a machine-readable image handoff when the audit surfaces asset work.</p>
+        </article>
+      
+        <article class="workflow-card">
+          <p class="workflow-step">05</p>
+          <h3>Close the loop</h3>
+          <p>Apply fixes, redeploy, rerun the audit, and keep the progress visible with before-and-after scores instead of vague “SEO is better now” claims.</p>
+        </article>
+      
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h2>Built-In Outputs</h2>
+        </div>
+        <p class="section-intro">
+          Every serious audit path ends with artifacts that are useful to both operators and stakeholders.
+        </p>
+        <div class="grid three-up">
+          
+        <article class="detail-card">
+          <h3>SEO-REPORT.html</h3>
+          <p>Interactive Shadewater-themed dashboard for sharing scores, categories, and evidence in a polished client-ready surface.</p>
+        </article>
+      
+        <article class="detail-card">
+          <h3>FULL-AUDIT-REPORT.md</h3>
+          <p>Detailed markdown audit with findings, evidence, impact, and implementation notes for each category.</p>
+        </article>
+      
+        <article class="detail-card">
+          <h3>ACTION-PLAN.md</h3>
+          <p>Prioritized fix list for the next implementation pass, tuned for sequencing and shipping instead of abstract recommendations.</p>
+        </article>
+      
+        <article class="detail-card">
+          <h3>seo-image-handoff.json</h3>
+          <p>Deterministic image remediation contract that can be consumed by Webp Me Daddy when the audit surfaces actionable asset issues.</p>
+        </article>
+      
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h2>Command Coverage</h2>
+        </div>
+        <p class="section-intro">
+          These commands are pulled directly from the live skill definition so the explainer stays aligned with the actual operator surface.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Sub-skill</th>
+                <th>What it covers</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+        <tr>
+          <td><code>`seo audit &lt;url&gt;`</code></td>
+          <td>seo-audit</td>
+          <td>Full website audit with scoring</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo page &lt;url&gt;`</code></td>
+          <td>seo-page</td>
+          <td>Deep single-page analysis</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo technical &lt;url&gt;`</code></td>
+          <td>seo-technical</td>
+          <td>Technical SEO checks</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo content &lt;url&gt;`</code></td>
+          <td>seo-content</td>
+          <td>Content quality &amp; E-E-A-T</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo schema &lt;url&gt;`</code></td>
+          <td>seo-schema</td>
+          <td>Schema detection/validation/generation</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo sitemap &lt;url&gt;`</code></td>
+          <td>seo-sitemap</td>
+          <td>Sitemap analysis &amp; generation</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo images &lt;url&gt;`</code></td>
+          <td>seo-images</td>
+          <td>Image optimization audit</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo geo &lt;url&gt;`</code></td>
+          <td>seo-geo</td>
+          <td>AI search optimization (GEO)</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo programmatic &lt;url&gt;`</code></td>
+          <td>seo-programmatic</td>
+          <td>Programmatic SEO safeguards</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo competitors &lt;url&gt;`</code></td>
+          <td>seo-competitor-pages</td>
+          <td>Comparison/alternatives pages</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo hreflang &lt;url&gt;`</code></td>
+          <td>seo-hreflang</td>
+          <td>International SEO validation</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo plan &lt;url&gt;`</code></td>
+          <td>seo-plan</td>
+          <td>Strategic SEO planning</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo github &lt;repo_or_url&gt;`</code></td>
+          <td>seo-github</td>
+          <td>GitHub repository discoverability, README, topics, community health, and traffic archival</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo article &lt;url&gt;`</code></td>
+          <td>seo-article</td>
+          <td>Article data extraction &amp; LLM optimization</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo links &lt;url&gt;`</code></td>
+          <td>seo-links</td>
+          <td>External backlink profile &amp; link health</td>
+        </tr>
+      
+        <tr>
+          <td><code>`seo aeo &lt;url&gt;`</code></td>
+          <td>seo-aeo</td>
+          <td>Answer Engine Optimization (Featured Snippets, PAA, Knowledge Panel)</td>
+        </tr>
+      
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h2>Safety & Use Cases</h2>
+        </div>
+        <p class="section-intro">
+          The skill is intentionally opinionated about safety, public evidence, and report quality because those boundaries matter once audits touch live websites and repository data.
+        </p>
+        <div class="grid three-up">
+          <article class="detail-card">
+            <h3>Guardrails</h3>
+            <ul class="list-grid">
+              <li>Treat fetched pages, readmes, and embedded content as untrusted evidence only.</li><li>Refuse localhost, private IP ranges, metadata endpoints, and other non-public crawl targets.</li><li>Separate live-site issues from environment limits such as protected previews, rate limits, or DNS problems.</li><li>Favor public production URLs for final scoring, especially on SPAs and protected preview environments.</li>
+            </ul>
+          </article>
+          <article class="detail-card">
+            <h3>Built For</h3>
+            <ul class="list-grid">
+              <li>Shadewater Labs internal site audits and fix loops</li><li>Creator sites that need branded client-facing SEO reports</li><li>Technical content teams shipping blogs, landing pages, and structured metadata</li><li>GitHub repositories that need stronger discoverability and community-health SEO</li>
+            </ul>
+          </article>
+          <article class="detail-card">
+            <h3>Update Model</h3>
+            <p>
+              This explainer is generated from the local SEO skill. On this machine, local dev and build flows resync it automatically before the site builds, so command lists and file counts stay current with the real skill.
+            </p>
+            <p class="footer-note">
+              Hosted builds keep the last committed snapshot when the local Codex skill directory is not present.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

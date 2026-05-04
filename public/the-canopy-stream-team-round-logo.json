@@ -1,0 +1,136 @@
+{
+  "version": "2.3.0",
+  "id": "the-canopy-stream-team-round-logo",
+  "input": {
+    "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\TCST_RoundLogo_Lowres.png.png",
+    "format": "png",
+    "bytes": 142419
+  },
+  "output": {
+    "mode": "generated",
+    "fit_mode": "contain",
+    "main": {
+      "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\the-canopy-stream-team-round-logo.webp",
+      "src": "/the-canopy-stream-team-round-logo.webp",
+      "format": "webp",
+      "width": 1000,
+      "height": 1000,
+      "bytes": 49570
+    },
+    "variants": [
+      {
+        "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\the-canopy-stream-team-round-logo-320w.webp",
+        "src": "/the-canopy-stream-team-round-logo-320w.webp",
+        "format": "webp",
+        "width": 320,
+        "height": 320,
+        "bytes": 18204
+      },
+      {
+        "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\the-canopy-stream-team-round-logo-640w.webp",
+        "src": "/the-canopy-stream-team-round-logo-640w.webp",
+        "format": "webp",
+        "width": 640,
+        "height": 640,
+        "bytes": 35954
+      },
+      {
+        "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\the-canopy-stream-team-round-logo-900w.webp",
+        "src": "/the-canopy-stream-team-round-logo-900w.webp",
+        "format": "webp",
+        "width": 900,
+        "height": 900,
+        "bytes": 50632
+      }
+    ],
+    "focus": {
+      "framing": "balanced",
+      "preset": "center",
+      "x": 0.5,
+      "y": 0.5
+    }
+  },
+  "recipe": {
+    "name": "logo-lockup",
+    "description": "Transparent-safe logo or lockup art that preserves the full composition.",
+    "aspect_ratio": "4:3",
+    "fit_mode": "contain",
+    "default_accessibility_mode": "logo",
+    "default_framing": "balanced",
+    "default_dimensions": {
+      "width": 1200,
+      "height": 900
+    },
+    "responsive_by_default": true,
+    "responsive_widths": [
+      320,
+      640,
+      900,
+      1200
+    ],
+    "default_loading": "lazy",
+    "default_fetch_priority": null,
+    "emit_snippets_by_default": true
+  },
+  "metadata": {
+    "inputs": {
+      "subject": "The Canopy Stream Team round logo",
+      "context": "Brin Shadewater community page hero",
+      "purpose": "hero creator-network logo",
+      "visible_text": null,
+      "framing": "balanced"
+    },
+    "accessibility_mode": "logo",
+    "provenance": "heuristic",
+    "generated": {
+      "slug": "the-canopy-stream-team-round-logo",
+      "alt": "The Canopy Stream Team round logo",
+      "title": "The Canopy Stream Team round logo - hero creator-network logo",
+      "caption": "The Canopy Stream Team round logo used as a hero creator-network logo for Brin Shadewater community page hero"
+    },
+    "usage_overrides": {
+      "community.hero.canopy.logo": {
+        "alt": "The Canopy Stream Team round logo.",
+        "title": "The Canopy Stream Team round logo - hero creator-network logo",
+        "caption": "The Canopy Stream Team round logo used as a hero creator-network logo for Brin Shadewater community page hero",
+        "accessibility_mode": "logo",
+        "provenance": "manual"
+      }
+    }
+  },
+  "snippets": {
+    "enabled": true,
+    "src": "/the-canopy-stream-team-round-logo.webp",
+    "srcset": "/the-canopy-stream-team-round-logo-320w.webp 320w, /the-canopy-stream-team-round-logo-640w.webp 640w, /the-canopy-stream-team-round-logo-900w.webp 900w, /the-canopy-stream-team-round-logo.webp 1000w",
+    "sizes": "100vw",
+    "loading": "lazy",
+    "fetch_priority": null,
+    "usage_key": "community.hero.canopy.logo",
+    "targets": {
+      "astro": {
+        "markup": "<img src=\"/the-canopy-stream-team-round-logo.webp\" alt=\"The Canopy Stream Team round logo.\" width=\"1000\" height=\"1000\" title=\"The Canopy Stream Team round logo - hero creator-network logo\" sizes=\"100vw\" loading=\"lazy\" decoding=\"async\" />"
+      },
+      "html": {
+        "markup": "<img src=\"/the-canopy-stream-team-round-logo.webp\" alt=\"The Canopy Stream Team round logo.\" width=\"1000\" height=\"1000\" title=\"The Canopy Stream Team round logo - hero creator-network logo\" srcset=\"/the-canopy-stream-team-round-logo-320w.webp 320w, /the-canopy-stream-team-round-logo-640w.webp 640w, /the-canopy-stream-team-round-logo-900w.webp 900w, /the-canopy-stream-team-round-logo.webp 1000w\" sizes=\"100vw\" loading=\"lazy\" decoding=\"async\" />"
+      },
+      "next": {
+        "markup": "import Image from \"next/image\";\n\n<Image src={\"/the-canopy-stream-team-round-logo.webp\"} alt={\"The Canopy Stream Team round logo.\"} width={1000} height={1000} title={\"The Canopy Stream Team round logo - hero creator-network logo\"} sizes={\"100vw\"} loading={\"lazy\"} decoding={\"async\"} />"
+      },
+      "react": {
+        "markup": "<img src={\"/the-canopy-stream-team-round-logo.webp\"} alt={\"The Canopy Stream Team round logo.\"} width={1000} height={1000} title={\"The Canopy Stream Team round logo - hero creator-network logo\"} srcSet={\"/the-canopy-stream-team-round-logo-320w.webp 320w, /the-canopy-stream-team-round-logo-640w.webp 640w, /the-canopy-stream-team-round-logo-900w.webp 900w, /the-canopy-stream-team-round-logo.webp 1000w\"} sizes={\"100vw\"} loading={\"lazy\"} decoding={\"async\"} />"
+      }
+    }
+  },
+  "analysis": {
+    "compression": {
+      "source_bytes": 142419,
+      "output_bytes": 49570,
+      "reduction_percent": 65.1942507671027
+    },
+    "lints": {
+      "blocking": [],
+      "warnings": []
+    },
+    "status": "ok"
+  }
+}

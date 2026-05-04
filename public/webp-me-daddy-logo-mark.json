@@ -1,0 +1,105 @@
+{
+  "version": "2.3.0",
+  "id": "webp-me-daddy-logo-mark",
+  "input": {
+    "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\webp-me-daddy-logo-mark-transparent.png",
+    "format": "png",
+    "bytes": 1061781
+  },
+  "output": {
+    "mode": "generated",
+    "fit_mode": "contain",
+    "main": {
+      "path": "C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\webp-me-daddy-logo-mark.webp",
+      "src": "/webp-me-daddy-logo-mark.webp",
+      "format": "webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 489636
+    },
+    "variants": [],
+    "focus": {
+      "framing": "balanced",
+      "preset": "center",
+      "x": 0.5,
+      "y": 0.5
+    }
+  },
+  "recipe": {
+    "name": "logo-lockup",
+    "description": "Transparent-safe logo or lockup art that preserves the full composition.",
+    "aspect_ratio": "4:3",
+    "fit_mode": "contain",
+    "default_accessibility_mode": "logo",
+    "default_framing": "balanced",
+    "default_dimensions": {
+      "width": 1200,
+      "height": 900
+    },
+    "responsive_by_default": true,
+    "responsive_widths": [
+      320,
+      640,
+      900,
+      1200
+    ],
+    "default_loading": "lazy",
+    "default_fetch_priority": null,
+    "emit_snippets_by_default": true
+  },
+  "metadata": {
+    "inputs": {
+      "subject": "Webp Me Daddy logo mark",
+      "context": "Shadewater Labs project",
+      "purpose": "Webp Me Daddy mark asset",
+      "visible_text": null,
+      "framing": "balanced"
+    },
+    "accessibility_mode": "logo",
+    "provenance": "heuristic",
+    "generated": {
+      "slug": "webp-me-daddy-logo-mark",
+      "alt": "Webp Me Daddy logo mark",
+      "title": "Webp Me Daddy logo mark - Webp Me Daddy mark asset",
+      "caption": "Webp Me Daddy logo mark used as a Webp Me Daddy mark asset for Shadewater Labs project"
+    },
+    "usage_overrides": {}
+  },
+  "snippets": {
+    "enabled": true,
+    "src": "/webp-me-daddy-logo-mark.webp",
+    "srcset": null,
+    "sizes": null,
+    "loading": "lazy",
+    "fetch_priority": null,
+    "usage_key": null,
+    "targets": {
+      "astro": {
+        "markup": "<img src=\"/webp-me-daddy-logo-mark.webp\" alt=\"Webp Me Daddy logo mark\" width=\"1200\" height=\"900\" title=\"Webp Me Daddy logo mark - Webp Me Daddy mark asset\" loading=\"lazy\" decoding=\"async\" />"
+      },
+      "html": {
+        "markup": "<img src=\"/webp-me-daddy-logo-mark.webp\" alt=\"Webp Me Daddy logo mark\" width=\"1200\" height=\"900\" title=\"Webp Me Daddy logo mark - Webp Me Daddy mark asset\" loading=\"lazy\" decoding=\"async\" />"
+      },
+      "next": {
+        "markup": "import Image from \"next/image\";\n\n<Image src={\"/webp-me-daddy-logo-mark.webp\"} alt={\"Webp Me Daddy logo mark\"} width={1200} height={900} title={\"Webp Me Daddy logo mark - Webp Me Daddy mark asset\"} loading={\"lazy\"} decoding={\"async\"} />"
+      },
+      "react": {
+        "markup": "<img src={\"/webp-me-daddy-logo-mark.webp\"} alt={\"Webp Me Daddy logo mark\"} width={1200} height={900} title={\"Webp Me Daddy logo mark - Webp Me Daddy mark asset\"} loading={\"lazy\"} decoding={\"async\"} />"
+      }
+    }
+  },
+  "analysis": {
+    "compression": {
+      "source_bytes": 1061781,
+      "output_bytes": 489636,
+      "reduction_percent": 53.885405747512905
+    },
+    "lints": {
+      "blocking": [],
+      "warnings": [
+        "oversized_for_recipe"
+      ]
+    },
+    "status": "warning"
+  }
+}

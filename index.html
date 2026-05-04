@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shadewater Labs | AI Tools, Coding Projects &amp; Tech Experiments</title>
+    <meta
+      name="description"
+      content="Shadewater Labs builds AI tools, coding projects, creative technology experiments, and digital product prototypes from Brin Shadewater."
+    />
+    <meta name="author" content="Brin Shadewater" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#0d2430" />
+    <meta property="og:site_name" content="Shadewater Labs" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Shadewater Labs | AI Tools, Coding Projects &amp; Tech Experiments" />
+    <meta
+      property="og:description"
+      content="Shadewater Labs builds AI tools, coding projects, creative technology experiments, and digital product prototypes from Brin Shadewater."
+    />
+    <meta property="og:url" content="https://shadewaterlabs.com/" />
+    <meta property="og:image" content="https://shadewaterlabs.com/shadewater-labs-logo-mark.webp" />
+    <meta property="og:image:alt" content="Shadewater Labs logo mark" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@brinshadewater" />
+    <meta name="twitter:creator" content="@brinshadewater" />
+    <meta name="twitter:title" content="Shadewater Labs | AI Tools, Coding Projects &amp; Tech Experiments" />
+    <meta
+      name="twitter:description"
+      content="Shadewater Labs builds AI tools, coding projects, creative technology experiments, and digital product prototypes from Brin Shadewater."
+    />
+    <meta name="twitter:image" content="https://shadewaterlabs.com/shadewater-labs-logo-mark.webp" />
+    <meta name="twitter:image:alt" content="Shadewater Labs logo mark" />
+    <link rel="canonical" href="https://shadewaterlabs.com/" />
+    <link rel="alternate" hreflang="en-CA" href="https://shadewaterlabs.com/" />
+    <link rel="alternate" hreflang="en" href="https://shadewaterlabs.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://shadewaterlabs.com/" />
+    <link
+      rel="preload"
+      as="image"
+      href="/shadewater-labs-logo-mark-640w.webp"
+      imagesrcset="/shadewater-labs-logo-mark-320w.webp 320w, /shadewater-labs-logo-mark-640w.webp 640w, /shadewater-labs-logo-mark-900w.webp 900w, /shadewater-labs-logo-mark.webp 1021w"
+      imagesizes="(min-width: 1024px) 10.5rem, (min-width: 640px) 9rem, 34vw"
+      fetchpriority="high"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --seo-bg: #081a26;
+        --seo-surface: rgba(16, 34, 46, 0.92);
+        --seo-surface-soft: rgba(18, 40, 55, 0.9);
+        --seo-border: rgba(191, 168, 128, 0.18);
+        --seo-text: #eef0eb;
+        --seo-muted: rgba(238, 240, 235, 0.72);
+        --seo-accent: #7dc9cf;
+        --seo-sandstone: #d6bf94;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(53, 118, 134, 0.22), transparent 34%),
+          linear-gradient(180deg, #081a26 0%, #0b2030 100%);
+        color: var(--seo-text);
+      }
+
+      .seo-shell {
+        width: min(1160px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 32px 0 72px;
+      }
+
+      .seo-shell__hero,
+      .seo-shell__section {
+        border: 1px solid var(--seo-border);
+        background: linear-gradient(180deg, var(--seo-surface), rgba(12, 29, 40, 0.94));
+        box-shadow: 0 22px 48px rgba(0, 0, 0, 0.22);
+        border-radius: 32px;
+      }
+
+      .seo-shell__hero {
+        padding: 24px;
+      }
+
+      .seo-shell__nav,
+      .seo-shell__link-grid,
+      .seo-shell__socials,
+      .seo-shell__feature-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .seo-shell__nav {
+        margin-bottom: 24px;
+      }
+
+      .seo-shell__nav a,
+      .seo-shell__pill,
+      .seo-shell__socials a {
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--seo-text);
+        padding: 10px 14px;
+        text-decoration: none;
+        font-size: 0.92rem;
+      }
+
+      .seo-shell__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+        gap: 28px;
+        align-items: center;
+      }
+
+      .seo-shell__eyebrow {
+        display: inline-flex;
+        margin-bottom: 16px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        color: var(--seo-sandstone);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .seo-shell h1,
+      .seo-shell h2,
+      .seo-shell h3 {
+        margin: 0;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        line-height: 0.95;
+      }
+
+      .seo-shell h1 {
+        font-size: clamp(3rem, 6vw, 5.3rem);
+      }
+
+      .seo-shell h2 {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        margin-bottom: 14px;
+      }
+
+      .seo-shell p {
+        margin: 0;
+        color: var(--seo-muted);
+        line-height: 1.7;
+      }
+
+      .seo-shell__lead {
+        max-width: 52rem;
+        margin: 18px 0 0;
+        font-size: 1.06rem;
+      }
+
+      .seo-shell__cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .seo-shell__cta a {
+        border-radius: 999px;
+        padding: 12px 18px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .seo-shell__cta-primary {
+        background: linear-gradient(135deg, #184955, #2f6c7a);
+        color: #fff;
+      }
+
+      .seo-shell__cta-secondary {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--seo-text);
+      }
+
+      .seo-shell__visual {
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+      }
+
+      .seo-shell__visual img {
+        width: min(100%, 430px);
+        height: auto;
+        filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.3));
+      }
+
+      .seo-shell__visual-note {
+        font-size: 0.84rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--seo-sandstone);
+      }
+
+      .seo-shell__section {
+        margin-top: 24px;
+        padding: 24px;
+      }
+
+      .seo-shell__feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .seo-shell__feature {
+        padding: 18px;
+        border-radius: 24px;
+        background: var(--seo-surface-soft);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .seo-shell__feature h3 {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+      }
+
+      .seo-shell__link-grid a {
+        color: var(--seo-text);
+      }
+
+      .seo-shell__small {
+        margin-top: 12px;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 860px) {
+        .seo-shell {
+          width: min(100vw - 24px, 1160px);
+          padding-top: 20px;
+        }
+
+        .seo-shell__hero,
+        .seo-shell__section {
+          border-radius: 26px;
+          padding: 20px;
+        }
+
+        .seo-shell__grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://brinshadewater.com/#organization",
+            "name": "Shadewater Labs",
+            "url": "https://brinshadewater.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://brinshadewater.com/shadewater-labs-logo-mark.webp"
+            },
+            "sameAs": [
+              "https://www.youtube.com/@brinshadewater",
+              "https://x.com/brinshadewater",
+              "https://www.instagram.com/brinshadewater",
+              "https://www.twitch.tv/brinshadewater",
+              "https://letterboxd.com/brinshadewater"
+            ]
+          },
+          {
+            "@type": "Person",
+            "@id": "https://brinshadewater.com/#person",
+            "name": "Brin Shadewater",
+            "url": "https://brinshadewater.com/",
+            "image": "https://brinshadewater.com/hero-illustration.webp",
+            "jobTitle": "Streamer, reviewer, filmmaker, and creator behind Shadewater Labs",
+            "description": "Brin Shadewater shares late-night Twitch streams, sharp game and movie reviews, community updates, and Shadewater Labs experiments in one cozy home base.",
+            "worksFor": {
+              "@id": "https://brinshadewater.com/#organization"
+            },
+            "sameAs": [
+              "https://www.youtube.com/@brinshadewater",
+              "https://x.com/brinshadewater",
+              "https://www.instagram.com/brinshadewater",
+              "https://www.twitch.tv/brinshadewater",
+              "https://letterboxd.com/brinshadewater"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://brinshadewater.com/#website",
+            "name": "Brin Shadewater",
+            "url": "https://brinshadewater.com/",
+            "inLanguage": "en-CA",
+            "description": "Brin Shadewater shares late-night Twitch streams, sharp game and movie reviews, community updates, and Shadewater Labs experiments in one cozy home base.",
+            "publisher": {
+              "@id": "https://brinshadewater.com/#organization"
+            },
+            "about": {
+              "@id": "https://brinshadewater.com/#person"
+            }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://brinshadewater.com/#webpage",
+            "url": "https://brinshadewater.com/",
+            "name": "Brin Shadewater",
+            "description": "Official home page for Brin Shadewater, streams, reviews, and Shadewater Labs.",
+            "isPartOf": {
+              "@id": "https://brinshadewater.com/#website"
+            },
+            "mainEntity": {
+              "@id": "https://brinshadewater.com/#person"
+            },
+            "about": {
+              "@id": "https://brinshadewater.com/#organization"
+            }
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://brinshadewater.com/#featured",
+            "name": "Featured reviews and projects",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "url": "https://brinshadewater.com/reviews-notes/bugonia-placeholder-review",
+                "name": "Bugonia - Placeholder Review"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "url": "https://brinshadewater.com/reviews-notes/the-last-caretaker-early-access-review",
+                "name": "The Last Caretaker - Early Access Review"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "url": "https://brinshadewater.com/labs/webp-me-daddy",
+                "name": "Webp Me Daddy"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "url": "https://brinshadewater.com/labs/inkmaster-studio",
+                "name": "InkMaster Studio"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <div class="seo-shell">
+        <header class="seo-shell__hero">
+          <nav class="seo-shell__nav" aria-label="Primary">
+            <a href="/">Home</a>
+            <a href="/stream">Stream</a>
+            <a href="/reviews-notes">Reviews &amp; Notes</a>
+            <a href="/community">Community</a>
+            <a href="/about">About</a>
+            <a href="/labs">Shadewater Labs</a>
+            <a href="/labs/webp-me-daddy">Webp Me Daddy</a>
+            <a href="/labs/inkmaster-studio">InkMaster Studio</a>
+            <a href="/sponsor-deck">Sponsor Deck</a>
+          </nav>
+
+          <div class="seo-shell__grid">
+            <div>
+              <div class="seo-shell__eyebrow">Late-night streams, reviews, and new projects</div>
+              <h1>Brin Shadewater</h1>
+              <p class="seo-shell__lead">
+                Late-night streams, honest reviews, and new builds from Shadewater Labs.
+                Start with the stream schedule, the latest notes, or the current tools.
+              </p>
+              <p class="seo-shell__small">
+                This is the home base for the stream, the review archive, and ongoing project work.
+                Each section is short and clear. Use the links below to jump in fast.
+              </p>
+              <div class="seo-shell__cta">
+                <a class="seo-shell__cta-primary" href="/stream">Watch the stream</a>
+                <a class="seo-shell__cta-secondary" href="/reviews-notes">Read reviews and notes</a>
+                <a class="seo-shell__cta-secondary" href="/labs">Explore Shadewater Labs</a>
+              </div>
+            </div>
+
+            <div class="seo-shell__visual">
+              <img
+                src="/hero-illustration.webp"
+                width="1574"
+                height="1200"
+                alt="Illustration of Brin Shadewater and Margot gaming together"
+              />
+              <p class="seo-shell__visual-note">Twitch streamer, reviewer, filmmaker, and builder</p>
+            </div>
+          </div>
+        </header>
+
+        <main>
+          <section class="seo-shell__section" aria-labelledby="explore-site">
+            <h2 id="explore-site">Explore the site</h2>
+            <p>
+              Use this site to follow streams, read reviews, and track new projects.
+              Each area is small and direct. Pick the path that fits what you want.
+            </p>
+            <div class="seo-shell__link-grid" style="margin-top: 18px;">
+              <a class="seo-shell__pill" href="/stream">Live stream schedule</a>
+              <a class="seo-shell__pill" href="/reviews-notes">All reviews and notes</a>
+              <a class="seo-shell__pill" href="/reviews-notes/bugonia-placeholder-review">Bugonia review</a>
+              <a class="seo-shell__pill" href="/reviews-notes/the-last-caretaker-early-access-review">The Last Caretaker review</a>
+              <a class="seo-shell__pill" href="/reviews-notes/whiskerwood-early-access-impressions">Whiskerwood impressions</a>
+              <a class="seo-shell__pill" href="/community">Community hub</a>
+              <a class="seo-shell__pill" href="/about">About Brin</a>
+              <a class="seo-shell__pill" href="/labs">Shadewater Labs overview</a>
+              <a class="seo-shell__pill" href="/labs/webp-me-daddy">Webp Me Daddy</a>
+              <a class="seo-shell__pill" href="/labs/inkmaster-studio">InkMaster Studio</a>
+              <a class="seo-shell__pill" href="/sponsor-deck">Sponsor deck</a>
+            </div>
+          </section>
+
+          <section class="seo-shell__section" aria-labelledby="featured-work">
+            <h2 id="featured-work">Featured reviews and projects</h2>
+            <p>
+              Start with one review and one project page. That gives you the tone of the site fast.
+            </p>
+            <div class="seo-shell__feature-grid">
+              <article class="seo-shell__feature">
+                <h3><a href="/reviews-notes/bugonia-placeholder-review">Bugonia</a></h3>
+                <p>Placeholder review for the site layout. The full review is still coming.</p>
+              </article>
+              <article class="seo-shell__feature">
+                <h3><a href="/reviews-notes/the-last-caretaker-early-access-review">The Last Caretaker</a></h3>
+                <p>Early access notes on survival, systems, and quiet progression.</p>
+              </article>
+              <article class="seo-shell__feature">
+                <h3><a href="/labs/webp-me-daddy">Webp Me Daddy</a></h3>
+                <p>Image workflow for responsive assets, metadata, proofing, and cleanup.</p>
+              </article>
+              <article class="seo-shell__feature">
+                <h3><a href="/labs/inkmaster-studio">InkMaster Studio</a></h3>
+                <p>Print-prep tool for apparel graphics, mockups, and DTG exports.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="seo-shell__section" aria-labelledby="find-brin">
+            <h2 id="find-brin">Find Brin around the internet</h2>
+            <p>
+              Twitch, YouTube, Instagram, and Discord are the best places for live updates.
+              The full AI summary lives in llms.txt and llms-full.txt.
+            </p>
+            <div class="seo-shell__socials" style="margin-top: 18px;">
+              <a href="https://www.twitch.tv/brinshadewater" rel="noopener noreferrer">Twitch</a>
+              <a href="https://www.youtube.com/@brinshadewater" rel="noopener noreferrer">YouTube</a>
+              <a href="https://www.instagram.com/brinshadewater" rel="noopener noreferrer">Instagram</a>
+              <a href="https://discord.gg/brinshadewater" rel="noopener noreferrer">Discord</a>
+            </div>
+            <p class="seo-shell__small">
+              For AI agents and crawler-friendly summaries, see
+              <a href="/llms.txt"> llms.txt</a>,
+              <a href="/llms-full.txt"> llms-full.txt</a>, and
+              <a href="/sitemap.xml"> sitemap.xml</a>.
+            </p>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
