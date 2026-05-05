@@ -26,4 +26,13 @@ export const managedWebsites = [
     description:
       'A focused web product for apparel artwork cleanup, DTG print prep, underbase generation, mockup previews, and export workflows.',
   },
+  {
+    id: 'strangeharvestmovie',
+    name: 'Strange Harvest Movie',
+    url: 'https://strangeharvestmovie.com',
+    role: 'Film site',
+    status: 'Live',
+    description:
+      'A dedicated movie website for the Strange Harvest project, maintained as part of the Shadewater Labs managed web portfolio.',
+  },
 ] as const;
