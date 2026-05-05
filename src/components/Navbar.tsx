@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { ExternalLink } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { LABS_ORIGIN, buildRouteHref } from '@/lib/routes';
 
 interface NavbarProps {
@@ -10,11 +12,9 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { name: 'Labs Home', path: 'labs' },
-    { name: 'SEO Report', path: 'shadewater-seo-report' },
-    { name: 'Webp Me Daddy', path: 'webp-me-daddy' },
-    { name: 'InkMaster Studio', path: 'inkmaster-studio' },
-    { name: 'Back To Brin', path: 'home' },
+    { name: 'Projects', path: 'projects' },
+    { name: 'Websites', path: 'websites' },
+    { name: 'Tech News', path: 'tech-news' },
   ];
 
   const brandHref = LABS_ORIGIN;
@@ -65,6 +65,12 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
                 {item.name}
               </a>
             ))}
+            <Button variant="hero" size="sm" className="ml-2 lg:ml-4" asChild>
+              <a href="https://brinshadewater.com/" rel="noopener noreferrer">
+                Brin Shadewater
+                <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+              </a>
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -105,6 +111,12 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
                 {item.name}
               </a>
             ))}
+            <Button variant="hero" className="mt-2 w-full" asChild>
+              <a href="https://brinshadewater.com/" rel="noopener noreferrer">
+                Brin Shadewater
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </Button>
           </div>
         )}
       </div>

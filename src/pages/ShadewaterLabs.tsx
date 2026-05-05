@@ -111,13 +111,6 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
             >
               Explore Projects
             </Button>
-            <Button
-              variant="hero-outline"
-              className="bg-[hsl(var(--sandstone)/0.16)] text-[hsl(var(--sandstone-soft))] hover:bg-[hsl(var(--sandstone)/0.24)]"
-              onClick={() => onNavigate('sponsor-deck')}
-            >
-              View Sponsor Deck
-            </Button>
           </div>
         </div>
       </section>

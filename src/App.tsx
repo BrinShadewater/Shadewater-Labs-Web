@@ -7,6 +7,9 @@ import { buildRouteHref, parseLocation } from './lib/routes';
 import { getSeoConfig } from './lib/seo';
 
 const ShadewaterLabs = lazy(() => import('./pages/ShadewaterLabs'));
+const Projects = lazy(() => import('./pages/Projects'));
+const Websites = lazy(() => import('./pages/Websites'));
+const TechNews = lazy(() => import('./pages/TechNews'));
 const ShadewaterSeoReport = lazy(() => import('./pages/ShadewaterSeoReport'));
 const WebpMeDaddy = lazy(() => import('./pages/WebpMeDaddy'));
 const InkMasterStudio = lazy(() => import('./pages/InkMasterStudio'));
@@ -94,6 +97,12 @@ function App() {
     switch (currentPage) {
       case 'labs':
         return <ShadewaterLabs onNavigate={handleNavigate} />;
+      case 'projects':
+        return <Projects onNavigate={handleNavigate} />;
+      case 'websites':
+        return <Websites />;
+      case 'tech-news':
+        return <TechNews />;
       case 'shadewater-seo-report':
         return <ShadewaterSeoReport onNavigate={handleNavigate} />;
       case 'webp-me-daddy':

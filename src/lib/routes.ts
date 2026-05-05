@@ -21,12 +21,23 @@ const STATIC_PATHS: Record<string, string> = {
 
 const LABS_STATIC_PATHS: Record<string, string> = {
   labs: '/',
+  projects: '/projects',
+  websites: '/websites',
+  'tech-news': '/tech-news',
   'shadewater-seo-report': '/shadewater-seo-report',
   'webp-me-daddy': '/webp-me-daddy',
   'inkmaster-studio': '/inkmaster-studio',
 };
 
-const LABS_PAGES = new Set(['labs', 'shadewater-seo-report', 'webp-me-daddy', 'inkmaster-studio']);
+const LABS_PAGES = new Set([
+  'labs',
+  'projects',
+  'websites',
+  'tech-news',
+  'shadewater-seo-report',
+  'webp-me-daddy',
+  'inkmaster-studio',
+]);
 
 export function getSiteKey(hostname: string): SiteKey {
   return hostname.toLowerCase().replace(/^www\./, '') === 'shadewaterlabs.com' ? 'labs' : 'brin';
@@ -110,6 +121,12 @@ export function parseLocation(pathname: string, hash = '', site: SiteKey = 'brin
         return { page: 'inkmaster-studio', noteId: '' };
       }
       return { page: 'labs', noteId: '' };
+    case 'projects':
+      return { page: 'projects', noteId: '' };
+    case 'websites':
+      return { page: 'websites', noteId: '' };
+    case 'tech-news':
+      return { page: 'tech-news', noteId: '' };
     case 'shadewater-seo-report':
       return { page: 'shadewater-seo-report', noteId: '' };
     case 'webp-me-daddy':

@@ -1,5 +1,7 @@
 import { notes } from '@/content/notes';
 import { projectStatuses } from '@/content/projects';
+import { techNewsItems } from '@/content/techNews';
+import { managedWebsites } from '@/content/websites';
 import { SHADEWATER_LABS_MARK_ALT, SHADEWATER_LABS_MARK_SRC } from '@/lib/brandAssets';
 import { BRIN_ORIGIN, LABS_ORIGIN, buildCanonicalUrl, buildPath, getOrigin, type SiteKey } from '@/lib/routes';
 
@@ -301,6 +303,98 @@ export function getSeoConfig(page: string, noteId = '', site: SiteKey = 'brin'):
           personSchema(),
         ],
       };
+    case 'projects':
+      return {
+        title: `Projects | ${ORGANIZATION_NAME}`,
+        description:
+          'Explore the active Shadewater Labs catalog of AI tools, coding projects, creative technology builds, and product experiments.',
+        canonical: buildCanonicalUrl('projects', undefined, 'labs'),
+        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
+        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        siteName: ORGANIZATION_NAME,
+        type: 'website',
+        keywords: 'Shadewater Labs projects, AI tools, coding projects, product experiments',
+        jsonLd: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: 'Shadewater Labs Projects',
+            url: buildCanonicalUrl('projects', undefined, 'labs'),
+            description: 'The active catalog of Shadewater Labs projects and experiments.',
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            itemListElement: Object.values(projectStatuses).map((project, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              url: buildCanonicalUrl(project.slug, undefined, 'labs'),
+              name: project.name,
+            })),
+          },
+          websiteSchema('labs'),
+          organizationSchema('labs'),
+          personSchema(),
+        ],
+      };
+    case 'websites':
+      return {
+        title: `Websites | ${ORGANIZATION_NAME}`,
+        description:
+          'Managed web properties from Shadewater Labs, including Brin Shadewater, Shadewater Labs, and InkMaster Studio.',
+        canonical: buildCanonicalUrl('websites', undefined, 'labs'),
+        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
+        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        siteName: ORGANIZATION_NAME,
+        type: 'website',
+        keywords: 'Shadewater Labs websites, managed websites, Brin Shadewater, InkMaster Studio',
+        jsonLd: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: 'Managed Web Properties',
+            url: buildCanonicalUrl('websites', undefined, 'labs'),
+            hasPart: managedWebsites.map((site) => ({
+              '@type': 'WebSite',
+              name: site.name,
+              url: site.url,
+              description: site.description,
+            })),
+          },
+          websiteSchema('labs'),
+          organizationSchema('labs'),
+          personSchema(),
+        ],
+      };
+    case 'tech-news':
+      return {
+        title: `Tech News | ${ORGANIZATION_NAME}`,
+        description:
+          'A manually curated Shadewater Labs feed for AI-related technology signals, creative tooling, and product experiment notes.',
+        canonical: buildCanonicalUrl('tech-news', undefined, 'labs'),
+        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
+        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        siteName: ORGANIZATION_NAME,
+        type: 'website',
+        keywords: 'AI tech news, creative technology, AI tools, Shadewater Labs notes',
+        jsonLd: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: 'AI & Creative Tech Notes',
+            url: buildCanonicalUrl('tech-news', undefined, 'labs'),
+            hasPart: techNewsItems.map((item) => ({
+              '@type': 'Article',
+              headline: item.title,
+              description: item.summary,
+              datePublished: item.date,
+            })),
+          },
+          websiteSchema('labs'),
+          organizationSchema('labs'),
+          personSchema(),
+        ],
+      };
     case 'shadewater-seo-report':
       return {
         title: `${seoReport.name} | ${BRAND_NAME}`,
@@ -450,6 +544,9 @@ export function getSitemapPaths() {
 export function getLabsSitemapPaths() {
   return [
     buildPath('labs', undefined, 'labs'),
+    buildPath('projects', undefined, 'labs'),
+    buildPath('websites', undefined, 'labs'),
+    buildPath('tech-news', undefined, 'labs'),
     buildPath('shadewater-seo-report', undefined, 'labs'),
     buildPath('webp-me-daddy', undefined, 'labs'),
     buildPath('inkmaster-studio', undefined, 'labs'),
