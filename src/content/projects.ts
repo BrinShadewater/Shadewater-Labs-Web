@@ -539,7 +539,7 @@ export const projectStatuses: Record<string, ProjectStatus> = {
         description:
           'A real proof render for review art, shown on multiple surfaces so composition and contrast issues are visible before shipping.',
         command:
-          'python C:\\Users\\Alex\\.codex\\skills\\webp-me-daddy\\scripts\\webp_me_daddy.py proof C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\bugonia-review-hero.webp --output C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\webp-me-daddy-proof-review-hero.png',
+          'python path/to/webp-me-daddy/scripts/webp_me_daddy.py proof path/to/project/public/bugonia-review-hero.webp --output path/to/project/public/webp-me-daddy-proof-review-hero.png',
         outputSummary: 'Dark/light proof sheet for a landscape review hero.',
         src: '/webp-me-daddy-proof-review-hero.webp',
         alt: 'Webp Me Daddy proof sheet showing the Bugonia review hero on dark and light surfaces with metadata and recipe details.',
@@ -553,7 +553,7 @@ export const projectStatuses: Record<string, ProjectStatus> = {
         description:
           'Transparent assets get reviewed on dark, light, and checker backgrounds so matte halos and edge issues do not slip through.',
         command:
-          'python C:\\Users\\Alex\\.codex\\skills\\webp-me-daddy\\scripts\\webp_me_daddy.py proof C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\brin-margot-logo-lockup.webp --output C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\webp-me-daddy-proof-logo-lockup.png',
+          'python path/to/webp-me-daddy/scripts/webp_me_daddy.py proof path/to/project/public/brin-margot-logo-lockup.webp --output path/to/project/public/webp-me-daddy-proof-logo-lockup.png',
         outputSummary: 'Dark/light/checker proof sheet for a transparent logo lockup.',
         src: '/webp-me-daddy-proof-logo-lockup.webp',
         alt: 'Webp Me Daddy proof sheet showing a transparent logo lockup on dark, light, and checkerboard surfaces.',
@@ -567,7 +567,7 @@ export const projectStatuses: Record<string, ProjectStatus> = {
         description:
           'A dry-run proof board that shows multiple assets together with status, issue hints, and visual QA context for faster approvals.',
         command:
-          'python C:\\Users\\Alex\\.codex\\skills\\webp-me-daddy\\scripts\\webp_me_daddy.py batch <temp-review-assets> --recipe review-hero --dry-run --proof-contact-sheet C:\\Users\\Alex\\Desktop\\Projects\\Claude\\Projects\\BrinShadewater Web\\public\\webp-me-daddy-proof-batch-contact-sheet.png --overwrite',
+          'python path/to/webp-me-daddy/scripts/webp_me_daddy.py batch path/to/assets/ --recipe review-hero --dry-run --proof-contact-sheet path/to/project/public/webp-me-daddy-proof-batch-contact-sheet.png --overwrite',
         outputSummary: 'Batch proof board with lint status, action hints, and multiple review-hero assets.',
         src: '/webp-me-daddy-proof-batch-contact-sheet.webp',
         alt: 'Webp Me Daddy batch proof contact sheet showing multiple review hero assets with lint status and suggested actions.',
