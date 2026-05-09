@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { projectStatuses } from '@/content/projects';
-import { noteAuthorThemes } from '@/content/notes';
+import { authorThemes as noteAuthorThemes } from '@/lib/authorThemes';
 import {
   SHADEWATER_LABS_MARK_HEIGHT,
   SHADEWATER_LABS_MARK_SRC,
@@ -218,6 +218,10 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
     </div>
   );
 }

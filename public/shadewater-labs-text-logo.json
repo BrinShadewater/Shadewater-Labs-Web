@@ -1,0 +1,128 @@
+{
+  "version": "2.3.0",
+  "id": "shadewater-labs-text-logo",
+  "input": {
+    "path": "/sessions/inspiring-magical-pascal/mnt/ShadewaterLabs Web/public/shadewater-labs-text-logo.png",
+    "format": "png",
+    "bytes": 2279155
+  },
+  "output": {
+    "mode": "generated",
+    "fit_mode": "contain",
+    "main": {
+      "path": "/sessions/inspiring-magical-pascal/mnt/ShadewaterLabs Web/public/shadewater-labs-text-logo.webp",
+      "src": "/shadewater-labs-text-logo.webp",
+      "format": "webp",
+      "width": 1200,
+      "height": 900,
+      "bytes": 56108
+    },
+    "variants": [
+      {
+        "path": "/sessions/inspiring-magical-pascal/mnt/ShadewaterLabs Web/public/shadewater-labs-text-logo-320w.webp",
+        "src": "/shadewater-labs-text-logo-320w.webp",
+        "format": "webp",
+        "width": 320,
+        "height": 240,
+        "bytes": 6712
+      },
+      {
+        "path": "/sessions/inspiring-magical-pascal/mnt/ShadewaterLabs Web/public/shadewater-labs-text-logo-640w.webp",
+        "src": "/shadewater-labs-text-logo-640w.webp",
+        "format": "webp",
+        "width": 640,
+        "height": 480,
+        "bytes": 20182
+      },
+      {
+        "path": "/sessions/inspiring-magical-pascal/mnt/ShadewaterLabs Web/public/shadewater-labs-text-logo-900w.webp",
+        "src": "/shadewater-labs-text-logo-900w.webp",
+        "format": "webp",
+        "width": 900,
+        "height": 675,
+        "bytes": 34986
+      }
+    ],
+    "focus": {
+      "framing": "balanced",
+      "preset": "center",
+      "x": 0.5,
+      "y": 0.5
+    }
+  },
+  "recipe": {
+    "name": "logo-lockup",
+    "description": "Transparent-safe logo or lockup art that preserves the full composition.",
+    "aspect_ratio": "4:3",
+    "fit_mode": "contain",
+    "default_accessibility_mode": "logo",
+    "default_framing": "balanced",
+    "default_dimensions": {
+      "width": 1200,
+      "height": 900
+    },
+    "responsive_by_default": true,
+    "responsive_widths": [
+      320,
+      640,
+      900,
+      1200
+    ],
+    "default_loading": "lazy",
+    "default_fetch_priority": null,
+    "emit_snippets_by_default": true
+  },
+  "metadata": {
+    "inputs": {
+      "subject": "Shadewater Labs",
+      "context": "Shadewater Labs website",
+      "purpose": "brand logo with text",
+      "visible_text": null,
+      "framing": "balanced"
+    },
+    "accessibility_mode": "logo",
+    "provenance": "heuristic",
+    "generated": {
+      "slug": "shadewater-labs-text-logo",
+      "alt": "Shadewater Labs logo",
+      "title": "Shadewater Labs logo - brand logo with text",
+      "caption": "Shadewater Labs logo used as a brand logo with text for Shadewater Labs website"
+    },
+    "usage_overrides": {}
+  },
+  "snippets": {
+    "enabled": true,
+    "src": "/shadewater-labs-text-logo.webp",
+    "srcset": "/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w, /shadewater-labs-text-logo.webp 1200w",
+    "sizes": "100vw",
+    "loading": "lazy",
+    "fetch_priority": null,
+    "usage_key": null,
+    "targets": {
+      "astro": {
+        "markup": "<img src=\"/shadewater-labs-text-logo.webp\" alt=\"Shadewater Labs logo\" width=\"1200\" height=\"900\" title=\"Shadewater Labs logo - brand logo with text\" sizes=\"100vw\" loading=\"lazy\" decoding=\"async\" />"
+      },
+      "html": {
+        "markup": "<img src=\"/shadewater-labs-text-logo.webp\" alt=\"Shadewater Labs logo\" width=\"1200\" height=\"900\" title=\"Shadewater Labs logo - brand logo with text\" srcset=\"/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w, /shadewater-labs-text-logo.webp 1200w\" sizes=\"100vw\" loading=\"lazy\" decoding=\"async\" />"
+      },
+      "next": {
+        "markup": "import Image from \"next/image\";\n\n<Image src={\"/shadewater-labs-text-logo.webp\"} alt={\"Shadewater Labs logo\"} width={1200} height={900} title={\"Shadewater Labs logo - brand logo with text\"} sizes={\"100vw\"} loading={\"lazy\"} decoding={\"async\"} />"
+      },
+      "react": {
+        "markup": "<img src={\"/shadewater-labs-text-logo.webp\"} alt={\"Shadewater Labs logo\"} width={1200} height={900} title={\"Shadewater Labs logo - brand logo with text\"} srcSet={\"/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w, /shadewater-labs-text-logo.webp 1200w\"} sizes={\"100vw\"} loading={\"lazy\"} decoding={\"async\"} />"
+      }
+    }
+  },
+  "analysis": {
+    "compression": {
+      "source_bytes": 2279155,
+      "output_bytes": 56108,
+      "reduction_percent": 97.53821043325267
+    },
+    "lints": {
+      "blocking": [],
+      "warnings": []
+    },
+    "status": "ok"
+  }
+}

@@ -9,11 +9,21 @@ export default defineConfig([
   globalIgnores(['dist', 'dist-preview', 'tailwind.config.js']),
   {
     files: ['**/*.{js,mjs,cjs}'],
+    ignores: ['scripts/**'],
     extends: [js.configs.recommended],
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: 'module',
       globals: globals.browser,
+    },
+  },
+  {
+    files: ['scripts/**/*.{js,mjs,cjs}'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: 'module',
+      globals: globals.node,
     },
   },
   {
@@ -27,6 +37,9 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
   },
 ])

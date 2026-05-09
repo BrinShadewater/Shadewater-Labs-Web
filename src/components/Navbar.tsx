@@ -78,6 +78,7 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="rounded-full border-2 border-white/10 bg-white/5 p-2 text-foreground md:hidden"
             aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav-menu"
             aria-label="Toggle navigation menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +93,7 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="space-y-2 border-t-2 border-white/10 py-4 md:hidden">
+          <div id="mobile-nav-menu" className="animate-in fade-in slide-in-from-top-1 duration-150 space-y-2 border-t-2 border-white/10 py-4 md:hidden">
             {navItems.map((item) => (
               <a
                 key={item.path}

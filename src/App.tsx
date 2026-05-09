@@ -15,7 +15,7 @@ const WebpMeDaddy = lazy(() => import('./pages/WebpMeDaddy'));
 const InkMasterStudio = lazy(() => import('./pages/InkMasterStudio'));
 
 function getRouteState() {
-  const { page, noteId } = parseLocation(window.location.pathname, window.location.hash, 'labs');
+  const { page, noteId } = parseLocation(window.location.pathname, window.location.hash);
   return {
     currentPage: page,
     selectedNoteId: noteId,

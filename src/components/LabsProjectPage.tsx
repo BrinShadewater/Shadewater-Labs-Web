@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { ProjectAction, ProjectStatus } from '@/content/projects';
-import { noteAuthorThemes } from '@/content/notes';
+import { authorThemes as noteAuthorThemes } from '@/lib/authorThemes';
 
 interface LabsProjectPageProps {
   project: ProjectStatus;
@@ -429,6 +429,10 @@ export default function LabsProjectPage({ project, onNavigate }: LabsProjectPage
           </div>
         </div>
       ) : null}
+    </div>
+  );
+}
+
     </div>
   );
 }
