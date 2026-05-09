@@ -432,7 +432,3 @@ export default function LabsProjectPage({ project, onNavigate }: LabsProjectPage
     </div>
   );
 }
-
-    </div>
-  );
-}

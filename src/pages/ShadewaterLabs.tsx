@@ -221,7 +221,3 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
     </div>
   );
 }
-
-    </div>
-  );
-}
