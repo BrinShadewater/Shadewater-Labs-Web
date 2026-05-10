@@ -183,3 +183,45 @@ a:focus-visible {
   content-visibility: auto;
   contain-intrinsic-size: 960px;
 }
+
+/* Aurora Drift — animated mesh gradients, ticker, constellation, particles */
+@keyframes adTicker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes adDrift1 {
+  0%   { transform: translate3d(-20px, 0, 0) scale(1); }
+  100% { transform: translate3d(80px, 60px, 0) scale(1.15); }
+}
+@keyframes adDrift2 {
+  0%   { transform: translate3d(20px, -10px, 0) scale(1); }
+  100% { transform: translate3d(-60px, 50px, 0) scale(0.9); }
+}
+@keyframes adDrift3 {
+  0%   { transform: translate3d(0, 0, 0) scale(0.95); }
+  100% { transform: translate3d(40px, -50px, 0) scale(1.1); }
+}
+@keyframes adRotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes adFloat {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.7; }
+  100% { transform: translate3d(var(--drift, 0), -560px, 0); opacity: 0; }
+}
+@keyframes adPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.92); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-tickerLane,
+  .ad-meshBlob,
+  .ad-constSpin,
+  .ad-particle,
+  .ad-pulse {
+    animation: none !important;
+  }
+}

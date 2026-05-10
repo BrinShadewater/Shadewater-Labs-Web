@@ -93,6 +93,20 @@ function App() {
 
   const seo = getSeoConfig(currentPage, selectedNoteId, siteKey);
 
+  // The Aurora Drift redesign owns its own ticker, navbar, and footer so the
+  // futurized chrome stays consistent across every page in the bundle.
+  // Suppress the legacy shared chrome on every route the redesign covers.
+  const AURORA_ROUTES = new Set([
+    'labs',
+    'projects',
+    'websites',
+    'tech-news',
+    'shadewater-seo-report',
+    'webp-me-daddy',
+    'inkmaster-studio',
+  ]);
+  const useAuroraChrome = AURORA_ROUTES.has(currentPage);
+
   const renderPage = () => {
     switch (currentPage) {
       case 'labs':
@@ -100,9 +114,9 @@ function App() {
       case 'projects':
         return <Projects onNavigate={handleNavigate} />;
       case 'websites':
-        return <Websites />;
+        return <Websites onNavigate={handleNavigate} />;
       case 'tech-news':
-        return <TechNews />;
+        return <TechNews onNavigate={handleNavigate} />;
       case 'shadewater-seo-report':
         return <ShadewaterSeoReport onNavigate={handleNavigate} />;
       case 'webp-me-daddy':
@@ -117,9 +131,11 @@ function App() {
   return (
     <div className="relative min-h-screen flex flex-col bg-background text-foreground">
       <Seo {...seo} />
-      {showBackgroundParticles ? <BackgroundParticles key={`${currentPage}:${selectedNoteId || 'root'}`} /> : null}
+      {showBackgroundParticles && !useAuroraChrome ? (
+        <BackgroundParticles key={`${currentPage}:${selectedNoteId || 'root'}`} />
+      ) : null}
       <div className="relative z-10 flex min-h-screen flex-col">
-        <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
+        {useAuroraChrome ? null : <Navbar currentPage={currentPage} onNavigate={handleNavigate} />}
         <main className="flex-grow">
           <Suspense
             fallback={
@@ -133,7 +149,7 @@ function App() {
             {renderPage()}
           </Suspense>
         </main>
-        <Footer />
+        {useAuroraChrome ? null : <Footer />}
       </div>
     </div>
   );

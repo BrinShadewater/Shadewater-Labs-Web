@@ -1,45 +1,107 @@
-import { ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { managedWebsites } from '@/content/websites';
+import {
+  AuroraPage,
+  adTone,
+  pp,
+} from '@/components/aurora/chrome';
+import type { AdToneKey, AuroraNavigate } from '@/components/aurora/chrome';
 
-export default function Websites() {
+interface WebsitesProps {
+  onNavigate: AuroraNavigate;
+}
+
+interface SiteRow {
+  name: string;
+  url: string;
+  role: string;
+  status: string;
+  tone: AdToneKey;
+  accent: string;
+  blurb: string;
+  sig: string;
+}
+
+const TONE_BY_STATUS: Record<string, AdToneKey> = {
+  Live: 'green',
+  Beta: 'amber',
+};
+
+const ACCENTS: Record<string, string> = {
+  brinshadewater: '186 85% 60%',
+  shadewaterlabs: '186 90% 60%',
+  inkmasterstudio: '219 85% 65%',
+  strangeharvestmovie: '210 85% 65%',
+};
+
+const SIGS: Record<string, string> = {
+  brinshadewater: 'main',
+  shadewaterlabs: 'labs',
+  inkmasterstudio: 'product',
+  strangeharvestmovie: 'film',
+};
+
+export default function Websites({ onNavigate }: WebsitesProps) {
+  const sites: SiteRow[] = managedWebsites.map((s) => ({
+    name: s.name,
+    url: s.url.replace(/^https?:\/\//, ''),
+    role: s.role,
+    status: s.status.toUpperCase(),
+    tone: TONE_BY_STATUS[s.status] ?? 'cyan',
+    accent: ACCENTS[s.id] ?? '186 90% 60%',
+    blurb: s.description,
+    sig: SIGS[s.id] ?? s.id,
+  }));
+
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8">
-      <section className="mb-10">
-        <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[hsl(var(--sandstone-soft))]/80">Websites</p>
-        <h1 className="mt-3 text-5xl font-bold text-white md:text-6xl">Managed Web Properties</h1>
-        <p className="mt-5 max-w-3xl text-lg text-foreground/72">
-          The public web surfaces currently managed, designed, or productized through Shadewater Labs.
-        </p>
-      </section>
+    <AuroraPage
+      active="websites"
+      onNavigate={onNavigate}
+      sectionLabel="Websites"
+      eyebrow="§ 02 · MANAGED WEB"
+      title="Managed web properties."
+      lede="The public web surfaces currently designed, productized, and maintained through Shadewater Labs."
+    >
+      <section style={pp.section}>
+        <div style={pp.sitesGrid}>
+          {sites.map((s) => (
+            <article key={s.url} style={pp.siteCard}>
+              <div
+                style={{
+                  ...pp.siteGlow,
+                  background: `radial-gradient(120% 80% at 50% -30%, hsl(${s.accent} / 0.32), transparent 65%)`,
+                }}
+              />
+              <div style={pp.siteTop}>
+                <span style={pp.siteRole}>{s.role}</span>
+                <span style={pp.statusPill}>
+                  <span style={{ ...pp.statusDot, background: adTone[s.tone] }} />
+                  <span style={{ color: adTone[s.tone] }}>{s.status}</span>
+                </span>
+              </div>
 
-      <div className="grid gap-5 md:grid-cols-3">
-        {managedWebsites.map((site) => (
-          <article
-            key={site.id}
-            className="flex min-h-full flex-col rounded-[1.75rem] border border-white/10 bg-[hsl(220_20%_13%/0.92)] p-6 shadow-[0_14px_34px_hsl(210_66%_3%/0.18)]"
-          >
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[hsl(var(--sandstone-soft))]/76">
-                {site.role}
-              </p>
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-foreground/70">
-                {site.status}
-              </span>
-            </div>
-            <h2 className="mt-4 text-3xl font-bold text-white">{site.name}</h2>
-            <p className="mt-3 text-foreground/70">{site.description}</p>
-            <div className="mt-auto pt-6">
-              <Button variant="hero-outline" asChild>
-                <a href={site.url} rel="noopener noreferrer">
-                  Visit Site
-                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              <div style={pp.siteUrlRow}>
+                <span style={pp.siteUrlPrefix}>https://</span>
+                <span style={pp.siteUrl}>{s.url}</span>
+              </div>
+
+              <h3 style={pp.siteName}>{s.name}</h3>
+              <p style={pp.siteBlurb}>{s.blurb}</p>
+
+              <div style={pp.siteFoot}>
+                <span style={pp.siteSig}>// {s.sig}</span>
+                <a
+                  href={`https://${s.url}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ ...pp.siteVisit, color: `hsl(${s.accent})` }}
+                >
+                  Visit <span style={{ marginLeft: 4 }}>↗</span>
                 </a>
-              </Button>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </AuroraPage>
   );
 }

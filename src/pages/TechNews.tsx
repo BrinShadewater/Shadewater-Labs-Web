@@ -1,45 +1,89 @@
-import { ExternalLink } from 'lucide-react';
 import { techNewsItems } from '@/content/techNews';
+import {
+  AuroraPage,
+  pp,
+} from '@/components/aurora/chrome';
+import type { AuroraNavigate } from '@/components/aurora/chrome';
 
-export default function TechNews() {
+interface TechNewsProps {
+  onNavigate: AuroraNavigate;
+}
+
+const ACCENTS: Record<string, string> = {
+  'AI Tools': '186 90% 60%',
+  'Creative Technology': '210 85% 65%',
+  'Product Experiments': '150 65% 55%',
+};
+
+const TAGS: Record<string, string[]> = {
+  'ai-tooling-watchlist': ['claude', 'agents', 'eval'],
+  'creative-tech-signals': ['video', 'image', 'pipeline'],
+  'product-experiment-log': ['ship', 'spike', 'maybe'],
+};
+
+export default function TechNews({ onNavigate }: TechNewsProps) {
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-12 pt-8 sm:px-6 lg:px-8">
-      <section className="mb-10">
-        <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[hsl(var(--sandstone-soft))]/80">Tech News</p>
-        <h1 className="mt-3 text-5xl font-bold text-white md:text-6xl">AI & Creative Tech Notes</h1>
-        <p className="mt-5 max-w-3xl text-lg text-foreground/72">
-          A manually curated space for AI-related technology signals, product ideas, and workflow changes worth tracking.
-        </p>
-      </section>
+    <AuroraPage
+      active="tech-news"
+      onNavigate={onNavigate}
+      sectionLabel="Tech News"
+      eyebrow="§ 02 · TRANSMISSIONS"
+      title="AI & creative-tech notes."
+      lede="A manually curated feed of AI signals, creative-tech ideas, and workflow changes worth tracking."
+    >
+      <section style={pp.section}>
+        <div style={pp.newsList}>
+          {techNewsItems.map((n, idx) => {
+            const accent = ACCENTS[n.category] ?? '186 90% 60%';
+            const tags = TAGS[n.id] ?? [];
+            const sig = String(idx + 1).padStart(2, '0');
+            return (
+              <article key={n.id} style={pp.newsCard}>
+                <div style={pp.newsRail}>
+                  <div style={pp.newsRailNum}>{sig}</div>
+                  <div
+                    style={{
+                      ...pp.newsRailDot,
+                      background: `hsl(${accent})`,
+                      boxShadow: `0 0 18px hsl(${accent})`,
+                    }}
+                  />
+                  <div style={pp.newsRailLine} />
+                </div>
 
-      <div className="space-y-5">
-        {techNewsItems.map((item) => (
-          <article
-            key={item.id}
-            className="rounded-[1.75rem] border border-white/10 bg-[hsl(220_20%_13%/0.92)] p-6 shadow-[0_14px_34px_hsl(210_66%_3%/0.18)]"
-          >
-            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.26em] text-[hsl(var(--sandstone-soft))]/76">
-              <span>{item.category}</span>
-              <span className="text-foreground/35">/</span>
-              <span>{item.date}</span>
-              <span className="text-foreground/35">/</span>
-              <span>{item.source}</span>
-            </div>
-            <h2 className="mt-4 text-3xl font-bold text-white">{item.title}</h2>
-            <p className="mt-3 max-w-3xl text-foreground/70">{item.summary}</p>
-            {item.href ? (
-              <a
-                href={item.href}
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[hsl(var(--sandstone-soft))] hover:text-white"
-              >
-                Read source
-                <ExternalLink className="h-4 w-4" aria-hidden="true" />
-              </a>
-            ) : null}
-          </article>
-        ))}
-      </div>
-    </div>
+                <div style={pp.newsBody}>
+                  <div style={pp.newsMeta}>
+                    <span style={{ ...pp.newsCat, color: `hsl(${accent})` }}>
+                      {n.category.toUpperCase()}
+                    </span>
+                    <span style={pp.newsSep}>/</span>
+                    <span style={pp.newsMono}>{n.date}</span>
+                    <span style={pp.newsSep}>/</span>
+                    <span style={pp.newsMono}>{n.source}</span>
+                  </div>
+                  <h3 style={pp.newsTitle}>{n.title}</h3>
+                  <p style={pp.newsSummary}>{n.summary}</p>
+                  <div style={pp.newsTags}>
+                    {tags.map((t) => (
+                      <span key={t} style={pp.newsTag}>#{t}</span>
+                    ))}
+                    {n.href ? (
+                      <a
+                        href={n.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ ...pp.newsRead, color: `hsl(${accent})` }}
+                      >
+                        Read transmission <span style={{ marginLeft: 4 }}>↗</span>
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </AuroraPage>
   );
 }
