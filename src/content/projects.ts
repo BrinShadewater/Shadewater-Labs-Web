@@ -1,10 +1,8 @@
 import { shadewaterSeoSkillSnapshot } from '@/content/generated/shadewaterSeoSkillSnapshot';
 import {
-  SHADEWATER_LABS_MARK_HEIGHT,
-  SHADEWATER_LABS_MARK_SIZES,
-  SHADEWATER_LABS_MARK_SRC,
-  SHADEWATER_LABS_MARK_SRCSET,
-  SHADEWATER_LABS_MARK_WIDTH,
+  SHADEWATER_LABS_MARK_CROPPED_HEIGHT,
+  SHADEWATER_LABS_MARK_CROPPED_SRC,
+  SHADEWATER_LABS_MARK_CROPPED_WIDTH,
 } from '@/lib/brandAssets';
 
 export interface ProjectProgressPhase {
@@ -165,13 +163,12 @@ export const projectStatuses: Record<string, ProjectStatus> = {
       description: `A deterministic SEO operator for real websites, content archives, and repositories. The current build spans ${shadewaterSeoSkillSnapshot.stats.commandCount} command routes, ${shadewaterSeoSkillSnapshot.stats.subSkillCount} focused sub-skills, ${shadewaterSeoSkillSnapshot.stats.agentCount} specialist agents, and ${shadewaterSeoSkillSnapshot.stats.scriptCount} scripts, all tuned to turn raw evidence into branded reports and ship-ready fixes.`,
       tagline: 'Evidence first. Branded reports second. Better rankings after the rerun.',
       logo: {
-        src: SHADEWATER_LABS_MARK_SRC,
-        srcSet: SHADEWATER_LABS_MARK_SRCSET,
-        sizes: SHADEWATER_LABS_MARK_SIZES,
+        src: SHADEWATER_LABS_MARK_CROPPED_SRC,
+        sizes: '(min-width: 1024px) 16rem, (min-width: 640px) 14rem, 48vw',
         alt: '',
-        width: SHADEWATER_LABS_MARK_WIDTH,
-        height: SHADEWATER_LABS_MARK_HEIGHT,
-        className: 'h-auto w-full max-w-[10.5rem] drop-shadow-[0_20px_50px_hsl(192_70%_60%/0.18)] sm:max-w-[11.5rem] md:max-w-[12.75rem]',
+        width: SHADEWATER_LABS_MARK_CROPPED_WIDTH,
+        height: SHADEWATER_LABS_MARK_CROPPED_HEIGHT,
+        className: 'h-auto w-full max-w-[13rem] drop-shadow-[0_20px_50px_hsl(192_70%_60%/0.18)] sm:max-w-[14rem] md:max-w-[16rem]',
       },
       actions: [
         {

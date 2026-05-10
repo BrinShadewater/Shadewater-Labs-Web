@@ -2,13 +2,9 @@ import { Button } from '@/components/ui/button';
 import { projectStatuses } from '@/content/projects';
 import { authorThemes as noteAuthorThemes } from '@/lib/authorThemes';
 import {
-  SHADEWATER_LABS_MARK_HEIGHT,
-  SHADEWATER_LABS_MARK_SRC,
-  SHADEWATER_LABS_MARK_SRCSET,
-  SHADEWATER_LABS_MARK_WIDTH,
+  SHADEWATER_LABS_TEXT_LOGO_ALT,
+  SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
 } from '@/lib/brandAssets';
-
-const LABS_LOGO_SIZES = '(min-width: 1024px) 10.5rem, (min-width: 640px) 9rem, 34vw';
 
 const labTracks = [
   {
@@ -51,8 +47,8 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
       buttonLabel: 'Shadewater SEO Report',
       description:
         'A deterministic SEO audit skill that turns live site evidence into branded dashboards, markdown reports, action plans, and rerunnable fix loops.',
-      logoWrapperClass: 'items-center py-4',
-      logoClass: 'max-h-[8.25rem] max-w-[6.5rem] drop-shadow-[0_16px_34px_hsl(192_70%_60%/0.16)]',
+      logoWrapperClass: 'h-56 items-center py-1',
+      logoClass: 'max-h-[15rem] max-w-[9rem] drop-shadow-[0_16px_34px_hsl(192_70%_60%/0.16)]',
     },
     {
       project: webpMeDaddy,
@@ -80,23 +76,23 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
     <div className="mx-auto max-w-6xl px-4 pb-12 pt-6 sm:px-6 lg:px-8">
       <div className="mb-2 flex justify-center px-4 sm:mb-3">
         <img
-          src={SHADEWATER_LABS_MARK_SRC}
-          srcSet={SHADEWATER_LABS_MARK_SRCSET}
-          sizes={LABS_LOGO_SIZES}
-          width={SHADEWATER_LABS_MARK_WIDTH}
-          height={SHADEWATER_LABS_MARK_HEIGHT}
-          alt=""
+          src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
+          width={620}
+          height={1220}
+          alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
           loading="eager"
           decoding="async"
           fetchPriority="high"
-          className="h-auto w-full max-w-[8rem] drop-shadow-[0_20px_50px_hsl(192_70%_60%/0.22)] sm:max-w-[9rem] md:max-w-[10.5rem]"
+          className="h-[28rem] w-auto drop-shadow-[0_20px_50px_hsl(192_70%_60%/0.22)] sm:h-[32rem] md:h-[40rem]"
         />
       </div>
 
-      <section className="overflow-hidden rounded-[2.5rem] border-2 border-white/10 bg-[linear-gradient(135deg,hsl(220_28%_10%),hsl(192_34%_16%),hsl(30_22%_18%))] px-6 py-12 shadow-[0_24px_56px_hsl(210_66%_3%/0.32)] sm:px-10 sm:py-16">
+      <section className="overflow-hidden rounded-[2.5rem] border-2 border-white/10 bg-[linear-gradient(135deg,hsl(220_28%_10%),hsl(192_34%_16%),hsl(30_22%_18%))] px-4 py-12 shadow-[0_24px_56px_hsl(210_66%_3%/0.32)] sm:px-10 sm:py-16">
         <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-5xl font-bold text-white md:text-6xl">AI Tools, Coding Projects &amp; Tech Experiments</h1>
-          <div className="mx-auto mt-6 max-w-3xl space-y-4 text-lg text-[hsl(var(--sandstone-soft))] md:text-xl">
+          <h1 className="mx-auto max-w-[19rem] text-3xl font-bold text-white sm:max-w-none sm:text-5xl md:text-6xl">
+            AI Tools, Coding Projects &amp; Tech Experiments
+          </h1>
+          <div className="mx-auto mt-6 max-w-3xl space-y-4 text-base text-[hsl(var(--sandstone-soft))] sm:text-lg md:text-xl">
             <p>
               Shadewater Labs is the experimental technology studio of Brin Shadewater. Here I build AI tools, websites,
               coding projects, and creative technology experiments while exploring the future of artificial intelligence,

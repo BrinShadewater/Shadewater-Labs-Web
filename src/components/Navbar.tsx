@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  SHADEWATER_LABS_MARK_ALT,
+  SHADEWATER_LABS_MARK_CROPPED_SRC,
+} from '@/lib/brandAssets';
 import { LABS_ORIGIN, buildRouteHref } from '@/lib/routes';
 
 interface NavbarProps {
@@ -31,18 +35,29 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
               event.preventDefault();
               onNavigate('labs');
             }}
-            className="group min-w-0 max-w-full text-left"
+            className="group flex min-w-0 max-w-full items-center gap-3 text-left"
             aria-label={brandLabel}
           >
-            <span className="mb-1 block truncate text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-[hsl(var(--sandstone-soft))]/85">
-              {brandEyebrow}
-            </span>
-            <span
-              className="block whitespace-nowrap text-[clamp(1.05rem,2vw,1.5rem)] font-bold leading-none transition-opacity group-hover:opacity-80"
-              style={{ textShadow: '0 0 18px hsl(192 40% 40% / 0.18)' }}
-            >
-              <span className="text-[hsl(192_40%_35%)]">Shadewater</span>
-              <span className="ml-1.5 text-white">Labs</span>
+            <img
+              src={SHADEWATER_LABS_MARK_CROPPED_SRC}
+              alt={SHADEWATER_LABS_MARK_ALT}
+              width={520}
+              height={1180}
+              loading="eager"
+              decoding="async"
+              className="h-14 w-auto shrink-0 object-contain drop-shadow-[0_10px_24px_hsl(192_70%_60%/0.2)] sm:h-16"
+            />
+            <span className="min-w-0">
+              <span className="mb-1 block truncate text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-[hsl(var(--sandstone-soft))]/85">
+                {brandEyebrow}
+              </span>
+              <span
+                className="block whitespace-nowrap text-[clamp(1.05rem,2vw,1.5rem)] font-bold leading-none transition-opacity group-hover:opacity-80"
+                style={{ textShadow: '0 0 18px hsl(192 40% 40% / 0.18)' }}
+              >
+                <span className="text-[hsl(192_40%_35%)]">Shadewater</span>
+                <span className="ml-1.5 text-white">Labs</span>
+              </span>
             </span>
           </a>
 
