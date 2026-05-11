@@ -10,6 +10,7 @@ const ShadewaterLabs = lazy(() => import('./pages/ShadewaterLabs'));
 const Projects = lazy(() => import('./pages/Projects'));
 const Websites = lazy(() => import('./pages/Websites'));
 const TechNews = lazy(() => import('./pages/TechNews'));
+const About = lazy(() => import('./pages/About'));
 const ShadewaterSeoReport = lazy(() => import('./pages/ShadewaterSeoReport'));
 const WebpMeDaddy = lazy(() => import('./pages/WebpMeDaddy'));
 const InkMasterStudio = lazy(() => import('./pages/InkMasterStudio'));
@@ -93,14 +94,12 @@ function App() {
 
   const seo = getSeoConfig(currentPage, selectedNoteId, siteKey);
 
-  // The Aurora Drift redesign owns its own ticker, navbar, and footer so the
-  // futurized chrome stays consistent across every page in the bundle.
-  // Suppress the legacy shared chrome on every route the redesign covers.
   const AURORA_ROUTES = new Set([
     'labs',
     'projects',
     'websites',
     'tech-news',
+    'about',
     'shadewater-seo-report',
     'webp-me-daddy',
     'inkmaster-studio',
@@ -117,6 +116,8 @@ function App() {
         return <Websites onNavigate={handleNavigate} />;
       case 'tech-news':
         return <TechNews onNavigate={handleNavigate} />;
+      case 'about':
+        return <About onNavigate={handleNavigate} />;
       case 'shadewater-seo-report':
         return <ShadewaterSeoReport onNavigate={handleNavigate} />;
       case 'webp-me-daddy':

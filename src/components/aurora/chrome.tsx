@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties, type ReactNode } from 'react';
+import { useMemo, useState, useRef, useEffect, type CSSProperties, type ReactNode } from 'react';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SRC,
 } from '@/lib/brandAssets';
@@ -59,26 +59,60 @@ export function ADNav({
   onNavigate: AuroraNavigate;
   active?: string;
 }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const navLinks: Array<{ label: string; page: string }> = [
     { label: 'Labs', page: 'labs' },
     { label: 'Projects', page: 'projects' },
     { label: 'Websites', page: 'websites' },
     { label: 'Tech News', page: 'tech-news' },
+    { label: 'About', page: 'about' },
   ];
   return (
     <nav style={ad.nav}>
-      <div style={ad.navInner}>
+      <style>{`
+        .ad-hamburger {
+          display: none;
+          background: none;
+          border: 1px solid hsl(186 50% 40% / 0.3);
+          color: hsl(186 60% 80%);
+          border-radius: 8px;
+          padding: 7px 11px;
+          cursor: pointer;
+          font-size: 18px;
+          line-height: 1;
+          margin-left: auto;
+          flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+          .ad-navInner { flex-wrap: wrap !important; }
+          .ad-hamburger { display: flex !important; align-items: center; justify-content: center; }
+          .ad-navLinks { display: none !important; order: 3; width: 100% !important; }
+          .ad-navLinks.ad-navOpen {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 4px !important;
+            padding: 8px 0 12px !important;
+            border-top: 1px solid hsl(186 50% 40% / 0.15) !important;
+            margin-top: 4px !important;
+          }
+          .ad-navLinks.ad-navOpen a { width: 100% !important; text-align: left !important; }
+          .ad-navBrand { order: 1; }
+        }
+      `}</style>
+      <div style={ad.navInner} className="ad-navInner">
         <a
           href="/"
           style={ad.brand}
+          className="ad-navBrand"
           onClick={(e) => {
             e.preventDefault();
             onNavigate('labs');
+            setMenuOpen(false);
           }}
         >
           <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.brandMark} />
           <span style={ad.brandText}>
-            <span style={ad.brandEyebrow}>// labs.shadewater.studio</span>
+            <span style={ad.brandEyebrow}>shadewaterlabs.com</span>
             <span style={ad.brandWord}>
               <span
                 style={{
@@ -94,7 +128,15 @@ export function ADNav({
             </span>
           </span>
         </a>
-        <div style={ad.navLinks}>
+        <button
+          className="ad-hamburger"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
+        <div style={ad.navLinks} className={`ad-navLinks${menuOpen ? ' ad-navOpen' : ''}`}>
           {navLinks.map((link) => {
             const isActive = link.page === active;
             const href = link.page === 'labs' ? '/' : `/${link.page}`;
@@ -105,6 +147,7 @@ export function ADNav({
                 onClick={(e) => {
                   e.preventDefault();
                   onNavigate(link.page);
+                  setMenuOpen(false);
                 }}
                 style={{ ...ad.navLink, ...(isActive ? ad.navLinkActive : null) }}
               >
@@ -125,7 +168,7 @@ export function ADFooter() {
   return (
     <footer style={ad.footer}>
       <div style={ad.footerBeam} />
-      <div style={ad.footerInner}>
+      <div style={ad.footerInner} className="ad-footerInner">
         <div style={ad.footerBrand}>
           <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.footerMark} />
           <div>
@@ -140,7 +183,7 @@ export function ADFooter() {
           <span style={ad.footerCell}>uptime · 99.97%</span>
           <span style={ad.footerCell}>
             <a href={LABS_ORIGIN} style={{ color: 'inherit', textDecoration: 'none' }}>
-              labs.shadewater
+              shadewaterlabs.com
             </a>
           </span>
         </div>
@@ -159,7 +202,7 @@ export function ConstellationField() {
       };
     };
     const rnd = seeded(7);
-    return Array.from({ length: 90 }, (_, i) => ({
+    return Array.from({ length: 55 }, (_, i) => ({
       id: i,
       x: rnd() * 100,
       y: rnd() * 100,
@@ -210,7 +253,6 @@ export function ConstellationField() {
         {stars.map((s) => (
           <span
             key={s.id}
-            className="ad-pulse"
             style={{
               position: 'absolute',
               left: `${s.x}%`,
@@ -219,10 +261,7 @@ export function ConstellationField() {
               height: `${s.r}px`,
               borderRadius: 999,
               background: `hsl(${s.hue} 90% 78%)`,
-              boxShadow: `0 0 ${s.r * 4}px hsl(${s.hue} 90% 70% / ${s.o})`,
-              opacity: s.o,
-              animation: `adPulse ${4 + s.d}s ease-in-out infinite`,
-              animationDelay: `${-s.d}s`,
+              opacity: s.o * 0.75,
             }}
           />
         ))}
@@ -233,51 +272,62 @@ export function ConstellationField() {
 }
 
 export function ParticleField() {
-  const particles = useMemo(() => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    let w = canvas.offsetWidth;
+    let h = canvas.offsetHeight;
+    canvas.width = w;
+    canvas.height = h;
+    const onResize = () => {
+      w = canvas.offsetWidth; h = canvas.offsetHeight;
+      canvas.width = w; canvas.height = h;
+    };
+    window.addEventListener('resize', onResize);
     const seeded = (n: number) => {
       let s = n * 1567 + 12289;
-      return () => {
-        s = (s * 1567 + 12289) % 233280;
-        return s / 233280;
-      };
+      return () => { s = (s * 1567 + 12289) % 233280; return s / 233280; };
     };
     const rnd = seeded(13);
-    return Array.from({ length: 28 }, (_, i) => ({
-      id: i,
-      x: rnd() * 100,
-      y: 80 + rnd() * 60,
+    const pts = Array.from({ length: 16 }, () => ({
+      x: rnd() * w,
+      y: (0.8 + rnd() * 0.6) * h,
       size: 1 + rnd() * 2.4,
-      dur: 14 + rnd() * 18,
-      delay: -rnd() * 28,
-      drift: -10 + rnd() * 20,
+      speed: (5 + rnd() * 7) * 0.012,
+      drift: (-10 + rnd() * 20) * 0.3,
       hue: rnd() < 0.25 ? 220 : 186,
+      progress: rnd(),
     }));
+    let rafId: number;
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      pts.forEach(p => {
+        p.progress += p.speed / 100;
+        if (p.progress > 1) { p.progress = 0; p.x = rnd() * w; p.y = (0.8 + rnd() * 0.3) * h; }
+        const py = p.y - p.progress * h * 0.8;
+        const px = p.x + Math.sin(p.progress * Math.PI * 2) * p.drift;
+        const alpha = p.progress < 0.1 ? p.progress * 10 * 0.7
+                    : p.progress > 0.85 ? (1 - p.progress) / 0.15 * 0.7 : 0.7;
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsl(${p.hue} 95% 75% / ${alpha.toFixed(2)})`;
+        ctx.fill();
+      });
+      rafId = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => { cancelAnimationFrame(rafId); window.removeEventListener('resize', onResize); };
   }, []);
   return (
-    <div style={ad.particleWrap} aria-hidden="true">
-      {particles.map((p) => (
-        <span
-          key={p.id}
-          className="ad-particle"
-          style={
-            {
-              position: 'absolute',
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              width: p.size,
-              height: p.size,
-              borderRadius: 999,
-              background: `hsl(${p.hue} 95% 75%)`,
-              boxShadow: `0 0 ${p.size * 6}px hsl(${p.hue} 90% 65% / 0.7)`,
-              opacity: 0.7,
-              ['--drift' as string]: `${p.drift}px`,
-              animation: `adFloat ${p.dur}s linear infinite`,
-              animationDelay: `${p.delay}s`,
-            } as CSSProperties
-          }
-        />
-      ))}
-    </div>
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
+    />
   );
 }
 
@@ -287,7 +337,6 @@ export function HeroMesh() {
       <div style={{ ...ad.meshBlob, ...ad.mesh1 }} className="ad-meshBlob" />
       <div style={{ ...ad.meshBlob, ...ad.mesh2 }} className="ad-meshBlob" />
       <div style={{ ...ad.meshBlob, ...ad.mesh3 }} className="ad-meshBlob" />
-      <div style={{ ...ad.meshBlob, ...ad.mesh4 }} className="ad-meshBlob" />
       <div style={ad.scanlines} />
     </div>
   );
@@ -316,6 +365,27 @@ export function AuroraPage({
 }: AuroraPageProps) {
   return (
     <div style={ad.root}>
+      <style>{`
+        /* ---- Aurora mobile pass ---- */
+        @media (max-width: 768px) {
+          /* Nav — layout is handled by ADNav's own <style>, just adjust padding */
+          .ad-navInner { padding: 12px 16px !important; }
+          /* Page hero */
+          .pp-heroInner { padding: 40px 20px 48px !important; }
+          .pp-h1 { font-size: clamp(1.8rem, 7vw, 3rem) !important; }
+          /* Grids */
+          .pp-projectsGrid { grid-template-columns: 1fr !important; }
+          .pp-sitesGrid { grid-template-columns: 1fr !important; }
+          .pp-trackGrid { grid-template-columns: 1fr !important; }
+          .pp-section { padding: 48px 20px 0 !important; }
+          /* Footer */
+          .ad-footerInner { flex-direction: column !important; gap: 20px !important; }
+        }
+        @media (max-width: 540px) {
+          .pp-h1 { font-size: 1.7rem !important; }
+          .pp-lede { font-size: 15px !important; }
+        }
+      `}</style>
       <ADTicker />
       <ADNav onNavigate={onNavigate} active={active} />
       <PageHero
@@ -351,7 +421,7 @@ function PageHero({
         <div style={{ ...pp.blob, ...pp.blob2 }} className="ad-meshBlob" />
       </div>
       <ConstellationField />
-      <div style={pp.heroInner}>
+      <div style={pp.heroInner} className="pp-heroInner">
         <div style={pp.crumb}>
           <span style={pp.crumbDot} className="ad-pulse" />
           <a
@@ -382,8 +452,8 @@ export const pp: Record<string, CSSProperties> = {
   body: { paddingTop: 8 },
 
   hero: { position: 'relative', overflow: 'hidden', paddingBottom: 0 },
-  heroAurora: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 },
-  blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(90px)', willChange: 'transform' },
+  heroAurora: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, contain: 'strict' as CSSProperties['contain'] },
+  blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   blob1: {
     width: 620, height: 620, top: -180, left: -120,
     background: 'radial-gradient(circle, hsl(186 95% 55% / 0.55), transparent 60%)',
@@ -496,12 +566,12 @@ export const pp: Record<string, CSSProperties> = {
   statusDot: { width: 7, height: 7, borderRadius: 999 },
   projectArt: {
     position: 'relative',
-    height: 130, borderRadius: 16, marginBottom: 16,
+    height: 180, borderRadius: 16, marginBottom: 16,
     background: 'linear-gradient(180deg, hsl(200 35% 14% / 0.85), hsl(200 30% 8% / 0.95))',
     border: '1px solid hsl(186 40% 35% / 0.3)',
     display: 'grid', placeItems: 'center', overflow: 'hidden',
   },
-  projectLogo: { maxHeight: 80, maxWidth: 160, objectFit: 'contain', position: 'relative', zIndex: 1 },
+  projectLogo: { maxHeight: 160, maxWidth: 320, objectFit: 'contain', position: 'relative', zIndex: 1 },
   projectGlyph: {
     position: 'relative', zIndex: 1,
     width: 78, height: 78, borderRadius: 20,
@@ -708,6 +778,7 @@ export const ad: Record<string, CSSProperties> = {
     display: 'flex', gap: 28, whiteSpace: 'nowrap',
     animation: 'adTicker 50s linear infinite',
     paddingLeft: 32, height: '100%', alignItems: 'center',
+    willChange: 'transform',
   },
   tickerItem: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
@@ -749,8 +820,8 @@ export const ad: Record<string, CSSProperties> = {
     cursor: 'pointer', textDecoration: 'none',
   },
 
-  meshWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 },
-  meshBlob: { position: 'absolute', borderRadius: '50%', filter: 'blur(90px)', willChange: 'transform' },
+  meshWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, contain: 'strict' as CSSProperties['contain'] },
+  meshBlob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   mesh1: { width: 780, height: 780, top: -200, left: -160, background: 'radial-gradient(circle, hsl(186 95% 55% / 0.55), transparent 60%)', animation: 'adDrift1 28s ease-in-out infinite alternate' },
   mesh2: { width: 720, height: 720, top: -120, right: -180, background: 'radial-gradient(circle, hsl(220 90% 55% / 0.5), transparent 60%)', animation: 'adDrift2 32s ease-in-out infinite alternate' },
   mesh3: { width: 620, height: 620, top: 320, left: '36%', background: 'radial-gradient(circle, hsl(150 70% 50% / 0.4), transparent 60%)', animation: 'adDrift3 24s ease-in-out infinite alternate' },
@@ -760,13 +831,14 @@ export const ad: Record<string, CSSProperties> = {
     backgroundImage: 'repeating-linear-gradient(0deg, transparent 0px, transparent 3px, hsl(0 0% 100% / 0.012) 3px, hsl(0 0% 100% / 0.012) 4px)',
     mixBlendMode: 'overlay',
   },
-  constWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' },
+  constWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', contain: 'strict' as CSSProperties['contain'] },
   constSpin: {
     position: 'absolute', left: '-15%', right: '-15%', top: '-15%', bottom: '-15%',
     animation: 'adRotate 240s linear infinite', transformOrigin: '50% 50%',
+    willChange: 'transform',
   },
   constFade: { position: 'absolute', inset: 0, background: 'radial-gradient(70% 60% at 50% 30%, transparent 30%, #020a13 90%)' },
-  particleWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' },
+  particleWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', contain: 'strict' as CSSProperties['contain'] },
 
   btnPrimary: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
@@ -778,33 +850,32 @@ export const ad: Record<string, CSSProperties> = {
   },
   btnGhost: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
-    padding: '14px 22px', borderRadius: 999,
-    color: '#fff', fontWeight: 500, fontSize: 15,
-    background: 'hsl(200 30% 8% / 0.6)',
-    border: '1px solid hsl(186 80% 60% / 0.35)',
-    backdropFilter: 'blur(8px)',
+    padding: '13px 24px', borderRadius: 999,
+    color: 'hsl(186 60% 82%)', fontWeight: 500, fontSize: 15,
+    background: 'hsl(186 50% 20% / 0.12)',
+    border: '1px solid hsl(186 60% 55% / 0.28)',
+    boxShadow: '0 4px 20px hsl(186 90% 50% / 0.10)',
     cursor: 'pointer', textDecoration: 'none',
   },
 
-  footer: { position: 'relative', marginTop: 88, padding: '32px 0 38px' },
+  footer: {
+    position: 'relative', marginTop: 80,
+    borderTop: '1px solid hsl(186 50% 40% / 0.15)',
+    background: 'hsl(210 66% 4% / 0.8)',
+  },
   footerBeam: {
-    height: 1,
+    position: 'absolute', top: 0, left: '10%', right: '10%', height: 1,
     background: 'linear-gradient(90deg, transparent, hsl(186 90% 60% / 0.5), transparent)',
-    margin: '0 0 32px',
   },
   footerInner: {
-    maxWidth: 1180, margin: '0 auto', padding: '0 32px',
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    gap: 24, flexWrap: 'wrap',
+    maxWidth: 1180, margin: '0 auto', padding: '32px 32px 28px',
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
+    flexWrap: 'wrap' as CSSProperties['flexWrap'],
   },
-  footerBrand: { display: 'flex', alignItems: 'center', gap: 14 },
-  footerMark: { height: 36 },
-  footerWord: { fontSize: 16, fontWeight: 700 },
-  footerEyebrow: { fontFamily: MONO, fontSize: 11, color: TG_DIM, letterSpacing: '0.14em', marginTop: 2 },
-  footerMono: { display: 'flex', gap: 14, fontFamily: MONO, fontSize: 11, color: TG_DIM, letterSpacing: '0.14em', flexWrap: 'wrap' },
-  footerCell: {
-    padding: '4px 10px', borderRadius: 999,
-    background: 'hsl(200 30% 8% / 0.7)',
-    border: '1px solid hsl(186 50% 40% / 0.2)',
-  },
+  footerBrand: { display: 'flex', alignItems: 'center', gap: 12 },
+  footerMark: { height: 36, width: 'auto', filter: 'drop-shadow(0 4px 12px hsl(186 90% 50% / 0.4))' },
+  footerWord: { fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em', color: '#fff' },
+  footerEyebrow: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.22em', color: 'hsl(186 50% 70%)', marginTop: 3 },
+  footerMono: { display: 'flex', gap: 24, flexWrap: 'wrap' as CSSProperties['flexWrap'] },
+  footerCell: { fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', color: TG_DIM },
 };

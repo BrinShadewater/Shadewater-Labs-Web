@@ -1,5 +1,6 @@
-import { type CSSProperties } from 'react';
+import { useState, useEffect, type CSSProperties } from 'react';
 import { projectStatuses } from '@/content/projects';
+import { managedWebsites } from '@/content/websites';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
@@ -15,7 +16,6 @@ import {
   ParticleField,
   TG_DIM,
   TG_MUTED,
-  adTone,
 } from '@/components/aurora/chrome';
 import type { AuroraNavigate } from '@/components/aurora/chrome';
 
@@ -27,18 +27,6 @@ interface ShadewaterLabsProps {
   onNavigate: AuroraNavigate;
 }
 
-interface AdProject {
-  badge: string;
-  name: string;
-  blurb: string;
-  accent: string;
-  glyph?: string;
-  logo?: { src: string; srcSet?: string };
-  sig: string;
-  status: string;
-  statusTone: 'green' | 'cyan' | 'amber';
-  page: string;
-}
 
 const AD_TRACKS = [
   {
@@ -80,7 +68,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
       <HeroMesh />
       <ConstellationField />
       <ParticleField />
-      <div style={home.heroInner}>
+      <div style={home.heroInner} className="home-heroInner">
         <div style={home.heroChip}>
           <span style={home.heroChipPulse} className="ad-pulse" />
           <span style={home.heroChipText}>LAB.SIGNAL · ONLINE</span>
@@ -93,7 +81,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
           style={{ ...home.heroLogo, objectFit: 'cover', width: 175, height: 250 }}
         />
 
-        <h1 style={home.heroTitle}>
+        <h1 style={home.heroTitle} className="home-heroTitle">
           The studio for <span style={home.heroAccent}>weird-good</span>
           <br />
           AI tools and tech experiments.
@@ -139,7 +127,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
             </div>
             <div style={home.hudMeta}>last refresh · 8s</div>
           </div>
-          <div style={home.hudGrid}>
+          <div style={home.hudGrid} className="home-hudGrid">
             <HudCell k="ACTIVE_BUILDS" v="03" sub="2 shipping · 1 spike" />
             <HudCell k="SHIPPED_2025" v="07" sub="+2 vs 2024" />
             <HudCell k="MODELS_USED" v="04" sub="claude · gpt · llama · sd" />
@@ -203,9 +191,9 @@ function SectionHead({ step, title, sub, align = 'center' }: { step: string; tit
 
 function ADTracks() {
   return (
-    <section id="labs-tracks" style={home.section}>
+    <section id="labs-tracks" style={home.section} className="home-section">
       <SectionHead step="02" title="What lives here" sub="Three working currents inside the lab." />
-      <div style={home.trackGrid}>
+      <div style={home.trackGrid} className="home-trackGrid">
         {AD_TRACKS.map((t) => (
           <article key={t.id} style={home.trackCard}>
             <div style={{ ...home.trackHalo, background: `radial-gradient(120% 100% at 50% -10%, hsl(${t.accent} / 0.40), transparent 65%)` }} />
@@ -228,77 +216,228 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
   const webp = projectStatuses['webp-me-daddy'];
   const ink = projectStatuses['inkmaster-studio'];
 
-  const projects: AdProject[] = [
+  interface CarouselCard {
+    key: string;
+    badge: string;
+    name: string;
+    blurb: string;
+    accent: string;
+    thumbnail?: string;
+    thumbnailSrcSet?: string;
+    logo?: { src: string; srcSet?: string };
+    glyph?: string;
+    statusLabel: string;
+    statusTone: string;
+    onClick: () => void;
+    ctaLabel: string;
+  }
+
+  const THUMBS: Record<string, { src: string; srcSet: string }> = {
+    brinshadewater: { src: '/brinshadewaterwebthumb.webp', srcSet: '/brinshadewaterwebthumb-320w.webp 320w, /brinshadewaterwebthumb-480w.webp 480w, /brinshadewaterwebthumb.webp 800w' },
+    shadewaterlabs: { src: '/shadewaterlabswebthumb.webp', srcSet: '/shadewaterlabswebthumb-320w.webp 320w, /shadewaterlabswebthumb-480w.webp 480w, /shadewaterlabswebthumb.webp 800w' },
+    inkmasterstudio: { src: '/inkmasterstudiowebthumb.webp', srcSet: '/inkmasterstudiowebthumb-320w.webp 320w, /inkmasterstudiowebthumb-480w.webp 480w, /inkmasterstudiowebthumb.webp 800w' },
+    strangeharvestmovie: { src: '/strangeharvestwebthumb.webp', srcSet: '/strangeharvestwebthumb-320w.webp 320w, /strangeharvestwebthumb-480w.webp 480w, /strangeharvestwebthumb.webp 800w' },
+    strangeharvestmerch: { src: '/strangeharvestmerchwebthumb.webp', srcSet: '/strangeharvestmerchwebthumb-320w.webp 320w, /strangeharvestmerchwebthumb-480w.webp 480w, /strangeharvestmerchwebthumb.webp 800w' },
+  };
+
+  const projectCards: CarouselCard[] = [
     {
-      badge: 'INTERNAL · OPERATOR',
+      key: 'seo',
+      badge: 'INTERNAL OPERATOR',
       name: seoReport.name,
-      blurb: 'Deterministic SEO audit skill — turns live evidence into branded dashboards, action plans, and rerunnable fix loops.',
+      blurb: 'Deterministic SEO audit skill that turns live site evidence into branded dashboards and action plans.',
       accent: '186 90% 60%',
-      glyph: 'SR',
-      sig: 'sig · 7af2',
-      status: 'OPERATIONAL',
-      statusTone: 'green',
-      page: 'shadewater-seo-report',
+      logo: { src: '/shadewater-labs-logo.webp', srcSet: '/shadewater-labs-logo-320w.webp 320w, /shadewater-labs-logo-640w.webp 640w, /shadewater-labs-logo.webp 900w' },
+      statusLabel: 'OPERATIONAL',
+      statusTone: 'hsl(150 70% 55%)',
+      onClick: () => onNavigate('shadewater-seo-report'),
+      ctaLabel: 'View project',
     },
     {
-      badge: 'FEATURED · PIPELINE',
+      key: 'webp',
+      badge: 'FEATURED PIPELINE',
       name: webp.name,
-      blurb: 'Layout-aware image pipeline. Messy assets become recipe-driven WebPs with strict metadata, proof sheets, and audits.',
+      blurb: 'Layout-aware image pipeline. Messy assets become recipe-driven WebPs with strict metadata and audits.',
       accent: '184 85% 58%',
       logo: webp.hero.logo ? { src: webp.hero.logo.src, srcSet: webp.hero.logo.srcSet } : undefined,
-      sig: 'sig · 19c4',
-      status: 'SHIPPING v0.9.4',
-      statusTone: 'cyan',
-      page: 'webp-me-daddy',
+      statusLabel: 'SHIPPING',
+      statusTone: 'hsl(186 90% 60%)',
+      onClick: () => onNavigate('webp-me-daddy'),
+      ctaLabel: 'View project',
     },
     {
-      badge: 'BETA · PRODUCT',
+      key: 'ink',
+      badge: 'BETA PRODUCT',
       name: ink.name,
-      blurb: 'Browser-based print-prep for apparel graphics. Knockout cleanup, texture controls, mockups, underbase, exports.',
+      blurb: 'Browser-based print-prep for apparel graphics. Knockout cleanup, mockups, underbase, exports.',
       accent: '219 85% 65%',
       logo: ink.hero.logo ? { src: ink.hero.logo.src, srcSet: ink.hero.logo.srcSet } : undefined,
-      sig: 'sig · b83e',
-      status: 'CLOSED BETA',
-      statusTone: 'amber',
-      page: 'inkmaster-studio',
+      statusLabel: 'CLOSED BETA',
+      statusTone: 'hsl(36 85% 62%)',
+      onClick: () => onNavigate('inkmaster-studio'),
+      ctaLabel: 'View project',
     },
   ];
 
+  const siteCards: CarouselCard[] = managedWebsites.map((s) => {
+    const thumb = THUMBS[s.id];
+    const ACCENTS: Record<string, string> = {
+      brinshadewater: '186 85% 60%',
+      shadewaterlabs: '186 90% 60%',
+      inkmasterstudio: '219 85% 65%',
+      strangeharvestmovie: '210 85% 65%',
+      strangeharvestmerch: '36 85% 62%',
+    };
+    return {
+      key: s.id,
+      badge: s.role.toUpperCase(),
+      name: s.name,
+      blurb: s.description,
+      accent: ACCENTS[s.id] ?? '186 90% 60%',
+      thumbnail: thumb?.src,
+      thumbnailSrcSet: thumb?.srcSet,
+      statusLabel: s.status.toUpperCase(),
+      statusTone: s.status === 'Live' ? 'hsl(150 70% 55%)' : 'hsl(36 85% 62%)',
+      onClick: () => { window.open(s.url, '_blank', 'noopener,noreferrer'); },
+      ctaLabel: 'Visit site',
+    };
+  });
+
+  const cards: CarouselCard[] = [...projectCards, ...siteCards];
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const total = cards.length;
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % total), 4000);
+    return () => clearInterval(t);
+  }, [paused, total]);
+
+  const prev = () => { setPaused(true); setIdx((i) => (i - 1 + total) % total); };
+  const next = () => { setPaused(true); setIdx((i) => (i + 1) % total); };
+
+  const getCard = (offset: number) => cards[(idx + offset + total) % total];
+
   return (
-    <section id="labs-projects" style={home.section}>
-      <SectionHead step="03" title="Things that already live here" sub="Working software with its own product page, progress notes, and a clearer production story." />
-      <div style={home.projectGrid}>
-        {projects.map((p) => (
-          <article key={p.name} style={home.projectCard}>
-            <div style={{ ...home.projectGlow, background: `radial-gradient(85% 70% at 50% 0%, hsl(${p.accent} / 0.35), transparent 65%)` }} />
-            <div style={home.projectScan} />
-            <div style={home.projectTop}>
-              <span style={home.projectBadge}>{p.badge}</span>
-              <span style={home.projectStatus}>
-                <span style={{ ...home.statusDot, background: adTone[p.statusTone] }} />
-                <span style={{ color: adTone[p.statusTone] }}>{p.status}</span>
-              </span>
-            </div>
-            <div style={{ ...home.projectArt, boxShadow: `0 18px 50px hsl(${p.accent} / 0.28), inset 0 1px 0 hsl(0 0% 100% / 0.06)` }}>
-              {p.logo ? (
-                <img src={p.logo.src} srcSet={p.logo.srcSet} sizes="(min-width: 1024px) 14rem, 40vw" alt="" loading="lazy" decoding="async" style={home.projectLogo} />
-              ) : (
-                <div style={{ ...home.projectGlyph, background: `conic-gradient(from 220deg at 50% 50%, hsl(${p.accent}), hsl(${p.accent} / 0.4), hsl(${p.accent}))` }}>
-                  <span>{p.glyph}</span>
+    <section id="labs-projects" style={home.section} className="home-section">
+      <SectionHead step="03" title="Things that live here" sub="Projects, tools, and managed web properties. Click any card to explore." />
+      <style>{`
+        .carousel-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        @media (max-width: 900px) { .carousel-track { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .carousel-track { grid-template-columns: 1fr; } }
+      `}</style>
+      <div
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        style={{ position: 'relative' }}
+      >
+        <div className="carousel-track">
+          {[0, 1, 2].map((offset) => {
+            const c = getCard(offset);
+            return (
+              <article
+                key={c.key + '-' + offset}
+                onClick={c.onClick}
+                style={{
+                  ...home.projectCard,
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                }}
+              >
+                <div style={{ ...home.projectGlow, background: 'radial-gradient(85% 70% at 50% 0%, hsl(' + c.accent + ' / 0.35), transparent 65%)' }} />
+                <div style={home.projectScan} />
+                <div style={home.projectTop}>
+                  <span style={home.projectBadge}>{c.badge}</span>
+                  <span style={home.projectStatus}>
+                    <span style={{ ...home.statusDot, background: c.statusTone }} />
+                    <span style={{ color: c.statusTone }}>{c.statusLabel}</span>
+                  </span>
                 </div>
-              )}
-              <div style={home.projectArtCorner}><span>◜</span></div>
-            </div>
-            <h3 style={home.projectName}>{p.name}</h3>
-            <p style={home.projectBlurb}>{p.blurb}</p>
-            <div style={home.projectFoot}>
-              <span style={home.projectSig}>{p.sig}</span>
-              <a href={`/${p.page}`} onClick={(e) => { e.preventDefault(); onNavigate(p.page); }} style={{ ...home.projectLink, color: `hsl(${p.accent})` }}>
-                Open <span style={{ marginLeft: 4 }}>↗</span>
-              </a>
-            </div>
-          </article>
-        ))}
+                <div style={{ ...home.projectArt, boxShadow: '0 18px 50px hsl(' + c.accent + ' / 0.28), inset 0 1px 0 hsl(0 0% 100% / 0.06)', overflow: 'hidden' }}>
+                  {c.thumbnail ? (
+                    <img
+                      src={c.thumbnail}
+                      srcSet={c.thumbnailSrcSet}
+                      sizes="(min-width: 1024px) 340px, 90vw"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                    />
+                  ) : c.logo ? (
+                    <img src={c.logo.src} srcSet={c.logo.srcSet} sizes="14rem" alt="" loading="lazy" decoding="async" style={home.projectLogo} />
+                  ) : (
+                    <div style={{ ...home.projectGlyph, background: 'conic-gradient(from 220deg at 50% 50%, hsl(' + c.accent + '), hsl(' + c.accent + ' / 0.4), hsl(' + c.accent + '))' }}>
+                      <span>{c.glyph ?? '◇'}</span>
+                    </div>
+                  )}
+                </div>
+                <h3 style={home.projectName}>{c.name}</h3>
+                <p style={home.projectBlurb}>{c.blurb}</p>
+                <div style={home.projectFoot}>
+                  <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(' + c.accent + ' / 0.6)' }}>
+                    {offset === 0 ? '● ' : '○ '}{(idx + offset) % total + 1}/{total}
+                  </span>
+                  <span style={{ ...home.projectLink, color: 'hsl(' + c.accent + ')' }}>
+                    {c.ctaLabel} <span style={{ marginLeft: 4 }}>{'↗'}</span>
+                  </span>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginTop: 28 }}>
+          <button
+            onClick={prev}
+            aria-label="Previous"
+            style={{ background: 'hsl(200 30% 10%)', border: '1px solid hsl(186 50% 40% / 0.3)', color: 'hsl(186 60% 75%)', borderRadius: 999, width: 36, height: 36, cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {'←'}
+          </button>
+          <div style={{ display: 'flex', gap: 6 }}>
+            {cards.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => { setPaused(true); setIdx(i); }}
+                aria-label={'Go to slide ' + (i + 1)}
+                style={{
+                  width: i === idx ? 20 : 8,
+                  height: 8,
+                  borderRadius: 999,
+                  background: i === idx ? 'hsl(186 90% 60%)' : 'hsl(186 30% 30%)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  transition: 'all 0.25s ease',
+                }}
+              />
+            ))}
+          </div>
+          <button
+            onClick={next}
+            aria-label="Next"
+            style={{ background: 'hsl(200 30% 10%)', border: '1px solid hsl(186 50% 40% / 0.3)', color: 'hsl(186 60% 75%)', borderRadius: 999, width: 36, height: 36, cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {'→'}
+          </button>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: 20, display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => onNavigate('projects')}
+            style={{ ...home.projectLink, color: 'hsl(186 90% 60%)', background: 'none', border: '1px solid hsl(186 50% 40% / 0.3)', borderRadius: 999, padding: '8px 20px', cursor: 'pointer', fontFamily: MONO, fontSize: 12, letterSpacing: '0.18em' }}
+          >
+            All projects {'→'}
+          </button>
+          <button
+            onClick={() => onNavigate('websites')}
+            style={{ ...home.projectLink, color: 'hsl(186 90% 60%)', background: 'none', border: '1px solid hsl(186 50% 40% / 0.3)', borderRadius: 999, padding: '8px 20px', cursor: 'pointer', fontFamily: MONO, fontSize: 12, letterSpacing: '0.18em' }}
+          >
+            All websites {'→'}
+          </button>
+        </div>
       </div>
     </section>
   );
@@ -306,7 +445,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
 function ADComing() {
   return (
-    <section style={home.section}>
+    <section style={home.section} className="home-section">
       <div style={home.comingPanel}>
         <div style={home.comingGlow} />
         <div style={home.comingHead}>
@@ -332,6 +471,18 @@ function ADComing() {
 export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
   return (
     <div style={ad.root}>
+      <style>{`
+        @media (max-width: 768px) {
+          .home-heroInner { padding: 40px 20px 60px !important; }
+          .home-heroTitle { font-size: clamp(2rem, 9vw, 3.5rem) !important; line-height: 1.08 !important; }
+          .home-hudGrid { grid-template-columns: repeat(2, 1fr) !important; }
+          .home-trackGrid { grid-template-columns: 1fr !important; }
+          .home-section { padding: 48px 20px 0 !important; }
+        }
+        @media (max-width: 480px) {
+          .home-hudGrid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
       <ADTicker />
       <ADNav onNavigate={onNavigate} active="labs" />
       <ADHero onNavigate={onNavigate} />
