@@ -62,6 +62,30 @@ export interface ProductPageProps {
 export default function ProductPage({ data, onNavigate }: ProductPageProps) {
   return (
     <div style={ad.root}>
+      <style>{`
+        @media (max-width: 768px) {
+          .prod-section { padding: 40px 20px 0 !important; }
+          .prod-heroInner { padding: 32px 20px 48px !important; }
+          .prod-heroSplit { grid-template-columns: 1fr !important; }
+          .prod-heroArt { display: none !important; }
+          .prod-h1 { font-size: clamp(2rem, 10vw, 3.5rem) !important; line-height: 1.08 !important; }
+          .prod-h2 { font-size: clamp(1.6rem, 7vw, 2.5rem) !important; }
+          .prod-metricStrip { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; padding: 18px 16px !important; }
+          .prod-purposeGrid { grid-template-columns: 1fr !important; }
+          .prod-step { grid-template-columns: 48px 1fr !important; }
+          .prod-stepLine { display: none !important; }
+          .prod-stepDot { display: none !important; }
+          .prod-showcaseGrid { grid-template-columns: 1fr !important; }
+          .prod-showcaseFeatured { grid-column: span 1 !important; }
+          .prod-compareGrid { grid-template-columns: 1fr !important; }
+          .prod-limitRow { grid-template-columns: 1fr !important; gap: 10px !important; }
+          .prod-ctaWrap { padding: 28px 20px !important; }
+        }
+        @media (max-width: 480px) {
+          .prod-metricStrip { grid-template-columns: repeat(2, 1fr) !important; }
+          .prod-h1 { font-size: 2rem !important; }
+        }
+      `}</style>
       <ADTicker />
       <ADNav onNavigate={onNavigate} active="projects" />
       <Hero data={data} onNavigate={onNavigate} />
@@ -89,7 +113,7 @@ function Hero({ data, onNavigate }: { data: ProductPageData; onNavigate: AuroraN
       </div>
       <ConstellationField />
 
-      <div style={prod.heroInner}>
+      <div style={prod.heroInner} className="prod-heroInner">
         <div style={prod.crumb}>
           <span style={prod.crumbDot} className="ad-pulse" />
           <a href="/" onClick={(e) => { e.preventDefault(); onNavigate('labs'); }} style={{ ...prod.crumbHome, textDecoration: 'none' }}>Labs</a>
@@ -99,11 +123,11 @@ function Hero({ data, onNavigate }: { data: ProductPageData; onNavigate: AuroraN
           <span style={prod.crumbCur}>{sectionLabel}</span>
         </div>
 
-        <div style={prod.heroSplit}>
+        <div style={prod.heroSplit} className="prod-heroSplit">
           <div>
             <span style={{ ...prod.badge, color: `hsl(${accent})`, borderColor: `hsl(${accent} / 0.45)` }}>{badge}</span>
             <p style={prod.eyebrow}>{eyebrow}</p>
-            <h1 style={prod.h1}>{name}</h1>
+            <h1 style={prod.h1} className="prod-h1">{name}</h1>
             <p style={prod.lede}>{lede}</p>
 
             <div style={prod.ctaRow}>
@@ -131,7 +155,7 @@ function Hero({ data, onNavigate }: { data: ProductPageData; onNavigate: AuroraN
             </div>
           </div>
 
-          <div style={prod.heroArt}>
+          <div style={prod.heroArt} className="prod-heroArt">
             <div style={{ ...prod.artGlow, background: `radial-gradient(60% 60% at 50% 50%, hsl(${accent} / 0.55), transparent 70%)` }} />
             <div style={prod.artFrame}>
               <div style={prod.artGrid} />
@@ -167,8 +191,8 @@ function Kicker({ accent, label, tone = 'accent' }: { accent: string; label: str
 
 function MetricStrip({ accent, metrics }: { accent: string; metrics: MetricItem[] }) {
   return (
-    <section style={prod.section}>
-      <div style={prod.metricStrip}>
+    <section style={prod.section} className="prod-section">
+      <div style={prod.metricStrip} className="prod-metricStrip">
         {metrics.map((m) => (
           <div key={m.k} style={prod.metricCell}>
             <div style={{ ...prod.metricKey, color: `hsl(${accent} / 0.7)` }}>{m.k}</div>
@@ -183,7 +207,7 @@ function MetricStrip({ accent, metrics }: { accent: string; metrics: MetricItem[
 
 function StageStrip({ accent, stage }: { accent: string; stage: ProductPageData['stage'] }) {
   return (
-    <section style={prod.section}>
+    <section style={prod.section} className="prod-section">
       <div style={prod.stageWrap}>
         <div style={prod.stageHead}>
           <div style={prod.stageMeta}>
@@ -206,11 +230,11 @@ function StageStrip({ accent, stage }: { accent: string; stage: ProductPageData[
 
 function PurposeGrid({ accent, section, items }: { accent: string; section: SectionCopy; items: PurposeItem[] }) {
   return (
-    <section style={prod.section}>
+    <section style={prod.section} className="prod-section">
       <Kicker accent={accent} label="§ 02 · WHY IT EXISTS" />
-      <h2 style={prod.h2}>{section.title}</h2>
+      <h2 style={prod.h2} className="prod-h2">{section.title}</h2>
       <p style={prod.h2Lede}>{section.description}</p>
-      <div style={prod.purposeGrid}>
+      <div style={prod.purposeGrid} className="prod-purposeGrid">
         {items.map((it, i) => (
           <article key={it.id} style={prod.purposeCard}>
             <div style={{ ...prod.purposeHalo, background: `radial-gradient(120% 70% at 0% 0%, hsl(${accent} / 0.18), transparent 60%)` }} />
@@ -226,19 +250,19 @@ function PurposeGrid({ accent, section, items }: { accent: string; section: Sect
 
 function WorkflowSteps({ accent, eyebrow, title, steps }: { accent: string; eyebrow: string; title: string; steps: WorkflowStep[] }) {
   return (
-    <section style={prod.section}>
+    <section style={prod.section} className="prod-section">
       <Kicker accent={accent} label={`§ 03 · ${eyebrow.toUpperCase()}`} />
-      <h2 style={prod.h2}>{title}</h2>
+      <h2 style={prod.h2} className="prod-h2">{title}</h2>
       <div style={prod.steps}>
         {steps.map((s) => (
-          <div key={s.id} style={prod.step}>
+          <div key={s.id} style={prod.step} className="prod-step">
             <div style={{ ...prod.stepNum, color: `hsl(${accent})` }}>{s.label}</div>
-            <div style={prod.stepLine} />
+            <div style={prod.stepLine} className="prod-stepLine" />
             <div>
               <h4 style={prod.stepTitle}>{s.title}</h4>
               <p style={prod.stepBody}>{s.description}</p>
             </div>
-            <div style={{ ...prod.stepDot, background: `hsl(${accent})`, boxShadow: `0 0 14px hsl(${accent} / 0.6)` }} />
+            <div style={{ ...prod.stepDot, background: `hsl(${accent})`, boxShadow: `0 0 14px hsl(${accent} / 0.6)` }} className="prod-stepDot" />
           </div>
         ))}
       </div>
@@ -248,12 +272,12 @@ function WorkflowSteps({ accent, eyebrow, title, steps }: { accent: string; eyeb
 
 function ShowcaseGrid({ accent, items }: { accent: string; items: ShowcaseItem[] }) {
   return (
-    <section style={prod.section}>
+    <section style={prod.section} className="prod-section">
       <Kicker accent={accent} label="§ 04 · ARTIFACTS" />
-      <h2 style={prod.h2}>What it actually outputs</h2>
-      <div style={prod.showcaseGrid}>
+      <h2 style={prod.h2} className="prod-h2">What it actually outputs</h2>
+      <div style={prod.showcaseGrid} className="prod-showcaseGrid">
         {items.map((it) => (
-          <article key={it.id} style={{ ...prod.showcaseCard, ...(it.featured ? prod.showcaseFeatured : null) }}>
+          <article key={it.id} style={{ ...prod.showcaseCard, ...(it.featured ? prod.showcaseFeatured : null) }} className={it.featured ? 'prod-showcaseFeatured' : undefined}>
             <div style={{ ...prod.showcaseGlow, background: `radial-gradient(80% 60% at 50% 0%, hsl(${accent} / 0.22), transparent 65%)` }} />
             <div style={prod.showcaseTop}>
               <span style={{ ...prod.showcaseLabel, color: `hsl(${accent})` }}>{it.label}</span>
@@ -278,11 +302,11 @@ function ShowcaseGrid({ accent, items }: { accent: string; items: ShowcaseItem[]
 
 function ComparisonRow({ accent, section, items }: { accent: string; section: SectionCopy; items: ComparisonItem[] }) {
   return (
-    <section style={prod.section}>
+    <section style={prod.section} className="prod-section">
       <Kicker accent={accent} label="§ 05 · POSITIONING" />
-      <h2 style={prod.h2}>{section.title}</h2>
+      <h2 style={prod.h2} className="prod-h2">{section.title}</h2>
       <p style={prod.h2Lede}>{section.description}</p>
-      <div style={prod.compareGrid}>
+      <div style={prod.compareGrid} className="prod-compareGrid">
         {items.map((c, i) => (
           <article key={c.id} style={prod.compareCard}>
             <span style={{ ...prod.compareIdx, color: `hsl(${accent})` }}>v{i + 1}</span>
@@ -297,13 +321,13 @@ function ComparisonRow({ accent, section, items }: { accent: string; section: Se
 
 function LimitationsRow({ section, items }: { section: SectionCopy; items: LimitationItem[] }) {
   return (
-    <section style={prod.section}>
+    <section style={prod.section} className="prod-section">
       <Kicker accent="" label="§ 06 · CAVEATS" tone="amber" />
-      <h2 style={prod.h2}>{section.title}</h2>
+      <h2 style={prod.h2} className="prod-h2">{section.title}</h2>
       <p style={prod.h2Lede}>{section.description}</p>
       <div style={prod.limitsList}>
         {items.map((l, i) => (
-          <div key={l.id} style={prod.limitRow}>
+          <div key={l.id} style={prod.limitRow} className="prod-limitRow">
             <span style={prod.limitTag}>note · 0{i + 1}</span>
             <div>
               <h4 style={prod.limitTitle}>{l.title}</h4>
@@ -318,8 +342,8 @@ function LimitationsRow({ section, items }: { section: SectionCopy; items: Limit
 
 function ProductCta({ accent, cta, title, body }: { accent: string; cta: CtaCopy; title: string; body: string }) {
   return (
-    <section style={{ ...prod.section, paddingBottom: 64 }}>
-      <div style={prod.ctaWrap}>
+    <section style={{ ...prod.section, paddingBottom: 64 }} className="prod-section">
+      <div style={prod.ctaWrap} className="prod-ctaWrap">
         <div style={{ ...prod.ctaGlow, background: `radial-gradient(80% 100% at 50% 0%, hsl(${accent} / 0.32), transparent 70%)` }} />
         <div style={prod.ctaInner}>
           <p style={{ ...prod.eyebrow, color: `hsl(${accent} / 0.85)` }}>§ 07 · TAKE IT FROM HERE</p>

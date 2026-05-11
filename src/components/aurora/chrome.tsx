@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties, type ReactNode } from 'react';
+import { useMemo, useState, useRef, useEffect, type CSSProperties, type ReactNode } from 'react';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SRC,
 } from '@/lib/brandAssets';
@@ -59,6 +59,7 @@ export function ADNav({
   onNavigate: AuroraNavigate;
   active?: string;
 }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const navLinks: Array<{ label: string; page: string }> = [
     { label: 'Labs', page: 'labs' },
     { label: 'Projects', page: 'projects' },
@@ -68,35 +69,64 @@ export function ADNav({
   ];
   return (
     <nav style={ad.nav}>
+      <style>{`
+        .ad-hamburger { display: none; background: none; border: 1px solid hsl(186 50% 40% / 0.3); color: hsl(186 60% 80%); border-radius: 8px; padding: 7px 11px; cursor: pointer; font-size: 18px; line-height: 1; }
+        @media (max-width: 768px) {
+          .ad-hamburger { display: flex; align-items: center; justify-content: center; }
+          .ad-navLinks { display: none !important; }
+          .ad-navLinks.ad-navOpen {
+            display: flex !important; flex-direction: column !important;
+            width: 100% !important; gap: 4px !important;
+            padding: 8px 0 12px !important;
+            border-top: 1px solid hsl(186 50% 40% / 0.15) !important;
+            margin-top: 8px !important;
+          }
+          .ad-navLinks.ad-navOpen a { width: 100% !important; text-align: left !important; }
+        }
+        @media (min-width: 769px) {
+          .ad-hamburger { display: none !important; }
+        }
+      `}</style>
       <div style={ad.navInner} className="ad-navInner">
-        <a
-          href="/"
-          style={ad.brand}
-          className="ad-navBrand"
-          onClick={(e) => {
-            e.preventDefault();
-            onNavigate('labs');
-          }}
-        >
-          <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.brandMark} />
-          <span style={ad.brandText}>
-            <span style={ad.brandEyebrow}>// labs.shadewater.studio</span>
-            <span style={ad.brandWord}>
-              <span
-                style={{
-                  background: 'linear-gradient(135deg, hsl(186 95% 75%), hsl(220 90% 78%))',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  color: 'transparent',
-                }}
-              >
-                Shadewater
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <a
+            href="/"
+            style={ad.brand}
+            className="ad-navBrand"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate('labs');
+              setMenuOpen(false);
+            }}
+          >
+            <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.brandMark} />
+            <span style={ad.brandText}>
+              <span style={ad.brandEyebrow}>shadewaterlabs.com</span>
+              <span style={ad.brandWord}>
+                <span
+                  style={{
+                    background: 'linear-gradient(135deg, hsl(186 95% 75%), hsl(220 90% 78%))',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent',
+                  }}
+                >
+                  Shadewater
+                </span>
+                <span style={{ color: '#fff', marginLeft: 6 }}>Labs</span>
               </span>
-              <span style={{ color: '#fff', marginLeft: 6 }}>Labs</span>
             </span>
-          </span>
-        </a>
-        <div style={ad.navLinks} className="ad-navLinks">
+          </a>
+          <button
+            className="ad-hamburger"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? '✕' : '☰'}
+          </button>
+        </div>
+        <div style={ad.navLinks} className={`ad-navLinks${menuOpen ? ' ad-navOpen' : ''}`}>
           {navLinks.map((link) => {
             const isActive = link.page === active;
             const href = link.page === 'labs' ? '/' : `/${link.page}`;
@@ -107,6 +137,7 @@ export function ADNav({
                 onClick={(e) => {
                   e.preventDefault();
                   onNavigate(link.page);
+                  setMenuOpen(false);
                 }}
                 style={{ ...ad.navLink, ...(isActive ? ad.navLinkActive : null) }}
               >
@@ -142,7 +173,7 @@ export function ADFooter() {
           <span style={ad.footerCell}>uptime · 99.97%</span>
           <span style={ad.footerCell}>
             <a href={LABS_ORIGIN} style={{ color: 'inherit', textDecoration: 'none' }}>
-              labs.shadewater
+              shadewaterlabs.com
             </a>
           </span>
         </div>
@@ -212,7 +243,6 @@ export function ConstellationField() {
         {stars.map((s) => (
           <span
             key={s.id}
-            className="ad-pulse"
             style={{
               position: 'absolute',
               left: `${s.x}%`,
@@ -221,9 +251,7 @@ export function ConstellationField() {
               height: `${s.r}px`,
               borderRadius: 999,
               background: `hsl(${s.hue} 90% 78%)`,
-              opacity: s.o * 0.9,
-              animation: `adPulse ${4 + s.d}s ease-in-out infinite`,
-              animationDelay: `${-s.d}s`,
+              opacity: s.o * 0.75,
             }}
           />
         ))}
@@ -234,51 +262,62 @@ export function ConstellationField() {
 }
 
 export function ParticleField() {
-  const particles = useMemo(() => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    let w = canvas.offsetWidth;
+    let h = canvas.offsetHeight;
+    canvas.width = w;
+    canvas.height = h;
+    const onResize = () => {
+      w = canvas.offsetWidth; h = canvas.offsetHeight;
+      canvas.width = w; canvas.height = h;
+    };
+    window.addEventListener('resize', onResize);
     const seeded = (n: number) => {
       let s = n * 1567 + 12289;
-      return () => {
-        s = (s * 1567 + 12289) % 233280;
-        return s / 233280;
-      };
+      return () => { s = (s * 1567 + 12289) % 233280; return s / 233280; };
     };
     const rnd = seeded(13);
-    return Array.from({ length: 16 }, (_, i) => ({
-      id: i,
-      x: rnd() * 100,
-      y: 80 + rnd() * 60,
+    const pts = Array.from({ length: 16 }, () => ({
+      x: rnd() * w,
+      y: (0.8 + rnd() * 0.6) * h,
       size: 1 + rnd() * 2.4,
-      dur: 14 + rnd() * 18,
-      delay: -rnd() * 28,
-      drift: -10 + rnd() * 20,
+      speed: (14 + rnd() * 18) * 0.012,
+      drift: (-10 + rnd() * 20) * 0.3,
       hue: rnd() < 0.25 ? 220 : 186,
+      progress: rnd(),
     }));
+    let rafId: number;
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      pts.forEach(p => {
+        p.progress += p.speed / 100;
+        if (p.progress > 1) { p.progress = 0; p.x = rnd() * w; p.y = (0.8 + rnd() * 0.3) * h; }
+        const py = p.y - p.progress * h * 0.8;
+        const px = p.x + Math.sin(p.progress * Math.PI * 2) * p.drift;
+        const alpha = p.progress < 0.1 ? p.progress * 10 * 0.7
+                    : p.progress > 0.85 ? (1 - p.progress) / 0.15 * 0.7 : 0.7;
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsl(${p.hue} 95% 75% / ${alpha.toFixed(2)})`;
+        ctx.fill();
+      });
+      rafId = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => { cancelAnimationFrame(rafId); window.removeEventListener('resize', onResize); };
   }, []);
   return (
-    <div style={ad.particleWrap} aria-hidden="true">
-      {particles.map((p) => (
-        <span
-          key={p.id}
-          className="ad-particle"
-          style={
-            {
-              position: 'absolute',
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              width: p.size,
-              height: p.size,
-              borderRadius: 999,
-              background: `hsl(${p.hue} 95% 75%)`,
-
-              opacity: 0.7,
-              ['--drift' as string]: `${p.drift}px`,
-              animation: `adFloat ${p.dur}s linear infinite`,
-              animationDelay: `${p.delay}s`,
-            } as CSSProperties
-          }
-        />
-      ))}
-    </div>
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
+    />
   );
 }
 
