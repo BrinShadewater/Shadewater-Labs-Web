@@ -161,7 +161,7 @@ export function ConstellationField() {
       };
     };
     const rnd = seeded(7);
-    return Array.from({ length: 90 }, (_, i) => ({
+    return Array.from({ length: 55 }, (_, i) => ({
       id: i,
       x: rnd() * 100,
       y: rnd() * 100,
@@ -221,8 +221,7 @@ export function ConstellationField() {
               height: `${s.r}px`,
               borderRadius: 999,
               background: `hsl(${s.hue} 90% 78%)`,
-              boxShadow: `0 0 ${s.r * 4}px hsl(${s.hue} 90% 70% / ${s.o})`,
-              opacity: s.o,
+              opacity: s.o * 0.9,
               animation: `adPulse ${4 + s.d}s ease-in-out infinite`,
               animationDelay: `${-s.d}s`,
             }}
@@ -244,7 +243,7 @@ export function ParticleField() {
       };
     };
     const rnd = seeded(13);
-    return Array.from({ length: 28 }, (_, i) => ({
+    return Array.from({ length: 16 }, (_, i) => ({
       id: i,
       x: rnd() * 100,
       y: 80 + rnd() * 60,
@@ -270,7 +269,7 @@ export function ParticleField() {
               height: p.size,
               borderRadius: 999,
               background: `hsl(${p.hue} 95% 75%)`,
-              boxShadow: `0 0 ${p.size * 6}px hsl(${p.hue} 90% 65% / 0.7)`,
+
               opacity: 0.7,
               ['--drift' as string]: `${p.drift}px`,
               animation: `adFloat ${p.dur}s linear infinite`,
@@ -289,7 +288,6 @@ export function HeroMesh() {
       <div style={{ ...ad.meshBlob, ...ad.mesh1 }} className="ad-meshBlob" />
       <div style={{ ...ad.meshBlob, ...ad.mesh2 }} className="ad-meshBlob" />
       <div style={{ ...ad.meshBlob, ...ad.mesh3 }} className="ad-meshBlob" />
-      <div style={{ ...ad.meshBlob, ...ad.mesh4 }} className="ad-meshBlob" />
       <div style={ad.scanlines} />
     </div>
   );
@@ -407,7 +405,7 @@ export const pp: Record<string, CSSProperties> = {
   body: { paddingTop: 8 },
 
   hero: { position: 'relative', overflow: 'hidden', paddingBottom: 0 },
-  heroAurora: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 },
+  heroAurora: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, contain: 'strict' as CSSProperties['contain'] },
   blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   blob1: {
     width: 620, height: 620, top: -180, left: -120,
@@ -775,7 +773,7 @@ export const ad: Record<string, CSSProperties> = {
     cursor: 'pointer', textDecoration: 'none',
   },
 
-  meshWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 },
+  meshWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, contain: 'strict' as CSSProperties['contain'] },
   meshBlob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   mesh1: { width: 780, height: 780, top: -200, left: -160, background: 'radial-gradient(circle, hsl(186 95% 55% / 0.55), transparent 60%)', animation: 'adDrift1 28s ease-in-out infinite alternate' },
   mesh2: { width: 720, height: 720, top: -120, right: -180, background: 'radial-gradient(circle, hsl(220 90% 55% / 0.5), transparent 60%)', animation: 'adDrift2 32s ease-in-out infinite alternate' },
@@ -786,14 +784,14 @@ export const ad: Record<string, CSSProperties> = {
     backgroundImage: 'repeating-linear-gradient(0deg, transparent 0px, transparent 3px, hsl(0 0% 100% / 0.012) 3px, hsl(0 0% 100% / 0.012) 4px)',
     mixBlendMode: 'overlay',
   },
-  constWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' },
+  constWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', contain: 'strict' as CSSProperties['contain'] },
   constSpin: {
     position: 'absolute', left: '-15%', right: '-15%', top: '-15%', bottom: '-15%',
     animation: 'adRotate 240s linear infinite', transformOrigin: '50% 50%',
     willChange: 'transform',
   },
   constFade: { position: 'absolute', inset: 0, background: 'radial-gradient(70% 60% at 50% 30%, transparent 30%, #020a13 90%)' },
-  particleWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' },
+  particleWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', contain: 'strict' as CSSProperties['contain'] },
 
   btnPrimary: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
