@@ -189,7 +189,16 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       lede="Working tools, product experiments, creative-tech builds, and operator workflows. Each card is a real ship — even the queued ones."
     >
       <section style={pp.section}>
-        <div style={pp.toolbar}>
+        <style>{`
+          @media (max-width: 768px) {
+            .pp-projectsGrid { grid-template-columns: 1fr !important; }
+            .pp-toolbar { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+          }
+          @media (min-width: 480px) and (max-width: 768px) {
+            .pp-projectsGrid { grid-template-columns: repeat(2, 1fr) !important; }
+          }
+        `}</style>
+        <div style={pp.toolbar} className="pp-toolbar">
           <div style={pp.toolbarMono}>
             {shippingCount > 0 && (
               <span style={pp.toolbarChip}>shipping · {shippingCount}</span>
@@ -222,7 +231,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           </div>
         </div>
 
-        <div style={pp.projectsGrid}>
+        <div style={pp.projectsGrid} className="pp-projectsGrid">
           {visibleCards.map((p) => (
             <article key={p.slug} style={pp.projectCard}>
               <div

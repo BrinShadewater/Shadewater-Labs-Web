@@ -2,7 +2,6 @@ import { type CSSProperties } from 'react';
 import {
   AuroraPage,
   MONO,
-  TG_DIM,
   pp,
   ad,
 } from '@/components/aurora/chrome';
@@ -17,13 +16,18 @@ export default function About({ onNavigate }: AboutProps) {
 
   const ACCENT = '186 90% 60%';
 
+  const split: CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.6fr)',
+    gap: 52,
+    alignItems: 'start',
+  };
+
   const photoWrap: CSSProperties = {
     position: 'relative',
     borderRadius: 20,
     overflow: 'hidden',
-    boxShadow:
-      '0 24px 60px hsl(' + ACCENT + ' / 0.22), 0 0 0 1px hsl(' + ACCENT + ' / 0.18)',
-    maxWidth: 480,
+    boxShadow: '0 24px 60px hsl(' + ACCENT + ' / 0.22), 0 0 0 1px hsl(' + ACCENT + ' / 0.18)',
     width: '100%',
   };
 
@@ -41,41 +45,47 @@ export default function About({ onNavigate }: AboutProps) {
     pointerEvents: 'none',
   };
 
-  const credRow: CSSProperties = {
+  const credSection: CSSProperties = {
+    marginTop: 22,
     display: 'flex',
     flexDirection: 'column' as CSSProperties['flexDirection'],
     gap: 10,
-    marginTop: 20,
   };
 
-  const credCard: CSSProperties = {
-    padding: '12px 16px',
-    borderRadius: 12,
+  const credGroup: CSSProperties = {
+    padding: '14px 16px',
+    borderRadius: 14,
     background: 'hsl(200 30% 8% / 0.7)',
     border: '1px solid hsl(' + ACCENT + ' / 0.14)',
   };
 
-  const credLabel: CSSProperties = {
+  const credCat: CSSProperties = {
     fontFamily: MONO,
     fontSize: 9,
-    letterSpacing: '0.26em',
-    color: 'hsl(' + ACCENT + ')',
+    letterSpacing: '0.28em',
+    color: 'hsl(36 55% 72%)',
     display: 'block',
-    marginBottom: 3,
+    marginBottom: 6,
+    textTransform: 'uppercase' as CSSProperties['textTransform'],
   };
 
-  const credValue: CSSProperties = {
+  const credEntry: CSSProperties = {
     fontSize: 13,
     color: 'hsl(45 20% 90%)',
-    lineHeight: 1.4,
+    lineHeight: 1.5,
     fontWeight: 500,
   };
 
-  const split: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(0, 0.9fr) minmax(0, 1.5fr)',
-    gap: 56,
-    alignItems: 'start',
+  const credEntryDim: CSSProperties = {
+    ...credEntry,
+    color: 'hsl(45 15% 72%)',
+    fontWeight: 400,
+  };
+
+  const linkStyle: CSSProperties = {
+    color: 'hsl(' + ACCENT + ')',
+    textDecoration: 'none',
+    borderBottom: '1px solid hsl(' + ACCENT + ' / 0.3)',
   };
 
   const nameLine: CSSProperties = {
@@ -108,7 +118,7 @@ export default function About({ onNavigate }: AboutProps) {
     height: 2,
     background: 'linear-gradient(90deg, hsl(' + ACCENT + '), transparent)',
     borderRadius: 999,
-    margin: '26px 0',
+    margin: '24px 0',
   };
 
   const exploreHead: CSSProperties = {
@@ -145,12 +155,6 @@ export default function About({ onNavigate }: AboutProps) {
     marginTop: 2,
   };
 
-  const linkStyle: CSSProperties = {
-    color: 'hsl(' + ACCENT + ')',
-    textDecoration: 'none',
-    borderBottom: '1px solid hsl(' + ACCENT + ' / 0.3)',
-  };
-
   const ctaRow: CSSProperties = {
     display: 'flex',
     gap: 12,
@@ -177,9 +181,18 @@ export default function About({ onNavigate }: AboutProps) {
       title="The person behind the lab."
       lede="Vancouver-based filmmaker, creative technologist, and digital creator working at the intersection of storytelling, emerging technology, and interactive media."
     >
+      <style>{`
+        .about-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 52px; align-items: start; }
+        .explore-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; margin-bottom: 26px; }
+        @media (max-width: 860px) {
+          .about-split { grid-template-columns: 1fr !important; }
+          .about-photo { max-width: 480px; margin: 0 auto; }
+          .explore-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
       <section style={pp.section}>
-        <div style={split}>
-          <div>
+        <div style={split} className="about-split">
+          <div className="about-photo">
             <div style={photoWrap}>
               <img
                 src="/Alexbiopic.png"
@@ -190,26 +203,26 @@ export default function About({ onNavigate }: AboutProps) {
               />
               <div style={photoGlow} />
             </div>
-            <div style={credRow}>
-              <div style={credCard}>
-                <span style={credLabel}>ROLE</span>
-                <span style={credValue}>Producer · 1st Assistant Director</span>
+
+            <div style={credSection}>
+              <div style={credGroup}>
+                <span style={credCat}>Companies</span>
+                <div style={credEntry}>Founder &amp; CEO — Shadewater Labs</div>
+                <div style={credEntryDim}>Producer — Adorable Damage &amp; Pathogen Pictures</div>
               </div>
-              <div style={credCard}>
-                <span style={credLabel}>GUILD</span>
-                <span style={credValue}>Directors Guild of Canada · DGC AI Working Group</span>
+              <div style={credGroup}>
+                <span style={credCat}>Guild</span>
+                <div style={credEntry}>Directors Guild of Canada — British Columbia</div>
+                <div style={credEntryDim}>DGC AI Working Group</div>
               </div>
-              <div style={credCard}>
-                <span style={credLabel}>LOCATION</span>
-                <span style={credValue}>Vancouver, BC · Canada</span>
-              </div>
-              <div style={credCard}>
-                <span style={credLabel}>COMMUNITY</span>
-                <span style={credValue}>
+              <div style={credGroup}>
+                <span style={credCat}>Communities &amp; Memberships</span>
+                <div style={credEntry}>
                   <a href="https://vancouver.bc-ai.net/" target="_blank" rel="noopener noreferrer" style={linkStyle}>Vancouver AI</a>
-                  {' · '}
+                </div>
+                <div style={credEntryDim}>
                   <a href="https://bc-ai.ca/" target="_blank" rel="noopener noreferrer" style={linkStyle}>BC + AI Ecosystem</a>
-                </span>
+                </div>
               </div>
             </div>
           </div>
@@ -241,7 +254,7 @@ export default function About({ onNavigate }: AboutProps) {
             <div style={divider} />
 
             <span style={exploreHead}>THROUGH SHADEWATER LABS, ALEX EXPLORES</span>
-            <div style={exploreGrid}>
+            <div style={exploreGrid} className="explore-grid">
               {explores.map((item) => (
                 <div key={item} style={exploreItem}>
                   <span style={exploreDot} />
@@ -258,20 +271,10 @@ export default function About({ onNavigate }: AboutProps) {
             </p>
 
             <div style={ctaRow}>
-              <a
-                href="https://brinshadewater.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={ad.btnPrimary}
-              >
+              <a href="https://brinshadewater.com" target="_blank" rel="noopener noreferrer" style={ad.btnPrimary}>
                 Visit brinshadewater.com <span style={{ marginLeft: 6 }}>{'↗'}</span>
               </a>
-              <a
-                href="https://www.twitch.tv/brinshadewater"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={ad.btnGhost}
-              >
+              <a href="https://www.twitch.tv/brinshadewater" target="_blank" rel="noopener noreferrer" style={ad.btnGhost}>
                 Watch on Twitch
               </a>
             </div>
@@ -283,4 +286,3 @@ export default function About({ onNavigate }: AboutProps) {
 }
 
 void ({} as CSSProperties);
-void (TG_DIM);

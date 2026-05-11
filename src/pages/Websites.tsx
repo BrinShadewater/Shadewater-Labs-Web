@@ -25,6 +25,7 @@ interface SiteRow {
   blurb: string;
   sig: string;
   thumbnail: string;
+  thumbnailSrcSet: string;
 }
 
 const TONE_BY_STATUS: Record<string, AdToneKey> = {
@@ -37,6 +38,7 @@ const ACCENTS: Record<string, string> = {
   shadewaterlabs: '186 90% 60%',
   inkmasterstudio: '219 85% 65%',
   strangeharvestmovie: '210 85% 65%',
+  strangeharvestmerch: '36 85% 62%',
 };
 
 const SIGS: Record<string, string> = {
@@ -44,19 +46,41 @@ const SIGS: Record<string, string> = {
   shadewaterlabs: 'labs',
   inkmasterstudio: 'product',
   strangeharvestmovie: 'film',
+  strangeharvestmerch: 'merch',
 };
 
-const thumbUrl = (url: string) =>
-  'https://image.thum.io/get/width/800/crop/450/noanimate/' + url;
+const THUMBS: Record<string, { src: string; srcSet: string }> = {
+  brinshadewater: {
+    src: '/brinshadewaterwebthumb.webp',
+    srcSet: '/brinshadewaterwebthumb-320w.webp 320w, /brinshadewaterwebthumb-480w.webp 480w, /brinshadewaterwebthumb-768w.webp 768w, /brinshadewaterwebthumb.webp 800w',
+  },
+  shadewaterlabs: {
+    src: '/shadewaterlabswebthumb.webp',
+    srcSet: '/shadewaterlabswebthumb-320w.webp 320w, /shadewaterlabswebthumb-480w.webp 480w, /shadewaterlabswebthumb-768w.webp 768w, /shadewaterlabswebthumb.webp 800w',
+  },
+  inkmasterstudio: {
+    src: '/inkmasterstudiowebthumb.webp',
+    srcSet: '/inkmasterstudiowebthumb-320w.webp 320w, /inkmasterstudiowebthumb-480w.webp 480w, /inkmasterstudiowebthumb-768w.webp 768w, /inkmasterstudiowebthumb.webp 800w',
+  },
+  strangeharvestmovie: {
+    src: '/strangeharvestwebthumb.webp',
+    srcSet: '/strangeharvestwebthumb-320w.webp 320w, /strangeharvestwebthumb-480w.webp 480w, /strangeharvestwebthumb-768w.webp 768w, /strangeharvestwebthumb.webp 800w',
+  },
+  strangeharvestmerch: {
+    src: '/strangeharvestmerchwebthumb.webp',
+    srcSet: '/strangeharvestmerchwebthumb-320w.webp 320w, /strangeharvestmerchwebthumb-480w.webp 480w, /strangeharvestmerchwebthumb-768w.webp 768w, /strangeharvestmerchwebthumb.webp 800w',
+  },
+};
 
 interface BrowserFrameProps {
   url: string;
   accent: string;
   thumbnail: string;
+  thumbnailSrcSet: string;
   fullUrl: string;
 }
 
-function BrowserFrame({ url, accent, thumbnail, fullUrl }: BrowserFrameProps) {
+function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl }: BrowserFrameProps) {
   const dot: CSSProperties = {
     width: 8,
     height: 8,
@@ -124,9 +148,15 @@ function BrowserFrame({ url, accent, thumbnail, fullUrl }: BrowserFrameProps) {
         >
           <img
             src={thumbnail}
+            srcSet={thumbnailSrcSet}
+            sizes="(min-width: 1024px) 540px, (min-width: 640px) 50vw, 100vw"
             alt=""
             loading="lazy"
             decoding="async"
+            width={800}
+            height={450}
+            aria-hidden={true}
+            role="presentation"
             style={{
               position: 'absolute',
               top: 0,
@@ -145,19 +175,31 @@ function BrowserFrame({ url, accent, thumbnail, fullUrl }: BrowserFrameProps) {
 }
 
 export default function Websites({ onNavigate }: WebsitesProps) {
-  const sites: SiteRow[] = managedWebsites.map((s) => ({
-    id: s.id,
-    name: s.name,
-    url: s.url.replace(/^https?:\/\//, ''),
-    fullUrl: s.url,
-    role: s.role,
-    status: s.status.toUpperCase(),
-    tone: TONE_BY_STATUS[s.status] ?? 'cyan',
-    accent: ACCENTS[s.id] ?? '186 90% 60%',
-    blurb: s.description,
-    sig: SIGS[s.id] ?? s.id,
-    thumbnail: thumbUrl(s.url),
-  }));
+  void onNavigate;
+
+  const sites: SiteRow[] = managedWebsites.map((s) => {
+    const thumb = THUMBS[s.id] ?? { src: '', srcSet: '' };
+    return {
+      id: s.id,
+      name: s.name,
+      url: s.url.replace(/^https?:\/\//, ''),
+      fullUrl: s.url,
+      role: s.role,
+      status: s.status.toUpperCase(),
+      tone: TONE_BY_STATUS[s.status] ?? 'cyan',
+      accent: ACCENTS[s.id] ?? '186 90% 60%',
+      blurb: s.description,
+      sig: SIGS[s.id] ?? s.id,
+      thumbnail: thumb.src,
+      thumbnailSrcSet: thumb.srcSet,
+    };
+  });
+
+  const sitesGrid: CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: 18,
+  };
 
   return (
     <AuroraPage
@@ -169,10 +211,15 @@ export default function Websites({ onNavigate }: WebsitesProps) {
       lede="The public web surfaces currently designed, productized, and maintained through Shadewater Labs."
     >
       <section style={pp.section}>
-        <div style={pp.sitesGrid}>
+        <style>{`
+          @media (max-width: 700px) {
+            .sites-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
+        <div style={sitesGrid} className="sites-grid">
           {sites.map((s) => (
             <article
-              key={s.url}
+              key={s.id}
               style={{ ...pp.siteCard, padding: 0, overflow: 'hidden' }}
             >
               <div
@@ -186,6 +233,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
                 url={s.url}
                 accent={s.accent}
                 thumbnail={s.thumbnail}
+                thumbnailSrcSet={s.thumbnailSrcSet}
                 fullUrl={s.fullUrl}
               />
 
