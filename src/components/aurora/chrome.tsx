@@ -70,62 +70,71 @@ export function ADNav({
   return (
     <nav style={ad.nav}>
       <style>{`
-        .ad-hamburger { display: none; background: none; border: 1px solid hsl(186 50% 40% / 0.3); color: hsl(186 60% 80%); border-radius: 8px; padding: 7px 11px; cursor: pointer; font-size: 18px; line-height: 1; }
+        .ad-hamburger {
+          display: none;
+          background: none;
+          border: 1px solid hsl(186 50% 40% / 0.3);
+          color: hsl(186 60% 80%);
+          border-radius: 8px;
+          padding: 7px 11px;
+          cursor: pointer;
+          font-size: 18px;
+          line-height: 1;
+          margin-left: auto;
+          flex-shrink: 0;
+        }
         @media (max-width: 768px) {
-          .ad-hamburger { display: flex; align-items: center; justify-content: center; }
-          .ad-navLinks { display: none !important; }
+          .ad-navInner { flex-wrap: wrap !important; }
+          .ad-hamburger { display: flex !important; align-items: center; justify-content: center; }
+          .ad-navLinks { display: none !important; order: 3; width: 100% !important; }
           .ad-navLinks.ad-navOpen {
-            display: flex !important; flex-direction: column !important;
-            width: 100% !important; gap: 4px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 4px !important;
             padding: 8px 0 12px !important;
             border-top: 1px solid hsl(186 50% 40% / 0.15) !important;
-            margin-top: 8px !important;
+            margin-top: 4px !important;
           }
           .ad-navLinks.ad-navOpen a { width: 100% !important; text-align: left !important; }
-        }
-        @media (min-width: 769px) {
-          .ad-hamburger { display: none !important; }
+          .ad-navBrand { order: 1; }
         }
       `}</style>
       <div style={ad.navInner} className="ad-navInner">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <a
-            href="/"
-            style={ad.brand}
-            className="ad-navBrand"
-            onClick={(e) => {
-              e.preventDefault();
-              onNavigate('labs');
-              setMenuOpen(false);
-            }}
-          >
-            <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.brandMark} />
-            <span style={ad.brandText}>
-              <span style={ad.brandEyebrow}>shadewaterlabs.com</span>
-              <span style={ad.brandWord}>
-                <span
-                  style={{
-                    background: 'linear-gradient(135deg, hsl(186 95% 75%), hsl(220 90% 78%))',
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-                    color: 'transparent',
-                  }}
-                >
-                  Shadewater
-                </span>
-                <span style={{ color: '#fff', marginLeft: 6 }}>Labs</span>
+        <a
+          href="/"
+          style={ad.brand}
+          className="ad-navBrand"
+          onClick={(e) => {
+            e.preventDefault();
+            onNavigate('labs');
+            setMenuOpen(false);
+          }}
+        >
+          <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.brandMark} />
+          <span style={ad.brandText}>
+            <span style={ad.brandEyebrow}>shadewaterlabs.com</span>
+            <span style={ad.brandWord}>
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, hsl(186 95% 75%), hsl(220 90% 78%))',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                }}
+              >
+                Shadewater
               </span>
             </span>
-          </a>
-          <button
-            className="ad-hamburger"
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? '✕' : '☰'}
-          </button>
-        </div>
+          </span>
+        </a>
+        <button
+          className="ad-hamburger"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
         <div style={ad.navLinks} className={`ad-navLinks${menuOpen ? ' ad-navOpen' : ''}`}>
           {navLinks.map((link) => {
             const isActive = link.page === active;
@@ -287,7 +296,7 @@ export function ParticleField() {
       x: rnd() * w,
       y: (0.8 + rnd() * 0.6) * h,
       size: 1 + rnd() * 2.4,
-      speed: (14 + rnd() * 18) * 0.012,
+      speed: (5 + rnd() * 7) * 0.012,
       drift: (-10 + rnd() * 20) * 0.3,
       hue: rnd() < 0.25 ? 220 : 186,
       progress: rnd(),
@@ -358,9 +367,8 @@ export function AuroraPage({
       <style>{`
         /* ---- Aurora mobile pass ---- */
         @media (max-width: 768px) {
-          /* Nav */
-          .ad-navInner { flex-direction: column !important; gap: 12px !important; padding: 14px 16px !important; align-items: flex-start !important; }
-          .ad-navLinks { gap: 4px !important; flex-wrap: wrap !important; }
+          /* Nav — layout is handled by ADNav's own <style>, just adjust padding */
+          .ad-navInner { padding: 12px 16px !important; }
           /* Page hero */
           .pp-heroInner { padding: 40px 20px 48px !important; }
           .pp-h1 { font-size: clamp(1.8rem, 7vw, 3rem) !important; }
@@ -373,7 +381,6 @@ export function AuroraPage({
           .ad-footerInner { flex-direction: column !important; gap: 20px !important; }
         }
         @media (max-width: 540px) {
-          .ad-navBrand span { display: none; }
           .pp-h1 { font-size: 1.7rem !important; }
           .pp-lede { font-size: 15px !important; }
         }
