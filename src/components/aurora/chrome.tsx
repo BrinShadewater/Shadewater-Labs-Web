@@ -64,6 +64,7 @@ export function ADNav({
     { label: 'Projects', page: 'projects' },
     { label: 'Websites', page: 'websites' },
     { label: 'Tech News', page: 'tech-news' },
+    { label: 'About', page: 'about' },
   ];
   return (
     <nav style={ad.nav}>
@@ -383,7 +384,7 @@ export const pp: Record<string, CSSProperties> = {
 
   hero: { position: 'relative', overflow: 'hidden', paddingBottom: 0 },
   heroAurora: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 },
-  blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(90px)', willChange: 'transform' },
+  blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   blob1: {
     width: 620, height: 620, top: -180, left: -120,
     background: 'radial-gradient(circle, hsl(186 95% 55% / 0.55), transparent 60%)',
@@ -708,6 +709,7 @@ export const ad: Record<string, CSSProperties> = {
     display: 'flex', gap: 28, whiteSpace: 'nowrap',
     animation: 'adTicker 50s linear infinite',
     paddingLeft: 32, height: '100%', alignItems: 'center',
+    willChange: 'transform',
   },
   tickerItem: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
@@ -750,7 +752,7 @@ export const ad: Record<string, CSSProperties> = {
   },
 
   meshWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 },
-  meshBlob: { position: 'absolute', borderRadius: '50%', filter: 'blur(90px)', willChange: 'transform' },
+  meshBlob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   mesh1: { width: 780, height: 780, top: -200, left: -160, background: 'radial-gradient(circle, hsl(186 95% 55% / 0.55), transparent 60%)', animation: 'adDrift1 28s ease-in-out infinite alternate' },
   mesh2: { width: 720, height: 720, top: -120, right: -180, background: 'radial-gradient(circle, hsl(220 90% 55% / 0.5), transparent 60%)', animation: 'adDrift2 32s ease-in-out infinite alternate' },
   mesh3: { width: 620, height: 620, top: 320, left: '36%', background: 'radial-gradient(circle, hsl(150 70% 50% / 0.4), transparent 60%)', animation: 'adDrift3 24s ease-in-out infinite alternate' },
@@ -764,6 +766,7 @@ export const ad: Record<string, CSSProperties> = {
   constSpin: {
     position: 'absolute', left: '-15%', right: '-15%', top: '-15%', bottom: '-15%',
     animation: 'adRotate 240s linear infinite', transformOrigin: '50% 50%',
+    willChange: 'transform',
   },
   constFade: { position: 'absolute', inset: 0, background: 'radial-gradient(70% 60% at 50% 30%, transparent 30%, #020a13 90%)' },
   particleWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' },
