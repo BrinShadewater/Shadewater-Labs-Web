@@ -35,4 +35,13 @@ export const managedWebsites = [
     description:
       'A dedicated movie website for the Strange Harvest project, maintained as part of the Shadewater Labs managed web portfolio.',
   },
+  {
+    id: 'strangeharvestmerch',
+    name: 'Strange Harvest Merch Store',
+    url: 'https://strangeharvestmovie.com',
+    role: 'Shopify store',
+    status: 'Live',
+    description:
+      'Official merchandise store for Strange Harvest, built on Shopify. Apparel, prints, and collectibles tied to the film.',
+  },
 ] as const;
