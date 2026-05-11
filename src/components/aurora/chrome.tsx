@@ -521,12 +521,12 @@ export const pp: Record<string, CSSProperties> = {
   statusDot: { width: 7, height: 7, borderRadius: 999 },
   projectArt: {
     position: 'relative',
-    height: 130, borderRadius: 16, marginBottom: 16,
+    height: 180, borderRadius: 16, marginBottom: 16,
     background: 'linear-gradient(180deg, hsl(200 35% 14% / 0.85), hsl(200 30% 8% / 0.95))',
     border: '1px solid hsl(186 40% 35% / 0.3)',
     display: 'grid', placeItems: 'center', overflow: 'hidden',
   },
-  projectLogo: { maxHeight: 80, maxWidth: 160, objectFit: 'contain', position: 'relative', zIndex: 1 },
+  projectLogo: { maxHeight: 160, maxWidth: 320, objectFit: 'contain', position: 'relative', zIndex: 1 },
   projectGlyph: {
     position: 'relative', zIndex: 1,
     width: 78, height: 78, borderRadius: 20,
@@ -812,4 +812,25 @@ export const ad: Record<string, CSSProperties> = {
     boxShadow: '0 4px 20px hsl(186 90% 50% / 0.10)',
     cursor: 'pointer', textDecoration: 'none',
   },
+
+  footer: {
+    position: 'relative', marginTop: 80,
+    borderTop: '1px solid hsl(186 50% 40% / 0.15)',
+    background: 'hsl(210 66% 4% / 0.8)',
+  },
+  footerBeam: {
+    position: 'absolute', top: 0, left: '10%', right: '10%', height: 1,
+    background: 'linear-gradient(90deg, transparent, hsl(186 90% 60% / 0.5), transparent)',
+  },
+  footerInner: {
+    maxWidth: 1180, margin: '0 auto', padding: '32px 32px 28px',
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
+    flexWrap: 'wrap' as CSSProperties['flexWrap'],
+  },
+  footerBrand: { display: 'flex', alignItems: 'center', gap: 12 },
+  footerMark: { height: 36, width: 'auto', filter: 'drop-shadow(0 4px 12px hsl(186 90% 50% / 0.4))' },
+  footerWord: { fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em', color: '#fff' },
+  footerEyebrow: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.22em', color: 'hsl(186 50% 70%)', marginTop: 3 },
+  footerMono: { display: 'flex', gap: 24, flexWrap: 'wrap' as CSSProperties['flexWrap'] },
+  footerCell: { fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', color: TG_DIM },
 };

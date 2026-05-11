@@ -141,7 +141,7 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl }: Brow
         <div
           style={{
             position: 'relative',
-            height: 180,
+            height: 260,
             background: 'hsl(200 30% 9%)',
             overflow: 'hidden',
           }}
@@ -237,7 +237,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
                 fullUrl={s.fullUrl}
               />
 
-              <div style={{ padding: '20px 24px 22px', position: 'relative' }}>
+              <div style={{ padding: '16px 20px 18px', position: 'relative' }}>
                 <div style={pp.siteTop}>
                   <span style={pp.siteRole}>{s.role}</span>
                   <span style={pp.statusPill}>
