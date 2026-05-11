@@ -64,13 +64,15 @@ export function ADNav({
     { label: 'Projects', page: 'projects' },
     { label: 'Websites', page: 'websites' },
     { label: 'Tech News', page: 'tech-news' },
+    { label: 'About', page: 'about' },
   ];
   return (
     <nav style={ad.nav}>
-      <div style={ad.navInner}>
+      <div style={ad.navInner} className="ad-navInner">
         <a
           href="/"
           style={ad.brand}
+          className="ad-navBrand"
           onClick={(e) => {
             e.preventDefault();
             onNavigate('labs');
@@ -94,7 +96,7 @@ export function ADNav({
             </span>
           </span>
         </a>
-        <div style={ad.navLinks}>
+        <div style={ad.navLinks} className="ad-navLinks">
           {navLinks.map((link) => {
             const isActive = link.page === active;
             const href = link.page === 'labs' ? '/' : `/${link.page}`;
@@ -125,7 +127,7 @@ export function ADFooter() {
   return (
     <footer style={ad.footer}>
       <div style={ad.footerBeam} />
-      <div style={ad.footerInner}>
+      <div style={ad.footerInner} className="ad-footerInner">
         <div style={ad.footerBrand}>
           <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.footerMark} />
           <div>
@@ -316,6 +318,29 @@ export function AuroraPage({
 }: AuroraPageProps) {
   return (
     <div style={ad.root}>
+      <style>{`
+        /* ---- Aurora mobile pass ---- */
+        @media (max-width: 768px) {
+          /* Nav */
+          .ad-navInner { flex-direction: column !important; gap: 12px !important; padding: 14px 16px !important; align-items: flex-start !important; }
+          .ad-navLinks { gap: 4px !important; flex-wrap: wrap !important; }
+          /* Page hero */
+          .pp-heroInner { padding: 40px 20px 48px !important; }
+          .pp-h1 { font-size: clamp(1.8rem, 7vw, 3rem) !important; }
+          /* Grids */
+          .pp-projectsGrid { grid-template-columns: 1fr !important; }
+          .pp-sitesGrid { grid-template-columns: 1fr !important; }
+          .pp-trackGrid { grid-template-columns: 1fr !important; }
+          .pp-section { padding: 48px 20px 0 !important; }
+          /* Footer */
+          .ad-footerInner { flex-direction: column !important; gap: 20px !important; }
+        }
+        @media (max-width: 540px) {
+          .ad-navBrand span { display: none; }
+          .pp-h1 { font-size: 1.7rem !important; }
+          .pp-lede { font-size: 15px !important; }
+        }
+      `}</style>
       <ADTicker />
       <ADNav onNavigate={onNavigate} active={active} />
       <PageHero
@@ -351,7 +376,7 @@ function PageHero({
         <div style={{ ...pp.blob, ...pp.blob2 }} className="ad-meshBlob" />
       </div>
       <ConstellationField />
-      <div style={pp.heroInner}>
+      <div style={pp.heroInner} className="pp-heroInner">
         <div style={pp.crumb}>
           <span style={pp.crumbDot} className="ad-pulse" />
           <a
@@ -383,7 +408,7 @@ export const pp: Record<string, CSSProperties> = {
 
   hero: { position: 'relative', overflow: 'hidden', paddingBottom: 0 },
   heroAurora: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 },
-  blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(90px)', willChange: 'transform' },
+  blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   blob1: {
     width: 620, height: 620, top: -180, left: -120,
     background: 'radial-gradient(circle, hsl(186 95% 55% / 0.55), transparent 60%)',
@@ -708,6 +733,7 @@ export const ad: Record<string, CSSProperties> = {
     display: 'flex', gap: 28, whiteSpace: 'nowrap',
     animation: 'adTicker 50s linear infinite',
     paddingLeft: 32, height: '100%', alignItems: 'center',
+    willChange: 'transform',
   },
   tickerItem: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
@@ -750,7 +776,7 @@ export const ad: Record<string, CSSProperties> = {
   },
 
   meshWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 },
-  meshBlob: { position: 'absolute', borderRadius: '50%', filter: 'blur(90px)', willChange: 'transform' },
+  meshBlob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   mesh1: { width: 780, height: 780, top: -200, left: -160, background: 'radial-gradient(circle, hsl(186 95% 55% / 0.55), transparent 60%)', animation: 'adDrift1 28s ease-in-out infinite alternate' },
   mesh2: { width: 720, height: 720, top: -120, right: -180, background: 'radial-gradient(circle, hsl(220 90% 55% / 0.5), transparent 60%)', animation: 'adDrift2 32s ease-in-out infinite alternate' },
   mesh3: { width: 620, height: 620, top: 320, left: '36%', background: 'radial-gradient(circle, hsl(150 70% 50% / 0.4), transparent 60%)', animation: 'adDrift3 24s ease-in-out infinite alternate' },
@@ -764,6 +790,7 @@ export const ad: Record<string, CSSProperties> = {
   constSpin: {
     position: 'absolute', left: '-15%', right: '-15%', top: '-15%', bottom: '-15%',
     animation: 'adRotate 240s linear infinite', transformOrigin: '50% 50%',
+    willChange: 'transform',
   },
   constFade: { position: 'absolute', inset: 0, background: 'radial-gradient(70% 60% at 50% 30%, transparent 30%, #020a13 90%)' },
   particleWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' },
@@ -778,33 +805,11 @@ export const ad: Record<string, CSSProperties> = {
   },
   btnGhost: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
-    padding: '14px 22px', borderRadius: 999,
-    color: '#fff', fontWeight: 500, fontSize: 15,
-    background: 'hsl(200 30% 8% / 0.6)',
-    border: '1px solid hsl(186 80% 60% / 0.35)',
-    backdropFilter: 'blur(8px)',
+    padding: '13px 24px', borderRadius: 999,
+    color: 'hsl(186 60% 82%)', fontWeight: 500, fontSize: 15,
+    background: 'hsl(186 50% 20% / 0.12)',
+    border: '1px solid hsl(186 60% 55% / 0.28)',
+    boxShadow: '0 4px 20px hsl(186 90% 50% / 0.10)',
     cursor: 'pointer', textDecoration: 'none',
-  },
-
-  footer: { position: 'relative', marginTop: 88, padding: '32px 0 38px' },
-  footerBeam: {
-    height: 1,
-    background: 'linear-gradient(90deg, transparent, hsl(186 90% 60% / 0.5), transparent)',
-    margin: '0 0 32px',
-  },
-  footerInner: {
-    maxWidth: 1180, margin: '0 auto', padding: '0 32px',
-    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    gap: 24, flexWrap: 'wrap',
-  },
-  footerBrand: { display: 'flex', alignItems: 'center', gap: 14 },
-  footerMark: { height: 36 },
-  footerWord: { fontSize: 16, fontWeight: 700 },
-  footerEyebrow: { fontFamily: MONO, fontSize: 11, color: TG_DIM, letterSpacing: '0.14em', marginTop: 2 },
-  footerMono: { display: 'flex', gap: 14, fontFamily: MONO, fontSize: 11, color: TG_DIM, letterSpacing: '0.14em', flexWrap: 'wrap' },
-  footerCell: {
-    padding: '4px 10px', borderRadius: 999,
-    background: 'hsl(200 30% 8% / 0.7)',
-    border: '1px solid hsl(186 50% 40% / 0.2)',
   },
 };

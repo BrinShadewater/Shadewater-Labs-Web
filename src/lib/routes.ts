@@ -7,6 +7,7 @@ const LABS_STATIC_PATHS: Record<string, string> = {
   projects: '/projects',
   websites: '/websites',
   'tech-news': '/tech-news',
+  about: '/about',
   'shadewater-seo-report': '/shadewater-seo-report',
   'webp-me-daddy': '/webp-me-daddy',
   'inkmaster-studio': '/inkmaster-studio',
@@ -17,6 +18,7 @@ const LABS_PAGES = new Set([
   'projects',
   'websites',
   'tech-news',
+  'about',
   'shadewater-seo-report',
   'webp-me-daddy',
   'inkmaster-studio',
@@ -56,6 +58,8 @@ export function parseLocation(pathname: string, _hash = '') {
       return { page: 'websites', noteId: '' };
     case 'tech-news':
       return { page: 'tech-news', noteId: '' };
+    case 'about':
+      return { page: 'about', noteId: '' };
     case 'shadewater-seo-report':
       return { page: 'shadewater-seo-report', noteId: '' };
     case 'webp-me-daddy':
