@@ -32,17 +32,17 @@ WEBP_SKILL_DIR = Path.home() / ".codex" / "skills" / "webp-me-daddy"
 WEBP_SKILL_MD = WEBP_SKILL_DIR / "SKILL.md"
 WEBP_SCRIPTS_DIR = WEBP_SKILL_DIR / "scripts"
 
-PAGE_BG = colors.HexColor("#071622")
-SURFACE = colors.HexColor("#122430")
-SURFACE_ALT = colors.HexColor("#1A3341")
-SURFACE_CARD = colors.HexColor("#132732")
-FORE = colors.HexColor("#F7EFE8")
-FORE_MUTED = colors.HexColor("#D6C8B4")
-SAND = colors.HexColor("#E8CDA6")
-SAND_SOFT = colors.HexColor("#C8B18D")
-TEAL = colors.HexColor("#4FA4AB")
-TEAL_DEEP = colors.HexColor("#244D57")
-LINE = colors.HexColor("#2C4450")
+PAGE_BG = colors.HexColor("#06202A")
+SURFACE = colors.HexColor("#092731")
+SURFACE_ALT = colors.HexColor("#0B303D")
+SURFACE_CARD = colors.HexColor("#071F28")
+FORE = colors.HexColor("#F8FBFF")
+FORE_MUTED = colors.HexColor("#C9D8E7")
+SAND = colors.HexColor("#A9C8EC")
+SAND_SOFT = colors.HexColor("#86A7C8")
+TEAL = colors.HexColor("#3D6FA6")
+TEAL_DEEP = colors.HexColor("#234A7C")
+LINE = colors.HexColor("#31556A")
 
 
 def styles() -> dict[str, ParagraphStyle]:
@@ -387,10 +387,13 @@ def bullet_block(items: list[str]) -> list[Table]:
 
 
 def metrics_grid(items: list[tuple[str, str, str]]) -> Table:
-    col_width = 1.67 * inch
-    cells = []
+    total_width = 6.92 * inch
+    gap = 0.14 * inch
+    col_width = (total_width - gap) / 2
+    rows = []
+    current = []
     for label, value, detail in items:
-        cells.append(
+        current.append(
             card(
                 [
                     Paragraph(label, STYLE["MetricLabel"]),
@@ -403,20 +406,29 @@ def metrics_grid(items: list[tuple[str, str, str]]) -> Table:
                 background=SURFACE_ALT,
             )
         )
+        if len(current) == 2:
+            rows.append(current)
+            current = []
 
-    table = Table([cells], colWidths=[col_width] * 4)
+    if current:
+        while len(current) < 2:
+            current.append(Spacer(1, 0.1 * inch))
+        rows.append(current)
+
+    table = Table(rows, colWidths=[col_width] * 2)
     table.setStyle(
         TableStyle(
             [
                 ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 0.12 * inch),
+                ("RIGHTPADDING", (0, 0), (-1, -1), gap),
                 ("TOPPADDING", (0, 0), (-1, -1), 0),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
                 ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ]
         )
     )
-    table.setStyle(TableStyle([("RIGHTPADDING", (3, 0), (3, 0), 0)]))
+    for row_index in range(len(rows)):
+        table.setStyle(TableStyle([("RIGHTPADDING", (1, row_index), (1, row_index), 0)]))
     return table
 
 
@@ -549,7 +561,7 @@ def hero_block(title: str, summary: str, tagline: str, project_logo: Path, meta_
 
 
 def build_seo_story(snapshot: dict) -> list:
-    brand_logo = PUBLIC_DIR / "shadewater-labs-logo-mark-transparent.png"
+    brand_logo = PUBLIC_DIR / "shadewater-labs-logo-cropped.webp"
     story = []
     story.extend(
         hero_block(
@@ -561,7 +573,8 @@ def build_seo_story(snapshot: dict) -> list:
             [
                 f"Last synced: {snapshot['lastSyncedAt'][:10]}",
                 f"Latest skill update: {snapshot['newestSkillArtifactAt'][:10]}",
-                "Source: local seo skill snapshot",
+                "Source: local SEO skill snapshot",
+                "Dashboard: novice readout plus operator evidence",
             ],
         )
     )
@@ -576,13 +589,48 @@ def build_seo_story(snapshot: dict) -> list:
             ]
         )
     )
-    story.append(Spacer(1, 0.2 * inch))
+    story.append(PageBreak())
     story.append(Paragraph("Why This Exists", STYLE["SectionTitle"]))
     story.append(section_rule())
     story.append(Spacer(1, 0.08 * inch))
     story.append(Paragraph(snapshot["headline"], STYLE["SectionIntro"]))
     story.append(Spacer(1, 0.08 * inch))
-    story.append(two_col_cards([(item["title"], item["description"]) for item in snapshot["valueProps"]], columns=3))
+    story.append(two_col_cards([(item["title"], item["description"]) for item in snapshot["valueProps"]], columns=2))
+
+    story.append(PageBreak())
+    story.append(Paragraph("Current Report Experience", STYLE["SectionTitle"]))
+    story.append(section_rule())
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(
+        Paragraph(
+            "The dashboard now separates executive readability from technical evidence. A client can understand the score, the speed context, and the next move quickly, while an operator can still open findings, inspect evidence, copy tasks, print the full report, or hand the work to Claude/Codex.",
+            STYLE["SectionIntro"],
+        )
+    )
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(
+        two_col_cards(
+            [
+                (
+                    "Overall Score",
+                    "A full audit score across technical SEO, content, AI readiness, and site health. It is meant for quick client orientation, not as a replacement for the findings.",
+                ),
+                (
+                    "Speed Insights",
+                    "A separate Google PageSpeed mobile performance score for Core Web Vitals context, shown apart from the overall audit score so performance does not get buried.",
+                ),
+                (
+                    "Novice Summary",
+                    "Critical Issues, Warnings, Info / Opportunities, and Strong Scores are grouped into readable sections with explanation, impact, effort, and how-to-resolve language.",
+                ),
+                (
+                    "Print & PDF Friendly Evidence",
+                    "Evidence and fix details are expanded during print/PDF export so the saved report includes the full technical context instead of hidden dropdown content.",
+                ),
+            ],
+            columns=2,
+        )
+    )
 
     story.append(Paragraph("Operator Workflow", STYLE["SectionTitle"]))
     story.append(section_rule())
@@ -608,6 +656,32 @@ def build_seo_story(snapshot: dict) -> list:
     )
     story.append(Spacer(1, 0.08 * inch))
     story.append(two_col_cards([(item["title"], item["description"]) for item in snapshot["outputs"]], columns=2))
+
+    story.append(Paragraph("Claude & Codex Handoff", STYLE["SectionTitle"]))
+    story.append(section_rule())
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(
+        Paragraph(
+            "Every generated report can now produce agent-specific handoff markdown. The buttons copy the handoff text from the dashboard, and the same content is saved beside the report for later implementation work.",
+            STYLE["SectionIntro"],
+        )
+    )
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(
+        two_col_cards(
+            [
+                (
+                    "Claude Handoff",
+                    "Guides Claude Code to open the SEO/web project, read CLAUDE.md when present, run tests before and after changes, and avoid secrets or pushes without approval.",
+                ),
+                (
+                    "Codex Handoff",
+                    "Guides Codex to inspect git state, read AGENTS.md or project memory where present, use existing tests and report artifacts, and avoid reset/delete/push actions without approval.",
+                ),
+            ],
+            columns=2,
+        )
+    )
 
     story.append(Paragraph("Command Coverage", STYLE["SectionTitle"]))
     story.append(section_rule())

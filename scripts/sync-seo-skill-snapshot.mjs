@@ -22,7 +22,7 @@ const staticNarrative = {
   headline:
     'A deterministic, report-first SEO operator for real websites, content archives, and GitHub repositories.',
   summary:
-    'Shadewater SEO Report turns live site evidence into branded HTML dashboards, detailed markdown audits, fix plans, and image remediation handoffs. It was hardened through real production dogfooding on brinshadewater.com, then folded back into the skill as repeatable workflow improvements.',
+    'Shadewater SEO Report turns live site evidence into branded HTML dashboards, detailed markdown audits, fix plans, PageSpeed context, and Claude/Codex handoff files. The current report is built for novice-friendly readouts first, then gives technical operators the evidence and agent-ready artifacts they need to ship fixes.',
   valueProps: [
     {
       title: 'Evidence Before Advice',
@@ -32,7 +32,12 @@ const staticNarrative = {
     {
       title: 'Branded Deliverables',
       description:
-        'Audits end as presentation-ready artifacts: a themed HTML dashboard, a detailed markdown report, an action plan, and optional image handoffs for Webp Me Daddy.',
+        'Audits end as presentation-ready artifacts: a themed HTML dashboard, a detailed markdown report, an action plan, Claude/Codex handoffs, and optional image handoffs for Webp Me Daddy.',
+    },
+    {
+      title: 'Novice-Friendly Readability',
+      description:
+        'The dashboard explains what matters in plain English, groups issues by severity, separates environment limitations, and shows a fix sequence before diving into technical evidence.',
     },
     {
       title: 'Safe-by-Default Auditing',
@@ -51,7 +56,7 @@ const staticNarrative = {
       label: '02',
       title: 'Verify with deterministic checks',
       description:
-        'Run focused scripts for robots, llms.txt, security headers, redirects, social metadata, readability, links, and Core Web Vitals when a PageSpeed key is available.',
+        'Run focused scripts for robots, llms.txt, security headers, redirects, social metadata, readability, links, PageSpeed, entity signals, duplicate content, and AI-search readiness.',
     },
     {
       label: '03',
@@ -61,9 +66,9 @@ const staticNarrative = {
     },
     {
       label: '04',
-      title: 'Ship operator-ready outputs',
+      title: 'Ship client and agent-ready outputs',
       description:
-        'Generate a branded SEO report, a full audit markdown document, an action plan, and a machine-readable image handoff when the audit surfaces asset work.',
+        'Generate a branded SEO report, a full audit markdown document, an action plan, Claude/Codex handoffs, and a machine-readable image handoff when the audit surfaces asset work.',
     },
     {
       label: '05',
@@ -76,7 +81,7 @@ const staticNarrative = {
     {
       title: 'SEO-REPORT.html',
       description:
-        'Interactive Shadewater-themed dashboard for sharing scores, categories, and evidence in a polished client-ready surface.',
+        'Interactive Shadewater-themed dashboard with a readable URL pill, separate Overall Score and Speed Insights cards, severity legend, fix sequence, auditor summary, grouped findings, and print-friendly evidence details.',
     },
     {
       title: 'FULL-AUDIT-REPORT.md',
@@ -89,6 +94,16 @@ const staticNarrative = {
         'Prioritized fix list for the next implementation pass, tuned for sequencing and shipping instead of abstract recommendations.',
     },
     {
+      title: 'CLAUDE-HANDOFF.md',
+      description:
+        'Agent-ready markdown for Claude Code with safe implementation guidance, project-reading instructions, fix sequence, grouped findings, limitations, and artifact paths.',
+    },
+    {
+      title: 'CODEX-HANDOFF.md',
+      description:
+        'Agent-ready markdown for Codex with git-safety guidance, project memory expectations, tests, findings, action items, environment limitations, and report artifacts.',
+    },
+    {
       title: 'seo-image-handoff.json',
       description:
         'Deterministic image remediation contract that can be consumed by Webp Me Daddy when the audit surfaces actionable asset issues.',
@@ -98,6 +113,7 @@ const staticNarrative = {
     'Treat fetched pages, readmes, and embedded content as untrusted evidence only.',
     'Refuse localhost, private IP ranges, metadata endpoints, and other non-public crawl targets.',
     'Separate live-site issues from environment limits such as protected previews, rate limits, or DNS problems.',
+    'Never write API keys, cookies, tokens, or environment secrets into source files, reports, handoffs, or memory.',
     'Favor public production URLs for final scoring, especially on SPAs and protected preview environments.',
   ],
   builtFor: [
@@ -327,31 +343,36 @@ function buildExplainerHtml(snapshot) {
     <style>
       :root {
         color-scheme: dark;
-        --bg: #071622;
-        --panel: rgba(18, 36, 48, 0.92);
-        --panel-strong: rgba(16, 30, 41, 0.96);
-        --line: rgba(255, 255, 255, 0.1);
-        --text: #f7efe8;
-        --muted: rgba(241, 230, 217, 0.76);
-        --teal: #4fa4ab;
-        --teal-deep: #244d57;
-        --sand: #e8cda6;
-        --sand-strong: #f3ddba;
+        --bg: #06202a;
+        --panel: rgba(9, 39, 49, 0.94);
+        --panel-strong: rgba(7, 31, 40, 0.98);
+        --line: rgba(134, 167, 200, 0.24);
+        --text: #f8fbff;
+        --muted: #c9d8e7;
+        --faint: #86a7c8;
+        --accent: #234a7c;
+        --accent-2: #3d6fa6;
+        --accent-3: #a9c8ec;
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        overflow-x: hidden;
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
         background:
-          radial-gradient(circle at top left, rgba(85, 144, 153, 0.18), transparent 32%),
-          radial-gradient(circle at top right, rgba(232, 205, 166, 0.14), transparent 28%),
-          linear-gradient(180deg, #091a27 0%, var(--bg) 100%);
+          radial-gradient(circle at 82% 0%, rgba(35, 74, 124, 0.24), transparent 28%),
+          radial-gradient(circle at 14% 100%, rgba(61, 111, 166, 0.12), transparent 30%),
+          linear-gradient(180deg, #082530 0%, var(--bg) 100%);
         color: var(--text);
         font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+        overflow-x: hidden;
       }
 
       a {
@@ -367,14 +388,24 @@ function buildExplainerHtml(snapshot) {
       .hero {
         display: grid;
         gap: 28px;
-        grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
-        align-items: start;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+        align-items: stretch;
         border: 1px solid var(--line);
-        border-radius: 36px;
+        border-radius: 8px;
         padding: 34px;
         background:
-          linear-gradient(135deg, rgba(28, 55, 69, 0.98), rgba(44, 66, 76, 0.94), rgba(69, 56, 46, 0.9));
+          linear-gradient(135deg, rgba(9, 39, 49, 0.98), rgba(7, 31, 40, 0.96));
         box-shadow: 0 24px 60px rgba(3, 10, 18, 0.28);
+      }
+
+      .hero > *,
+      .grid > *,
+      .section > *,
+      .meta-card,
+      .metric-card,
+      .detail-card,
+      .workflow-card {
+        min-width: 0;
       }
 
       .hero-mark {
@@ -383,9 +414,9 @@ function buildExplainerHtml(snapshot) {
         gap: 14px;
         padding: 10px 14px;
         border-radius: 999px;
-        border: 1px solid rgba(232, 205, 166, 0.22);
-        background: rgba(255, 255, 255, 0.04);
-        color: rgba(232, 205, 166, 0.9);
+        border: 1px solid rgba(134, 167, 200, 0.38);
+        background: rgba(134, 167, 200, 0.12);
+        color: var(--accent-3);
         font-size: 12px;
         letter-spacing: 0.28em;
         text-transform: uppercase;
@@ -393,9 +424,11 @@ function buildExplainerHtml(snapshot) {
 
       .hero-title {
         margin: 20px 0 0;
-        font-family: "Cormorant Garamond", Georgia, serif;
-        font-size: clamp(3.2rem, 6vw, 5.5rem);
-        line-height: 0.92;
+        font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+        font-size: clamp(3rem, 5.4vw, 5rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+        max-width: 12ch;
       }
 
       .hero-copy {
@@ -404,18 +437,20 @@ function buildExplainerHtml(snapshot) {
         color: var(--muted);
         font-size: 1.08rem;
         line-height: 1.7;
+        overflow-wrap: anywhere;
       }
 
       .hero-meta {
         display: grid;
         gap: 18px;
+        align-content: start;
       }
 
       .logo-card,
       .meta-card,
       .section {
         border: 1px solid var(--line);
-        border-radius: 28px;
+        border-radius: 8px;
         background: var(--panel);
         box-shadow: 0 18px 40px rgba(3, 10, 18, 0.22);
       }
@@ -426,12 +461,17 @@ function buildExplainerHtml(snapshot) {
         justify-content: center;
         min-height: 210px;
         padding: 24px;
+        background:
+          radial-gradient(circle at 50% 40%, rgba(61, 111, 166, 0.2), transparent 60%),
+          var(--panel-strong);
       }
 
       .logo-card img {
         width: min(220px, 68%);
+        max-height: 220px;
         height: auto;
-        filter: drop-shadow(0 16px 32px rgba(79, 164, 171, 0.18));
+        object-fit: contain;
+        filter: drop-shadow(0 16px 32px rgba(35, 74, 124, 0.34));
       }
 
       .meta-card {
@@ -444,13 +484,15 @@ function buildExplainerHtml(snapshot) {
         font-size: 0.8rem;
         letter-spacing: 0.28em;
         text-transform: uppercase;
-        color: rgba(232, 205, 166, 0.82);
+        color: var(--accent-3);
       }
 
       .meta-card p {
         margin: 12px 0 0;
         color: var(--muted);
         line-height: 1.6;
+        overflow-wrap: anywhere;
+        word-break: break-word;
       }
 
       .meta-card strong {
@@ -460,24 +502,28 @@ function buildExplainerHtml(snapshot) {
       .grid {
         display: grid;
         gap: 22px;
+        align-items: stretch;
       }
 
       .metrics {
         margin-top: 28px;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(160px, 1fr));
       }
 
       .metric-card {
         border: 1px solid var(--line);
-        border-radius: 24px;
-        padding: 22px;
+        border-radius: 8px;
+        padding: 18px;
         background: var(--panel-strong);
+        display: grid;
+        align-content: start;
+        min-height: 150px;
       }
 
       .metric-label,
       .workflow-step {
         margin: 0;
-        color: rgba(232, 205, 166, 0.82);
+        color: var(--accent-3);
         font-size: 0.76rem;
         letter-spacing: 0.26em;
         text-transform: uppercase;
@@ -485,10 +531,11 @@ function buildExplainerHtml(snapshot) {
 
       .metric-value {
         margin-top: 14px;
-        font-size: 3rem;
+        font-size: clamp(2.35rem, 4vw, 3rem);
         line-height: 1;
         font-weight: 700;
-        color: var(--text);
+        color: var(--accent-3);
+        text-shadow: 0 12px 32px rgba(35, 74, 124, 0.35);
       }
 
       .metric-detail,
@@ -503,6 +550,7 @@ function buildExplainerHtml(snapshot) {
 
       .metric-detail {
         margin: 12px 0 0;
+        overflow-wrap: anywhere;
       }
 
       .stack {
@@ -512,6 +560,7 @@ function buildExplainerHtml(snapshot) {
       .section {
         margin-top: 28px;
         padding: 30px;
+        overflow: hidden;
       }
 
       .section-title {
@@ -529,56 +578,62 @@ function buildExplainerHtml(snapshot) {
       .section-intro {
         margin: 16px 0 0;
         max-width: 70ch;
+        overflow-wrap: anywhere;
       }
 
       .three-up {
         margin-top: 22px;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .detail-card,
       .workflow-card {
         border: 1px solid var(--line);
-        border-radius: 24px;
+        border-radius: 8px;
         padding: 22px;
         background: var(--panel-strong);
+        display: grid;
+        align-content: start;
+        height: 100%;
       }
 
       .detail-card h3,
       .workflow-card h3 {
         margin: 14px 0 0;
-        font-size: 1.35rem;
+        font-size: clamp(1.08rem, 2vw, 1.28rem);
+        overflow-wrap: anywhere;
       }
 
       .detail-card p,
       .workflow-card p {
         margin: 12px 0 0;
+        overflow-wrap: anywhere;
       }
 
       .workflow-grid {
         margin-top: 22px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       }
 
       .table-wrap {
         margin-top: 22px;
         overflow: auto;
         border: 1px solid var(--line);
-        border-radius: 22px;
-        background: rgba(10, 22, 30, 0.84);
+        border-radius: 8px;
+        background: var(--panel-strong);
       }
 
       table {
         width: 100%;
         border-collapse: collapse;
-        min-width: 760px;
+        min-width: 680px;
       }
 
       thead th {
         padding: 16px 18px;
         border-bottom: 1px solid var(--line);
         text-align: left;
-        color: rgba(232, 205, 166, 0.88);
+        color: var(--accent-3);
         font-size: 0.76rem;
         letter-spacing: 0.24em;
         text-transform: uppercase;
@@ -596,33 +651,38 @@ function buildExplainerHtml(snapshot) {
 
       code {
         display: inline-block;
+        max-width: 100%;
         padding: 0.22rem 0.48rem;
         border-radius: 0.55rem;
-        background: rgba(255, 255, 255, 0.06);
-        color: var(--sand-strong);
+        background: rgba(134, 167, 200, 0.12);
+        color: var(--accent-3);
         font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
         font-size: 0.86rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
       }
 
       .list-grid {
         margin-top: 22px;
         display: grid;
         gap: 14px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         padding-left: 0;
         list-style: none;
       }
 
       .list-grid li {
         padding: 18px 20px;
-        border-radius: 20px;
+        border-radius: 8px;
         border: 1px solid var(--line);
         background: var(--panel-strong);
+        overflow-wrap: anywhere;
       }
 
       .footer-note {
         margin-top: 28px;
-        color: rgba(241, 230, 217, 0.66);
+        color: var(--faint);
         font-size: 0.96rem;
       }
 
@@ -644,12 +704,33 @@ function buildExplainerHtml(snapshot) {
           padding: 26px;
         }
 
+        .metrics {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
         .section {
           padding: 24px;
         }
 
         .hero-title {
-          font-size: clamp(2.75rem, 12vw, 4.1rem);
+          font-size: clamp(2.35rem, 11vw, 3.5rem);
+        }
+      }
+
+      @media (max-width: 620px) {
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-mark {
+          align-items: flex-start;
+          white-space: normal;
+          overflow-wrap: anywhere;
+          letter-spacing: 0.18em;
+        }
+
+        table {
+          min-width: 620px;
         }
       }
     </style>
@@ -668,7 +749,7 @@ function buildExplainerHtml(snapshot) {
 
         <div class="hero-meta">
           <div class="logo-card">
-            <img src="/shadewater-labs-logo-mark.webp" alt="Shadewater Labs logo mark" width="512" height="512" />
+            <img src="./shadewater-labs-logo-cropped.webp" alt="Shadewater Labs logo mark" width="512" height="512" />
           </div>
           <div class="meta-card">
             <h2>Current Sync</h2>

@@ -10,6 +10,12 @@ import {
   pp,
 } from '@/components/aurora/chrome';
 import type { AuroraNavigate } from '@/components/aurora/chrome';
+import {
+  SHADEWATER_LABS_TEXT_LOGO_ALT,
+  SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
+  SHADEWATER_LABS_TEXT_LOGO_HEIGHT,
+  SHADEWATER_LABS_TEXT_LOGO_WIDTH,
+} from '@/lib/brandAssets';
 
 interface ShadewaterSeoReportProps {
   onNavigate: AuroraNavigate;
@@ -19,12 +25,14 @@ const ACCENT = '186 90% 60%';
 
 export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportProps) {
   const project = projectStatuses['shadewater-seo-report'];
+  const sampleReportHref = '/shadewater-seo-report-sample.html';
+  const explainerHref = '/shadewater-seo-report-explainer.pdf';
 
   const metrics = [
-    { k: 'AUDIT_TARGETS', v: '12', sub: 'pages scanned per run' },
-    { k: 'DETERMINISTIC', v: '100%', sub: 'reproducible reports' },
-    { k: 'FIX_LOOPS', v: '06', sub: 'rerunnable workflows' },
-    { k: 'AVG_RUNTIME', v: '47s', sub: 'live evidence pull' },
+    { k: 'OVERALL_SCORE', v: '90', sub: 'shadewaterlabs.com audit' },
+    { k: 'SPEED_INSIGHTS', v: '78', sub: 'mobile performance score' },
+    { k: 'VERIFIED_FINDINGS', v: '03', sub: 'confirmed next fixes' },
+    { k: 'ARTIFACTS', v: '06', sub: 'report + handoff files' },
   ];
 
   const steps = [
@@ -58,6 +66,21 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
 
           <div style={pp.projSplit}>
             <div style={pp.projInfo}>
+              <img
+                src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
+                alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
+                width={SHADEWATER_LABS_TEXT_LOGO_WIDTH}
+                height={SHADEWATER_LABS_TEXT_LOGO_HEIGHT}
+                loading="eager"
+                decoding="async"
+                style={{
+                  display: 'block',
+                  width: 'min(320px, 78vw)',
+                  height: 'auto',
+                  margin: '0 0 22px',
+                  filter: 'drop-shadow(0 18px 42px hsl(192 80% 60% / 0.18))',
+                }}
+              />
               <span style={{ ...pp.projBadge, color: `hsl(${ACCENT})`, borderColor: `hsl(${ACCENT} / 0.4)` }}>
                 INTERNAL · OPERATOR
               </span>
@@ -69,38 +92,57 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
               </p>
               <div style={pp.projCtas}>
                 <a
-                  href="/shadewater-seo-report-explainer.html"
+                  href={sampleReportHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ ...ad.btnPrimary, background: `linear-gradient(135deg, hsl(${ACCENT} / 0.95), hsl(192 80% 60%))` }}
                 >
-                  Run the audit <span>→</span>
+                  View sample report <span>→</span>
                 </a>
                 <a
-                  href="/shadewater-seo-report-explainer.html"
+                  href={explainerHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={ad.btnGhost}
                 >
                   <span style={{ fontFamily: MONO, fontSize: 12, opacity: 0.7 }}>›</span>
-                  Read the explainer
+                  Open explainer PDF
                 </a>
               </div>
 
               <div style={pp.projMetaRow}>
-                <span style={pp.projMetaCell}>build · v0.6.2</span>
-                <span style={pp.projMetaCell}>runs · 128</span>
-                <span style={pp.projMetaCell}>last_run · 4h</span>
+                <span style={pp.projMetaCell}>target · shadewaterlabs.com</span>
+                <span style={pp.projMetaCell}>score · 90/100</span>
+                <span style={pp.projMetaCell}>generated · May 18</span>
               </div>
             </div>
 
             <div style={pp.projHeroArt}>
               <div style={{ ...pp.projArtGlow, background: `radial-gradient(60% 60% at 50% 50%, hsl(${ACCENT} / 0.5), transparent 70%)` }} />
-              <div style={pp.projOrb}>
+              <div style={{ ...pp.projOrb, overflow: 'hidden' }}>
                 <div style={pp.projOrbRing} />
                 <div style={pp.projOrbRing2} />
-                <div style={{ ...pp.projOrbCore, background: `radial-gradient(circle, hsl(${ACCENT}) 0%, hsl(186 60% 25%) 70%)` }}>
-                  <span style={pp.projOrbGlyph}>SR</span>
+                <div
+                  style={{
+                    ...pp.projOrbCore,
+                    background: `radial-gradient(circle, hsl(${ACCENT} / 0.18) 0%, hsl(186 60% 12%) 72%)`,
+                    overflow: 'hidden',
+                  }}
+                >
+                  <img
+                    src={project.hero.logo?.src ?? SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
+                    alt=""
+                    width={project.hero.logo?.width ?? SHADEWATER_LABS_TEXT_LOGO_WIDTH}
+                    height={project.hero.logo?.height ?? SHADEWATER_LABS_TEXT_LOGO_HEIGHT}
+                    loading="eager"
+                    decoding="async"
+                    style={{
+                      width: '54%',
+                      height: '72%',
+                      objectFit: 'contain',
+                      filter: 'drop-shadow(0 12px 24px hsl(192 80% 60% / 0.25))',
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -117,6 +159,49 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
               <div style={pp.metricSub}>{m.sub}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section style={pp.section}>
+        <div style={pp.kicker2}>
+          <span style={pp.kickerLine2} />
+          <span style={pp.kickerText2}>§ 01 · LIVE REPORT OUTPUT</span>
+          <span style={pp.kickerLine2} />
+        </div>
+        <h2 style={pp.h2}>The actual dashboard</h2>
+        <p style={{ ...pp.stepBody, maxWidth: 820, margin: '12px auto 24px', textAlign: 'center' }}>
+          This is the generated Shadewater SEO Report for shadewaterlabs.com, embedded directly from the report artifact.
+          Open it in a new tab for the interactive filters, copy buttons, print layout, and agent handoff controls.
+        </p>
+        <div
+          style={{
+            overflow: 'hidden',
+            border: '1px solid rgba(255,255,255,0.12)',
+            borderRadius: 18,
+            background: 'hsl(210 30% 8%)',
+            boxShadow: '0 18px 44px hsl(210 66% 3% / 0.28)',
+          }}
+        >
+          <iframe
+            title="Shadewater SEO Report sample dashboard"
+            src={sampleReportHref}
+            loading="lazy"
+            style={{ display: 'block', width: '100%', height: 620, border: 0 }}
+          />
+        </div>
+        <div style={{ ...pp.projCtas, justifyContent: 'center', marginTop: 22 }}>
+          <a
+            href={sampleReportHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ ...ad.btnPrimary, background: `linear-gradient(135deg, hsl(${ACCENT} / 0.95), hsl(192 80% 60%))` }}
+          >
+            Open sample report <span>→</span>
+          </a>
+          <a href={explainerHref} target="_blank" rel="noopener noreferrer" style={ad.btnGhost}>
+            <span style={{ fontFamily: MONO, fontSize: 12, opacity: 0.7 }}>›</span>
+            Open explainer PDF
+          </a>
         </div>
       </section>
 
