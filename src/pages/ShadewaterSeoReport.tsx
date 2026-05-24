@@ -27,6 +27,7 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
   const project = projectStatuses['shadewater-seo-report'];
   const sampleReportHref = '/shadewater-seo-report-sample.html';
   const explainerHref = '/shadewater-seo-report-explainer.pdf';
+  const dashboardPreviewHref = '/shadewater-seo-report-dashboard-preview.png';
 
   const metrics = [
     { k: 'OVERALL_SCORE', v: '90', sub: 'shadewaterlabs.com audit' },
@@ -170,11 +171,12 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
         </div>
         <h2 style={pp.h2}>The actual dashboard</h2>
         <p style={{ ...pp.stepBody, maxWidth: 820, margin: '12px auto 24px', textAlign: 'center' }}>
-          This is the generated Shadewater SEO Report for shadewaterlabs.com, embedded directly from the report artifact.
-          Open it in a new tab for the interactive filters, copy buttons, print layout, and agent handoff controls.
+          This preview is captured from the generated Shadewater SEO Report for shadewaterlabs.com.
+          Open the full report in a new tab for the interactive filters, copy buttons, print layout, and agent handoff controls.
         </p>
         <div
           style={{
+            position: 'relative',
             overflow: 'hidden',
             border: '1px solid rgba(255,255,255,0.12)',
             borderRadius: 18,
@@ -182,11 +184,18 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
             boxShadow: '0 18px 44px hsl(210 66% 3% / 0.28)',
           }}
         >
-          <iframe
-            title="Shadewater SEO Report sample dashboard"
-            src={sampleReportHref}
+          <img
+            src={dashboardPreviewHref}
+            alt="Preview of the generated Shadewater SEO Report dashboard for shadewaterlabs.com"
+            width={1440}
+            height={1100}
             loading="lazy"
-            style={{ display: 'block', width: '100%', height: 620, border: 0 }}
+            decoding="async"
+            style={{
+              display: 'block',
+              width: '100%',
+              height: 'auto',
+            }}
           />
         </div>
         <div style={{ ...pp.projCtas, justifyContent: 'center', marginTop: 22 }}>
