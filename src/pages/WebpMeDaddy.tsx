@@ -27,6 +27,7 @@ export default function WebpMeDaddy({ onNavigate }: WebpMeDaddyProps) {
     meta: ['build · v0.9.4', 'recipes · 14', 'last_run · 6h', 'sites_audited · 9'],
     cta: {
       primary: 'See the workflow',
+      primaryHref: '#core-workflow',
       secondary: 'Open explainer PDF',
       secondaryHref: '/webp-me-daddy-explainer.pdf',
     },
@@ -65,9 +66,43 @@ export default function WebpMeDaddy({ onNavigate }: WebpMeDaddyProps) {
       ],
     },
     showcase: [
-      { id: 'review-proof', label: 'SURFACE PROOF', title: 'Review-hero proof sheet', description: 'A real proof render shown on dark and light surfaces so composition and contrast issues are visible before shipping.', tag: 'webp-me-daddy/proof-review-hero.webp', command: 'wmd proof public/bugonia-review-hero.webp' },
-      { id: 'logo-proof', label: 'TRANSPARENCY QA', title: 'Logo lockup surface check', description: 'Transparent assets get reviewed on dark, light, and checker backgrounds so matte halos and edge issues do not slip through.', tag: 'webp-me-daddy/proof-logo-lockup.webp', command: 'wmd proof public/brin-margot-logo-lockup.webp' },
-      { id: 'batch-board', label: 'BATCH REVIEW', title: 'Batch contact sheet', description: 'A dry-run proof board that shows multiple assets together with status, issue hints, and visual QA context for faster approvals.', tag: 'webp-me-daddy/proof-batch-contact.webp', command: 'wmd batch ./assets --recipe review-hero --dry-run --proof', featured: true },
+      {
+        id: 'review-proof',
+        label: 'SURFACE PROOF',
+        title: 'Review-hero proof sheet',
+        description: 'A real proof render shown on dark and light surfaces so composition and contrast issues are visible before shipping.',
+        tag: 'webp-me-daddy/proof-review-hero.webp',
+        command: 'wmd proof public/bugonia-review-hero.webp',
+        src: '/webp-me-daddy-proof-review-hero.webp',
+        alt: 'Webp Me Daddy review hero proof sheet showing the same image across dark and light surfaces.',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 'logo-proof',
+        label: 'TRANSPARENCY QA',
+        title: 'Logo lockup surface check',
+        description: 'Transparent assets get reviewed on dark, light, and checker backgrounds so matte halos and edge issues do not slip through.',
+        tag: 'webp-me-daddy/proof-logo-lockup.webp',
+        command: 'wmd proof public/brin-margot-logo-lockup.webp',
+        src: '/webp-me-daddy-proof-logo-lockup.webp',
+        alt: 'Webp Me Daddy transparent logo proof sheet with dark, light, and checkerboard backgrounds.',
+        width: 1600,
+        height: 900,
+      },
+      {
+        id: 'batch-board',
+        label: 'BATCH REVIEW',
+        title: 'Batch contact sheet',
+        description: 'A dry-run proof board that shows multiple assets together with status, issue hints, and visual QA context for faster approvals.',
+        tag: 'webp-me-daddy/proof-batch-contact.webp',
+        command: 'wmd batch ./assets --recipe review-hero --dry-run --proof',
+        src: '/webp-me-daddy-proof-batch-contact-sheet.webp',
+        alt: 'Webp Me Daddy batch contact sheet showing multiple processed assets together for review.',
+        width: 1600,
+        height: 900,
+        featured: true,
+      },
     ],
     comparison: {
       section: {
@@ -99,8 +134,6 @@ export default function WebpMeDaddy({ onNavigate }: WebpMeDaddyProps) {
         'Webp Me Daddy is already a real Shadewater Labs project, and it is still actively evolving. The explainer is the deepest read; the sponsor deck is the fastest read.',
     },
   };
-
-  data.cta.primaryHref = '/webp-me-daddy-explainer.pdf';
 
   return <ProductPage data={data} onNavigate={onNavigate} />;
 }

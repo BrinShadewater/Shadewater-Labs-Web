@@ -360,6 +360,49 @@ def two_col_cards(items: list[tuple[str, str]], columns: int = 2) -> Table:
     return grid
 
 
+def image_card_grid(items: list[tuple[str, str, Path]], columns: int = 2) -> Table:
+    total_width = 6.92 * inch
+    gap = 0.14 * inch
+    col_width = (total_width - (gap * (columns - 1))) / columns
+    rows = []
+    current = []
+
+    for title, body, image_path in items:
+        preview = image(image_path, width=col_width - 0.24 * inch, height=1.52 * inch)
+        inner = [
+            Paragraph(title, STYLE["CardTitle"]),
+            Spacer(1, 0.05 * inch),
+            Paragraph(body, STYLE["CardBody"]),
+        ]
+        if preview is not None:
+            inner.extend([Spacer(1, 0.08 * inch), preview])
+        current.append(card(inner, width=col_width, background=SURFACE_ALT))
+        if len(current) == columns:
+            rows.append(current)
+            current = []
+
+    if current:
+        while len(current) < columns:
+            current.append(Spacer(1, 0.1 * inch))
+        rows.append(current)
+
+    grid = Table(rows, colWidths=[col_width] * columns)
+    grid.setStyle(
+        TableStyle(
+            [
+                ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                ("RIGHTPADDING", (0, 0), (-1, -1), gap),
+                ("TOPPADDING", (0, 0), (-1, -1), 0),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ]
+        )
+    )
+    for row_index in range(len(rows)):
+        grid.setStyle(TableStyle([("RIGHTPADDING", (columns - 1, row_index), (columns - 1, row_index), 0)]))
+    return grid
+
+
 def bullet_block(items: list[str]) -> list[Table]:
     blocks = []
     for item in items:
@@ -714,7 +757,7 @@ def build_seo_story(snapshot: dict) -> list:
 
 
 def build_webp_story(stats: dict) -> list:
-    project_logo = PUBLIC_DIR / "webp-me-daddy-logo-lockup-transparent.png"
+    project_logo = PUBLIC_DIR / "webp-me-daddy-logo-lockup.webp"
     story = []
     story.extend(
         hero_block(
@@ -817,6 +860,39 @@ def build_webp_story(stats: dict) -> list:
     story.append(section_rule())
     story.append(Spacer(1, 0.08 * inch))
     story.append(two_col_cards([(f"Output {index + 1}", description) for index, description in enumerate(stats["outputs"])], columns=2))
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(Paragraph("Output Proofs", STYLE["SectionTitle"]))
+    story.append(section_rule())
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(
+        Paragraph(
+            "The public project page now shows the real proof artifacts instead of blank placeholders. These previews demonstrate the visual QA layer that makes the pipeline more than a compressor.",
+            STYLE["SectionIntro"],
+        )
+    )
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(
+        image_card_grid(
+            [
+                (
+                    "Review-hero proof sheet",
+                    "Dark and light surface checks make crop, contrast, and composition issues visible before production.",
+                    PUBLIC_DIR / "webp-me-daddy-proof-review-hero.webp",
+                ),
+                (
+                    "Logo lockup surface check",
+                    "Transparent logos are checked against multiple surfaces so edge halos and matte problems do not slip through.",
+                    PUBLIC_DIR / "webp-me-daddy-proof-logo-lockup.webp",
+                ),
+                (
+                    "Batch contact sheet",
+                    "A dry-run board groups outputs, status, and QA context so approvals can happen quickly.",
+                    PUBLIC_DIR / "webp-me-daddy-proof-batch-contact-sheet.webp",
+                ),
+            ],
+            columns=2,
+        )
+    )
 
     story.append(Paragraph("Command Patterns", STYLE["SectionTitle"]))
     story.append(section_rule())

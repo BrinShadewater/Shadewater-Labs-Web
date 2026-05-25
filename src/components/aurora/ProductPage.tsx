@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode } from 'react';
+import { type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import {
   ad,
   ADFooter,
@@ -15,8 +15,17 @@ import type { AuroraNavigate } from '@/components/aurora/chrome';
 /* InkMaster Studio).                                                 */
 /* ------------------------------------------------------------------ */
 
-export function shiftHue(accent: string, delta: number): string {
+function shiftHue(accent: string, delta: number): string {
   return accent.replace(/^(\d+)( \d+%)/, (_, h: string, rest: string) => `${parseInt(h, 10) + delta}${rest}`);
+}
+
+function handleHashLink(event: MouseEvent<HTMLAnchorElement>, href?: string) {
+  if (!href?.startsWith('#')) return;
+  const target = document.getElementById(href.slice(1));
+  if (!target) return;
+  event.preventDefault();
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  window.history.replaceState(null, '', href);
 }
 
 interface CtaCopy {
@@ -28,7 +37,19 @@ interface CtaCopy {
 
 interface MetricItem { k: string; v: string; sub: string; }
 interface PurposeItem { id: string; title: string; description: string; }
-interface ShowcaseItem { id: string; label: string; title: string; description: string; tag: string; command: string; featured?: boolean; }
+interface ShowcaseItem {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  tag: string;
+  command: string;
+  featured?: boolean;
+  src?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+}
 interface ComparisonItem { id: string; title: string; description: string; }
 interface LimitationItem { id: string; title: string; description: string; }
 interface WorkflowStep { id: string; label: string; title: string; description: string; }
@@ -133,6 +154,7 @@ function Hero({ data, onNavigate }: { data: ProductPageData; onNavigate: AuroraN
             <div style={prod.ctaRow}>
               <a
                 href={cta.primaryHref ?? '#'}
+                onClick={(event) => handleHashLink(event, cta.primaryHref)}
                 target={cta.primaryHref?.startsWith('http') ? '_blank' : undefined}
                 rel={cta.primaryHref?.startsWith('http') ? 'noopener noreferrer' : undefined}
                 style={{ ...ad.btnPrimary, background: `linear-gradient(135deg, hsl(${accent} / 0.95), hsl(${shiftHue(accent, 24)}))` }}
@@ -141,6 +163,7 @@ function Hero({ data, onNavigate }: { data: ProductPageData; onNavigate: AuroraN
               </a>
               <a
                 href={cta.secondaryHref ?? '#'}
+                onClick={(event) => handleHashLink(event, cta.secondaryHref)}
                 target={cta.secondaryHref?.startsWith('http') ? '_blank' : undefined}
                 rel={cta.secondaryHref?.startsWith('http') ? 'noopener noreferrer' : undefined}
                 style={ad.btnGhost}
@@ -250,7 +273,7 @@ function PurposeGrid({ accent, section, items }: { accent: string; section: Sect
 
 function WorkflowSteps({ accent, eyebrow, title, steps }: { accent: string; eyebrow: string; title: string; steps: WorkflowStep[] }) {
   return (
-    <section style={prod.section} className="prod-section">
+    <section id="core-workflow" style={prod.section} className="prod-section">
       <Kicker accent={accent} label={`§ 03 · ${eyebrow.toUpperCase()}`} />
       <h2 style={prod.h2} className="prod-h2">{title}</h2>
       <div style={prod.steps}>
@@ -285,10 +308,25 @@ function ShowcaseGrid({ accent, items }: { accent: string; items: ShowcaseItem[]
             </div>
             <h3 style={prod.showcaseTitle}>{it.title}</h3>
             <p style={prod.showcaseDesc}>{it.description}</p>
-            <div style={prod.showcasePlaceholder}>
-              <div style={{ ...prod.showcasePlaceholderShine, background: `linear-gradient(135deg, hsl(${accent} / 0.18), transparent 70%)` }} />
-              <span style={prod.showcasePlaceholderTag}>{it.tag}</span>
-            </div>
+            {it.src ? (
+              <figure style={prod.showcaseFigure}>
+                <img
+                  src={it.src}
+                  alt={it.alt ?? it.title}
+                  width={it.width}
+                  height={it.height}
+                  loading="lazy"
+                  decoding="async"
+                  style={prod.showcaseImage}
+                />
+                <figcaption style={prod.showcaseImageTag}>{it.tag}</figcaption>
+              </figure>
+            ) : (
+              <div style={prod.showcasePlaceholder}>
+                <div style={{ ...prod.showcasePlaceholderShine, background: `linear-gradient(135deg, hsl(${accent} / 0.18), transparent 70%)` }} />
+                <span style={prod.showcasePlaceholderTag}>{it.tag}</span>
+              </div>
+            )}
             <div style={prod.showcaseCmd}>
               <span style={{ ...prod.showcasePrompt, color: `hsl(${accent})` }}>$</span>
               <span style={prod.showcaseCmdText}>{it.command}</span>
@@ -352,6 +390,7 @@ function ProductCta({ accent, cta, title, body }: { accent: string; cta: CtaCopy
           <div style={prod.ctaRow}>
             <a
               href={cta.primaryHref ?? '#'}
+              onClick={(event) => handleHashLink(event, cta.primaryHref)}
               target={cta.primaryHref?.startsWith('http') ? '_blank' : undefined}
               rel={cta.primaryHref?.startsWith('http') ? 'noopener noreferrer' : undefined}
               style={{ ...ad.btnPrimary, background: `linear-gradient(135deg, hsl(${accent} / 0.95), hsl(${shiftHue(accent, 24)}))` }}
@@ -360,6 +399,7 @@ function ProductCta({ accent, cta, title, body }: { accent: string; cta: CtaCopy
             </a>
             <a
               href={cta.secondaryHref ?? '#'}
+              onClick={(event) => handleHashLink(event, cta.secondaryHref)}
               target={cta.secondaryHref?.startsWith('http') ? '_blank' : undefined}
               rel={cta.secondaryHref?.startsWith('http') ? 'noopener noreferrer' : undefined}
               style={ad.btnGhost}
@@ -563,6 +603,35 @@ const prod: Record<string, CSSProperties> = {
     background: 'repeating-linear-gradient(45deg, hsl(200 30% 9%) 0 12px, hsl(200 30% 12%) 12px 24px)',
     border: '1px solid hsl(186 30% 30% / 0.3)',
     display: 'grid', placeItems: 'center',
+  },
+  showcaseFigure: {
+    position: 'relative',
+    margin: '16px 0 0',
+    borderRadius: 14,
+    overflow: 'hidden',
+    background: 'hsl(210 32% 7%)',
+    border: '1px solid hsl(186 30% 30% / 0.32)',
+  },
+  showcaseImage: {
+    display: 'block',
+    width: '100%',
+    height: 'auto',
+    objectFit: 'cover',
+  },
+  showcaseImageTag: {
+    position: 'absolute',
+    left: 12,
+    bottom: 12,
+    maxWidth: 'calc(100% - 24px)',
+    fontFamily: MONO,
+    fontSize: 10.5,
+    letterSpacing: '0.14em',
+    padding: '6px 10px',
+    borderRadius: 999,
+    color: 'hsl(0 0% 94%)',
+    background: 'hsl(200 30% 4% / 0.78)',
+    border: '1px solid hsl(186 40% 35% / 0.42)',
+    backdropFilter: 'blur(4px)',
   },
   showcasePlaceholderShine: { position: 'absolute', inset: 0, pointerEvents: 'none' },
   showcasePlaceholderTag: {
