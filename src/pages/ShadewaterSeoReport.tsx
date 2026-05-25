@@ -11,10 +11,10 @@ import {
 } from '@/components/aurora/chrome';
 import type { AuroraNavigate } from '@/components/aurora/chrome';
 import {
-  SHADEWATER_LABS_TEXT_LOGO_ALT,
-  SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
-  SHADEWATER_LABS_TEXT_LOGO_HEIGHT,
-  SHADEWATER_LABS_TEXT_LOGO_WIDTH,
+  SHADEWATER_LABS_MARK_ALT,
+  SHADEWATER_LABS_MARK_CROPPED_HEIGHT,
+  SHADEWATER_LABS_MARK_CROPPED_SRC,
+  SHADEWATER_LABS_MARK_CROPPED_WIDTH,
 } from '@/lib/brandAssets';
 
 interface ShadewaterSeoReportProps {
@@ -28,12 +28,13 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
   const sampleReportHref = '/shadewater-seo-report-sample.html';
   const explainerHref = '/shadewater-seo-report-explainer.pdf';
   const dashboardPreviewHref = '/shadewater-seo-report-dashboard-preview.png';
+  const phaseProgress = (id: string) => project.phases.find((phase) => phase.id === id)?.progress ?? 0;
 
   const metrics = [
-    { k: 'OVERALL_SCORE', v: '90', sub: 'shadewaterlabs.com audit' },
-    { k: 'SPEED_INSIGHTS', v: '78', sub: 'mobile performance score' },
-    { k: 'VERIFIED_FINDINGS', v: '03', sub: 'confirmed next fixes' },
-    { k: 'ARTIFACTS', v: '06', sub: 'report + handoff files' },
+    { k: 'OVERALL_PROGRESS', v: `${project.overallProgress}%`, sub: 'product surface maturity' },
+    { k: 'AUDIT_ENGINE', v: `${phaseProgress('audit-engine')}%`, sub: 'core evidence layer' },
+    { k: 'REPORTING_SURFACE', v: `${phaseProgress('reporting-surface')}%`, sub: 'dashboard + artifacts' },
+    { k: 'REPO_LOCAL_MODE', v: `${phaseProgress('repo-local-mode')}%`, sub: 'patch-ready fixes' },
   ];
 
   const steps = [
@@ -67,21 +68,6 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
 
           <div style={pp.projSplit}>
             <div style={pp.projInfo}>
-              <img
-                src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
-                alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
-                width={SHADEWATER_LABS_TEXT_LOGO_WIDTH}
-                height={SHADEWATER_LABS_TEXT_LOGO_HEIGHT}
-                loading="eager"
-                decoding="async"
-                style={{
-                  display: 'block',
-                  width: 'min(320px, 78vw)',
-                  height: 'auto',
-                  margin: '0 0 22px',
-                  filter: 'drop-shadow(0 18px 42px hsl(192 80% 60% / 0.18))',
-                }}
-              />
               <span style={{ ...pp.projBadge, color: `hsl(${ACCENT})`, borderColor: `hsl(${ACCENT} / 0.4)` }}>
                 INTERNAL · OPERATOR
               </span>
@@ -112,40 +98,29 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
               </div>
 
               <div style={pp.projMetaRow}>
-                <span style={pp.projMetaCell}>target · shadewaterlabs.com</span>
-                <span style={pp.projMetaCell}>score · 90/100</span>
-                <span style={pp.projMetaCell}>generated · May 18</span>
+                <span style={pp.projMetaCell}>stage · public explainer</span>
+                <span style={pp.projMetaCell}>progress · {project.overallProgress}%</span>
+                <span style={pp.projMetaCell}>next · repo-local mode</span>
               </div>
             </div>
 
-            <div style={pp.projHeroArt}>
-              <div style={{ ...pp.projArtGlow, background: `radial-gradient(60% 60% at 50% 50%, hsl(${ACCENT} / 0.5), transparent 70%)` }} />
-              <div style={{ ...pp.projOrb, overflow: 'hidden' }}>
-                <div style={pp.projOrbRing} />
-                <div style={pp.projOrbRing2} />
-                <div
-                  style={{
-                    ...pp.projOrbCore,
-                    background: `radial-gradient(circle, hsl(${ACCENT} / 0.18) 0%, hsl(186 60% 12%) 72%)`,
-                    overflow: 'hidden',
-                  }}
-                >
-                  <img
-                    src={project.hero.logo?.src ?? SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
-                    alt=""
-                    width={project.hero.logo?.width ?? SHADEWATER_LABS_TEXT_LOGO_WIDTH}
-                    height={project.hero.logo?.height ?? SHADEWATER_LABS_TEXT_LOGO_HEIGHT}
-                    loading="eager"
-                    decoding="async"
-                    style={{
-                      width: '54%',
-                      height: '72%',
-                      objectFit: 'contain',
-                      filter: 'drop-shadow(0 12px 24px hsl(192 80% 60% / 0.25))',
-                    }}
-                  />
-                </div>
-              </div>
+            <div style={{ ...pp.projHeroArt, height: 320, justifyItems: 'center' }}>
+              <img
+                src={SHADEWATER_LABS_MARK_CROPPED_SRC}
+                alt={SHADEWATER_LABS_MARK_ALT}
+                width={SHADEWATER_LABS_MARK_CROPPED_WIDTH}
+                height={SHADEWATER_LABS_MARK_CROPPED_HEIGHT}
+                loading="eager"
+                decoding="async"
+                style={{
+                  display: 'block',
+                  width: 'min(260px, 42vw)',
+                  maxHeight: 300,
+                  height: 'auto',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 18px 44px hsl(192 80% 60% / 0.22))',
+                }}
+              />
             </div>
           </div>
         </div>
