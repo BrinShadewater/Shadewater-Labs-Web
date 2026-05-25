@@ -1,8 +1,7 @@
 import { useState, type CSSProperties, type MouseEvent } from 'react';
 import { projectStatuses } from '@/content/projects';
 import {
-  SHADEWATER_LABS_MARK_SRC,
-  SHADEWATER_LABS_MARK_SRCSET,
+  SHADEWATER_LABS_MARK_CROPPED_SRC,
 } from '@/lib/brandAssets';
 import {
   AuroraPage,
@@ -52,7 +51,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
         'Deterministic SEO audit skill that turns live site evidence into branded dashboards, action plans, and rerunnable fix loops.',
       progress: 92,
       accent: '186 90% 60%',
-      logo: { src: SHADEWATER_LABS_MARK_SRC, srcSet: SHADEWATER_LABS_MARK_SRCSET },
+      logo: { src: SHADEWATER_LABS_MARK_CROPPED_SRC },
       sig: '7af2',
       status: 'OPERATIONAL',
       tone: 'green',
