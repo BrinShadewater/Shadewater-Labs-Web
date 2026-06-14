@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useMemo, useState, useRef, useEffect, type CSSProperties, type ReactNode } from 'react';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SRC,
