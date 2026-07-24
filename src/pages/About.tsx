@@ -195,7 +195,9 @@ export default function About({ onNavigate }: AboutProps) {
           <div className="about-photo">
             <div style={photoWrap}>
               <img
-                src="/Alexbiopic.png"
+                src="/Alexbiopic.webp"
+                srcSet="/Alexbiopic-320w.webp 320w, /Alexbiopic-640w.webp 640w, /Alexbiopic-900w.webp 900w, /Alexbiopic-1200w.webp 1200w, /Alexbiopic.webp 1448w"
+                sizes="(min-width: 900px) 400px, 92vw"
                 alt="Alex Yesilcimen"
                 style={photoImg}
                 width={1448}

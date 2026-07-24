@@ -222,6 +222,7 @@ a:focus-visible,
   .ad-meshBlob,
   .ad-constSpin,
   .ad-particle,
+  .ad-rotate,
   .ad-pulse {
     animation: none !important;
   }

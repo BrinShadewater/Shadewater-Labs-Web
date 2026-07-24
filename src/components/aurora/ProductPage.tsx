@@ -182,8 +182,8 @@ function Hero({ data, onNavigate }: { data: ProductPageData; onNavigate: AuroraN
             <div style={{ ...prod.artGlow, background: `radial-gradient(60% 60% at 50% 50%, hsl(${accent} / 0.55), transparent 70%)` }} />
             <div style={prod.artFrame}>
               <div style={prod.artGrid} />
-              <div style={{ ...prod.artRing, borderColor: `hsl(${accent} / 0.35)` }} />
-              <div style={{ ...prod.artRing2, borderColor: `hsl(${accent} / 0.18)` }} />
+              <div className="ad-rotate" style={{ ...prod.artRing, borderColor: `hsl(${accent} / 0.35)` }} />
+              <div className="ad-rotate" style={{ ...prod.artRing2, borderColor: `hsl(${accent} / 0.18)` }} />
               <img src={logo.src} srcSet={logo.srcSet} alt="" style={{ ...prod.artLogo, ...logo.style }} />
               <div style={prod.artCorners} aria-hidden="true">
                 <span style={{ ...prod.artCorner, top: 10, left: 10, borderTop: `1px solid hsl(${accent} / 0.5)`, borderLeft: `1px solid hsl(${accent} / 0.5)` }} />

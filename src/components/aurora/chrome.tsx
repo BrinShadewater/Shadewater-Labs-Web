@@ -811,9 +811,13 @@ export const ad: Record<string, CSSProperties> = {
 
   nav: {
     position: 'sticky', top: 0, zIndex: 20,
-    background: 'hsl(210 66% 5% / 0.7)',
-    backdropFilter: 'blur(14px) saturate(140%)',
-    WebkitBackdropFilter: 'blur(14px) saturate(140%)',
+    // Nearly-opaque so the backdrop-filter has little work to do. The blurred
+    // mesh blobs behind this bar animate forever, and a wide translucent
+    // backdrop-filter forces a re-blur of that region every frame while
+    // scrolling. Keep the blur small.
+    background: 'hsl(210 66% 5% / 0.92)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
     borderBottom: '1px solid hsl(186 50% 40% / 0.18)',
   },
   navInner: {
