@@ -7,6 +7,7 @@ export const managedWebsites = [
     status: 'Live',
     description:
       'The main Brin Shadewater home base for streams, reviews, community updates, sponsor information, and creator identity.',
+    updated: '2026-05-18',
   },
   {
     id: 'shadewaterlabs',
@@ -16,6 +17,7 @@ export const managedWebsites = [
     status: 'Live',
     description:
       'The dedicated home for Labs projects, AI tools, managed websites, product experiments, and future technology notes.',
+    updated: '2026-07-23',
   },
   {
     id: 'datagoblin',
@@ -25,6 +27,7 @@ export const managedWebsites = [
     status: 'Live',
     description:
       'A free, bilingual field guide to AI, power, and data in Canada. Twenty-one chapters with a receipt behind every claim, plus a glossary, source ledger, and a claim-testing toolkit.',
+    updated: '2026-07-24',
   },
   {
     id: 'inkmasterstudio',
@@ -34,6 +37,7 @@ export const managedWebsites = [
     status: 'Beta',
     description:
       'A focused web product for apparel artwork cleanup, DTG print prep, underbase generation, mockup previews, and export workflows.',
+    updated: '2026-05-08',
   },
   {
     id: 'strangeharvestmovie',
@@ -43,6 +47,7 @@ export const managedWebsites = [
     status: 'Live',
     description:
       'A dedicated movie website for the Strange Harvest project, maintained as part of the Shadewater Labs managed web portfolio.',
+    updated: '2026-03-18',
   },
   {
     id: 'strangeharvestmerch',
@@ -52,5 +57,6 @@ export const managedWebsites = [
     status: 'Live',
     description:
       'Official merchandise store for Strange Harvest, built on Shopify. Apparel, prints, and collectibles tied to the film.',
+    updated: '2026-05-08',
   },
 ] as const;
