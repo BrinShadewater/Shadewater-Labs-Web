@@ -181,7 +181,6 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl }: Brow
 }
 
 export default function Websites({ onNavigate }: WebsitesProps) {
-  void onNavigate;
 
   const sites: SiteRow[] = managedWebsites.map((s) => {
     const thumb = THUMBS[s.id] ?? { src: '', srcSet: '' };
@@ -280,4 +279,3 @@ export default function Websites({ onNavigate }: WebsitesProps) {
   );
 }
 
-void ({} as CSSProperties);

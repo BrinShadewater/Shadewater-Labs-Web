@@ -1,4 +1,4 @@
-import { type CSSProperties, type MouseEvent, type ReactNode } from 'react';
+import { type CSSProperties, type MouseEvent } from 'react';
 import {
   ad,
   ADFooter,
@@ -414,8 +414,6 @@ function ProductCta({ accent, cta, title, body }: { accent: string; cta: CtaCopy
   );
 }
 
-const _unused: ReactNode = null;
-void _unused;
 
 /* ----- Product page style sheet ----- */
 

@@ -65,7 +65,7 @@ const AD_COMING = [
 
 function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
   return (
-    <section style={ad.hero ?? home.hero}>
+    <section style={home.hero}>
       <HeroMesh />
       <ConstellationField />
       <ParticleField />

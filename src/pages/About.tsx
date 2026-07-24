@@ -12,7 +12,6 @@ interface AboutProps {
 }
 
 export default function About({ onNavigate }: AboutProps) {
-  void onNavigate;
 
   const ACCENT = '186 90% 60%';
 
@@ -289,4 +288,3 @@ export default function About({ onNavigate }: AboutProps) {
   );
 }
 
-void ({} as CSSProperties);

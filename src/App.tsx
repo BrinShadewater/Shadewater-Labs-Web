@@ -1,7 +1,4 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
-import BackgroundParticles from './components/BackgroundParticles';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import Seo from './components/Seo';
 import { buildRouteHref, parseLocation } from './lib/routes';
 import { getSeoConfig } from './lib/seo';
@@ -66,7 +63,6 @@ function getRouteState() {
 function App() {
   const siteKey = 'labs';
   const [{ currentPage, selectedNoteId }, setRouteState] = useState(getRouteState);
-  const [showBackgroundParticles, setShowBackgroundParticles] = useState(false);
 
   useEffect(() => {
     const syncFromLocation = () => {
@@ -94,24 +90,6 @@ function App() {
       window.removeEventListener('hashchange', syncFromLocation);
     };
   }, [siteKey]);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return;
-    }
-
-    if (window.matchMedia('(max-width: 767px)').matches) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      setShowBackgroundParticles(true);
-    }, 1400);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, []);
 
   // Warm the other page chunks once the browser is idle so switching pages
   // resolves without suspending (no "Loading" flash on navigation).
@@ -159,18 +137,6 @@ function App() {
 
   const seo = getSeoConfig(currentPage, selectedNoteId, siteKey);
 
-  const AURORA_ROUTES = new Set([
-    'labs',
-    'projects',
-    'websites',
-    'tech-news',
-    'about',
-    'shadewater-seo-report',
-    'webp-me-daddy',
-    'inkmaster-studio',
-  ]);
-  const useAuroraChrome = AURORA_ROUTES.has(currentPage);
-
   const renderPage = () => {
     switch (currentPage) {
       case 'labs':
@@ -195,20 +161,13 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-background text-foreground">
+    <div className="relative min-h-screen flex flex-col">
       <Seo {...seo} />
-      {showBackgroundParticles && !useAuroraChrome ? (
-        <BackgroundParticles key={`${currentPage}:${selectedNoteId || 'root'}`} />
-      ) : null}
-      <div className="relative z-10 flex min-h-screen flex-col">
-        {useAuroraChrome ? null : <Navbar currentPage={currentPage} onNavigate={handleNavigate} />}
-        <main className="flex-grow">
-          <Suspense fallback={<DelayedPageFallback />}>
-            {renderPage()}
-          </Suspense>
-        </main>
-        {useAuroraChrome ? null : <Footer />}
-      </div>
+      <main className="flex-grow">
+        <Suspense fallback={<DelayedPageFallback />}>
+          {renderPage()}
+        </Suspense>
+      </main>
     </div>
   );
 }

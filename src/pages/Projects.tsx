@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type MouseEvent } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { projectStatuses } from '@/content/projects';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SRC,
@@ -351,4 +351,3 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   );
 }
 
-void ({} as CSSProperties);

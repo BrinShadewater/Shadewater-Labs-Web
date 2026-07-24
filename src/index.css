@@ -80,110 +80,6 @@ a:focus-visible,
   outline-offset: 3px;
 }
 
-.font-serif {
-  font-family: Georgia, 'Times New Roman', serif;
-}
-
-.font-display {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
-
-.glow-primary  { box-shadow: none; }
-.glow-secondary { box-shadow: none; }
-.glow-accent   { box-shadow: none; }
-
-.panel-border       { border-width: 2px; }
-.panel-border-strong { border-width: 3px; }
-
-.glow-border { position: relative; }
-
-.glow-border::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.04), hsl(0 0% 100% / 0.03));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, hsl(280 50% 65%), hsl(320 45% 60%), hsl(280 50% 65%));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.bg-gradient-card {
-  background: linear-gradient(145deg, hsl(220 20% 13%), hsl(220 22% 11%));
-}
-
-.card-shadow {
-  box-shadow: 0 4px 12px hsl(0 0% 0% / 0.3), 0 0 20px hsl(var(--frame) / 0.1);
-}
-
-.content-container {
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .content-container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .content-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-.reading-width {
-  max-width: 42rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from { box-shadow: none; }
-  to   { box-shadow: none; }
-}
-
-.hover-lift {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
-
-.hover-lift:hover {
-  transform: translateY(-0.25rem);
-  box-shadow: 0 8px 30px hsl(220 25% 5% / 0.4);
-}
-
-.defer-render {
-  content-visibility: auto;
-  contain-intrinsic-size: 960px;
-}
 
 /* Aurora Drift — animated mesh gradients, ticker, constellation, particles */
 @keyframes adTicker {
@@ -205,12 +101,6 @@ a:focus-visible,
 @keyframes adRotate {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-@keyframes adFloat {
-  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
-  10%  { opacity: 0.8; }
-  90%  { opacity: 0.7; }
-  100% { transform: translate3d(var(--drift, 0), -560px, 0); opacity: 0; }
 }
 @keyframes adPulse {
   0%, 100% { opacity: 1; transform: scale(1); }

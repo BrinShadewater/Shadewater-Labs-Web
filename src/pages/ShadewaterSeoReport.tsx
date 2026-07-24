@@ -1,4 +1,3 @@
-import { type CSSProperties } from 'react';
 import { projectStatuses } from '@/content/projects';
 import {
   ad,
@@ -215,4 +214,3 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
   );
 }
 
-void ({} as CSSProperties);
