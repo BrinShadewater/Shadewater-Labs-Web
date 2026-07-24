@@ -212,20 +212,21 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           </div>
           <div style={pp.toolbarFilters}>
             {filters.map((f) => (
-              <span
+              <button
                 key={f}
-                role="button"
-                tabIndex={0}
+                type="button"
+                aria-pressed={activeFilter === f}
                 onClick={() => setActiveFilter(f)}
-                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setActiveFilter(f)}
                 style={{
+                  background: 'none',
+                  border: 'none',
                   ...pp.filterPill,
                   ...(activeFilter === f ? pp.filterActive : null),
                   userSelect: 'none',
                 }}
               >
                 {f}
-              </span>
+              </button>
             ))}
           </div>
         </div>

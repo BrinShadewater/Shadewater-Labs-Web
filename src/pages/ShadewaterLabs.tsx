@@ -1,6 +1,7 @@
 import { useState, useEffect, type CSSProperties } from 'react';
 import { projectStatuses } from '@/content/projects';
 import { managedWebsites } from '@/content/websites';
+import { buildRouteHref } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
@@ -78,10 +79,10 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
         <img
           src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
           alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
-          width={175}
-          height={250}
+          width={245}
+          height={350}
           decoding="async"
-          style={{ ...home.heroLogo, objectFit: 'cover', width: 175, height: 250 }}
+          style={{ ...home.heroLogo, objectFit: 'cover', width: 245, height: 350 }}
         />
 
         <h1 style={home.heroTitle} className="home-heroTitle">
@@ -234,6 +235,9 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     statusTone: string;
     onClick: () => void;
     ctaLabel: string;
+    /** Real destination, so the card title is a focusable link and not a click-only div. */
+    href: string;
+    external?: boolean;
   }
 
   const THUMBS: Record<string, { src: string; srcSet: string }> = {
@@ -258,6 +262,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       statusTone: 'hsl(150 70% 55%)',
       onClick: () => onNavigate('shadewater-seo-report'),
       ctaLabel: 'View project',
+      href: buildRouteHref('shadewater-seo-report'),
     },
     {
       key: 'webp',
@@ -270,6 +275,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       statusLabel: 'SHIPPING',
       statusTone: 'hsl(186 90% 60%)',
       onClick: () => onNavigate('webp-me-daddy'),
+      href: buildRouteHref('webp-me-daddy'),
       ctaLabel: 'View project',
     },
     {
@@ -284,6 +290,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       statusTone: 'hsl(36 85% 62%)',
       onClick: () => onNavigate('inkmaster-studio'),
       ctaLabel: 'View project',
+      href: buildRouteHref('inkmaster-studio'),
     },
   ];
 
@@ -310,6 +317,8 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       statusTone: s.status === 'Live' ? 'hsl(150 70% 55%)' : 'hsl(36 85% 62%)',
       onClick: () => { window.open(s.url, '_blank', 'noopener,noreferrer'); },
       ctaLabel: 'Visit site',
+      href: s.url,
+      external: true,
     };
   });
 
@@ -323,6 +332,8 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
   useEffect(() => {
     if (paused) return;
+    // WCAG 2.2.2: don't auto-advance for people who asked for reduced motion.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const t = setInterval(() => setIdx((i) => (i + 1) % total), 4000);
     return () => clearInterval(t);
   }, [paused, total]);
@@ -386,7 +397,24 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                     </div>
                   )}
                 </div>
-                <h3 style={home.projectName}>{c.name}</h3>
+                <h3 style={home.projectName}>
+                  <a
+                    href={c.href}
+                    {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    onClick={(e) => {
+                      // The card's onClick is a mouse convenience; the link is the real
+                      // control. Stop propagation so we don't navigate twice.
+                      e.stopPropagation();
+                      if (!c.external) {
+                        e.preventDefault();
+                        c.onClick();
+                      }
+                    }}
+                    style={{ color: 'inherit', textDecoration: 'none', outlineOffset: 4 }}
+                  >
+                    {c.name}
+                  </a>
+                </h3>
                 <p style={home.projectBlurb}>{c.blurb}</p>
                 <div style={home.projectFoot}>
                   <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(' + c.accent + ' / 0.6)' }}>
