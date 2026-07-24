@@ -19,13 +19,14 @@ export const AD_BG = '#020a13';
 
 export type AuroraNavigate = (page: string) => void;
 
+// Standing description of what the lab works on. Deliberately not framed as
+// a live feed — nothing here updates, so it shouldn't pretend to.
 const AD_SIGNALS = [
-  '\u{2381} LAB.SIGNAL · 2026.05.09',
-  'BUILDING · webp-me-daddy v0.9.4',
-  'OBSERVING · long-context retrieval',
-  'SHIPPING · seo report skill',
-  'DRAFTING · inkmaster v1.0',
-  'IDLE · weekend reset',
+  'AI tools and creative-tech experiments',
+  'Webp Me Daddy · image pipeline',
+  'InkMaster Studio · print prep',
+  'Shadewater SEO Report · site audits',
+  'Managed websites, built and maintained',
 ];
 
 export const adTone = {
@@ -179,8 +180,7 @@ export function ADFooter() {
           </div>
         </div>
         <div style={ad.footerMono}>
-          <span style={ad.footerCell}>build · 0.4.7</span>
-          <span style={ad.footerCell}>uptime · 99.97%</span>
+          <span style={ad.footerCell}>Vancouver, BC</span>
           <span style={ad.footerCell}>
             <a href={LABS_ORIGIN} style={{ color: 'inherit', textDecoration: 'none' }}>
               shadewaterlabs.com

@@ -211,7 +211,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
       active="websites"
       onNavigate={onNavigate}
       sectionLabel="Websites"
-      eyebrow="§ 02 · MANAGED WEB"
+      eyebrow="MANAGED WEB"
       title="Managed web properties."
       lede="The public web surfaces currently designed, productized, and maintained through Shadewater Labs."
     >

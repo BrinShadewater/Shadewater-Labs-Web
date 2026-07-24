@@ -16,7 +16,7 @@ interface ProjectsProps {
   onNavigate: AuroraNavigate;
 }
 
-type FilterKey = 'all' | 'ai_tools' | 'web' | 'pipelines' | 'spikes';
+type FilterKey = 'all' | 'ai_tools' | 'web' | 'pipelines';
 
 interface ProjectCard {
   slug: string;
@@ -28,7 +28,6 @@ interface ProjectCard {
   accent: string;
   glyph?: string;
   logo?: { src: string; srcSet?: string };
-  sig: string;
   status: string;
   tone: AdToneKey;
   categories: FilterKey[];
@@ -52,7 +51,6 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       progress: 92,
       accent: '186 90% 60%',
       logo: { src: SHADEWATER_LABS_MARK_CROPPED_SRC },
-      sig: '7af2',
       status: 'OPERATIONAL',
       tone: 'green',
       categories: ['ai_tools', 'pipelines'],
@@ -67,7 +65,6 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       progress: 78,
       accent: '184 85% 58%',
       logo: webp.hero.logo ? { src: webp.hero.logo.src, srcSet: webp.hero.logo.srcSet } : undefined,
-      sig: '19c4',
       status: 'SHIPPING',
       tone: 'cyan',
       categories: ['pipelines', 'web'],
@@ -82,56 +79,13 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       progress: 64,
       accent: '219 85% 65%',
       logo: ink.hero.logo ? { src: ink.hero.logo.src, srcSet: ink.hero.logo.srcSet } : undefined,
-      sig: 'b83e',
       status: 'CLOSED BETA',
       tone: 'amber',
       categories: ['web'],
     },
-    {
-      slug: 'lab-bench-04',
-      name: 'Bench · L-04',
-      stage: 'QUEUED · DRAFT',
-      summary:
-        'Sketch for a small AI tool — surface area still being defined. Will graduate when it earns a name.',
-      progress: 14,
-      accent: '150 65% 55%',
-      glyph: '◇',
-      sig: '0a11',
-      status: 'QUEUED',
-      tone: 'green',
-      categories: ['spikes', 'ai_tools'],
-    },
-    {
-      slug: 'lab-bench-05',
-      name: 'Bench · L-05',
-      stage: 'SPIKE · WEB UTIL',
-      summary:
-        'A small web utility experiment. Currently a one-pager prototype that may or may not grow.',
-      progress: 22,
-      accent: '210 85% 65%',
-      glyph: '◇',
-      sig: '0c33',
-      status: 'SPIKE',
-      tone: 'blue',
-      categories: ['spikes', 'web'],
-    },
-    {
-      slug: 'lab-bench-06',
-      name: 'Bench · L-06',
-      stage: 'OBSERVING · NOTES',
-      summary:
-        'Reading-only — collecting evidence on a problem before deciding whether to build for it.',
-      progress: 8,
-      accent: '36 85% 62%',
-      glyph: '◇',
-      sig: '0e77',
-      status: 'OBSERVING',
-      tone: 'amber',
-      categories: ['spikes'],
-    },
   ];
 
-  const filters: FilterKey[] = ['all', 'ai_tools', 'web', 'pipelines', 'spikes'];
+  const filters: FilterKey[] = ['all', 'ai_tools', 'web', 'pipelines'];
 
   const visibleCards =
     activeFilter === 'all' ? cards : cards.filter((p) => p.categories.includes(activeFilter));
@@ -140,9 +94,6 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     (p) => p.status === 'SHIPPING' || p.status === 'OPERATIONAL',
   ).length;
   const betaCount = visibleCards.filter((p) => p.status === 'CLOSED BETA').length;
-  const queuedCount = visibleCards.filter((p) =>
-    ['QUEUED', 'SPIKE', 'OBSERVING'].includes(p.status),
-  ).length;
 
   const handleCardNav = (page: string) => (e: MouseEvent) => {
     e.preventDefault();
@@ -183,7 +134,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       active="projects"
       onNavigate={onNavigate}
       sectionLabel="Projects"
-      eyebrow="§ 02 · CATALOG"
+      eyebrow="CATALOG"
       title="The active project catalog."
       lede="Working tools, product experiments, creative-tech builds, and operator workflows. Each card is a real ship — even the queued ones."
     >
@@ -203,10 +154,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               <span style={pp.toolbarChip}>shipping · {shippingCount}</span>
             )}
             {betaCount > 0 && <span style={pp.toolbarChip}>beta · {betaCount}</span>}
-            {queuedCount > 0 && (
-              <span style={pp.toolbarChip}>queued · {queuedCount}</span>
-            )}
-            {shippingCount === 0 && betaCount === 0 && queuedCount === 0 && (
+            {shippingCount === 0 && betaCount === 0 && (
               <span style={pp.toolbarChip}>no results</span>
             )}
           </div>
@@ -320,7 +268,6 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               </div>
 
               <div style={pp.projectFoot}>
-                <span style={pp.projectSig}>sig · {p.sig}</span>
                 {p.page ? (
                   <a
                     href={'/' + p.page}

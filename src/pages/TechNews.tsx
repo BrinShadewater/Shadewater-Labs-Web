@@ -27,7 +27,7 @@ export default function TechNews({ onNavigate }: TechNewsProps) {
       active="tech-news"
       onNavigate={onNavigate}
       sectionLabel="Tech News"
-      eyebrow="§ 02 · TRANSMISSIONS"
+      eyebrow="TRANSMISSIONS"
       title="AI & creative-tech notes."
       lede="A manually curated feed of AI signals, creative-tech ideas, and workflow changes worth tracking."
     >

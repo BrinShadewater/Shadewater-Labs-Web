@@ -17,14 +17,14 @@ export default function InkMasterStudio({ onNavigate }: InkMasterStudioProps) {
     sectionLabel: 'InkMaster Studio',
     accent: ACCENT,
     badge: 'BETA · BROWSER PRODUCT',
-    eyebrow: '§ 01 · LABS PROJECT',
+    eyebrow: 'LABS PROJECT',
     name: project.name,
     lede:
       'A browser-based print-prep workflow for apparel graphics. It helps creators turn rough source art into DTG-ready assets with knockout processing, texture controls, underbase generation, mockup previews, and export tooling built around real garment production needs.',
     logo: heroLogo
       ? { src: heroLogo.src, srcSet: heroLogo.srcSet, style: { maxWidth: 240, maxHeight: 200 } }
       : { src: '/inkmaster-studio-site-logo.webp', style: { maxWidth: 240, maxHeight: 200 } },
-    meta: ['build · v0.8 beta', 'master · 4200×5100', 'last_run · 12h', 'inkmasterstudio.com'],
+    meta: ['build · v0.8 beta', 'master · 4200×5100', 'inkmasterstudio.com'],
     cta: {
       primary: 'Visit live site',
       primaryHref: 'https://inkmasterstudio.com',

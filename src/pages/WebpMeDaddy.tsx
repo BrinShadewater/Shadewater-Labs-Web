@@ -17,14 +17,14 @@ export default function WebpMeDaddy({ onNavigate }: WebpMeDaddyProps) {
     sectionLabel: 'Webp Me Daddy',
     accent: ACCENT,
     badge: 'FEATURED · CLI PIPELINE',
-    eyebrow: '§ 01 · LABS PROJECT',
+    eyebrow: 'LABS PROJECT',
     name: project.name,
     lede:
       'A CLI-first, layout-aware image pipeline for front-end teams, agencies, and technical creators. It turns messy website images into production-ready WebP assets — with semantic recipes, strict metadata, snippets, proof sheets, and audit-driven fix plans.',
     logo: heroLogo
       ? { src: heroLogo.src, srcSet: heroLogo.srcSet, style: { maxWidth: 300, maxHeight: 220 } }
       : { src: '/webp-me-daddy-logo-lockup.webp', style: { maxWidth: 300, maxHeight: 220 } },
-    meta: ['build · v0.9.4', 'recipes · 14', 'last_run · 6h', 'sites_audited · 9'],
+    meta: ['build · v0.9.4', 'recipes · 14', 'CLI-first'],
     cta: {
       primary: 'See the workflow',
       primaryHref: '#core-workflow',

@@ -235,9 +235,8 @@ function StageStrip({ accent, stage }: { accent: string; stage: ProductPageData[
         <div style={prod.stageHead}>
           <div style={prod.stageMeta}>
             <span style={{ ...prod.stageDot, background: `hsl(${accent})`, boxShadow: `0 0 14px hsl(${accent} / 0.6)` }} />
-            <span style={prod.stageMono}>CURRENT_STAGE</span>
+            <span style={prod.stageMono}>Current stage</span>
             <span style={prod.stageSep}>/</span>
-            <span style={prod.stageMono}>last_synced · 2026.05.07</span>
           </div>
           <span style={prod.stageProg}>{stage.progress}%</span>
         </div>
@@ -254,7 +253,7 @@ function StageStrip({ accent, stage }: { accent: string; stage: ProductPageData[
 function PurposeGrid({ accent, section, items }: { accent: string; section: SectionCopy; items: PurposeItem[] }) {
   return (
     <section style={prod.section} className="prod-section">
-      <Kicker accent={accent} label="§ 02 · WHY IT EXISTS" />
+      <Kicker accent={accent} label="WHY IT EXISTS" />
       <h2 style={prod.h2} className="prod-h2">{section.title}</h2>
       <p style={prod.h2Lede}>{section.description}</p>
       <div style={prod.purposeGrid} className="prod-purposeGrid">
@@ -274,7 +273,7 @@ function PurposeGrid({ accent, section, items }: { accent: string; section: Sect
 function WorkflowSteps({ accent, eyebrow, title, steps }: { accent: string; eyebrow: string; title: string; steps: WorkflowStep[] }) {
   return (
     <section id="core-workflow" style={prod.section} className="prod-section">
-      <Kicker accent={accent} label={`§ 03 · ${eyebrow.toUpperCase()}`} />
+      <Kicker accent={accent} label={`${eyebrow.toUpperCase()}`} />
       <h2 style={prod.h2} className="prod-h2">{title}</h2>
       <div style={prod.steps}>
         {steps.map((s) => (
@@ -296,7 +295,7 @@ function WorkflowSteps({ accent, eyebrow, title, steps }: { accent: string; eyeb
 function ShowcaseGrid({ accent, items }: { accent: string; items: ShowcaseItem[] }) {
   return (
     <section style={prod.section} className="prod-section">
-      <Kicker accent={accent} label="§ 04 · ARTIFACTS" />
+      <Kicker accent={accent} label="ARTIFACTS" />
       <h2 style={prod.h2} className="prod-h2">What it actually outputs</h2>
       <div style={prod.showcaseGrid} className="prod-showcaseGrid">
         {items.map((it) => (
@@ -341,7 +340,7 @@ function ShowcaseGrid({ accent, items }: { accent: string; items: ShowcaseItem[]
 function ComparisonRow({ accent, section, items }: { accent: string; section: SectionCopy; items: ComparisonItem[] }) {
   return (
     <section style={prod.section} className="prod-section">
-      <Kicker accent={accent} label="§ 05 · POSITIONING" />
+      <Kicker accent={accent} label="POSITIONING" />
       <h2 style={prod.h2} className="prod-h2">{section.title}</h2>
       <p style={prod.h2Lede}>{section.description}</p>
       <div style={prod.compareGrid} className="prod-compareGrid">
@@ -360,7 +359,7 @@ function ComparisonRow({ accent, section, items }: { accent: string; section: Se
 function LimitationsRow({ section, items }: { section: SectionCopy; items: LimitationItem[] }) {
   return (
     <section style={prod.section} className="prod-section">
-      <Kicker accent="" label="§ 06 · CAVEATS" tone="amber" />
+      <Kicker accent="" label="CAVEATS" tone="amber" />
       <h2 style={prod.h2} className="prod-h2">{section.title}</h2>
       <p style={prod.h2Lede}>{section.description}</p>
       <div style={prod.limitsList}>
@@ -384,7 +383,7 @@ function ProductCta({ accent, cta, title, body }: { accent: string; cta: CtaCopy
       <div style={prod.ctaWrap} className="prod-ctaWrap">
         <div style={{ ...prod.ctaGlow, background: `radial-gradient(80% 100% at 50% 0%, hsl(${accent} / 0.32), transparent 70%)` }} />
         <div style={prod.ctaInner}>
-          <p style={{ ...prod.eyebrow, color: `hsl(${accent} / 0.85)` }}>§ 07 · TAKE IT FROM HERE</p>
+          <p style={{ ...prod.eyebrow, color: `hsl(${accent} / 0.85)` }}>TAKE IT FROM HERE</p>
           <h2 style={prod.ctaH}>{title}</h2>
           <p style={prod.ctaBody}>{body}</p>
           <div style={prod.ctaRow}>

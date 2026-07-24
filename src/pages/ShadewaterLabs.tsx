@@ -20,10 +20,6 @@ import {
 } from '@/components/aurora/chrome';
 import type { AuroraNavigate } from '@/components/aurora/chrome';
 
-/* ------------------------------------------------------------------ */
-/* Aurora Drift home — direction B from the Futurized handoff bundle. */
-/* ------------------------------------------------------------------ */
-
 interface ShadewaterLabsProps {
   onNavigate: AuroraNavigate;
 }
@@ -31,39 +27,48 @@ interface ShadewaterLabsProps {
 
 const AD_TRACKS = [
   {
-    id: '01',
+    id: 'ai-tools',
     title: 'AI Tools & Creative Tech',
     body:
-      'Prompt rigs, automation flows, creative software experiments. Where generative models become instruments.',
-    sigil: '◐',
+      'Prompt rigs, automation flows, and creative software experiments. Where generative models become instruments.',
     accent: '186 90% 60%',
   },
   {
-    id: '02',
+    id: 'web',
     title: 'Websites & Coding Builds',
-    body:
-      'Custom web apps, utilities, and small ships. Software made for the way I actually work.',
-    sigil: '◑',
+    body: 'Custom web apps, utilities, and small ships. Software made for the way I actually work.',
     accent: '210 85% 65%',
   },
   {
-    id: '03',
+    id: 'experiments',
     title: 'Future Tech Experiments',
-    body:
-      'A workshop for prototypes — emerging-tech ideas, rough spikes, and the occasional graduate.',
-    sigil: '◓',
+    body: 'A workshop for prototypes: emerging-tech ideas, rough spikes, and the occasional graduate.',
     accent: '150 65% 55%',
   },
 ];
 
 const AD_COMING = [
-  { code: 'L-04', label: 'New AI tools and coding utilities' },
-  { code: 'L-05', label: 'Experimental web apps and creative software' },
-  { code: 'L-06', label: 'Behind-the-scenes technology notes' },
-  { code: 'L-07', label: 'Small digital downloads for creators' },
+  'New AI tools and coding utilities',
+  'Experimental web apps and creative software',
+  'Behind-the-scenes technology notes',
+  'Small digital downloads for creators',
 ];
 
+/**
+ * Everything in the status readout is derived from the site's own content
+ * files, so it stays true on its own. Nothing here is hand-entered.
+ */
+function useLabStatus() {
+  const liveSites = managedWebsites.filter((s) => s.status === 'Live').length;
+  const betaSites = managedWebsites.length - liveSites;
+  const newest = managedWebsites.reduce((a, b) => (b.updated > a.updated ? b : a));
+  const projects = Object.values(projectStatuses);
+  const furthest = projects.reduce((a, b) => (b.overallProgress > a.overallProgress ? b : a));
+  return { liveSites, betaSites, newest, projects, furthest };
+}
+
 function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
+  const { liveSites, betaSites, newest, projects, furthest } = useLabStatus();
   return (
     <section style={home.hero}>
       <HeroMesh />
@@ -72,8 +77,8 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
       <div style={home.heroInner} className="home-heroInner">
         <div style={home.heroChip}>
           <span style={home.heroChipPulse} className="ad-pulse" />
-          <span style={home.heroChipText}>LAB.SIGNAL · ONLINE</span>
-          <span style={home.heroChipMono}>52.486°N · 1.890°W · 10:42</span>
+          <span style={home.heroChipText}>Shadewater Labs</span>
+          <span style={home.heroChipMono}>Vancouver, BC</span>
         </div>
 
         <img
@@ -127,19 +132,23 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
           <div style={home.hudHead}>
             <div style={home.hudTitle}>
               <span style={home.hudPulse} className="ad-pulse" />
-              LAB · LIVE READOUT
+              Where things stand
             </div>
-            <div style={home.hudMeta}>last refresh · 8s</div>
+            <div style={home.hudMeta}>from the project files</div>
           </div>
           <div style={home.hudGrid} className="home-hudGrid">
-            <HudCell k="ACTIVE_BUILDS" v="03" sub="2 shipping · 1 spike" />
-            <HudCell k="SHIPPED_2025" v="07" sub="+2 vs 2024" />
-            <HudCell k="MODELS_USED" v="04" sub="claude · gpt · llama · sd" />
-            <HudCell k="CURRENT_FOCUS" v="img/io" sub="webp pipeline v0.9.4" />
-          </div>
-          <div style={home.hudSparkRow}>
-            <div style={home.hudSparkLabel}>signal · 28d</div>
-            <Sparkline />
+            <HudCell
+              k="Sites managed"
+              v={String(managedWebsites.length)}
+              sub={`${liveSites} live · ${betaSites} in beta`}
+            />
+            <HudCell k="Projects tracked" v={String(projects.length)} sub="each with a working page" />
+            <HudCell k="Last updated" v={newest.updated} sub={newest.name} />
+            <HudCell
+              k="Furthest along"
+              v={`${furthest.overallProgress}%`}
+              sub={furthest.name}
+            />
           </div>
         </div>
       </div>
@@ -157,34 +166,13 @@ function HudCell({ k, v, sub }: { k: string; v: string; sub: string }) {
   );
 }
 
-function Sparkline() {
-  const points = [12, 14, 9, 18, 16, 22, 19, 28, 24, 30, 26, 34, 31, 38, 36, 44, 41, 48, 52, 47, 56, 60, 58, 64, 70, 66, 72, 75];
-  const max = Math.max(...points);
-  const w = 720;
-  const h = 38;
-  const dx = w / (points.length - 1);
-  const path = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${(i * dx).toFixed(1)},${(h - (p / max) * h).toFixed(1)}`).join(' ');
-  const area = `${path} L${w},${h} L0,${h} Z`;
-  return (
-    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" style={home.spark}>
-      <defs>
-        <linearGradient id="adSparkFill" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="hsl(186 90% 60%)" stopOpacity="0.45" />
-          <stop offset="100%" stopColor="hsl(186 90% 60%)" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path d={area} fill="url(#adSparkFill)" />
-      <path d={path} fill="none" stroke="hsl(186 90% 70%)" strokeWidth="1.4" />
-    </svg>
-  );
-}
 
-function SectionHead({ step, title, sub, align = 'center' }: { step: string; title: string; sub: string; align?: 'center' | 'left' }) {
+function SectionHead({ kicker, title, sub, align = 'center' }: { kicker: string; title: string; sub: string; align?: 'center' | 'left' }) {
   return (
     <div style={{ ...home.sectionHead, textAlign: align, margin: align === 'left' ? '0 0 32px' : '0 auto 40px' }}>
       <div style={{ ...home.kicker, justifyContent: align === 'left' ? 'flex-start' : 'center' }}>
         <span style={home.kickerLine} />
-        <span style={home.kickerText}>§ {step} · LAB</span>
+        <span style={home.kickerText}>{kicker}</span>
         <span style={home.kickerLine} />
       </div>
       <h2 style={home.h2}>{title}</h2>
@@ -196,15 +184,11 @@ function SectionHead({ step, title, sub, align = 'center' }: { step: string; tit
 function ADTracks() {
   return (
     <section id="labs-tracks" style={home.section} className="home-section">
-      <SectionHead step="02" title="What lives here" sub="Three working currents inside the lab." />
+      <SectionHead kicker="Focus" title="What lives here" sub="Three things the lab actually works on." />
       <div style={home.trackGrid} className="home-trackGrid">
         {AD_TRACKS.map((t) => (
           <article key={t.id} style={home.trackCard}>
             <div style={{ ...home.trackHalo, background: `radial-gradient(120% 100% at 50% -10%, hsl(${t.accent} / 0.40), transparent 65%)` }} />
-            <div style={home.trackTop}>
-              <span style={home.trackId}>TRACK_{t.id}</span>
-              <span style={{ ...home.trackSigil, color: `hsl(${t.accent})` }}>{t.sigil}</span>
-            </div>
             <h3 style={home.trackTitle}>{t.title}</h3>
             <p style={home.trackBody}>{t.body}</p>
             <div style={{ ...home.trackLine, background: `linear-gradient(90deg, transparent, hsl(${t.accent} / 0.7), transparent)` }} />
@@ -345,7 +329,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
   return (
     <section id="labs-projects" style={home.section} className="home-section">
-      <SectionHead step="03" title="Things that live here" sub="Projects, tools, and managed web properties. Click any card to explore." />
+      <SectionHead kicker="Work" title="Projects and managed sites" sub="Every card goes to a real page. Click any of them." />
       <style>{`
         .carousel-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         @media (max-width: 900px) { .carousel-track { grid-template-columns: repeat(2, 1fr); } }
@@ -490,13 +474,12 @@ function ADComing() {
       <div style={home.comingPanel}>
         <div style={home.comingGlow} />
         <div style={home.comingHead}>
-          <SectionHead step="04" title="On the bench" sub="Sketches and queued experiments — no ship dates, just intent." align="left" />
+          <SectionHead kicker="Next up" title="On the bench" sub="Sketches and queued experiments. No ship dates, just intent." align="left" />
         </div>
         <ul style={home.comingList}>
-          {AD_COMING.map((c) => (
-            <li key={c.code} style={home.comingItem}>
-              <span style={home.comingCode}>{c.code}</span>
-              <span style={home.comingLabel}>{c.label}</span>
+          {AD_COMING.map((label) => (
+            <li key={label} style={home.comingItem}>
+              <span style={home.comingLabel}>{label}</span>
               <span style={home.comingTag}>
                 <span style={home.comingTagDot} className="ad-pulse" />
                 queued
@@ -597,9 +580,6 @@ const home: Record<string, CSSProperties> = {
   hudKey: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.22em', color: 'hsl(186 35% 65%)' },
   hudVal: { fontSize: 26, fontWeight: 700, letterSpacing: '-0.02em', color: '#fff' },
   hudSub: { fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.06em', color: 'hsl(36 30% 70%)' },
-  hudSparkRow: { marginTop: 16, display: 'flex', alignItems: 'center', gap: 14 },
-  hudSparkLabel: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.2em', color: 'hsl(186 35% 65%)' },
-  spark: { flex: 1, height: 38 },
 
   section: { position: 'relative', maxWidth: 1180, margin: '0 auto', padding: '80px 32px 0', zIndex: 1 },
   sectionHead: { textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' },
@@ -622,9 +602,6 @@ const home: Record<string, CSSProperties> = {
     overflow: 'hidden',
   },
   trackHalo: { position: 'absolute', inset: 0, pointerEvents: 'none' },
-  trackTop: { position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 22 },
-  trackId: { fontFamily: MONO, fontSize: 11, letterSpacing: '0.24em', color: 'hsl(186 60% 75%)' },
-  trackSigil: { fontSize: 22, lineHeight: 1, filter: 'drop-shadow(0 0 14px currentColor)' },
   trackTitle: { position: 'relative', fontSize: 24, fontWeight: 700, letterSpacing: '-0.01em', margin: 0, color: '#fff' },
   trackBody: { position: 'relative', color: 'hsl(45 18% 84%)', fontSize: 15, lineHeight: 1.6, marginTop: 12 },
   trackLine: { position: 'absolute', left: 0, right: 0, bottom: 0, height: 2, opacity: 0.8 },
@@ -672,7 +649,6 @@ const home: Record<string, CSSProperties> = {
     position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
     marginTop: 22, paddingTop: 16, borderTop: '1px solid hsl(186 30% 30% / 0.3)',
   },
-  projectSig: { fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: TG_DIM },
   projectLink: { display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
 
   comingPanel: {
@@ -693,7 +669,6 @@ const home: Record<string, CSSProperties> = {
     padding: '14px 18px', borderRadius: 14,
     background: 'hsl(200 30% 7% / 0.7)', border: '1px solid hsl(186 50% 40% / 0.2)',
   },
-  comingCode: { fontFamily: MONO, fontSize: 12, letterSpacing: '0.22em', color: 'hsl(186 60% 75%)' },
   comingLabel: { fontSize: 16, color: '#fff' },
   comingTag: { display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(36 60% 78%)' },
   comingTagDot: {

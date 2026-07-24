@@ -140,7 +140,7 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
       <section style={pp.section}>
         <div style={pp.kicker2}>
           <span style={pp.kickerLine2} />
-          <span style={pp.kickerText2}>§ 01 · LIVE REPORT OUTPUT</span>
+          <span style={pp.kickerText2}>LIVE REPORT OUTPUT</span>
           <span style={pp.kickerLine2} />
         </div>
         <h2 style={pp.h2}>The actual dashboard</h2>
@@ -191,7 +191,7 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
       <section style={pp.section}>
         <div style={pp.kicker2}>
           <span style={pp.kickerLine2} />
-          <span style={pp.kickerText2}>§ 02 · WORKFLOW</span>
+          <span style={pp.kickerText2}>WORKFLOW</span>
           <span style={pp.kickerLine2} />
         </div>
         <h2 style={pp.h2}>How it runs</h2>

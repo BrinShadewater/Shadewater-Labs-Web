@@ -176,7 +176,7 @@ export default function About({ onNavigate }: AboutProps) {
       active="about"
       onNavigate={onNavigate}
       sectionLabel="About"
-      eyebrow="§ 05 · ABOUT"
+      eyebrow="ABOUT"
       title="The person behind the lab."
       lede="Vancouver-based filmmaker, creative technologist, and digital creator working at the intersection of storytelling, emerging technology, and interactive media."
     >
