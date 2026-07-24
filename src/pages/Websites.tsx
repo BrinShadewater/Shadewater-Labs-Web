@@ -36,6 +36,7 @@ const TONE_BY_STATUS: Record<string, AdToneKey> = {
 const ACCENTS: Record<string, string> = {
   brinshadewater: '186 85% 60%',
   shadewaterlabs: '186 90% 60%',
+  datagoblin: '150 65% 55%',
   inkmasterstudio: '219 85% 65%',
   strangeharvestmovie: '210 85% 65%',
   strangeharvestmerch: '36 85% 62%',
@@ -44,6 +45,7 @@ const ACCENTS: Record<string, string> = {
 const SIGS: Record<string, string> = {
   brinshadewater: 'main',
   shadewaterlabs: 'labs',
+  datagoblin: 'guide',
   inkmasterstudio: 'product',
   strangeharvestmovie: 'film',
   strangeharvestmerch: 'merch',
@@ -57,6 +59,10 @@ const THUMBS: Record<string, { src: string; srcSet: string }> = {
   shadewaterlabs: {
     src: '/shadewaterlabswebthumb.webp',
     srcSet: '/shadewaterlabswebthumb-320w.webp 320w, /shadewaterlabswebthumb-480w.webp 480w, /shadewaterlabswebthumb-768w.webp 768w, /shadewaterlabswebthumb.webp 800w',
+  },
+  datagoblin: {
+    src: '/datagoblinwebthumb.webp',
+    srcSet: '/datagoblinwebthumb-320w.webp 320w, /datagoblinwebthumb-480w.webp 480w, /datagoblinwebthumb-768w.webp 768w, /datagoblinwebthumb.webp 800w',
   },
   inkmasterstudio: {
     src: '/inkmasterstudiowebthumb.webp',

@@ -18,6 +18,15 @@ export const managedWebsites = [
       'The dedicated home for Labs projects, AI tools, managed websites, product experiments, and future technology notes.',
   },
   {
+    id: 'datagoblin',
+    name: 'Data Goblin',
+    url: 'https://datagoblin.ca',
+    role: 'Field guide',
+    status: 'Live',
+    description:
+      'A free, bilingual field guide to AI, power, and data in Canada. Twenty-one chapters with a receipt behind every claim, plus a glossary, source ledger, and a claim-testing toolkit.',
+  },
+  {
     id: 'inkmasterstudio',
     name: 'InkMaster Studio',
     url: 'https://inkmasterstudio.com',
