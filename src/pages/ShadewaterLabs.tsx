@@ -78,6 +78,9 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
         <img
           src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
           alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
+          width={175}
+          height={250}
+          decoding="async"
           style={{ ...home.heroLogo, objectFit: 'cover', width: 175, height: 250 }}
         />
 

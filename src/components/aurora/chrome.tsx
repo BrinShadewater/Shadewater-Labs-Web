@@ -111,7 +111,7 @@ export function ADNav({
             setMenuOpen(false);
           }}
         >
-          <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.brandMark} />
+          <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" width={408} height={712} decoding="async" style={ad.brandMark} />
           <span style={ad.brandText}>
             <span style={ad.brandEyebrow}>shadewaterlabs.com</span>
             <span style={ad.brandWord}>
@@ -170,7 +170,7 @@ export function ADFooter() {
       <div style={ad.footerBeam} />
       <div style={ad.footerInner} className="ad-footerInner">
         <div style={ad.footerBrand}>
-          <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" style={ad.footerMark} />
+          <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" width={408} height={712} loading="lazy" decoding="async" style={ad.footerMark} />
           <div>
             <div style={ad.footerWord}>Shadewater Labs</div>
             <div style={ad.footerEyebrow}>

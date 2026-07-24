@@ -198,6 +198,8 @@ export default function About({ onNavigate }: AboutProps) {
                 src="/Alexbiopic.png"
                 alt="Alex Yesilcimen"
                 style={photoImg}
+                width={1448}
+                height={1086}
                 loading="eager"
                 decoding="async"
               />

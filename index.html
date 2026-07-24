@@ -11,7 +11,15 @@
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+      />
+    </noscript>
     <title>Shadewater Labs | AI Tools, Coding Projects &amp; Tech Experiments</title>
     <meta
       name="description"
@@ -47,9 +55,9 @@
     <link
       rel="preload"
       as="image"
-      href="/shadewater-labs-logo-640w.webp"
-      imagesrcset="/shadewater-labs-logo-320w.webp 320w, /shadewater-labs-logo-640w.webp 640w, /shadewater-labs-logo-900w.webp 900w, /shadewater-labs-logo.webp 1200w"
-      imagesizes="(min-width: 1024px) 13rem, (min-width: 640px) 11rem, 38vw"
+      href="/shadewater-labs-text-logo-640w.webp"
+      imagesrcset="/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w"
+      imagesizes="(min-width: 640px) 22rem, 60vw"
       fetchpriority="high"
     />
     <style>
@@ -269,12 +277,16 @@
         "@graph": [
           {
             "@type": "Organization",
-            "@id": "https://brinshadewater.com/#organization",
+            "@id": "https://shadewaterlabs.com/#organization",
             "name": "Shadewater Labs",
-            "url": "https://brinshadewater.com/",
+            "url": "https://shadewaterlabs.com/",
+            "description": "Shadewater Labs builds AI tools, coding projects, creative technology experiments, and digital product prototypes.",
             "logo": {
               "@type": "ImageObject",
               "url": "https://shadewaterlabs.com/shadewater-labs-text-logo.png"
+            },
+            "founder": {
+              "@id": "https://brinshadewater.com/#person"
             },
             "sameAs": [
               "https://www.youtube.com/@brinshadewater",
@@ -289,12 +301,8 @@
             "@id": "https://brinshadewater.com/#person",
             "name": "Brin Shadewater",
             "url": "https://brinshadewater.com/",
-            "image": "https://brinshadewater.com/hero-illustration.webp",
             "jobTitle": "Streamer, reviewer, filmmaker, and creator behind Shadewater Labs",
-            "description": "Brin Shadewater shares late-night Twitch streams, sharp game and movie reviews, community updates, and Shadewater Labs experiments in one cozy home base.",
-            "worksFor": {
-              "@id": "https://brinshadewater.com/#organization"
-            },
+            "description": "Brin Shadewater builds AI rigs, web apps, and creative-tech prototypes in public under the Shadewater Labs banner.",
             "sameAs": [
               "https://www.youtube.com/@brinshadewater",
               "https://x.com/brinshadewater",
@@ -305,62 +313,56 @@
           },
           {
             "@type": "WebSite",
-            "@id": "https://brinshadewater.com/#website",
-            "name": "Brin Shadewater",
-            "url": "https://brinshadewater.com/",
+            "@id": "https://shadewaterlabs.com/#website",
+            "name": "Shadewater Labs",
+            "url": "https://shadewaterlabs.com/",
             "inLanguage": "en-CA",
-            "description": "Brin Shadewater shares late-night Twitch streams, sharp game and movie reviews, community updates, and Shadewater Labs experiments in one cozy home base.",
+            "description": "Shadewater Labs builds AI tools, coding projects, creative technology experiments, and digital product prototypes from Brin Shadewater.",
             "publisher": {
-              "@id": "https://brinshadewater.com/#organization"
-            },
-            "about": {
-              "@id": "https://brinshadewater.com/#person"
+              "@id": "https://shadewaterlabs.com/#organization"
             }
           },
           {
-            "@type": "ProfilePage",
-            "@id": "https://brinshadewater.com/#webpage",
-            "url": "https://brinshadewater.com/",
-            "name": "Brin Shadewater",
-            "description": "Official home page for Brin Shadewater, streams, reviews, and Shadewater Labs.",
+            "@type": "WebPage",
+            "@id": "https://shadewaterlabs.com/#webpage",
+            "url": "https://shadewaterlabs.com/",
+            "name": "Shadewater Labs | AI Tools, Coding Projects & Tech Experiments",
+            "description": "Shadewater Labs builds AI tools, coding projects, creative technology experiments, and digital product prototypes from Brin Shadewater.",
             "isPartOf": {
-              "@id": "https://brinshadewater.com/#website"
-            },
-            "mainEntity": {
-              "@id": "https://brinshadewater.com/#person"
+              "@id": "https://shadewaterlabs.com/#website"
             },
             "about": {
-              "@id": "https://brinshadewater.com/#organization"
+              "@id": "https://shadewaterlabs.com/#organization"
             }
           },
           {
             "@type": "ItemList",
-            "@id": "https://brinshadewater.com/#featured",
-            "name": "Featured reviews and projects",
+            "@id": "https://shadewaterlabs.com/#featured",
+            "name": "Featured tools and projects",
             "itemListElement": [
               {
                 "@type": "ListItem",
                 "position": 1,
-                "url": "https://brinshadewater.com/reviews-notes/bugonia-placeholder-review",
-                "name": "Bugonia - Placeholder Review"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "url": "https://brinshadewater.com/reviews-notes/the-last-caretaker-early-access-review",
-                "name": "The Last Caretaker - Early Access Review"
-              },
-              {
-                "@type": "ListItem",
-                "position": 3,
-                "url": "https://brinshadewater.com/labs/webp-me-daddy",
+                "url": "https://shadewaterlabs.com/webp-me-daddy",
                 "name": "Webp Me Daddy"
               },
               {
                 "@type": "ListItem",
-                "position": 4,
-                "url": "https://brinshadewater.com/labs/inkmaster-studio",
+                "position": 2,
+                "url": "https://shadewaterlabs.com/inkmaster-studio",
                 "name": "InkMaster Studio"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "url": "https://shadewaterlabs.com/shadewater-seo-report",
+                "name": "Shadewater SEO Report"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "url": "https://shadewaterlabs.com/websites",
+                "name": "Managed Websites"
               }
             ]
           }
@@ -373,91 +375,90 @@
       <div class="seo-shell">
         <header class="seo-shell__hero">
           <nav class="seo-shell__nav" aria-label="Primary">
-            <a href="/">Home</a>
-            <a href="/stream">Stream</a>
-            <a href="/reviews-notes">Reviews &amp; Notes</a>
-            <a href="/community">Community</a>
+            <a href="/">Shadewater Labs</a>
+            <a href="/projects">Projects</a>
+            <a href="/websites">Websites</a>
+            <a href="/tech-news">Tech News</a>
             <a href="/about">About</a>
-            <a href="/labs">Shadewater Labs</a>
-            <a href="/labs/webp-me-daddy">Webp Me Daddy</a>
-            <a href="/labs/inkmaster-studio">InkMaster Studio</a>
-            <a href="/sponsor-deck">Sponsor Deck</a>
+            <a href="/webp-me-daddy">Webp Me Daddy</a>
+            <a href="/inkmaster-studio">InkMaster Studio</a>
+            <a href="/shadewater-seo-report">SEO Report</a>
           </nav>
 
           <div class="seo-shell__grid">
             <div>
-              <div class="seo-shell__eyebrow">Late-night streams, reviews, and new projects</div>
-              <h1>Brin Shadewater</h1>
+              <div class="seo-shell__eyebrow">AI Tools &amp; Tech Experiments</div>
+              <h1>Shadewater Labs</h1>
               <p class="seo-shell__lead">
-                Late-night streams, honest reviews, and new builds from Shadewater Labs.
-                Start with the stream schedule, the latest notes, or the current tools.
+                The studio for weird-good AI tools and tech experiments. Brin Shadewater builds
+                AI rigs, web apps, and creative-tech prototypes in public.
               </p>
               <p class="seo-shell__small">
-                This is the home base for the stream, the review archive, and ongoing project work.
-                Each section is short and clear. Use the links below to jump in fast.
+                Each project ships with a working page, progress notes, and the rough edges left
+                intact. Use the links below to jump into the tools, the managed websites, or the
+                latest tech notes.
               </p>
               <div class="seo-shell__cta">
-                <a class="seo-shell__cta-primary" href="/stream">Watch the stream</a>
-                <a class="seo-shell__cta-secondary" href="/reviews-notes">Read reviews and notes</a>
-                <a class="seo-shell__cta-secondary" href="/labs">Explore Shadewater Labs</a>
+                <a class="seo-shell__cta-primary" href="/projects">Explore the projects</a>
+                <a class="seo-shell__cta-secondary" href="/websites">See managed websites</a>
+                <a class="seo-shell__cta-secondary" href="/tech-news">Read tech news</a>
               </div>
             </div>
 
             <div class="seo-shell__visual">
               <img
-                src="/hero-illustration.webp"
-                width="1574"
-                height="1200"
-                alt="Illustration of Brin Shadewater and Margot gaming together"
+                src="/shadewater-labs-text-logo-640w.webp"
+                srcset="/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w"
+                sizes="(min-width: 640px) 22rem, 60vw"
+                width="602"
+                height="875"
+                alt="Shadewater Labs logo"
               />
-              <p class="seo-shell__visual-note">Twitch streamer, reviewer, filmmaker, and builder</p>
+              <p class="seo-shell__visual-note">AI tools, web apps, and creative-tech prototypes</p>
             </div>
           </div>
         </header>
 
         <main>
           <section class="seo-shell__section" aria-labelledby="explore-site">
-            <h2 id="explore-site">Explore the site</h2>
+            <h2 id="explore-site">Explore the lab</h2>
             <p>
-              Use this site to follow streams, read reviews, and track new projects.
-              Each area is small and direct. Pick the path that fits what you want.
+              Shadewater Labs is the umbrella for AI tools, coding projects, SEO experiments, and
+              creative technology. Each area is small and direct. Pick the path that fits what you
+              want.
             </p>
             <div class="seo-shell__link-grid" style="margin-top: 18px;">
-              <a class="seo-shell__pill" href="/stream">Live stream schedule</a>
-              <a class="seo-shell__pill" href="/reviews-notes">All reviews and notes</a>
-              <a class="seo-shell__pill" href="/reviews-notes/bugonia-placeholder-review">Bugonia review</a>
-              <a class="seo-shell__pill" href="/reviews-notes/the-last-caretaker-early-access-review">The Last Caretaker review</a>
-              <a class="seo-shell__pill" href="/reviews-notes/whiskerwood-early-access-impressions">Whiskerwood impressions</a>
-              <a class="seo-shell__pill" href="/community">Community hub</a>
-              <a class="seo-shell__pill" href="/about">About Brin</a>
-              <a class="seo-shell__pill" href="/labs">Shadewater Labs overview</a>
-              <a class="seo-shell__pill" href="/labs/webp-me-daddy">Webp Me Daddy</a>
-              <a class="seo-shell__pill" href="/labs/inkmaster-studio">InkMaster Studio</a>
-              <a class="seo-shell__pill" href="/sponsor-deck">Sponsor deck</a>
+              <a class="seo-shell__pill" href="/projects">All projects</a>
+              <a class="seo-shell__pill" href="/websites">Managed websites</a>
+              <a class="seo-shell__pill" href="/tech-news">Tech news</a>
+              <a class="seo-shell__pill" href="/webp-me-daddy">Webp Me Daddy</a>
+              <a class="seo-shell__pill" href="/inkmaster-studio">InkMaster Studio</a>
+              <a class="seo-shell__pill" href="/shadewater-seo-report">Shadewater SEO Report</a>
+              <a class="seo-shell__pill" href="/about">About Shadewater Labs</a>
             </div>
           </section>
 
           <section class="seo-shell__section" aria-labelledby="featured-work">
-            <h2 id="featured-work">Featured reviews and projects</h2>
+            <h2 id="featured-work">Featured tools and projects</h2>
             <p>
-              Start with one review and one project page. That gives you the tone of the site fast.
+              Start with one tool and one project page. That gives you the tone of the lab fast.
             </p>
             <div class="seo-shell__feature-grid">
               <article class="seo-shell__feature">
-                <h3><a href="/reviews-notes/bugonia-placeholder-review">Bugonia</a></h3>
-                <p>Placeholder review for the site layout. The full review is still coming.</p>
-              </article>
-              <article class="seo-shell__feature">
-                <h3><a href="/reviews-notes/the-last-caretaker-early-access-review">The Last Caretaker</a></h3>
-                <p>Early access notes on survival, systems, and quiet progression.</p>
-              </article>
-              <article class="seo-shell__feature">
-                <h3><a href="/labs/webp-me-daddy">Webp Me Daddy</a></h3>
+                <h3><a href="/webp-me-daddy">Webp Me Daddy</a></h3>
                 <p>Image workflow for responsive assets, metadata, proofing, and cleanup.</p>
               </article>
               <article class="seo-shell__feature">
-                <h3><a href="/labs/inkmaster-studio">InkMaster Studio</a></h3>
+                <h3><a href="/inkmaster-studio">InkMaster Studio</a></h3>
                 <p>Print-prep tool for apparel graphics, mockups, and DTG exports.</p>
+              </article>
+              <article class="seo-shell__feature">
+                <h3><a href="/shadewater-seo-report">Shadewater SEO Report</a></h3>
+                <p>Deterministic, LLM-first SEO audits for sites, posts, and repositories.</p>
+              </article>
+              <article class="seo-shell__feature">
+                <h3><a href="/websites">Managed Websites</a></h3>
+                <p>Sites Shadewater Labs designs, builds, and keeps running in production.</p>
               </article>
             </div>
           </section>
