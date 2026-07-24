@@ -41,8 +41,8 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
             <img
               src={SHADEWATER_LABS_MARK_CROPPED_SRC}
               alt={SHADEWATER_LABS_MARK_ALT}
-              width={417}
-              height={734}
+              width={520}
+              height={1180}
               loading="eager"
               decoding="async"
               className="h-14 w-auto shrink-0 object-contain drop-shadow-[0_10px_24px_hsl(192_70%_60%/0.2)] sm:h-16"
