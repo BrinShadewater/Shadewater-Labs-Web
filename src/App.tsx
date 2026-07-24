@@ -6,14 +6,54 @@ import Seo from './components/Seo';
 import { buildRouteHref, parseLocation } from './lib/routes';
 import { getSeoConfig } from './lib/seo';
 
-const ShadewaterLabs = lazy(() => import('./pages/ShadewaterLabs'));
-const Projects = lazy(() => import('./pages/Projects'));
-const Websites = lazy(() => import('./pages/Websites'));
-const TechNews = lazy(() => import('./pages/TechNews'));
-const About = lazy(() => import('./pages/About'));
-const ShadewaterSeoReport = lazy(() => import('./pages/ShadewaterSeoReport'));
-const WebpMeDaddy = lazy(() => import('./pages/WebpMeDaddy'));
-const InkMasterStudio = lazy(() => import('./pages/InkMasterStudio'));
+// Keep the import factories so the same chunks can be both lazy-rendered and
+// prefetched on idle. Warming these after first paint means page switches
+// resolve synchronously, so the Suspense fallback almost never appears.
+const pageImports = {
+  labs: () => import('./pages/ShadewaterLabs'),
+  projects: () => import('./pages/Projects'),
+  websites: () => import('./pages/Websites'),
+  techNews: () => import('./pages/TechNews'),
+  about: () => import('./pages/About'),
+  seoReport: () => import('./pages/ShadewaterSeoReport'),
+  webpMeDaddy: () => import('./pages/WebpMeDaddy'),
+  inkMasterStudio: () => import('./pages/InkMasterStudio'),
+};
+
+const ShadewaterLabs = lazy(pageImports.labs);
+const Projects = lazy(pageImports.projects);
+const Websites = lazy(pageImports.websites);
+const TechNews = lazy(pageImports.techNews);
+const About = lazy(pageImports.about);
+const ShadewaterSeoReport = lazy(pageImports.seoReport);
+const WebpMeDaddy = lazy(pageImports.webpMeDaddy);
+const InkMasterStudio = lazy(pageImports.inkMasterStudio);
+
+// Subtle, on-theme fallback that only appears if a chunk genuinely takes a
+// moment to load — avoids flashing a loader on fast navigations.
+function DelayedPageFallback() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setVisible(true), 200);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  if (!visible) {
+    return null;
+  }
+
+  return (
+    <div className="mx-auto flex max-w-6xl items-center justify-center px-4 py-24 sm:px-6 lg:px-8">
+      <div className="flex items-center gap-3 rounded-full border border-white/10 bg-[hsl(220_20%_13%/0.72)] px-5 py-3 text-xs uppercase tracking-[0.3em] text-[hsl(186_38%_72%)] shadow-[0_12px_30px_hsl(210_66%_3%/0.24)]">
+        <span
+          aria-hidden="true"
+          className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-[hsl(186_40%_60%/0.3)] border-t-[hsl(186_60%_70%)]"
+        />
+        Loading
+      </div>
+    </div>
+  );
+}
 
 function getRouteState() {
   const { page, noteId } = parseLocation(window.location.pathname, window.location.hash);
@@ -71,6 +111,31 @@ function App() {
     return () => {
       window.clearTimeout(timer);
     };
+  }, []);
+
+  // Warm the other page chunks once the browser is idle so switching pages
+  // resolves without suspending (no "Loading" flash on navigation).
+  useEffect(() => {
+    const warm = () => {
+      for (const load of Object.values(pageImports)) {
+        load().catch(() => {
+          /* prefetch is best-effort; ignore network/chunk errors */
+        });
+      }
+    };
+
+    const win = window as typeof window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+
+    if (typeof win.requestIdleCallback === 'function') {
+      const handle = win.requestIdleCallback(warm, { timeout: 2500 });
+      return () => win.cancelIdleCallback?.(handle);
+    }
+
+    const timer = window.setTimeout(warm, 1500);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const handleNavigate = (page: string, noteId?: string) => {
@@ -138,15 +203,7 @@ function App() {
       <div className="relative z-10 flex min-h-screen flex-col">
         {useAuroraChrome ? null : <Navbar currentPage={currentPage} onNavigate={handleNavigate} />}
         <main className="flex-grow">
-          <Suspense
-            fallback={
-              <div className="mx-auto flex max-w-6xl items-center justify-center px-4 py-24 sm:px-6 lg:px-8">
-                <div className="rounded-[1.75rem] border border-white/10 bg-[hsl(220_20%_13%/0.86)] px-6 py-5 text-sm uppercase tracking-[0.32em] text-[hsl(var(--sandstone-soft))]/80 shadow-[0_12px_30px_hsl(210_66%_3%/0.24)]">
-                  Loading page
-                </div>
-              </div>
-            }
-          >
+          <Suspense fallback={<DelayedPageFallback />}>
             {renderPage()}
           </Suspense>
         </main>
