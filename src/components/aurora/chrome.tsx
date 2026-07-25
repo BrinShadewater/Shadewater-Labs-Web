@@ -826,7 +826,10 @@ export const ad: Record<string, CSSProperties> = {
     flexWrap: 'wrap', gap: 16,
   },
   brand: { display: 'flex', alignItems: 'center', gap: 14, textDecoration: 'none' },
-  brandMark: { height: 44, filter: 'drop-shadow(0 6px 20px hsl(186 90% 50% / 0.5))' },
+  // width:auto is required — the img carries width/height attributes for CLS,
+  // and without this the width attribute wins as a presentational hint and
+  // stretches the mark to its full intrinsic width.
+  brandMark: { height: 44, width: 'auto', filter: 'drop-shadow(0 6px 20px hsl(186 90% 50% / 0.5))' },
   brandText: { display: 'flex', flexDirection: 'column', gap: 4, lineHeight: 1 },
   brandEyebrow: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.24em', color: 'hsl(186 50% 70%)' },
   brandWord: { fontSize: 20, fontWeight: 700, letterSpacing: '-0.01em' },
