@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "createdAt": "2026-07-29T03:01:45.767Z",
+        "reason": "Deliberate brand font across Shadewater sites"
+      }
+    ]
+  }
+}
