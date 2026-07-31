@@ -7,10 +7,6 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "sync:seo-skill": "node scripts/sync-seo-skill-snapshot.mjs",
-    "sync:explainers": "node scripts/sync-project-explainers.mjs",
-    "predev": "npm run sync:seo-skill && npm run sync:explainers",
-    "prebuild": "npm run sync:seo-skill && npm run sync:explainers",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

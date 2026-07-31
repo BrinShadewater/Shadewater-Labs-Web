@@ -3,9 +3,6 @@ import { projectStatuses } from '@/content/projects';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import {
-  SHADEWATER_LABS_MARK_CROPPED_SRC,
-} from '@/lib/brandAssets';
-import {
   AuroraPage,
   MONO,
   TG_DIM,
@@ -43,8 +40,6 @@ interface ProjectCard {
 }
 
 export default function Projects({ onNavigate }: ProjectsProps) {
-  const seo = projectStatuses['shadewater-seo-report'];
-  const webp = projectStatuses['webp-me-daddy'];
   const ink = projectStatuses['inkmaster-studio'];
   // One source for status: the same content file the Websites page renders.
   const inkSiteStatus = managedWebsites.find((s) => s.id === 'inkmasterstudio')?.status ?? 'Beta';
@@ -52,34 +47,6 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
 
   const cards: ProjectCard[] = [
-    {
-      slug: 'shadewater-seo-report',
-      page: 'shadewater-seo-report',
-      name: seo.name,
-      stage: 'INTERNAL OPERATOR',
-      summary:
-        'Deterministic SEO audit skill that turns live site evidence into branded dashboards, action plans, and rerunnable fix loops.',
-      progress: seo.overallProgress,
-      accent: '186 90% 60%',
-      logo: { src: SHADEWATER_LABS_MARK_CROPPED_SRC },
-      status: 'OPERATIONAL',
-      tone: 'green',
-      categories: ['ai_tools', 'pipelines'],
-    },
-    {
-      slug: 'webp-me-daddy',
-      page: 'webp-me-daddy',
-      name: webp.name,
-      stage: 'FEATURED PIPELINE',
-      summary:
-        'Layout-aware image pipeline. Messy assets become recipe-driven WebPs with strict metadata, proof sheets, and audits.',
-      progress: webp.overallProgress,
-      accent: '184 85% 58%',
-      logo: webp.hero.logo ? { src: webp.hero.logo.src, srcSet: webp.hero.logo.srcSet } : undefined,
-      status: 'SHIPPING',
-      tone: 'cyan',
-      categories: ['pipelines', 'web'],
-    },
     {
       slug: 'inkmaster-studio',
       page: 'inkmaster-studio',

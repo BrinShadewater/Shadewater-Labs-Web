@@ -98,8 +98,6 @@ function breadcrumbSchema(items: Array<{ name: string; url: string }>) {
 }
 
 export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'): SeoConfig {
-  const seoReport = projectStatuses['shadewater-seo-report'];
-  const webp = projectStatuses['webp-me-daddy'];
   const inkmaster = projectStatuses['inkmaster-studio'];
 
   switch (page) {
@@ -124,7 +122,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
-            itemListElement: [seoReport, webp, inkmaster].map((project, index) => ({
+            itemListElement: [inkmaster].map((project, index) => ({
               '@type': 'ListItem',
               position: index + 1,
               url: buildCanonicalUrl(project.slug, undefined, 'labs'),
@@ -228,67 +226,6 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           personSchema(),
         ],
       };
-    case 'shadewater-seo-report':
-      return {
-        title: `${seoReport.name} | ${ORGANIZATION_NAME}`,
-        description: seoReport.summary,
-        canonical: buildCanonicalUrl('shadewater-seo-report', undefined, 'labs'),
-        image: `${LABS_ORIGIN}${seoReport.hero.logo?.src ?? SHADEWATER_LABS_MARK_SRC}`,
-        imageAlt: seoReport.name,
-        siteName: ORGANIZATION_NAME,
-        type: 'website',
-        author: seoReport.author,
-        keywords:
-          'Shadewater SEO Report, SEO audit skill, technical SEO reports, branded SEO dashboard, Shadewater Labs',
-        jsonLd: [
-          {
-            '@context': 'https://schema.org',
-            '@type': 'SoftwareApplication',
-            name: seoReport.name,
-            description: seoReport.summary,
-            applicationCategory: 'DeveloperApplication',
-            creator: { '@type': 'Person', name: seoReport.author },
-            url: buildCanonicalUrl('shadewater-seo-report', undefined, 'labs'),
-          },
-          breadcrumbSchema([
-            { name: 'Shadewater Labs', url: buildCanonicalUrl('labs', undefined, 'labs') },
-            { name: seoReport.name, url: buildCanonicalUrl('shadewater-seo-report', undefined, 'labs') },
-          ]),
-          websiteSchema(),
-          organizationSchema(),
-          personSchema(),
-        ],
-      };
-    case 'webp-me-daddy':
-      return {
-        title: `${webp.name} | ${ORGANIZATION_NAME}`,
-        description: webp.summary,
-        canonical: buildCanonicalUrl('webp-me-daddy', undefined, 'labs'),
-        image: `${LABS_ORIGIN}${webp.hero.logo?.src ?? '/webp-me-daddy-logo-lockup.webp'}`,
-        imageAlt: webp.name,
-        siteName: ORGANIZATION_NAME,
-        type: 'website',
-        author: webp.author,
-        keywords: 'Webp Me Daddy, image optimization, WebP pipeline, frontend image workflow, Brin Shadewater',
-        jsonLd: [
-          {
-            '@context': 'https://schema.org',
-            '@type': 'SoftwareApplication',
-            name: webp.name,
-            description: webp.summary,
-            applicationCategory: 'DeveloperApplication',
-            creator: { '@type': 'Person', name: webp.author },
-            url: buildCanonicalUrl('webp-me-daddy', undefined, 'labs'),
-          },
-          breadcrumbSchema([
-            { name: 'Shadewater Labs', url: buildCanonicalUrl('labs', undefined, 'labs') },
-            { name: webp.name, url: buildCanonicalUrl('webp-me-daddy', undefined, 'labs') },
-          ]),
-          websiteSchema(),
-          organizationSchema(),
-          personSchema(),
-        ],
-      };
     case 'inkmaster-studio':
       return {
         title: `${inkmaster.name} | ${ORGANIZATION_NAME}`,
@@ -340,8 +277,6 @@ export function getLabsSitemapPaths() {
     buildPath('projects', undefined, 'labs'),
     buildPath('websites', undefined, 'labs'),
     buildPath('tech-news', undefined, 'labs'),
-    buildPath('shadewater-seo-report', undefined, 'labs'),
-    buildPath('webp-me-daddy', undefined, 'labs'),
     buildPath('inkmaster-studio', undefined, 'labs'),
   ];
 }

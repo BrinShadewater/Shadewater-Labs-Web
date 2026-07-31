@@ -12,8 +12,6 @@ const pageImports = {
   websites: () => import('./pages/Websites'),
   techNews: () => import('./pages/TechNews'),
   about: () => import('./pages/About'),
-  seoReport: () => import('./pages/ShadewaterSeoReport'),
-  webpMeDaddy: () => import('./pages/WebpMeDaddy'),
   inkMasterStudio: () => import('./pages/InkMasterStudio'),
 };
 
@@ -22,8 +20,6 @@ const Projects = lazy(pageImports.projects);
 const Websites = lazy(pageImports.websites);
 const TechNews = lazy(pageImports.techNews);
 const About = lazy(pageImports.about);
-const ShadewaterSeoReport = lazy(pageImports.seoReport);
-const WebpMeDaddy = lazy(pageImports.webpMeDaddy);
 const InkMasterStudio = lazy(pageImports.inkMasterStudio);
 
 // Subtle, on-theme fallback that only appears if a chunk genuinely takes a
@@ -149,10 +145,6 @@ function App() {
         return <TechNews onNavigate={handleNavigate} />;
       case 'about':
         return <About onNavigate={handleNavigate} />;
-      case 'shadewater-seo-report':
-        return <ShadewaterSeoReport onNavigate={handleNavigate} />;
-      case 'webp-me-daddy':
-        return <WebpMeDaddy onNavigate={handleNavigate} />;
       case 'inkmaster-studio':
         return <InkMasterStudio onNavigate={handleNavigate} />;
       default:

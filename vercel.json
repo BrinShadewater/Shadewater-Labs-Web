@@ -30,6 +30,18 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/shadewater-seo-report",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/webp-me-daddy",
+      "destination": "/projects",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!.*\\.).*)",

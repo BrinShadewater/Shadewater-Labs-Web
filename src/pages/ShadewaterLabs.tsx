@@ -205,8 +205,6 @@ function ADTracks() {
 }
 
 function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
-  const seoReport = projectStatuses['shadewater-seo-report'];
-  const webp = projectStatuses['webp-me-daddy'];
   const ink = projectStatuses['inkmaster-studio'];
   // One source for status: the same content file the site cards below derive from.
   const inkSiteStatus = managedWebsites.find((s) => s.id === 'inkmasterstudio')?.status ?? 'Beta';
@@ -242,34 +240,6 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
   };
 
   const projectCards: CarouselCard[] = [
-    {
-      key: 'seo',
-      updated: '2026-05-19',
-      badge: 'INTERNAL OPERATOR',
-      name: seoReport.name,
-      blurb: 'Deterministic SEO audit skill that turns live site evidence into branded dashboards and action plans.',
-      accent: '186 90% 60%',
-      logo: { src: '/shadewater-labs-logo.webp', srcSet: '/shadewater-labs-logo-320w.webp 320w, /shadewater-labs-logo-640w.webp 640w, /shadewater-labs-logo.webp 900w' },
-      statusLabel: 'OPERATIONAL',
-      statusTone: 'hsl(150 70% 55%)',
-      onClick: () => onNavigate('shadewater-seo-report'),
-      ctaLabel: 'View project',
-      href: buildRouteHref('shadewater-seo-report'),
-    },
-    {
-      key: 'webp',
-      updated: '2026-03-14',
-      badge: 'FEATURED PIPELINE',
-      name: webp.name,
-      blurb: 'Layout-aware image pipeline. Messy assets become recipe-driven WebPs with strict metadata and audits.',
-      accent: '184 85% 58%',
-      logo: webp.hero.logo ? { src: webp.hero.logo.src, srcSet: webp.hero.logo.srcSet } : undefined,
-      statusLabel: 'SHIPPING',
-      statusTone: 'hsl(186 90% 60%)',
-      onClick: () => onNavigate('webp-me-daddy'),
-      href: buildRouteHref('webp-me-daddy'),
-      ctaLabel: 'View project',
-    },
     {
       key: 'ink',
       updated: '2026-03-14',

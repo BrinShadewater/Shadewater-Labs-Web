@@ -32,8 +32,20 @@ numbering, fake signature hashes). Keep the aurora look; do not rebuild the fake
 
 ## The Labs showcase lives here
 
-`src/pages/ShadewaterLabs.tsx` plus per-project pages (`InkMasterStudio.tsx`,
-`ShadewaterSeoReport.tsx`, `WebpMeDaddy.tsx`) and `src/content/projects.ts`.
+`src/pages/ShadewaterLabs.tsx`, `src/pages/InkMasterStudio.tsx`, and
+`src/content/projects.ts`.
+
+**The Shadewater SEO Report and Webp Me Daddy product pages were retired 2026-07-31**, once
+both tools were open-sourced and their repo cards landed on `/projects`. A marketing page for
+a tool whose repo is public and documented is a second thing to keep in sync, so it went.
+Their routes 301 to `/projects` in `vercel.json` — they were in the sitemap and indexed, and
+this site has no 404 route, so without the redirect they would have silently served the
+homepage as a soft-404. **If you add a route, add it to `public/sitemap.xml`; if you remove
+one, redirect it.**
+
+Open-source releases are content, not pages: `src/content/openSource.ts` carries the repo,
+licence, language, accent and thumbnail, and both `/projects` and the home carousel render
+from it. Adding a release is one entry plus a thumbnail set in `public/`.
 
 An earlier April draft of this feature exists in the retired `Claude\` workspace and is
 **superseded**. It had a shared `LabsProjectPage` component that was deliberately refactored
@@ -65,6 +77,8 @@ check `git remote -v` rather than inferring from upstream tracking.
 
 ## Build notes
 
-`predev` and `prebuild` run `sync:seo-skill` and `sync:explainers`. If a build fails oddly,
-check those synced outputs before suspecting app code. Committing and pushing is Alex's
-call.
+**There is no longer a `predev`/`prebuild` step.** Those ran `sync:seo-skill` and
+`sync:explainers`, which existed solely to feed the two retired product pages — the explainer
+generator regenerated its PDFs into `public/` on every build, so retiring the pages meant
+retiring the pipeline or the deleted assets would have come straight back. `npm run dev` and
+`npm run build` are now exactly what they say. Committing and pushing is Alex's call.
