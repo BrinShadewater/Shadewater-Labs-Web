@@ -12,6 +12,7 @@ type SeoProps = {
   publishedTime?: string;
   modifiedTime?: string;
   keywords?: string;
+  noindex?: boolean;
   jsonLd: object[];
 };
 
@@ -61,6 +62,7 @@ export default function Seo({
   publishedTime,
   modifiedTime,
   keywords,
+  noindex,
   jsonLd,
 }: SeoProps) {
   useEffect(() => {
@@ -89,7 +91,10 @@ export default function Seo({
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description });
     upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: image });
     upsertMeta('meta[name="twitter:image:alt"]', { name: 'twitter:image:alt', content: imageAlt });
-    upsertMeta('meta[name="robots"]', { name: 'robots', content: 'index,follow,max-image-preview:large' });
+    upsertMeta('meta[name="robots"]', {
+      name: 'robots',
+      content: noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large',
+    });
     setOptionalMeta(
       'meta[property="article:published_time"]',
       type === 'article' && publishedTime
@@ -134,7 +139,7 @@ export default function Seo({
       script.text = JSON.stringify(entry);
       document.head.appendChild(script);
     });
-  }, [author, canonical, description, image, imageAlt, jsonLd, keywords, modifiedTime, publishedTime, siteName, title, type]);
+  }, [author, canonical, description, image, imageAlt, jsonLd, keywords, modifiedTime, noindex, publishedTime, siteName, title, type]);
 
   return null;
 }

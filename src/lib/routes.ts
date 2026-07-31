@@ -55,7 +55,9 @@ export function parseLocation(pathname: string, _hash = '') {
     case 'about':
       return { page: 'about', noteId: '' };
     default:
-      return { page: 'labs', noteId: '' };
+      // Unknown path. Previously this returned the homepage, so a bad URL looked
+      // like a working one and every wrong address served duplicate content.
+      return { page: 'not-found', noteId: '' };
   }
 }
 

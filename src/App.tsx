@@ -12,6 +12,7 @@ const pageImports = {
   websites: () => import('./pages/Websites'),
   techNews: () => import('./pages/TechNews'),
   about: () => import('./pages/About'),
+  notFound: () => import('./pages/NotFound'),
 };
 
 const ShadewaterLabs = lazy(pageImports.labs);
@@ -19,6 +20,7 @@ const Projects = lazy(pageImports.projects);
 const Websites = lazy(pageImports.websites);
 const TechNews = lazy(pageImports.techNews);
 const About = lazy(pageImports.about);
+const NotFound = lazy(pageImports.notFound);
 
 // Subtle, on-theme fallback that only appears if a chunk genuinely takes a
 // moment to load — avoids flashing a loader on fast navigations.
@@ -144,7 +146,7 @@ function App() {
       case 'about':
         return <About onNavigate={handleNavigate} />;
       default:
-        return <ShadewaterLabs onNavigate={handleNavigate} />;
+        return <NotFound onNavigate={handleNavigate} />;
     }
   };
 

@@ -16,6 +16,8 @@ type SeoConfig = {
   publishedTime?: string;
   modifiedTime?: string;
   keywords?: string;
+  /** Keeps a page out of the index — set for the 404, which must not be indexed. */
+  noindex?: boolean;
   jsonLd: object[];
 };
 
@@ -236,6 +238,19 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           organizationSchema(),
           personSchema(),
         ],
+      };
+    case 'not-found':
+      return {
+        title: `Page not found | ${ORGANIZATION_NAME}`,
+        description: 'That address does not match anything on shadewaterlabs.com.',
+        canonical: `${LABS_ORIGIN}/`,
+        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
+        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        siteName: ORGANIZATION_NAME,
+        type: 'website',
+        noindex: true,
+        keywords: '',
+        jsonLd: [websiteSchema(), organizationSchema()],
       };
     default:
       return {

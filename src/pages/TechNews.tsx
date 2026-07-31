@@ -29,7 +29,7 @@ export default function TechNews({ onNavigate }: TechNewsProps) {
       sectionLabel="Tech News"
       eyebrow="TRANSMISSIONS"
       title="AI & creative-tech notes."
-      lede="A manually curated feed of AI signals, creative-tech ideas, and workflow changes worth tracking."
+      lede="Nothing has been published here yet. These are the three things this section will cover when it does — kept visible so the shape of it is clear, rather than hidden behind an empty page."
     >
       <section style={pp.section}>
         <div style={pp.newsList}>
@@ -56,10 +56,20 @@ export default function TechNews({ onNavigate }: TechNewsProps) {
                     <span style={{ ...pp.newsCat, color: `hsl(${accent})` }}>
                       {n.category.toUpperCase()}
                     </span>
-                    <span style={pp.newsSep}>/</span>
-                    <span style={pp.newsMono}>{n.date}</span>
-                    <span style={pp.newsSep}>/</span>
-                    <span style={pp.newsMono}>{n.source}</span>
+                    {n.date ? (
+                      <>
+                        <span style={pp.newsSep}>/</span>
+                        <span style={pp.newsMono}>{n.date}</span>
+                      </>
+                    ) : null}
+                    {n.source ? (
+                      <>
+                        <span style={pp.newsSep}>/</span>
+                        <span style={pp.newsMono}>{n.source}</span>
+                      </>
+                    ) : null}
+                    {!n.date ? <span style={pp.newsSep}>/</span> : null}
+                    {!n.date ? <span style={pp.newsMono}>planned</span> : null}
                   </div>
                   <h3 style={pp.newsTitle}>{n.title}</h3>
                   <p style={pp.newsSummary}>{n.summary}</p>
