@@ -83,6 +83,21 @@ export const openSourceReleases: OpenSourceRelease[] = [
     kicker: 'site audits',
   },
   {
+    id: 'agent-memory-starter',
+    name: 'Agent Memory Starter',
+    repo: 'BrinShadewater/Agent-Memory-Starter',
+    url: 'https://github.com/BrinShadewater/Agent-Memory-Starter',
+    licence: 'MIT',
+    language: 'Python',
+    summary:
+      'A memory vault for coding agents that ships completely empty. The structure and the operating discipline are the product — most of it is about the harder problem, which is not storing what an agent learned but stopping the store filling up with things that are no longer true.',
+    updated: '2026-07-31',
+    accent: '150 55% 58%',
+    thumb: 'agentmemorystarterthumb',
+    categories: ['agents'],
+    kicker: 'memory vault',
+  },
+  {
     id: 'transparent-gif-loop-skill',
     name: 'Transparent Gif Loop Skill',
     repo: 'BrinShadewater/Transparent-Gif-Loop-Skill',
