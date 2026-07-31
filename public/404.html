@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found | Shadewater Labs</title>
+    <meta name="robots" content="noindex,follow" />
+    <meta name="description" content="That address does not match anything on shadewaterlabs.com." />
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      /* Static page: Vercel serves this with a real 404 status for unknown paths,
+         so it cannot rely on the app's stylesheet being loaded. Values mirror
+         DESIGN.md rather than importing it. */
+      :root {
+        --bg: hsl(210 66% 7%);
+        --frame: hsl(192 49% 14%);
+        --warm: hsl(45 20% 95%);
+        --muted: hsl(45 15% 65%);
+        --cyan: hsl(186 90% 60%);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 20px;
+        background: var(--bg);
+        color: var(--warm);
+        font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+        background-image:
+          radial-gradient(60% 50% at 80% 0%, hsl(186 90% 60% / 0.10), transparent 70%),
+          radial-gradient(50% 50% at 0% 100%, hsl(192 49% 14% / 0.55), transparent 70%);
+      }
+      main { width: 100%; max-width: 640px; }
+      .kicker {
+        font-size: 11px;
+        letter-spacing: 0.32em;
+        color: var(--cyan);
+        margin: 0 0 18px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      h1 {
+        font-size: clamp(2rem, 7vw, 3.25rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        margin: 0 0 16px;
+      }
+      p { color: var(--muted); font-size: 17px; line-height: 1.6; margin: 0 0 28px; }
+      ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+      a.route {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 16px 20px;
+        border-radius: 14px;
+        text-decoration: none;
+        color: var(--warm);
+        background: hsl(200 30% 9% / 0.7);
+        border: 1px solid hsl(186 50% 40% / 0.28);
+        transition: border-color 0.2s ease, transform 0.2s ease;
+      }
+      a.route:hover { border-color: hsl(186 90% 60% / 0.55); transform: translateY(-1px); }
+      a.route:focus-visible { outline: 2px solid hsl(186 80% 65%); outline-offset: 3px; }
+      .name { font-weight: 700; font-size: 17px; }
+      .blurb { color: var(--muted); font-size: 14px; flex: 1 1 220px; }
+      .go { color: var(--cyan); font-weight: 600; font-size: 14px; margin-left: auto; }
+      @media (prefers-reduced-motion: reduce) {
+        a.route { transition: none; }
+        a.route:hover { transform: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="kicker">NO SIGNAL</p>
+      <h1>This page isn&rsquo;t here.</h1>
+      <p>
+        The address didn&rsquo;t match anything on the site. It may have moved, or it may never
+        have existed &mdash; either way, here is everything that does.
+      </p>
+      <ul>
+        <li>
+          <a class="route" href="/">
+            <span class="name">Home</span>
+            <span class="blurb">What the lab works on right now.</span>
+            <span class="go">Open &#8599;</span>
+          </a>
+        </li>
+        <li>
+          <a class="route" href="/projects">
+            <span class="name">Projects</span>
+            <span class="blurb">Open-source tools, each linking to its repository.</span>
+            <span class="go">Open &#8599;</span>
+          </a>
+        </li>
+        <li>
+          <a class="route" href="/websites">
+            <span class="name">Websites</span>
+            <span class="blurb">The web properties built and maintained here.</span>
+            <span class="go">Open &#8599;</span>
+          </a>
+        </li>
+        <li>
+          <a class="route" href="/tech-news">
+            <span class="name">Tech News</span>
+            <span class="blurb">Notes on tooling and creative technology.</span>
+            <span class="go">Open &#8599;</span>
+          </a>
+        </li>
+        <li>
+          <a class="route" href="/about">
+            <span class="name">About</span>
+            <span class="blurb">The person behind the lab.</span>
+            <span class="go">Open &#8599;</span>
+          </a>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

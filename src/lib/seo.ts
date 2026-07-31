@@ -2,7 +2,7 @@ import { techNewsItems } from '@/content/techNews';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases } from '@/content/openSource';
 import { SHADEWATER_LABS_MARK_ALT, SHADEWATER_LABS_MARK_SRC } from '@/lib/brandAssets';
-import { BRIN_ORIGIN, LABS_ORIGIN, buildCanonicalUrl, buildPath, getOrigin, type SiteKey } from '@/lib/routes';
+import { BRIN_ORIGIN, CONTACT_EMAIL, LABS_ORIGIN, buildCanonicalUrl, buildPath, getOrigin, type SiteKey } from '@/lib/routes';
 
 type SeoConfig = {
   title: string;
@@ -49,6 +49,12 @@ function organizationSchema(site: SiteKey = 'labs') {
     sameAs: SAME_AS_LINKS,
     founder: {
       '@id': `${BRIN_ORIGIN}#person`,
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'business enquiries',
+      email: CONTACT_EMAIL,
+      url: `${LABS_ORIGIN}/about`,
     },
   };
 }

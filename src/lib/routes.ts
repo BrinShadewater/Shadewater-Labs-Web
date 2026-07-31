@@ -1,5 +1,7 @@
 export const BRIN_ORIGIN = 'https://brinshadewater.com';
 export const LABS_ORIGIN = 'https://shadewaterlabs.com';
+/** Public contact address. Already listed on the GitHub profile. */
+export const CONTACT_EMAIL = 'brinshadewater@gmail.com';
 export type SiteKey = 'brin' | 'labs';
 
 const LABS_STATIC_PATHS: Record<string, string> = {

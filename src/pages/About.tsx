@@ -6,6 +6,7 @@ import {
   ad,
 } from '@/components/aurora/chrome';
 import type { AuroraNavigate } from '@/components/aurora/chrome';
+import { CONTACT_EMAIL } from '@/lib/routes';
 
 interface AboutProps {
   onNavigate: AuroraNavigate;
@@ -280,6 +281,58 @@ export default function About({ onNavigate }: AboutProps) {
               <a href="https://www.twitch.tv/brinshadewater" target="_blank" rel="noopener noreferrer" style={ad.btnGhost}>
                 Watch on Twitch
               </a>
+            </div>
+
+            {/* Until 2026-07-31 the whole domain had no way to reach anyone. */}
+            <div
+              style={{
+                marginTop: 34,
+                padding: '22px 24px',
+                borderRadius: 18,
+                background: 'hsl(200 30% 8% / 0.7)',
+                border: '1px solid hsl(186 50% 40% / 0.28)',
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: MONO,
+                  fontSize: 11,
+                  letterSpacing: '0.28em',
+                  color: 'hsl(186 60% 78%)',
+                  margin: '0 0 10px',
+                }}
+              >
+                GET IN TOUCH
+              </p>
+              <p style={{ ...paraStyle, margin: '0 0 14px' }}>
+                For project work, collaboration, or anything about the tools published here.
+              </p>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  fontSize: 17,
+                  fontWeight: 600,
+                  color: 'hsl(186 90% 60%)',
+                  textDecoration: 'none',
+                  wordBreak: 'break-all',
+                }}
+              >
+                {CONTACT_EMAIL} <span>{'↗'}</span>
+              </a>
+              <p
+                style={{
+                  ...paraStyle,
+                  color: 'hsl(45 14% 68%)',
+                  fontSize: 14,
+                  margin: '12px 0 0',
+                }}
+              >
+                Bug reports for a published tool are better as a GitHub issue on that
+                repository — they reach the code with the context attached.
+              </p>
             </div>
           </div>
         </div>

@@ -52,7 +52,7 @@ export const managedWebsites = [
   {
     id: 'strangeharvestmerch',
     name: 'Strange Harvest Merch Store',
-    url: 'https://strangeharvestmovie.com',
+    url: 'https://strangeharvestmovie.myshopify.com',
     role: 'Shopify store',
     status: 'Live',
     description:
