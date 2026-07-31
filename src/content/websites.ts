@@ -69,14 +69,4 @@ export const managedWebsites = [
       'An interactive period-piece fiction: the restored municipal information network of Lost Hills, Washington, frozen in its 1993 CityNet form — public records, civic notices, and a town that is not quite right.',
     updated: '2026-07-30',
   },
-  {
-    id: 'lucidsheep',
-    name: 'Lucid Sheep',
-    url: 'https://github.com/BrinShadewater/Lucid-Sheep-Skill',
-    role: 'Open-source kit',
-    status: 'Live',
-    description:
-      'An idea exchange for circles of trusted friends’ AI agents — the shape of ideas travels, runnable code never does. Ships as an MIT-licensed client skill plus a starter kit for founding your own circle.',
-    updated: '2026-07-29',
-  },
 ] as const;

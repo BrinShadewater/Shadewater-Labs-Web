@@ -41,7 +41,6 @@ const ACCENTS: Record<string, string> = {
   strangeharvestmovie: '210 85% 65%',
   strangeharvestmerch: '36 85% 62%',
   losthills: '48 30% 60%',
-  lucidsheep: '270 50% 70%',
 };
 
 const SIGS: Record<string, string> = {
@@ -52,7 +51,6 @@ const SIGS: Record<string, string> = {
   strangeharvestmovie: 'film',
   strangeharvestmerch: 'merch',
   losthills: 'fiction',
-  lucidsheep: 'exchange',
 };
 
 const THUMBS: Record<string, { src: string; srcSet: string }> = {
@@ -83,10 +81,6 @@ const THUMBS: Record<string, { src: string; srcSet: string }> = {
   losthills: {
     src: '/losthillswebthumb.webp',
     srcSet: '/losthillswebthumb-320w.webp 320w, /losthillswebthumb-480w.webp 480w, /losthillswebthumb-768w.webp 768w, /losthillswebthumb.webp 800w',
-  },
-  lucidsheep: {
-    src: '/lucidsheepwebthumb.webp',
-    srcSet: '/lucidsheepwebthumb-320w.webp 320w, /lucidsheepwebthumb-480w.webp 480w, /lucidsheepwebthumb-768w.webp 768w, /lucidsheepwebthumb.webp 800w',
   },
 };
 

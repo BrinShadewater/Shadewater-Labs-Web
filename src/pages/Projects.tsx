@@ -1,6 +1,7 @@
-import { useState, type MouseEvent } from 'react';
+import { useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { projectStatuses } from '@/content/projects';
 import { managedWebsites } from '@/content/websites';
+import { openSourceReleases } from '@/content/openSource';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SRC,
 } from '@/lib/brandAssets';
@@ -21,18 +22,37 @@ type FilterKey = 'all' | 'ai_tools' | 'web' | 'pipelines';
 
 interface ProjectCard {
   slug: string;
+  /** Internal route, for products with a page on this site. */
   page?: string;
+  /** External destination, for open-source releases whose artifact is the repo. */
+  externalUrl?: string;
   name: string;
   stage: string;
   summary: string;
-  progress: number;
+  /** Only for projects tracked in projects.ts. A repo has no meaningful percentage. */
+  progress?: number;
+  /** Shown in place of the progress bar. Facts about the release, never counters. */
+  meta?: string[];
   accent: string;
   glyph?: string;
   logo?: { src: string; srcSet?: string };
+  thumbnail?: { src: string; srcSet: string };
   status: string;
   tone: AdToneKey;
   categories: FilterKey[];
 }
+
+/** Per-release presentation, keyed by `openSourceReleases[].id`. */
+const OSS_ACCENTS: Record<string, string> = {
+  'lucid-sheep': '270 50% 70%',
+};
+
+const OSS_THUMBS: Record<string, { src: string; srcSet: string }> = {
+  'lucid-sheep': {
+    src: '/lucidsheepwebthumb.webp',
+    srcSet: '/lucidsheepwebthumb-320w.webp 320w, /lucidsheepwebthumb-480w.webp 480w, /lucidsheepwebthumb.webp 800w',
+  },
+};
 
 export default function Projects({ onNavigate }: ProjectsProps) {
   const seo = projectStatuses['shadewater-seo-report'];
@@ -86,6 +106,19 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       tone: 'amber',
       categories: ['web'],
     },
+    ...openSourceReleases.map((r): ProjectCard => ({
+      slug: r.id,
+      externalUrl: r.url,
+      name: r.name,
+      stage: 'OPEN SOURCE',
+      summary: r.summary,
+      meta: [`${r.licence} licence`, r.language, r.repo],
+      accent: OSS_ACCENTS[r.id] ?? '270 50% 70%',
+      thumbnail: OSS_THUMBS[r.id],
+      status: 'RELEASED',
+      tone: 'green',
+      categories: ['ai_tools'],
+    })),
   ];
 
   const filters: FilterKey[] = ['all', 'ai_tools', 'web', 'pipelines'];
@@ -93,9 +126,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   const visibleCards =
     activeFilter === 'all' ? cards : cards.filter((p) => p.categories.includes(activeFilter));
 
-  const shippingCount = visibleCards.filter(
-    (p) => p.status === 'SHIPPING' || p.status === 'OPERATIONAL',
-  ).length;
+  const SHIPPED = ['SHIPPING', 'OPERATIONAL', 'RELEASED'];
+  const shippingCount = visibleCards.filter((p) => SHIPPED.includes(p.status)).length;
   const betaCount = visibleCards.length - shippingCount;
 
   const handleCardNav = (page: string) => (e: MouseEvent) => {
@@ -103,8 +135,57 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     onNavigate(page);
   };
 
+  /**
+   * Wraps card content in the right anchor: an internal route, an external repo, or
+   * nothing at all. Keeps every clickable card element a real link rather than a
+   * click handler on a div — the cards are navigation.
+   */
+  const linkWrap = (
+    p: ProjectCard,
+    children: ReactNode,
+    extraStyle?: CSSProperties,
+    ariaLabel?: string,
+  ) => {
+    if (p.page) {
+      return (
+        <a
+          href={'/' + p.page}
+          onClick={handleCardNav(p.page)}
+          style={{ textDecoration: 'none', ...extraStyle }}
+          aria-label={ariaLabel}
+        >
+          {children}
+        </a>
+      );
+    }
+    if (p.externalUrl) {
+      return (
+        <a
+          href={p.externalUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none', ...extraStyle }}
+          aria-label={ariaLabel ? ariaLabel + ' on GitHub' : undefined}
+        >
+          {children}
+        </a>
+      );
+    }
+    return children;
+  };
+
   const artInner = (p: ProjectCard) =>
-    p.logo ? (
+    p.thumbnail ? (
+      <img
+        src={p.thumbnail.src}
+        srcSet={p.thumbnail.srcSet}
+        sizes="(min-width: 1024px) 340px, 90vw"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+      />
+    ) : p.logo ? (
       <img
         src={p.logo.src}
         srcSet={p.logo.srcSet}
@@ -203,27 +284,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                 </span>
               </div>
 
-              {p.page ? (
-                <a
-                  href={'/' + p.page}
-                  onClick={handleCardNav(p.page)}
-                  style={{ display: 'block', textDecoration: 'none' }}
-                  aria-label={'Open ' + p.name}
-                >
-                  <div
-                    style={{
-                      ...pp.projectArt,
-                      boxShadow:
-                        '0 18px 50px hsl(' +
-                        p.accent +
-                        ' / 0.28), inset 0 1px 0 hsl(0 0% 100% / 0.06)',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {artInner(p)}
-                  </div>
-                </a>
-              ) : (
+              {linkWrap(
+                p,
                 <div
                   style={{
                     ...pp.projectArt,
@@ -231,44 +293,69 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                       '0 18px 50px hsl(' +
                       p.accent +
                       ' / 0.28), inset 0 1px 0 hsl(0 0% 100% / 0.06)',
+                    ...(p.page || p.externalUrl ? { cursor: 'pointer' } : null),
                   }}
                 >
                   {artInner(p)}
-                </div>
+                </div>,
+                { display: 'block' },
+                'Open ' + p.name,
               )}
 
-              {p.page ? (
-                <a
-                  href={'/' + p.page}
-                  onClick={handleCardNav(p.page)}
-                  style={{ textDecoration: 'none' }}
+              {linkWrap(
+                p,
+                <h3
+                  style={{
+                    ...pp.projectName,
+                    ...(p.page || p.externalUrl ? { cursor: 'pointer' } : null),
+                  }}
                 >
-                  <h3 style={{ ...pp.projectName, cursor: 'pointer' }}>{p.name}</h3>
-                </a>
-              ) : (
-                <h3 style={pp.projectName}>{p.name}</h3>
+                  {p.name}
+                </h3>,
               )}
 
               <p style={pp.projectBlurb}>{p.summary}</p>
 
-              <div style={pp.progressRow}>
-                <div style={pp.progressTrack}>
-                  <div
-                    style={{
-                      ...pp.progressFill,
-                      width: p.progress + '%',
-                      background:
-                        'linear-gradient(90deg, hsl(' +
-                        p.accent +
-                        '), hsl(' +
-                        p.accent +
-                        ' / 0.7))',
-                      boxShadow: '0 0 16px hsl(' + p.accent + ' / 0.5)',
-                    }}
-                  />
+              {typeof p.progress === 'number' ? (
+                <div style={pp.progressRow}>
+                  <div style={pp.progressTrack}>
+                    <div
+                      style={{
+                        ...pp.progressFill,
+                        width: p.progress + '%',
+                        background:
+                          'linear-gradient(90deg, hsl(' +
+                          p.accent +
+                          '), hsl(' +
+                          p.accent +
+                          ' / 0.7))',
+                        boxShadow: '0 0 16px hsl(' + p.accent + ' / 0.5)',
+                      }}
+                    />
+                  </div>
+                  <span style={pp.progressVal}>{p.progress}%</span>
                 </div>
-                <span style={pp.progressVal}>{p.progress}%</span>
-              </div>
+              ) : p.meta ? (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 18 }}>
+                  {p.meta.map((m) => (
+                    <span
+                      key={m}
+                      style={{
+                        fontFamily: MONO,
+                        fontSize: 10.5,
+                        letterSpacing: '0.12em',
+                        color: TG_DIM,
+                        padding: '4px 10px',
+                        borderRadius: 999,
+                        background: 'hsl(200 30% 6% / 0.65)',
+                        border: '1px solid hsl(' + p.accent + ' / 0.25)',
+                      }}
+                    >
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
 
               <div style={pp.projectFoot}>
                 {p.page ? (
@@ -278,6 +365,15 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                     style={{ ...pp.projectLink, color: 'hsl(' + p.accent + ')' }}
                   >
                     Open project <span style={{ marginLeft: 4 }}>↗</span>
+                  </a>
+                ) : p.externalUrl ? (
+                  <a
+                    href={p.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ ...pp.projectLink, color: 'hsl(' + p.accent + ')' }}
+                  >
+                    View on GitHub <span style={{ marginLeft: 4 }}>↗</span>
                   </a>
                 ) : (
                   <span

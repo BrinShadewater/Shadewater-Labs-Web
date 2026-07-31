@@ -1,6 +1,7 @@
 import { useState, useEffect, type CSSProperties } from 'react';
 import { projectStatuses } from '@/content/projects';
 import { managedWebsites } from '@/content/websites';
+import { openSourceReleases } from '@/content/openSource';
 import { buildRouteHref } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
@@ -142,7 +143,11 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
               v={String(managedWebsites.length)}
               sub={`${liveSites} live · ${betaSites} in beta`}
             />
-            <HudCell k="Projects tracked" v={String(projects.length)} sub="each with a working page" />
+            <HudCell
+              k="Projects tracked"
+              v={String(projects.length + openSourceReleases.length)}
+              sub={`${projects.length} with a page here · ${openSourceReleases.length} on GitHub`}
+            />
             <HudCell k="Last updated" v={newest.updated} sub={newest.name} />
             <HudCell
               k="Furthest along"
@@ -234,7 +239,6 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     strangeharvestmovie: { src: '/strangeharvestwebthumb.webp', srcSet: '/strangeharvestwebthumb-320w.webp 320w, /strangeharvestwebthumb-480w.webp 480w, /strangeharvestwebthumb.webp 800w' },
     strangeharvestmerch: { src: '/strangeharvestmerchwebthumb.webp', srcSet: '/strangeharvestmerchwebthumb-320w.webp 320w, /strangeharvestmerchwebthumb-480w.webp 480w, /strangeharvestmerchwebthumb.webp 800w' },
     losthills: { src: '/losthillswebthumb.webp', srcSet: '/losthillswebthumb-320w.webp 320w, /losthillswebthumb-480w.webp 480w, /losthillswebthumb.webp 800w' },
-    lucidsheep: { src: '/lucidsheepwebthumb.webp', srcSet: '/lucidsheepwebthumb-320w.webp 320w, /lucidsheepwebthumb-480w.webp 480w, /lucidsheepwebthumb.webp 800w' },
   };
 
   const projectCards: CarouselCard[] = [
@@ -280,6 +284,23 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       ctaLabel: 'View project',
       href: buildRouteHref('inkmaster-studio'),
     },
+    ...openSourceReleases.map((r): CarouselCard => ({
+      key: r.id,
+      updated: r.updated,
+      badge: 'OPEN SOURCE',
+      name: r.name,
+      blurb: r.summary,
+      accent: '270 50% 70%',
+      thumbnail: '/lucidsheepwebthumb.webp',
+      thumbnailSrcSet:
+        '/lucidsheepwebthumb-320w.webp 320w, /lucidsheepwebthumb-480w.webp 480w, /lucidsheepwebthumb.webp 800w',
+      statusLabel: 'RELEASED',
+      statusTone: 'hsl(150 70% 55%)',
+      onClick: () => { window.open(r.url, '_blank', 'noopener,noreferrer'); },
+      ctaLabel: 'View on GitHub',
+      href: r.url,
+      external: true,
+    })),
   ];
 
   const siteCards: CarouselCard[] = managedWebsites.map((s) => {
@@ -292,7 +313,6 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       strangeharvestmovie: '210 85% 65%',
       strangeharvestmerch: '36 85% 62%',
       losthills: '48 30% 60%',
-      lucidsheep: '270 50% 70%',
     };
     return {
       key: s.id,
