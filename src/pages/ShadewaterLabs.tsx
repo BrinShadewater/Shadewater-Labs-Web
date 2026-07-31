@@ -607,7 +607,8 @@ const home: Record<string, CSSProperties> = {
 
   projectGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 },
   projectCard: {
-    position: 'relative', padding: 24, borderRadius: 24,
+    position: 'relative', display: 'flex', flexDirection: 'column',
+    padding: 24, borderRadius: 24,
     background: 'linear-gradient(180deg, hsl(200 30% 11% / 0.85), hsl(200 30% 7% / 0.95))',
     border: '1px solid hsl(186 50% 40% / 0.3)',
     boxShadow: '0 20px 50px hsl(210 80% 4% / 0.5), inset 0 1px 0 hsl(186 70% 70% / 0.06)',
@@ -646,9 +647,10 @@ const home: Record<string, CSSProperties> = {
   projectBlurb: { position: 'relative', color: 'hsl(45 18% 84%)', fontSize: 14.5, lineHeight: 1.6, marginTop: 10 },
   projectFoot: {
     position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    marginTop: 22, paddingTop: 16, borderTop: '1px solid hsl(186 30% 30% / 0.3)',
+    marginTop: 'auto', paddingTop: 16, borderTop: '1px solid hsl(186 30% 30% / 0.3)',
+    gap: 8,
   },
-  projectLink: { display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
+  projectLink: { display: 'inline-flex', alignItems: 'center', marginLeft: 'auto', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
 
   comingPanel: {
     position: 'relative', overflow: 'hidden', padding: '36px 40px', borderRadius: 28,

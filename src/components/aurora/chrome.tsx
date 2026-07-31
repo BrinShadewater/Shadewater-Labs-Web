@@ -4,6 +4,7 @@ import {
   SHADEWATER_LABS_MARK_CROPPED_SRC,
 } from '@/lib/brandAssets';
 import { LABS_ORIGIN, BRIN_ORIGIN } from '@/lib/routes';
+import { openSourceReleases } from '@/content/openSource';
 
 /* ------------------------------------------------------------------ */
 /* Aurora Drift — shared chrome (ticker, nav, footer, backgrounds)    */
@@ -21,11 +22,11 @@ export type AuroraNavigate = (page: string) => void;
 
 // Standing description of what the lab works on. Deliberately not framed as
 // a live feed — nothing here updates, so it shouldn't pretend to.
+// Derived, because the hardcoded version outlived the pages it advertised: it was
+// still naming a product page months after that page was retired, on every route.
 const AD_SIGNALS = [
   'AI tools and creative-tech experiments',
-  'Webp Me Daddy · image pipeline',
-  'InkMaster Studio · print prep',
-  'Shadewater SEO Report · site audits',
+  ...openSourceReleases.map((r) => `${r.name} · ${r.kicker}`),
   'Managed websites, built and maintained',
 ];
 
@@ -539,7 +540,11 @@ export const pp: Record<string, CSSProperties> = {
 
   projectsGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 },
   projectCard: {
-    position: 'relative', padding: 24, borderRadius: 24,
+    // Column layout so the footer can be pinned to the bottom: grid stretches the
+    // cards to equal height, and marginTop:auto on the footer keeps the links on
+    // one line across the row instead of floating up with short copy.
+    position: 'relative', display: 'flex', flexDirection: 'column',
+    padding: 24, borderRadius: 24,
     background: 'linear-gradient(180deg, hsl(200 30% 11% / 0.85), hsl(200 30% 7% / 0.95))',
     border: '1px solid hsl(186 50% 40% / 0.3)',
     boxShadow: '0 20px 50px hsl(210 80% 4% / 0.5), inset 0 1px 0 hsl(186 70% 70% / 0.06)',
@@ -617,15 +622,16 @@ export const pp: Record<string, CSSProperties> = {
   projectFoot: {
     position: 'relative',
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    marginTop: 18, paddingTop: 14, borderTop: '1px solid hsl(186 30% 30% / 0.3)',
+    marginTop: 'auto', paddingTop: 16, borderTop: '1px solid hsl(186 30% 30% / 0.3)',
     flexWrap: 'wrap', gap: 8,
   },
   projectSig: { fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: TG_DIM },
-  projectLink: { display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
+  projectLink: { display: 'inline-flex', alignItems: 'center', marginLeft: 'auto', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
 
   sitesGrid: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 18 },
   siteCard: {
     position: 'relative', overflow: 'hidden',
+    display: 'flex', flexDirection: 'column',
     padding: '26px 28px', borderRadius: 24,
     background: 'linear-gradient(180deg, hsl(200 30% 11% / 0.85), hsl(200 30% 7% / 0.95))',
     border: '1px solid hsl(186 50% 40% / 0.3)',
@@ -653,11 +659,11 @@ export const pp: Record<string, CSSProperties> = {
   siteFoot: {
     position: 'relative',
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    marginTop: 18, paddingTop: 14, borderTop: '1px solid hsl(186 30% 30% / 0.3)',
+    marginTop: 'auto', paddingTop: 16, borderTop: '1px solid hsl(186 30% 30% / 0.3)',
     flexWrap: 'wrap', gap: 8,
   },
   siteSig: { fontFamily: MONO, fontSize: 11, color: TG_DIM, letterSpacing: '0.18em' },
-  siteVisit: { display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
+  siteVisit: { display: 'inline-flex', alignItems: 'center', marginLeft: 'auto', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
 
   newsList: { display: 'flex', flexDirection: 'column', gap: 18 },
   newsCard: {

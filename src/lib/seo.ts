@@ -212,6 +212,31 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           personSchema(),
         ],
       };
+    case 'about':
+      return {
+        title: `About | ${ORGANIZATION_NAME}`,
+        description:
+          'Shadewater Labs is run by Brin Shadewater, a Vancouver-based filmmaker and creative technologist working across film production, AI tooling, and interactive media.',
+        canonical: buildCanonicalUrl('about', undefined, 'labs'),
+        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
+        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        siteName: ORGANIZATION_NAME,
+        type: 'website',
+        keywords: 'Brin Shadewater, Shadewater Labs, Vancouver, filmmaker, creative technologist, Directors Guild of Canada',
+        jsonLd: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'AboutPage',
+            name: `About ${ORGANIZATION_NAME}`,
+            url: buildCanonicalUrl('about', undefined, 'labs'),
+            description:
+              'Background on Shadewater Labs and the person who runs it.',
+          },
+          websiteSchema(),
+          organizationSchema(),
+          personSchema(),
+        ],
+      };
     default:
       return {
         title: `Shadewater Labs | AI Tools, Coding Projects & Tech Experiments`,

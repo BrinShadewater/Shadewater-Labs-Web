@@ -248,7 +248,16 @@ export default function Websites({ onNavigate }: WebsitesProps) {
                 fullUrl={s.fullUrl}
               />
 
-              <div style={{ padding: '16px 20px 18px', position: 'relative' }}>
+              {/* Grows to fill the card so siteFoot's auto margin has slack to push into. */}
+              <div
+                style={{
+                  padding: '16px 20px 18px',
+                  position: 'relative',
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
                 <div style={pp.siteTop}>
                   <span style={pp.siteRole}>{s.role}</span>
                   <span style={pp.statusPill}>
