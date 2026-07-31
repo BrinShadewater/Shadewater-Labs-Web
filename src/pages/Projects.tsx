@@ -1,5 +1,6 @@
 import { useState, type MouseEvent } from 'react';
 import { projectStatuses } from '@/content/projects';
+import { managedWebsites } from '@/content/websites';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SRC,
 } from '@/lib/brandAssets';
@@ -37,6 +38,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   const seo = projectStatuses['shadewater-seo-report'];
   const webp = projectStatuses['webp-me-daddy'];
   const ink = projectStatuses['inkmaster-studio'];
+  // One source for status: the same content file the Websites page renders.
+  const inkSiteStatus = managedWebsites.find((s) => s.id === 'inkmasterstudio')?.status ?? 'Beta';
 
   const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
 
@@ -45,10 +48,10 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       slug: 'shadewater-seo-report',
       page: 'shadewater-seo-report',
       name: seo.name,
-      stage: 'INTERNAL OPERATOR · v0.6',
+      stage: 'INTERNAL OPERATOR',
       summary:
         'Deterministic SEO audit skill that turns live site evidence into branded dashboards, action plans, and rerunnable fix loops.',
-      progress: 92,
+      progress: seo.overallProgress,
       accent: '186 90% 60%',
       logo: { src: SHADEWATER_LABS_MARK_CROPPED_SRC },
       status: 'OPERATIONAL',
@@ -59,10 +62,10 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       slug: 'webp-me-daddy',
       page: 'webp-me-daddy',
       name: webp.name,
-      stage: 'FEATURED PIPELINE · v0.9.4',
+      stage: 'FEATURED PIPELINE',
       summary:
         'Layout-aware image pipeline. Messy assets become recipe-driven WebPs with strict metadata, proof sheets, and audits.',
-      progress: 78,
+      progress: webp.overallProgress,
       accent: '184 85% 58%',
       logo: webp.hero.logo ? { src: webp.hero.logo.src, srcSet: webp.hero.logo.srcSet } : undefined,
       status: 'SHIPPING',
@@ -73,13 +76,13 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       slug: 'inkmaster-studio',
       page: 'inkmaster-studio',
       name: ink.name,
-      stage: 'BETA PRODUCT · v0.8',
+      stage: 'BETA PRODUCT',
       summary:
         'Browser-based print-prep for apparel graphics. Knockout cleanup, texture controls, mockups, underbase, exports.',
-      progress: 64,
+      progress: ink.overallProgress,
       accent: '219 85% 65%',
       logo: ink.hero.logo ? { src: ink.hero.logo.src, srcSet: ink.hero.logo.srcSet } : undefined,
-      status: 'CLOSED BETA',
+      status: inkSiteStatus.toUpperCase(),
       tone: 'amber',
       categories: ['web'],
     },
@@ -93,7 +96,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   const shippingCount = visibleCards.filter(
     (p) => p.status === 'SHIPPING' || p.status === 'OPERATIONAL',
   ).length;
-  const betaCount = visibleCards.filter((p) => p.status === 'CLOSED BETA').length;
+  const betaCount = visibleCards.length - shippingCount;
 
   const handleCardNav = (page: string) => (e: MouseEvent) => {
     e.preventDefault();

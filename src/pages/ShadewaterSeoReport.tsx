@@ -45,6 +45,19 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
 
   return (
     <div style={ad.root}>
+      <style>{`
+        @media (max-width: 768px) {
+          .seo-section { padding: 40px 20px 0 !important; }
+          .seo-heroInner { padding: 36px 20px 48px !important; }
+          .seo-split { grid-template-columns: 1fr !important; }
+          .seo-heroArt { display: none !important; }
+          .seo-h1 { font-size: clamp(2rem, 10vw, 3.5rem) !important; line-height: 1.08 !important; }
+          .seo-h2 { font-size: clamp(1.6rem, 7vw, 2.5rem) !important; }
+          .seo-metricRow { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; padding: 18px 16px !important; }
+          .seo-step { grid-template-columns: 48px 1fr !important; }
+          .seo-stepDot { display: none !important; }
+        }
+      `}</style>
       <ADTicker />
       <ADNav onNavigate={onNavigate} active="projects" />
 
@@ -55,7 +68,7 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
         </div>
         <ConstellationField />
 
-        <div style={pp.projHeroInner}>
+        <div style={pp.projHeroInner} className="seo-heroInner">
           <div style={pp.crumb}>
             <span style={pp.crumbDot} className="ad-pulse" />
             <a href="/" onClick={(e) => { e.preventDefault(); onNavigate('labs'); }} style={{ ...pp.crumbHome, textDecoration: 'none' }}>Labs</a>
@@ -65,12 +78,12 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
             <span style={pp.crumbCur}>SEO Report</span>
           </div>
 
-          <div style={pp.projSplit}>
+          <div style={pp.projSplit} className="seo-split">
             <div style={pp.projInfo}>
               <span style={{ ...pp.projBadge, color: `hsl(${ACCENT})`, borderColor: `hsl(${ACCENT} / 0.4)` }}>
                 INTERNAL · OPERATOR
               </span>
-              <h1 style={pp.projTitle}>{project.name}</h1>
+              <h1 style={pp.projTitle} className="seo-h1">{project.name}</h1>
               <p style={pp.projDesc}>
                 A deterministic SEO audit skill that turns live site evidence into branded dashboards,
                 markdown reports, action plans, and rerunnable fix loops. Built for Labs operators —
@@ -103,7 +116,7 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
               </div>
             </div>
 
-            <div style={{ ...pp.projHeroArt, height: 320, justifyItems: 'center' }}>
+            <div style={{ ...pp.projHeroArt, height: 320, justifyItems: 'center' }} className="seo-heroArt">
               <img
                 src={SHADEWATER_LABS_MARK_CROPPED_SRC}
                 alt={SHADEWATER_LABS_MARK_ALT}
@@ -125,8 +138,8 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
         </div>
       </section>
 
-      <section style={pp.section}>
-        <div style={pp.metricRow}>
+      <section style={pp.section} className="seo-section">
+        <div style={pp.metricRow} className="seo-metricRow">
           {metrics.map((m) => (
             <div key={m.k} style={pp.metric}>
               <div style={pp.metricKey}>{m.k}</div>
@@ -137,13 +150,13 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
         </div>
       </section>
 
-      <section style={pp.section}>
+      <section style={pp.section} className="seo-section">
         <div style={pp.kicker2}>
           <span style={pp.kickerLine2} />
           <span style={pp.kickerText2}>LIVE REPORT OUTPUT</span>
           <span style={pp.kickerLine2} />
         </div>
-        <h2 style={pp.h2}>The actual dashboard</h2>
+        <h2 style={pp.h2} className="seo-h2">The actual dashboard</h2>
         <p style={{ ...pp.stepBody, maxWidth: 820, margin: '12px auto 24px', textAlign: 'center' }}>
           This preview is captured from the generated Shadewater SEO Report for shadewaterlabs.com.
           Open the full report in a new tab for the interactive filters, copy buttons, print layout, and agent handoff controls.
@@ -188,22 +201,22 @@ export default function ShadewaterSeoReport({ onNavigate }: ShadewaterSeoReportP
         </div>
       </section>
 
-      <section style={pp.section}>
+      <section style={pp.section} className="seo-section">
         <div style={pp.kicker2}>
           <span style={pp.kickerLine2} />
           <span style={pp.kickerText2}>WORKFLOW</span>
           <span style={pp.kickerLine2} />
         </div>
-        <h2 style={pp.h2}>How it runs</h2>
+        <h2 style={pp.h2} className="seo-h2">How it runs</h2>
         <div style={pp.steps}>
           {steps.map((s) => (
-            <div key={s.n} style={pp.step}>
+            <div key={s.n} style={pp.step} className="seo-step">
               <div style={pp.stepNum}>{s.n}</div>
               <div>
                 <h4 style={pp.stepTitle}>{s.t}</h4>
                 <p style={pp.stepBody}>{s.d}</p>
               </div>
-              <div style={pp.stepDot} />
+              <div style={pp.stepDot} className="seo-stepDot" />
             </div>
           ))}
         </div>

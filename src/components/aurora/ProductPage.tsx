@@ -65,7 +65,8 @@ export interface ProductPageData {
   logo: { src: string; srcSet?: string; style?: CSSProperties };
   meta: string[];
   cta: CtaCopy;
-  metrics: MetricItem[];
+  /** Optional — only for figures that derive from repo content. Never hand-enter values. */
+  metrics?: MetricItem[];
   stage: { progress: number; headline: string; summary: string };
   purpose: { section: SectionCopy; items: PurposeItem[] };
   workflow: { eyebrow: string; title: string; steps: WorkflowStep[] };
@@ -110,7 +111,9 @@ export default function ProductPage({ data, onNavigate }: ProductPageProps) {
       <ADTicker />
       <ADNav onNavigate={onNavigate} active="projects" />
       <Hero data={data} onNavigate={onNavigate} />
-      <MetricStrip accent={data.accent} metrics={data.metrics} />
+      {data.metrics && data.metrics.length > 0 && (
+        <MetricStrip accent={data.accent} metrics={data.metrics} />
+      )}
       <StageStrip accent={data.accent} stage={data.stage} />
       <PurposeGrid accent={data.accent} section={data.purpose.section} items={data.purpose.items} />
       <WorkflowSteps accent={data.accent} eyebrow={data.workflow.eyebrow} title={data.workflow.title} steps={data.workflow.steps} />

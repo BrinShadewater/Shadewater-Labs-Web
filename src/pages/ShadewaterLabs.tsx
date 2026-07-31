@@ -203,6 +203,8 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
   const seoReport = projectStatuses['shadewater-seo-report'];
   const webp = projectStatuses['webp-me-daddy'];
   const ink = projectStatuses['inkmaster-studio'];
+  // One source for status: the same content file the site cards below derive from.
+  const inkSiteStatus = managedWebsites.find((s) => s.id === 'inkmasterstudio')?.status ?? 'Beta';
 
   interface CarouselCard {
     key: string;
@@ -231,6 +233,8 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     inkmasterstudio: { src: '/inkmasterstudiowebthumb.webp', srcSet: '/inkmasterstudiowebthumb-320w.webp 320w, /inkmasterstudiowebthumb-480w.webp 480w, /inkmasterstudiowebthumb.webp 800w' },
     strangeharvestmovie: { src: '/strangeharvestwebthumb.webp', srcSet: '/strangeharvestwebthumb-320w.webp 320w, /strangeharvestwebthumb-480w.webp 480w, /strangeharvestwebthumb.webp 800w' },
     strangeharvestmerch: { src: '/strangeharvestmerchwebthumb.webp', srcSet: '/strangeharvestmerchwebthumb-320w.webp 320w, /strangeharvestmerchwebthumb-480w.webp 480w, /strangeharvestmerchwebthumb.webp 800w' },
+    losthills: { src: '/losthillswebthumb.webp', srcSet: '/losthillswebthumb-320w.webp 320w, /losthillswebthumb-480w.webp 480w, /losthillswebthumb.webp 800w' },
+    lucidsheep: { src: '/lucidsheepwebthumb.webp', srcSet: '/lucidsheepwebthumb-320w.webp 320w, /lucidsheepwebthumb-480w.webp 480w, /lucidsheepwebthumb.webp 800w' },
   };
 
   const projectCards: CarouselCard[] = [
@@ -270,7 +274,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       blurb: 'Browser-based print-prep for apparel graphics. Knockout cleanup, mockups, underbase, exports.',
       accent: '219 85% 65%',
       logo: ink.hero.logo ? { src: ink.hero.logo.src, srcSet: ink.hero.logo.srcSet } : undefined,
-      statusLabel: 'CLOSED BETA',
+      statusLabel: inkSiteStatus.toUpperCase(),
       statusTone: 'hsl(36 85% 62%)',
       onClick: () => onNavigate('inkmaster-studio'),
       ctaLabel: 'View project',
@@ -287,6 +291,8 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       inkmasterstudio: '219 85% 65%',
       strangeharvestmovie: '210 85% 65%',
       strangeharvestmerch: '36 85% 62%',
+      losthills: '48 30% 60%',
+      lucidsheep: '270 50% 70%',
     };
     return {
       key: s.id,
@@ -338,6 +344,8 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       <div
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
         style={{ position: 'relative' }}
       >
         <div className="carousel-track">
@@ -345,7 +353,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
             const c = getCard(offset);
             return (
               <article
-                key={c.key + '-' + offset}
+                key={'slot-' + offset}
                 onClick={c.onClick}
                 style={{
                   ...home.projectCard,
@@ -404,9 +412,20 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                   <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(' + c.accent + ' / 0.6)' }}>
                     {offset === 0 ? '● ' : '○ '}{(idx + offset) % total + 1}/{total}
                   </span>
-                  <span style={{ ...home.projectLink, color: 'hsl(' + c.accent + ')' }}>
+                  <a
+                    href={c.href}
+                    {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!c.external) {
+                        e.preventDefault();
+                        c.onClick();
+                      }
+                    }}
+                    style={{ ...home.projectLink, color: 'hsl(' + c.accent + ')' }}
+                  >
                     {c.ctaLabel} <span style={{ marginLeft: 4 }}>{'↗'}</span>
-                  </span>
+                  </a>
                 </div>
               </article>
             );
@@ -421,23 +440,34 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
           >
             {'←'}
           </button>
-          <div style={{ display: 'flex', gap: 6 }}>
+          <div style={{ display: 'flex' }}>
             {cards.map((_, i) => (
               <button
                 key={i}
                 onClick={() => { setPaused(true); setIdx(i); }}
                 aria-label={'Go to slide ' + (i + 1)}
+                aria-current={i === idx ? 'true' : undefined}
                 style={{
-                  width: i === idx ? 20 : 8,
-                  height: 8,
-                  borderRadius: 999,
-                  background: i === idx ? 'hsl(186 90% 60%)' : 'hsl(186 30% 30%)',
+                  background: 'none',
                   border: 'none',
                   cursor: 'pointer',
-                  padding: 0,
-                  transition: 'all 0.25s ease',
+                  padding: 8,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
-              />
+              >
+                <span
+                  style={{
+                    display: 'block',
+                    width: i === idx ? 20 : 8,
+                    height: 8,
+                    borderRadius: 999,
+                    background: i === idx ? 'hsl(186 90% 60%)' : 'hsl(186 25% 48%)',
+                    transition: 'all 0.25s ease',
+                  }}
+                />
+              </button>
             ))}
           </div>
           <button
@@ -665,7 +695,7 @@ const home: Record<string, CSSProperties> = {
   comingHead: { position: 'relative' },
   comingList: { position: 'relative', listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 10 },
   comingItem: {
-    display: 'grid', gridTemplateColumns: '92px 1fr auto', alignItems: 'center', gap: 18,
+    display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: 18,
     padding: '14px 18px', borderRadius: 14,
     background: 'hsl(200 30% 7% / 0.7)', border: '1px solid hsl(186 50% 40% / 0.2)',
   },

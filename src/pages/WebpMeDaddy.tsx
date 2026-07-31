@@ -24,21 +24,15 @@ export default function WebpMeDaddy({ onNavigate }: WebpMeDaddyProps) {
     logo: heroLogo
       ? { src: heroLogo.src, srcSet: heroLogo.srcSet, style: { maxWidth: 300, maxHeight: 220 } }
       : { src: '/webp-me-daddy-logo-lockup.webp', style: { maxWidth: 300, maxHeight: 220 } },
-    meta: ['build · v0.9.4', 'recipes · 14', 'CLI-first'],
+    meta: ['CLI-first', 'WebP-first'],
     cta: {
       primary: 'See the workflow',
       primaryHref: '#core-workflow',
       secondary: 'Open explainer PDF',
       secondaryHref: '/webp-me-daddy-explainer.pdf',
     },
-    metrics: [
-      { k: 'BYTES_SAVED', v: '64%', sub: 'avg compression' },
-      { k: 'RECIPES', v: '14', sub: 'placement-aware' },
-      { k: 'LINT_RULES', v: '37', sub: 'meta + a11y checks' },
-      { k: 'AUTOFIX_SAFE', v: '92%', sub: 'audit-to-fix coverage' },
-    ],
     stage: {
-      progress: 88,
+      progress: project.overallProgress,
       headline: 'Refining the operator loop and product surface.',
       summary:
         'The CLI-first core is strong and already production-capable. The remaining work is productization: multi-format planning (AVIF), richer orchestration, and turning the workflow into an easier public-facing experience.',
@@ -131,7 +125,7 @@ export default function WebpMeDaddy({ onNavigate }: WebpMeDaddyProps) {
     finalCta: {
       title: 'Want to follow the project?',
       body:
-        'Webp Me Daddy is already a real Shadewater Labs project, and it is still actively evolving. The explainer is the deepest read; the sponsor deck is the fastest read.',
+        'Webp Me Daddy is already a real Shadewater Labs project, and it is still actively evolving. The explainer PDF is the deepest read.',
     },
   };
 

@@ -24,21 +24,15 @@ export default function InkMasterStudio({ onNavigate }: InkMasterStudioProps) {
     logo: heroLogo
       ? { src: heroLogo.src, srcSet: heroLogo.srcSet, style: { maxWidth: 240, maxHeight: 200 } }
       : { src: '/inkmaster-studio-site-logo.webp', style: { maxWidth: 240, maxHeight: 200 } },
-    meta: ['build · v0.8 beta', 'master · 4200×5100', 'inkmasterstudio.com'],
+    meta: ['master · 4200×5100', 'inkmasterstudio.com'],
     cta: {
       primary: 'Visit live site',
       primaryHref: 'https://inkmasterstudio.com',
       secondary: 'Open explainer PDF',
       secondaryHref: '/inkmaster-studio-explainer.pdf',
     },
-    metrics: [
-      { k: 'PRINT_MASTER', v: '4200×5100', sub: 'baseline canvas' },
-      { k: 'KNOCKOUT_MODES', v: '06', sub: 'garment-aware cleanup' },
-      { k: 'EXPORT_FORMATS', v: '04', sub: 'PNG · SVG · PDF · JPG' },
-      { k: 'MOCKUP_GARMENTS', v: '12', sub: 'colors + placements' },
-    ],
     stage: {
-      progress: 76,
+      progress: project.overallProgress,
       headline: 'Polishing the beta and sharpening the product story.',
       summary:
         'The core browser workflow is real and already useful: upload art, prep it for DTG, preview it on garments, export production assets. Remaining work is product polish, broader SKU coverage, and deciding how far the AI-assisted path goes in a production-safe version.',
