@@ -4,5 +4,6 @@
   <url><loc>https://shadewaterlabs.com/projects</loc></url>
   <url><loc>https://shadewaterlabs.com/websites</loc></url>
   <url><loc>https://shadewaterlabs.com/tech-news</loc></url>
-  <url><loc>https://shadewaterlabs.com/inkmaster-studio</loc></url>
+  <url>
+    <loc>https://shadewaterlabs.com/about</loc></url>
 </urlset>

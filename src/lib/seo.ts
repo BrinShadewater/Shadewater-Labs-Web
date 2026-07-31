@@ -1,6 +1,6 @@
-import { projectStatuses } from '@/content/projects';
 import { techNewsItems } from '@/content/techNews';
 import { managedWebsites } from '@/content/websites';
+import { openSourceReleases } from '@/content/openSource';
 import { SHADEWATER_LABS_MARK_ALT, SHADEWATER_LABS_MARK_SRC } from '@/lib/brandAssets';
 import { BRIN_ORIGIN, LABS_ORIGIN, buildCanonicalUrl, buildPath, getOrigin, type SiteKey } from '@/lib/routes';
 
@@ -84,21 +84,7 @@ function websiteSchema() {
   };
 }
 
-function breadcrumbSchema(items: Array<{ name: string; url: string }>) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: item.url,
-    })),
-  };
-}
-
 export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'): SeoConfig {
-  const inkmaster = projectStatuses['inkmaster-studio'];
 
   switch (page) {
     case 'labs':
@@ -122,11 +108,11 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
-            itemListElement: [inkmaster].map((project, index) => ({
+            itemListElement: openSourceReleases.map((release, index) => ({
               '@type': 'ListItem',
               position: index + 1,
-              url: buildCanonicalUrl(project.slug, undefined, 'labs'),
-              name: project.name,
+              url: release.url,
+              name: release.name,
             })),
           },
           websiteSchema(),
@@ -156,11 +142,11 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
-            itemListElement: Object.values(projectStatuses).map((project, index) => ({
+            itemListElement: openSourceReleases.map((release, index) => ({
               '@type': 'ListItem',
               position: index + 1,
-              url: buildCanonicalUrl(project.slug, undefined, 'labs'),
-              name: project.name,
+              url: release.url,
+              name: release.name,
             })),
           },
           websiteSchema(),
@@ -226,36 +212,6 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           personSchema(),
         ],
       };
-    case 'inkmaster-studio':
-      return {
-        title: `${inkmaster.name} | ${ORGANIZATION_NAME}`,
-        description: inkmaster.summary,
-        canonical: buildCanonicalUrl('inkmaster-studio', undefined, 'labs'),
-        image: `${LABS_ORIGIN}${inkmaster.hero.logo?.src ?? '/inkmaster-studio-site-logo.webp'}`,
-        imageAlt: inkmaster.name,
-        siteName: ORGANIZATION_NAME,
-        type: 'website',
-        author: inkmaster.author,
-        keywords: 'InkMaster Studio, DTG print prep, merch design workflow, apparel graphics, Brin Shadewater',
-        jsonLd: [
-          {
-            '@context': 'https://schema.org',
-            '@type': 'SoftwareApplication',
-            name: inkmaster.name,
-            description: inkmaster.summary,
-            applicationCategory: 'BusinessApplication',
-            creator: { '@type': 'Person', name: inkmaster.author },
-            url: buildCanonicalUrl('inkmaster-studio', undefined, 'labs'),
-          },
-          breadcrumbSchema([
-            { name: 'Shadewater Labs', url: buildCanonicalUrl('labs', undefined, 'labs') },
-            { name: inkmaster.name, url: buildCanonicalUrl('inkmaster-studio', undefined, 'labs') },
-          ]),
-          websiteSchema(),
-          organizationSchema(),
-          personSchema(),
-        ],
-      };
     default:
       return {
         title: `Shadewater Labs | AI Tools, Coding Projects & Tech Experiments`,
@@ -277,6 +233,6 @@ export function getLabsSitemapPaths() {
     buildPath('projects', undefined, 'labs'),
     buildPath('websites', undefined, 'labs'),
     buildPath('tech-news', undefined, 'labs'),
-    buildPath('inkmaster-studio', undefined, 'labs'),
+    buildPath('about', undefined, 'labs'),
   ];
 }

@@ -12,7 +12,6 @@ const pageImports = {
   websites: () => import('./pages/Websites'),
   techNews: () => import('./pages/TechNews'),
   about: () => import('./pages/About'),
-  inkMasterStudio: () => import('./pages/InkMasterStudio'),
 };
 
 const ShadewaterLabs = lazy(pageImports.labs);
@@ -20,7 +19,6 @@ const Projects = lazy(pageImports.projects);
 const Websites = lazy(pageImports.websites);
 const TechNews = lazy(pageImports.techNews);
 const About = lazy(pageImports.about);
-const InkMasterStudio = lazy(pageImports.inkMasterStudio);
 
 // Subtle, on-theme fallback that only appears if a chunk genuinely takes a
 // moment to load — avoids flashing a loader on fast navigations.
@@ -145,8 +143,6 @@ function App() {
         return <TechNews onNavigate={handleNavigate} />;
       case 'about':
         return <About onNavigate={handleNavigate} />;
-      case 'inkmaster-studio':
-        return <InkMasterStudio onNavigate={handleNavigate} />;
       default:
         return <ShadewaterLabs onNavigate={handleNavigate} />;
     }

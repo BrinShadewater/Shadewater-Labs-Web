@@ -40,6 +40,11 @@
       "source": "/webp-me-daddy",
       "destination": "/projects",
       "permanent": true
+    },
+    {
+      "source": "/inkmaster-studio",
+      "destination": "/websites",
+      "permanent": true
     }
   ],
   "rewrites": [

@@ -1,8 +1,6 @@
 import { useState, useEffect, type CSSProperties } from 'react';
-import { projectStatuses } from '@/content/projects';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
-import { buildRouteHref } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
@@ -63,13 +61,12 @@ function useLabStatus() {
   const liveSites = managedWebsites.filter((s) => s.status === 'Live').length;
   const betaSites = managedWebsites.length - liveSites;
   const newest = managedWebsites.reduce((a, b) => (b.updated > a.updated ? b : a));
-  const projects = Object.values(projectStatuses);
-  const furthest = projects.reduce((a, b) => (b.overallProgress > a.overallProgress ? b : a));
-  return { liveSites, betaSites, newest, projects, furthest };
+  return { liveSites, betaSites, newest };
 }
 
 function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
-  const { liveSites, betaSites, newest, projects, furthest } = useLabStatus();
+  const { liveSites, betaSites, newest } = useLabStatus();
+  const newestRelease = openSourceReleases.reduce((a, b) => (b.updated > a.updated ? b : a));
   return (
     <section style={home.hero}>
       <HeroMesh />
@@ -144,15 +141,15 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
               sub={`${liveSites} live · ${betaSites} in beta`}
             />
             <HudCell
-              k="Projects tracked"
-              v={String(projects.length + openSourceReleases.length)}
-              sub={`${projects.length} with a page here · ${openSourceReleases.length} on GitHub`}
+              k="Open source"
+              v={String(openSourceReleases.length)}
+              sub="released on GitHub"
             />
             <HudCell k="Last updated" v={newest.updated} sub={newest.name} />
             <HudCell
-              k="Furthest along"
-              v={`${furthest.overallProgress}%`}
-              sub={furthest.name}
+              k="Newest release"
+              v={newestRelease.name}
+              sub={newestRelease.licence + ' · ' + newestRelease.language}
             />
           </div>
         </div>
@@ -205,9 +202,6 @@ function ADTracks() {
 }
 
 function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
-  const ink = projectStatuses['inkmaster-studio'];
-  // One source for status: the same content file the site cards below derive from.
-  const inkSiteStatus = managedWebsites.find((s) => s.id === 'inkmasterstudio')?.status ?? 'Beta';
 
   interface CarouselCard {
     key: string;
@@ -240,20 +234,6 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
   };
 
   const projectCards: CarouselCard[] = [
-    {
-      key: 'ink',
-      updated: '2026-03-14',
-      badge: 'BETA PRODUCT',
-      name: ink.name,
-      blurb: 'Browser-based print-prep for apparel graphics. Knockout cleanup, mockups, underbase, exports.',
-      accent: '219 85% 65%',
-      logo: ink.hero.logo ? { src: ink.hero.logo.src, srcSet: ink.hero.logo.srcSet } : undefined,
-      statusLabel: inkSiteStatus.toUpperCase(),
-      statusTone: 'hsl(36 85% 62%)',
-      onClick: () => onNavigate('inkmaster-studio'),
-      ctaLabel: 'View project',
-      href: buildRouteHref('inkmaster-studio'),
-    },
     ...openSourceReleases.map((r): CarouselCard => ({
       key: r.id,
       updated: r.updated,

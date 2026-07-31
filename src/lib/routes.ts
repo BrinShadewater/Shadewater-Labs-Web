@@ -8,7 +8,6 @@ const LABS_STATIC_PATHS: Record<string, string> = {
   websites: '/websites',
   'tech-news': '/tech-news',
   about: '/about',
-  'inkmaster-studio': '/inkmaster-studio',
 };
 
 const LABS_PAGES = new Set([
@@ -17,7 +16,6 @@ const LABS_PAGES = new Set([
   'websites',
   'tech-news',
   'about',
-  'inkmaster-studio',
 ]);
 
 export function getSiteKey(hostname: string): SiteKey {
@@ -56,8 +54,6 @@ export function parseLocation(pathname: string, _hash = '') {
       return { page: 'tech-news', noteId: '' };
     case 'about':
       return { page: 'about', noteId: '' };
-    case 'inkmaster-studio':
-      return { page: 'inkmaster-studio', noteId: '' };
     default:
       return { page: 'labs', noteId: '' };
   }

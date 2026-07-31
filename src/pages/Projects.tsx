@@ -1,6 +1,4 @@
 import { useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
-import { projectStatuses } from '@/content/projects';
-import { managedWebsites } from '@/content/websites';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import {
   AuroraPage,
@@ -14,8 +12,6 @@ import type { AdToneKey, AuroraNavigate } from '@/components/aurora/chrome';
 interface ProjectsProps {
   onNavigate: AuroraNavigate;
 }
-
-type FilterKey = 'all' | 'ai_tools' | 'web' | 'pipelines';
 
 interface ProjectCard {
   slug: string;
@@ -36,31 +32,14 @@ interface ProjectCard {
   thumbnail?: { src: string; srcSet: string };
   status: string;
   tone: AdToneKey;
-  categories: FilterKey[];
+  categories: string[];
 }
 
 export default function Projects({ onNavigate }: ProjectsProps) {
-  const ink = projectStatuses['inkmaster-studio'];
-  // One source for status: the same content file the Websites page renders.
-  const inkSiteStatus = managedWebsites.find((s) => s.id === 'inkmasterstudio')?.status ?? 'Beta';
 
-  const [activeFilter, setActiveFilter] = useState<FilterKey>('all');
+  const [activeFilter, setActiveFilter] = useState('all');
 
   const cards: ProjectCard[] = [
-    {
-      slug: 'inkmaster-studio',
-      page: 'inkmaster-studio',
-      name: ink.name,
-      stage: 'BETA PRODUCT',
-      summary:
-        'Browser-based print-prep for apparel graphics. Knockout cleanup, texture controls, mockups, underbase, exports.',
-      progress: ink.overallProgress,
-      accent: '219 85% 65%',
-      logo: ink.hero.logo ? { src: ink.hero.logo.src, srcSet: ink.hero.logo.srcSet } : undefined,
-      status: inkSiteStatus.toUpperCase(),
-      tone: 'amber',
-      categories: ['web'],
-    },
     ...openSourceReleases.map((r): ProjectCard => ({
       slug: r.id,
       externalUrl: r.url,
@@ -72,11 +51,13 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       thumbnail: { src: `/${r.thumb}.webp`, srcSet: thumbSrcSet(r.thumb) },
       status: 'RELEASED',
       tone: 'green',
-      categories: ['ai_tools'],
+      categories: r.categories,
     })),
   ];
 
-  const filters: FilterKey[] = ['all', 'ai_tools', 'web', 'pipelines'];
+  // Only offer a filter that returns something; a control that always shows
+  // "no results" is worse than no control.
+  const filters = ['all', ...Array.from(new Set(cards.flatMap((c) => c.categories))).sort()];
 
   const visibleCards =
     activeFilter === 'all' ? cards : cards.filter((p) => p.categories.includes(activeFilter));
@@ -174,8 +155,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       onNavigate={onNavigate}
       sectionLabel="Projects"
       eyebrow="CATALOG"
-      title="The active project catalog."
-      lede="Working tools, product experiments, creative-tech builds, and operator workflows. Each card is a real ship — even the queued ones."
+      title="Tools, in the open."
+      lede="Open-source tools built for the work here, then published. Each one is a real repository you can read, install, and run."
     >
       <section style={pp.section}>
         <style>{`

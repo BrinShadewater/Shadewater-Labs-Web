@@ -24,6 +24,8 @@ export interface OpenSourceRelease {
   accent: string;
   /** Base name of the thumbnail in public/, without the width suffix or extension. */
   thumb: string;
+  /** Drives the filter row on /projects, which renders only the tags in use. */
+  categories: string[];
 }
 
 /** Both surfaces build their srcSet the same way, from one place. */
@@ -44,6 +46,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     updated: '2026-07-29',
     accent: '270 50% 70%',
     thumb: 'lucidsheepwebthumb',
+    categories: ['agents'],
   },
   {
     id: 'webp-me-daddy-skill',
@@ -58,6 +61,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     updated: '2026-07-31',
     accent: '184 85% 58%',
     thumb: 'webpmedaddyskillthumb',
+    categories: ['pipelines', 'agents'],
   },
   {
     id: 'shadewater-seo-skill',
@@ -71,6 +75,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     updated: '2026-07-31',
     accent: '186 90% 60%',
     thumb: 'shadewaterseoskillthumb',
+    categories: ['seo', 'agents'],
   },
   {
     id: 'transparent-gif-loop-skill',
@@ -84,5 +89,6 @@ export const openSourceReleases: OpenSourceRelease[] = [
     updated: '2026-07-31',
     accent: '330 70% 65%',
     thumb: 'transparentgifloopskillthumb',
+    categories: ['pipelines'],
   },
 ];
