@@ -1,7 +1,7 @@
 import { useState, useEffect, type CSSProperties } from 'react';
 import { projectStatuses } from '@/content/projects';
 import { managedWebsites } from '@/content/websites';
-import { openSourceReleases } from '@/content/openSource';
+import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { buildRouteHref } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
@@ -290,10 +290,9 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       badge: 'OPEN SOURCE',
       name: r.name,
       blurb: r.summary,
-      accent: '270 50% 70%',
-      thumbnail: '/lucidsheepwebthumb.webp',
-      thumbnailSrcSet:
-        '/lucidsheepwebthumb-320w.webp 320w, /lucidsheepwebthumb-480w.webp 480w, /lucidsheepwebthumb.webp 800w',
+      accent: r.accent,
+      thumbnail: `/${r.thumb}.webp`,
+      thumbnailSrcSet: thumbSrcSet(r.thumb),
       statusLabel: 'RELEASED',
       statusTone: 'hsl(150 70% 55%)',
       onClick: () => { window.open(r.url, '_blank', 'noopener,noreferrer'); },

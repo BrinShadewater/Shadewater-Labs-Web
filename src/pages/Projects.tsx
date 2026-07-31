@@ -1,7 +1,7 @@
 import { useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { projectStatuses } from '@/content/projects';
 import { managedWebsites } from '@/content/websites';
-import { openSourceReleases } from '@/content/openSource';
+import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SRC,
 } from '@/lib/brandAssets';
@@ -41,18 +41,6 @@ interface ProjectCard {
   tone: AdToneKey;
   categories: FilterKey[];
 }
-
-/** Per-release presentation, keyed by `openSourceReleases[].id`. */
-const OSS_ACCENTS: Record<string, string> = {
-  'lucid-sheep': '270 50% 70%',
-};
-
-const OSS_THUMBS: Record<string, { src: string; srcSet: string }> = {
-  'lucid-sheep': {
-    src: '/lucidsheepwebthumb.webp',
-    srcSet: '/lucidsheepwebthumb-320w.webp 320w, /lucidsheepwebthumb-480w.webp 480w, /lucidsheepwebthumb.webp 800w',
-  },
-};
 
 export default function Projects({ onNavigate }: ProjectsProps) {
   const seo = projectStatuses['shadewater-seo-report'];
@@ -113,8 +101,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       stage: 'OPEN SOURCE',
       summary: r.summary,
       meta: [`${r.licence} licence`, r.language, r.repo],
-      accent: OSS_ACCENTS[r.id] ?? '270 50% 70%',
-      thumbnail: OSS_THUMBS[r.id],
+      accent: r.accent,
+      thumbnail: { src: `/${r.thumb}.webp`, srcSet: thumbSrcSet(r.thumb) },
       status: 'RELEASED',
       tone: 'green',
       categories: ['ai_tools'],
