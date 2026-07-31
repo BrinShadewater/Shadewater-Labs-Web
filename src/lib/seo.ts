@@ -1,4 +1,4 @@
-import { techNewsItems } from '@/content/techNews';
+import { tools } from '@/content/tools';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases } from '@/content/openSource';
 import { SHADEWATER_LABS_MARK_ALT, SHADEWATER_LABS_MARK_SRC } from '@/lib/brandAssets';
@@ -191,28 +191,30 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           personSchema(),
         ],
       };
-    case 'tech-news':
+    case 'toolkit':
       return {
-        title: `Tech News | ${ORGANIZATION_NAME}`,
+        title: `Toolkit | ${ORGANIZATION_NAME}`,
         description:
-          'A manually curated Shadewater Labs feed for AI-related technology signals, creative tooling, and product experiment notes.',
-        canonical: buildCanonicalUrl('tech-news', undefined, 'labs'),
+          'Third-party tools actually used at Shadewater Labs, what each one is reached for, and where it falls short.',
+        canonical: buildCanonicalUrl('toolkit', undefined, 'labs'),
         image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
         imageAlt: SHADEWATER_LABS_MARK_ALT,
         siteName: ORGANIZATION_NAME,
         type: 'website',
-        keywords: 'AI tech news, creative technology, AI tools, Shadewater Labs notes',
+        keywords: 'creative tech tools, AI video tools, agent tooling, Shadewater Labs toolkit',
         jsonLd: [
           {
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
-            name: 'AI & Creative Tech Notes',
-            url: buildCanonicalUrl('tech-news', undefined, 'labs'),
-            hasPart: techNewsItems.map((item) => ({
-              '@type': 'Article',
-              headline: item.title,
-              description: item.summary,
-              datePublished: item.date,
+            name: `Toolkit | ${ORGANIZATION_NAME}`,
+            url: buildCanonicalUrl('toolkit', undefined, 'labs'),
+            description: 'Third-party tools used on real work at Shadewater Labs.',
+            hasPart: tools.map((t) => ({
+              '@type': 'SoftwareApplication',
+              name: t.name,
+              url: t.url,
+              applicationCategory: t.category,
+              description: t.use,
             })),
           },
           websiteSchema(),
@@ -278,7 +280,7 @@ export function getLabsSitemapPaths() {
     buildPath('labs', undefined, 'labs'),
     buildPath('projects', undefined, 'labs'),
     buildPath('websites', undefined, 'labs'),
-    buildPath('tech-news', undefined, 'labs'),
+    buildPath('toolkit', undefined, 'labs'),
     buildPath('about', undefined, 'labs'),
   ];
 }

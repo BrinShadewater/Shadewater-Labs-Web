@@ -45,6 +45,11 @@
       "source": "/inkmaster-studio",
       "destination": "/websites",
       "permanent": true
+    },
+    {
+      "source": "/tech-news",
+      "destination": "/toolkit",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -61,7 +66,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/tech-news",
+      "source": "/toolkit",
       "destination": "/index.html"
     },
     {

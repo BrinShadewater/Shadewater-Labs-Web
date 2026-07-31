@@ -14,7 +14,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
   const routes: Array<{ page: string; label: string; blurb: string }> = [
     { page: 'projects', label: 'Projects', blurb: 'Open-source tools, each linking to its repository.' },
     { page: 'websites', label: 'Websites', blurb: 'The web properties built and maintained here.' },
-    { page: 'tech-news', label: 'Tech News', blurb: 'Notes on tooling and creative technology.' },
+    { page: 'toolkit', label: 'Toolkit', blurb: 'Third-party tools actually used here.' },
     { page: 'about', label: 'About', blurb: 'The person behind the lab.' },
   ];
 

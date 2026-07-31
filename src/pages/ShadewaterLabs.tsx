@@ -1,6 +1,7 @@
 import { useState, useEffect, type CSSProperties } from 'react';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
+import { queueItems } from '@/content/queue';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
@@ -44,13 +45,6 @@ const AD_TRACKS = [
     body: 'A workshop for prototypes: emerging-tech ideas, rough spikes, and the occasional graduate.',
     accent: '150 65% 55%',
   },
-];
-
-const AD_COMING = [
-  'New AI tools and coding utilities',
-  'Experimental web apps and creative software',
-  'Behind-the-scenes technology notes',
-  'Small digital downloads for creators',
 ];
 
 /**
@@ -307,8 +301,14 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       <SectionHead kicker="Work" title="Projects and managed sites" sub="Every card goes to a real page. Click any of them." />
       <style>{`
         .carousel-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-        @media (max-width: 900px) { .carousel-track { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .carousel-track { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) {
+          .carousel-track { grid-template-columns: repeat(2, 1fr); }
+          .carousel-slot-2 { display: none !important; }
+        }
+        @media (max-width: 600px) {
+          .carousel-track { grid-template-columns: 1fr; }
+          .carousel-slot-1 { display: none !important; }
+        }
       `}</style>
       <div
         onMouseEnter={() => setPaused(true)}
@@ -323,6 +323,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
             return (
               <article
                 key={'slot-' + offset}
+                className={'carousel-slot-' + offset}
                 onClick={c.onClick}
                 style={{
                   ...home.projectCard,
@@ -448,18 +449,12 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
           </button>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: 20, display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button
-            onClick={() => onNavigate('projects')}
-            style={{ ...home.projectLink, color: 'hsl(186 90% 60%)', background: 'none', border: '1px solid hsl(186 50% 40% / 0.3)', borderRadius: 999, padding: '8px 20px', cursor: 'pointer', fontFamily: MONO, fontSize: 12, letterSpacing: '0.18em' }}
-          >
-            All projects {'→'}
+        <div style={{ marginTop: 28, display: 'flex', gap: 16, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button onClick={() => onNavigate('projects')} style={home.catalogueBtn}>
+            All projects <span style={home.catalogueArrow}>{'→'}</span>
           </button>
-          <button
-            onClick={() => onNavigate('websites')}
-            style={{ ...home.projectLink, color: 'hsl(186 90% 60%)', background: 'none', border: '1px solid hsl(186 50% 40% / 0.3)', borderRadius: 999, padding: '8px 20px', cursor: 'pointer', fontFamily: MONO, fontSize: 12, letterSpacing: '0.18em' }}
-          >
-            All websites {'→'}
+          <button onClick={() => onNavigate('websites')} style={home.catalogueBtn}>
+            All websites <span style={home.catalogueArrow}>{'→'}</span>
           </button>
         </div>
       </div>
@@ -473,15 +468,23 @@ function ADComing() {
       <div style={home.comingPanel}>
         <div style={home.comingGlow} />
         <div style={home.comingHead}>
-          <SectionHead kicker="Next up" title="On the bench" sub="Sketches and queued experiments. No ship dates, just intent." align="left" />
+          <SectionHead
+            kicker="Now"
+            title="In the queue"
+            sub="What the lab is actually working on. No ship dates — intent is checkable, a date is a promise."
+            align="left"
+          />
         </div>
         <ul style={home.comingList}>
-          {AD_COMING.map((label) => (
-            <li key={label} style={home.comingItem}>
-              <span style={home.comingLabel}>{label}</span>
+          {queueItems.map((q) => (
+            <li key={q.id} style={home.comingItem}>
+              <div>
+                <span style={home.comingLabel}>{q.name}</span>
+                <p style={home.comingNote}>{q.note}</p>
+              </div>
               <span style={home.comingTag}>
                 <span style={home.comingTagDot} className="ad-pulse" />
-                queued
+                {q.status.toLowerCase()}
               </span>
             </li>
           ))}
@@ -651,6 +654,17 @@ const home: Record<string, CSSProperties> = {
     gap: 8,
   },
   projectLink: { display: 'inline-flex', alignItems: 'center', marginLeft: 'auto', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
+  catalogueBtn: {
+    display: 'inline-flex', alignItems: 'center', gap: 10,
+    padding: '15px 30px', borderRadius: 999,
+    background: 'hsl(200 30% 9% / 0.75)',
+    border: '1px solid hsl(186 60% 50% / 0.38)',
+    color: 'hsl(186 90% 68%)',
+    fontFamily: MONO, fontSize: 13.5, letterSpacing: '0.16em',
+    fontWeight: 600, cursor: 'pointer',
+    transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease',
+  },
+  catalogueArrow: { fontSize: 15, transform: 'translateY(-1px)' },
 
   comingPanel: {
     position: 'relative', overflow: 'hidden', padding: '36px 40px', borderRadius: 28,
@@ -666,11 +680,12 @@ const home: Record<string, CSSProperties> = {
   comingHead: { position: 'relative' },
   comingList: { position: 'relative', listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 10 },
   comingItem: {
-    display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: 18,
-    padding: '14px 18px', borderRadius: 14,
+    display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'start', gap: 18,
+    padding: '16px 18px', borderRadius: 14,
     background: 'hsl(200 30% 7% / 0.7)', border: '1px solid hsl(186 50% 40% / 0.2)',
   },
-  comingLabel: { fontSize: 16, color: '#fff' },
+  comingLabel: { fontSize: 16.5, fontWeight: 600, color: '#fff' },
+  comingNote: { margin: '6px 0 0', color: 'hsl(45 18% 78%)', fontSize: 14, lineHeight: 1.55, maxWidth: 640 },
   comingTag: { display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(36 60% 78%)' },
   comingTagDot: {
     width: 6, height: 6, borderRadius: 999, background: 'hsl(36 80% 60%)',

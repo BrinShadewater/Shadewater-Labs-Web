@@ -8,7 +8,7 @@ const LABS_STATIC_PATHS: Record<string, string> = {
   labs: '/',
   projects: '/projects',
   websites: '/websites',
-  'tech-news': '/tech-news',
+  toolkit: '/toolkit',
   about: '/about',
 };
 
@@ -16,7 +16,7 @@ const LABS_PAGES = new Set([
   'labs',
   'projects',
   'websites',
-  'tech-news',
+  'toolkit',
   'about',
 ]);
 
@@ -52,8 +52,8 @@ export function parseLocation(pathname: string, _hash = '') {
       return { page: 'projects', noteId: '' };
     case 'websites':
       return { page: 'websites', noteId: '' };
-    case 'tech-news':
-      return { page: 'tech-news', noteId: '' };
+    case 'toolkit':
+      return { page: 'toolkit', noteId: '' };
     case 'about':
       return { page: 'about', noteId: '' };
     default:

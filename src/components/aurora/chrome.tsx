@@ -67,7 +67,7 @@ export function ADNav({
     { label: 'Labs', page: 'labs' },
     { label: 'Projects', page: 'projects' },
     { label: 'Websites', page: 'websites' },
-    { label: 'Tech News', page: 'tech-news' },
+    { label: 'Toolkit', page: 'toolkit' },
     { label: 'About', page: 'about' },
   ];
   return (

@@ -10,7 +10,7 @@ const pageImports = {
   labs: () => import('./pages/ShadewaterLabs'),
   projects: () => import('./pages/Projects'),
   websites: () => import('./pages/Websites'),
-  techNews: () => import('./pages/TechNews'),
+  toolkit: () => import('./pages/Toolkit'),
   about: () => import('./pages/About'),
   notFound: () => import('./pages/NotFound'),
 };
@@ -18,7 +18,7 @@ const pageImports = {
 const ShadewaterLabs = lazy(pageImports.labs);
 const Projects = lazy(pageImports.projects);
 const Websites = lazy(pageImports.websites);
-const TechNews = lazy(pageImports.techNews);
+const Toolkit = lazy(pageImports.toolkit);
 const About = lazy(pageImports.about);
 const NotFound = lazy(pageImports.notFound);
 
@@ -141,8 +141,8 @@ function App() {
         return <Projects onNavigate={handleNavigate} />;
       case 'websites':
         return <Websites onNavigate={handleNavigate} />;
-      case 'tech-news':
-        return <TechNews onNavigate={handleNavigate} />;
+      case 'toolkit':
+        return <Toolkit onNavigate={handleNavigate} />;
       case 'about':
         return <About onNavigate={handleNavigate} />;
       default:
