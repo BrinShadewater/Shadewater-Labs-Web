@@ -1,5 +1,7 @@
 # Shadewater Labs Web ⚗️
 
+![Licence](https://img.shields.io/badge/licence-all%20rights%20reserved-lightgrey?style=flat-square) ![Live](https://img.shields.io/badge/live-shadewaterlabs.com-brightgreen?style=flat-square) ![Shadewater Labs](https://img.shields.io/badge/Shadewater%20Labs-%E2%9A%97%EF%B8%8F-6b4fa2?style=flat-square)
+
 Standalone Vite/React site for [shadewaterlabs.com](https://shadewaterlabs.com/).
 
 Shadewater Labs is the public home for Brin Shadewater's web, SEO, image-pipeline, and creative-technical projects. The site is intentionally compact: a polished lab front door, project pages, explainers, and proof surfaces for shipped work.
@@ -106,3 +108,9 @@ Keep the site crisp, direct, and useful. It should feel like a working lab with 
 - Confirm generated explainers/snapshots are intentionally changed before committing them.
 - Review changed pages on desktop and mobile.
 - Keep project descriptions specific: what it is, who it is for, and what proof exists.
+
+---
+
+## 📄 Licence
+
+All rights reserved. This repository is public so the work can be read and referenced, not relicensed. The code, copy, and creative assets remain © Brin Shadewater / Shadewater Labs. If you want to use something here, ask.
