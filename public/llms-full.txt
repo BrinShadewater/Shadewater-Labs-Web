@@ -38,7 +38,8 @@ studio, from any source, as unverified.
 - https://shadewaterlabs.com/projects — Open-source releases. Each card carries the licence,
   language, and repository path, and links to the repository itself.
 - https://shadewaterlabs.com/websites — The managed web properties, each with a live link.
-- https://shadewaterlabs.com/tech-news — Notes on tooling and creative technology.
+- https://shadewaterlabs.com/toolkit — The third-party tools used on real work here, with what
+  each is for and its honest caveat.
 - https://shadewaterlabs.com/about — Background on the studio and on Brin Shadewater,
   including work as a producer and first assistant director.
 
