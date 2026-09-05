@@ -48,8 +48,10 @@ const AD_TRACKS = [
 ];
 
 /**
- * Everything in the status readout is derived from the site's own content
- * files, so it stays true on its own. Nothing here is hand-entered.
+ * Everything in the status readout is derived from the site's own content files, and the
+ * dates in those files are written from GitHub at build time (scripts/refresh-updated.mjs).
+ * Nothing here is hand-entered. (The dates were, until 2026-09-05, and had drifted by up to
+ * five months while this comment said otherwise.)
  */
 function useLabStatus() {
   const liveSites = managedWebsites.filter((s) => s.status === 'Live').length;
@@ -89,8 +91,8 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
         </h1>
 
         <p style={home.heroLede}>
-          Brin Shadewater builds AI rigs, web apps, and creative-tech prototypes in public. Each
-          project ships with a working page, progress notes, and the rough edges left intact.
+          Brin Shadewater builds AI rigs, web apps, and creative-tech prototypes in public. The
+          releases are on GitHub, the sites are live, and the rough edges are left in.
         </p>
 
         <div style={home.heroCtas}>

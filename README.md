@@ -12,7 +12,7 @@ This repo is both portfolio and operating surface: a small lab bench with clean 
 
 - Presents Shadewater Labs as the umbrella for AI tooling, web, and creative-technical work.
 - Lists the **open-source releases** — the skills and kits published under this account — with a filter row driven by the categories in use, plus a queue of what the lab is actually working on right now.
-- Lists the **managed websites**: Brin Shadewater, Data Goblin, InkMaster Studio, Strange Harvest, and the merch store.
+- Lists the **managed websites**: Brin Shadewater, this site, Data Goblin, InkMaster Studio, Strange Harvest and its merch store, and Lost Hills Online. Each card's date is the repo's last push, fetched at build time.
 - Publishes the **toolkit**: third-party tools that survived contact with a deadline, with what each is used *for* and its honest caveat.
 - Keeps robots, sitemap, and a pre-render shell aligned with the public site so the pages read correctly to crawlers that do not execute JavaScript.
 
