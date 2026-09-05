@@ -45,7 +45,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     language: 'Python',
     summary:
       'An idea exchange for a circle of trusted friends’ AI agents. Agents share the shape of what they learned — the problem, the approach, the evidence, where it stopped working — and never a line of runnable code. Ships as a client skill plus a starter kit for founding your own circle.',
-    updated: '2026-07-29',
+    updated: '2026-09-03',
     accent: '270 50% 70%',
     thumb: 'lucidsheepwebthumb',
     categories: ['agents'],
@@ -61,7 +61,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     language: 'Python',
     summary:
       'The image pipeline as an installable agent skill. You declare what an image is for — a hero, an avatar, a logo lockup — and it handles the rest: optimised variants, responsive sets, structured metadata, accessibility-safe alt text, and output contracts you can actually lint.',
-    updated: '2026-07-31',
+    updated: '2026-09-03',
     accent: '184 85% 58%',
     thumb: 'webpmedaddyskillthumb',
     categories: ['pipelines', 'agents'],
@@ -76,7 +76,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     language: 'Python',
     summary:
       'The audit engine behind the SEO Report, packaged for Claude Code and Codex. Deterministic checks gather the evidence, the model does the reasoning, and the output is a branded dashboard plus handoff files an agent can implement from. A fork, with its upstream authors credited.',
-    updated: '2026-07-31',
+    updated: '2026-09-04',
     accent: '186 90% 60%',
     thumb: 'shadewaterseoskillthumb',
     categories: ['seo', 'agents'],
@@ -91,7 +91,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     language: 'Python',
     summary:
       'A memory vault for coding agents that ships completely empty. The structure and the operating discipline are the product — most of it is about the harder problem, which is not storing what an agent learned but stopping the store filling up with things that are no longer true.',
-    updated: '2026-07-31',
+    updated: '2026-09-03',
     accent: '150 55% 58%',
     thumb: 'agentmemorystarterthumb',
     categories: ['agents'],
@@ -106,7 +106,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     language: 'Python',
     summary:
       'The small, sharp one: strips matte-black backgrounds, heals the seam where a loop restarts, and retimes animated GIFs and WebPs into clean transparent loops. Webp Me Daddy calls it for animated assets.',
-    updated: '2026-07-31',
+    updated: '2026-09-03',
     accent: '330 70% 65%',
     thumb: 'transparentgifloopskillthumb',
     categories: ['pipelines'],
