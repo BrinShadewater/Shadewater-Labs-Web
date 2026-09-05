@@ -1,8 +1,8 @@
 # Shadewater Labs
 
 > The studio site for Brin Shadewater's AI tools, open-source agent skills, and managed web
-> properties. Every figure shown on the site is derived from data in its own repository
-> rather than written by hand.
+> properties. Every figure shown on the site is derived from the site's content files or
+> fetched from GitHub at build time rather than written by hand.
 
 ## Main sections
 - [Home](https://shadewaterlabs.com/): What the lab works on, current status, and recent work.
