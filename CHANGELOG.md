@@ -4,6 +4,7 @@ Notable changes to Shadewater Labs Web are tracked here.
 
 ## Unreleased
 
+- Home page Lighthouse pass (#53): the hero text logo and the nav/footer mark are served at the size they render, the crawl shell and the app share one hero download, the stale 155 KB preload is gone, and the favicon links point at real 32/180/192 px files. Local mobile performance 78 → 89, LCP 5.6 s → 3.6 s.
 - Expanded repository documentation.
 - Added contribution, security, issue, and pull request guidance.
 - Added project brief and maintenance documentation for portfolio/lab operations.

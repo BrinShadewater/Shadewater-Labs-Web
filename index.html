@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/shadewater-labs-favicon-sq.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/shadewater-labs-favicon-sq.png" />
-    <link rel="apple-touch-icon" href="/shadewater-labs-favicon-sq.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/shadewater-labs-favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/shadewater-labs-favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/shadewater-labs-favicon-180.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shadewater Labs | AI Tools, Coding Projects &amp; Tech Experiments</title>
     <meta
@@ -34,18 +34,21 @@
     />
     <meta name="twitter:image" content="https://shadewaterlabs.com/shadewater-labs-text-logo.webp" />
     <meta name="twitter:image:alt" content="Shadewater Labs" />
+    <!-- The home page's LCP element is the hero text logo, which React inserts after the bundle
+         runs. Preloading it here lets the browser fetch it with the HTML instead of ~1 s later.
+         Sub-routes pay for one small image they do not show; the home page is most of the traffic. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/shadewater-labs-text-logo-cropped-245w.webp"
+      imagesrcset="/shadewater-labs-text-logo-cropped-245w.webp 245w, /shadewater-labs-text-logo-cropped-490w.webp 490w, /shadewater-labs-text-logo-cropped.webp 602w"
+      imagesizes="245px"
+      fetchpriority="high"
+    />
     <link rel="canonical" href="https://shadewaterlabs.com/" />
     <link rel="alternate" hreflang="en-CA" href="https://shadewaterlabs.com/" />
     <link rel="alternate" hreflang="en" href="https://shadewaterlabs.com/" />
     <link rel="alternate" hreflang="x-default" href="https://shadewaterlabs.com/" />
-    <link
-      rel="preload"
-      as="image"
-      href="/shadewater-labs-text-logo-640w.webp"
-      imagesrcset="/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w"
-      imagesizes="(min-width: 640px) 22rem, 60vw"
-      fetchpriority="high"
-    />
     <style>
       :root {
         color-scheme: dark;
@@ -378,11 +381,12 @@
 
             <div class="seo-shell__visual">
               <img
-                src="/shadewater-labs-text-logo-640w.webp"
-                srcset="/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w"
-                sizes="(min-width: 640px) 22rem, 60vw"
-                width="602"
-                height="875"
+                src="/shadewater-labs-text-logo-cropped-245w.webp"
+                srcset="/shadewater-labs-text-logo-cropped-245w.webp 245w, /shadewater-labs-text-logo-cropped-490w.webp 490w, /shadewater-labs-text-logo-cropped.webp 602w"
+                sizes="245px"
+                width="245"
+                height="350"
+                fetchpriority="high"
                 alt="Shadewater Labs logo"
               />
               <p class="seo-shell__visual-note">AI tools, web apps, and creative-tech prototypes</p>
