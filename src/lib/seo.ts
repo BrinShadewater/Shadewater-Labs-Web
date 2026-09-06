@@ -97,7 +97,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
   switch (page) {
     case 'labs':
       return {
-        title: `Shadewater Labs | AI Tools, Coding Projects & Tech Experiments`,
+        title: `Shadewater Labs | AI Tools, Web Apps & Tech Experiments`,
         description: LABS_DESCRIPTION,
         canonical: buildCanonicalUrl('labs', undefined, 'labs'),
         image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
@@ -262,7 +262,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       };
     default:
       return {
-        title: `Shadewater Labs | AI Tools, Coding Projects & Tech Experiments`,
+        title: `Shadewater Labs | AI Tools, Web Apps & Tech Experiments`,
         description: LABS_DESCRIPTION,
         canonical: `${LABS_ORIGIN}/`,
         image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
