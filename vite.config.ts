@@ -52,6 +52,14 @@ function prerenderShells(): Plugin {
           /<link rel="canonical" href="[^"]*" \/>/,
           `<link rel="canonical" href="${escapeAttr(cfg.canonical)}" />`,
         )
+        // The hreflang alternates are self-referencing on a single-language site, so on a
+        // sub-route they must name that route. Left as the shell's, every page told search
+        // engines the English version of itself was the home page — the same claim the
+        // canonical was making, in a second place.
+        html = html.replace(
+          /<link rel="alternate" hreflang="([^"]+)" href="[^"]*" \/>/g,
+          (_m, lang) => `<link rel="alternate" hreflang="${lang}" href="${escapeAttr(cfg.canonical)}" />`,
+        )
         const tags: Record<string, string> = {
           description: cfg.description,
           robots: cfg.noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large',

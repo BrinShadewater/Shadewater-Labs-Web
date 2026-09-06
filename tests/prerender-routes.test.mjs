@@ -48,6 +48,12 @@ test('every prerendered route names itself, not the home page', async () => {
       `${route}: title must not be the home page's, or share cards all read the same`,
     );
     assert.match(html, /<div id="root">/, `${route}: the app must still hydrate inside the shell`);
+
+    // Self-referencing on a single-language site: left as the shell's, every page claimed the
+    // English version of itself was the home page.
+    for (const [, href] of html.matchAll(/<link rel="alternate" hreflang="[^"]+" href="([^"]+)"/g)) {
+      assert.equal(href, want, `${route}: hreflang alternates must name this route`);
+    }
   }
 });
 
