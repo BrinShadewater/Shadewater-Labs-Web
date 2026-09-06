@@ -271,7 +271,8 @@ export default function Websites({ onNavigate }: WebsitesProps) {
                   <span style={pp.siteUrl}>{s.url}</span>
                 </div>
 
-                <h3 style={pp.siteName}>{s.name}</h3>
+                {/* h2: the page's only heading above these is the h1; an h3 here skipped a level. */}
+                <h2 style={pp.siteName}>{s.name}</h2>
                 <p style={pp.siteBlurb}>{s.blurb}</p>
 
                 <div style={pp.siteFoot}>

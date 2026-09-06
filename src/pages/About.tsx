@@ -85,6 +85,11 @@ export default function About({ onNavigate }: AboutProps) {
   const linkStyle: CSSProperties = {
     color: 'hsl(' + ACCENT + ')',
     textDecoration: 'none',
+    // Inline links in 11-13px credits are too small to tap (Lighthouse target-size): the
+    // padding grows the hit area to 24px+ and the negative margin keeps the layout as it was.
+    display: 'inline-block',
+    padding: '6px 0',
+    margin: '-6px 0',
     borderBottom: '1px solid hsl(' + ACCENT + ' / 0.3)',
   };
 
