@@ -1,8 +1,12 @@
-import { tools } from '@/content/tools';
-import { managedWebsites } from '@/content/websites';
-import { openSourceReleases } from '@/content/openSource';
-import { SHADEWATER_LABS_MARK_ALT, SHADEWATER_LABS_MARK_SRC } from '@/lib/brandAssets';
-import { BRIN_ORIGIN, CONTACT_EMAIL, LABS_ORIGIN, buildCanonicalUrl, buildPath, getOrigin, type SiteKey } from '@/lib/routes';
+// Imports here are relative, not "@/": vite.config.ts imports this module so the prerendered
+// per-route shells and the runtime <Seo> read one source of truth, and Vite's config loader
+// resolves relative paths only — a "@/" specifier there reads as a bare package and the build
+// fails. Same reason brinshadewater.com's seo.ts is relative.
+import { tools } from '../content/tools';
+import { managedWebsites } from '../content/websites';
+import { openSourceReleases } from '../content/openSource';
+import { SHADEWATER_LABS_MARK_ALT, SHADEWATER_LABS_MARK_SRC } from './brandAssets';
+import { BRIN_ORIGIN, CONTACT_EMAIL, LABS_ORIGIN, buildCanonicalUrl, buildPath, getOrigin, type SiteKey } from './routes';
 
 type SeoConfig = {
   title: string;
@@ -273,6 +277,17 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         jsonLd: [websiteSchema(), organizationSchema(), personSchema()],
       };
   }
+}
+
+/**
+ * The routes that get their own prerendered shell at build time. The home page is
+ * index.html itself, so it is not listed here; everything else in LABS_PAGES is.
+ */
+export function getLabsPrerenderTargets(): { path: string; page: string }[] {
+  return ['projects', 'websites', 'toolkit', 'about'].map((page) => ({
+    path: buildPath(page, undefined, 'labs'),
+    page,
+  }));
 }
 
 export function getLabsSitemapPaths() {
