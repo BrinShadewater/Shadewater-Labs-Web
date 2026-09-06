@@ -1,7 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useMemo, useState, useRef, useEffect, type CSSProperties, type ReactNode } from 'react';
 import {
-  SHADEWATER_LABS_MARK_CROPPED_SRC,
+  SHADEWATER_LABS_MARK_CROPPED_SMALL_HEIGHT,
+  SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC,
+  SHADEWATER_LABS_MARK_CROPPED_SMALL_WIDTH,
 } from '@/lib/brandAssets';
 import { LABS_ORIGIN, BRIN_ORIGIN } from '@/lib/routes';
 import { openSourceReleases } from '@/content/openSource';
@@ -113,7 +115,14 @@ export function ADNav({
             setMenuOpen(false);
           }}
         >
-          <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" width={408} height={712} decoding="async" style={ad.brandMark} />
+          <img
+            src={SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC}
+            alt=""
+            width={SHADEWATER_LABS_MARK_CROPPED_SMALL_WIDTH}
+            height={SHADEWATER_LABS_MARK_CROPPED_SMALL_HEIGHT}
+            decoding="async"
+            style={ad.brandMark}
+          />
           <span style={ad.brandText}>
             <span style={ad.brandEyebrow}>shadewaterlabs.com</span>
             <span style={ad.brandWord}>
@@ -172,7 +181,15 @@ export function ADFooter() {
       <div style={ad.footerBeam} />
       <div style={ad.footerInner} className="ad-footerInner">
         <div style={ad.footerBrand}>
-          <img src={SHADEWATER_LABS_MARK_CROPPED_SRC} alt="" width={408} height={712} loading="lazy" decoding="async" style={ad.footerMark} />
+          <img
+            src={SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC}
+            alt=""
+            width={SHADEWATER_LABS_MARK_CROPPED_SMALL_WIDTH}
+            height={SHADEWATER_LABS_MARK_CROPPED_SMALL_HEIGHT}
+            loading="lazy"
+            decoding="async"
+            style={ad.footerMark}
+          />
           <div>
             <div style={ad.footerWord}>Shadewater Labs</div>
             <div style={ad.footerEyebrow}>

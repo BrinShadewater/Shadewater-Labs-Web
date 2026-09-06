@@ -4,7 +4,9 @@ import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
+  SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
+  SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET,
 } from '@/lib/brandAssets';
 import {
   ad,
@@ -75,11 +77,15 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
           <span style={home.heroChipMono}>Vancouver, BC</span>
         </div>
 
+        {/* The LCP element on the home page: sized for its 245x350 slot and fetched first. */}
         <img
           src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
+          srcSet={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET}
+          sizes={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES}
           alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
           width={245}
           height={350}
+          fetchPriority="high"
           decoding="async"
           style={{ ...home.heroLogo, objectFit: 'cover', width: 245, height: 350 }}
         />
