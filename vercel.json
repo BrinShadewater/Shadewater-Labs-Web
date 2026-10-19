@@ -38,9 +38,41 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    },
+    {
+      "source": "/Testing/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/Testing/(assets|media)/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ],
   "redirects": [
+    {
+      "source": "/Testing",
+      "destination": "/Testing/program",
+      "permanent": false
+    },
+    {
+      "source": "/testing/:path*",
+      "destination": "/Testing/:path*",
+      "permanent": false
+    },
     {
       "source": "/shadewater-seo-report",
       "destination": "/projects",
@@ -63,6 +95,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/Testing/:path*",
+      "destination": "/Testing/index.html"
+    },
     {
       "source": "/",
       "destination": "/index.html"

@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'dist-preview', 'tailwind.config.js']),
+  globalIgnores(['public/Testing/**', 'dist', 'dist-preview', 'tailwind.config.js']),
   {
     files: ['**/*.{js,mjs,cjs}'],
     ignores: ['scripts/**'],
