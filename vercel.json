@@ -49,6 +49,10 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self' https: wss://*.ably.io wss://*.ably-realtime.com;  media-src 'self' https: blob:; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
         }
       ]
     },
@@ -91,6 +95,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/futureproof-pilot/:path*",
+      "destination": "/api/pilot?pilotPath=:path*"
+    },
+    {
       "source": "/Testing/:path*",
       "destination": "/Testing/index.html"
     },
@@ -114,5 +122,11 @@
       "source": "/about",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "outputDirectory": "dist",
+  "functions": {
+    "api/pilot.js": {
+      "maxDuration": 60
+    }
+  }
 }
