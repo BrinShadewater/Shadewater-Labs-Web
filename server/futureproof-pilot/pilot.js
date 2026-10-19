@@ -238,6 +238,7 @@ export class Pilot {
                 text: i.text,
                 author: s.people[i.authorId]?.displayName ?? "Participant",
                 authorId: i.authorId,
+                authorRole: s.people[i.authorId]?.kind === 'operator' ? (s.people[i.authorId]?.role ?? 'moderator') : null,
                 createdAt: i.createdAt,
                 status: i.status,
                 votes: i.voters.length,
@@ -259,6 +260,7 @@ export class Pilot {
                 cursor: String(r.revision),
                 chatOpen: r.chatOpen,
                 questionsOpen: r.questionsOpen,
+                pinned: r.messages.filter(i => i.id === r.pinnedId && !i.hidden && !p.mutes.includes(i.authorId)).map(safe)[0] ?? null,
                 messages: r.messages
                     .filter((i) => isMod || (!i.hidden && !p.mutes.includes(i.authorId)))
                     .slice(-100)
@@ -371,6 +373,13 @@ export class Pilot {
             if (action === "open" || action === "close") {
                 r.chatOpen = r.questionsOpen = action === "open";
             }
+            else if (action === "unpin")
+                r.pinnedId = null;
+            else if (action === "pin") {
+                if (!item || item.hidden || !r.messages.includes(item))
+                    return fail('invalid');
+                r.pinnedId = item.id;
+            }
             else if (action === "clear")
                 r.stage = null;
             else if (action === "pause")
@@ -400,6 +409,8 @@ export class Pilot {
                         item.status = "rejected";
                     if (r.stage?.id === item.id)
                         r.stage = null;
+                    if (r.pinnedId === item.id)
+                        r.pinnedId = null;
                 }
                 else if (action === "show") {
                     if (item.hidden ||
