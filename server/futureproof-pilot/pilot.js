@@ -59,9 +59,13 @@ const mutation = z.discriminatedUnion("type", [
 export class Pilot {
     store;
     mode;
-    constructor(store, mode) {
+    schedule;
+    clock;
+    constructor(store, mode, schedule = [], clock = Date.now) {
         this.store = store;
         this.mode = mode;
+        this.schedule = schedule;
+        this.clock = clock;
     }
     async run(fn) {
         const result = await this.store.transaction(async (s) => {
@@ -213,6 +217,29 @@ export class Pilot {
             return { id };
         });
     }
+    async activeRoom(token) {
+        return this.run(s => {
+            const person = this.person(s, token);
+            if (person.kind === 'display')
+                return fail('forbidden');
+            const due = this.schedule.filter(x => Date.parse(x.startsAt) <= this.clock()).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt)).at(-1);
+            const id = due?.id || s.activeRoomId || Object.keys(s.rooms)[0];
+            if (!id)
+                return fail('unavailable');
+            if (!s.rooms[id])
+                s.rooms[id] = { id, revision: 0, chatOpen: true, questionsOpen: true, messages: [], questions: [], stage: null, paused: false };
+            if (s.activeRoomId !== id) {
+                for (const room of Object.values(s.rooms)) {
+                    room.stage = null;
+                    if (room.id !== id)
+                        room.questionsOpen = false;
+                }
+                s.rooms[id].questionsOpen = true;
+                s.activeRoomId = id;
+            }
+            return { roomId: id, rooms: Object.keys(s.rooms) };
+        });
+    }
     changed(s, r) {
         r.revision++;
         s.outbox.push({
@@ -260,8 +287,8 @@ export class Pilot {
                 cursor: String(r.revision),
                 chatOpen: r.chatOpen,
                 questionsOpen: r.questionsOpen,
-                pinned: r.messages.filter(i => i.id === r.pinnedId && !i.hidden && !p.mutes.includes(i.authorId)).map(safe)[0] ?? null,
-                messages: r.messages
+                pinned: Object.values(s.rooms).flatMap(room => room.messages).filter(i => i.id === r.pinnedId && !i.hidden && !p.mutes.includes(i.authorId)).map(safe)[0] ?? null,
+                messages: Object.values(s.rooms).flatMap(room => room.messages).sort((a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id))
                     .filter((i) => isMod || (!i.hidden && !p.mutes.includes(i.authorId)))
                     .slice(-100)
                     .map(safe),
@@ -290,6 +317,9 @@ export class Pilot {
             if (!parsed.success || !key || key.length > 100)
                 fail("invalid");
             const m = parsed.data;
+            const scheduled = this.schedule.filter(x => Date.parse(x.startsAt) <= this.clock()).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt)).at(-1);
+            if (m.type === 'question' && scheduled && scheduled.id !== roomId)
+                fail('closed');
             const fingerprint = digest(JSON.stringify(m));
             const k = digest(`${p.id}:${roomId}:${key}`);
             const prior = s.keys[k];
@@ -325,7 +355,7 @@ export class Pilot {
                 id = m.id;
             }
             else if (m.type === "report") {
-                if (![...r.messages, ...r.questions].some((i) => i.id === m.id))
+                if (![...Object.values(s.rooms).flatMap(room => room.messages), ...r.questions].some((i) => i.id === m.id))
                     fail("invalid");
                 this.rate(s, `${p.id}:reports`, 5);
                 s.reports.push({
@@ -369,14 +399,18 @@ export class Pilot {
             const r = this.room(s, roomId);
             if (r.revision !== revision)
                 fail("conflict");
-            const item = [...r.messages, ...r.questions].find((i) => i.id === target);
+            const messages = Object.values(s.rooms).flatMap(room => room.messages);
+            const item = [...messages, ...r.questions].find((i) => i.id === target);
+            const sourceRoom = Object.values(s.rooms).find(room => room.messages.some(i => i.id === target));
+            if (sourceRoom)
+                this.operator(p, sourceRoom.id);
             if (action === "open" || action === "close") {
                 r.chatOpen = r.questionsOpen = action === "open";
             }
             else if (action === "unpin")
                 r.pinnedId = null;
             else if (action === "pin") {
-                if (!item || item.hidden || !r.messages.includes(item))
+                if (!item || item.hidden || !messages.includes(item))
                     return fail('invalid');
                 r.pinnedId = item.id;
             }
@@ -411,6 +445,12 @@ export class Pilot {
                         r.stage = null;
                     if (r.pinnedId === item.id)
                         r.pinnedId = null;
+                    for (const other of Object.values(s.rooms)) {
+                        if (other.pinnedId === item.id)
+                            other.pinnedId = null;
+                        if (other.stage?.id === item.id)
+                            other.stage = null;
+                    }
                 }
                 else if (action === "show") {
                     if (item.hidden ||
@@ -469,10 +509,11 @@ export class Pilot {
                 return fail("forbidden");
             const session = s.sessions[digest(token)];
             const r = this.room(s, session.roomId);
+            const scheduled = this.schedule.filter(x => Date.parse(x.startsAt) <= this.clock()).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt)).at(-1);
             return {
                 roomId: r.id,
                 revision: r.revision,
-                item: r.stage,
+                item: scheduled && scheduled.id !== r.id ? null : r.stage,
                 paused: r.paused,
                 validForMs: 15000,
             };

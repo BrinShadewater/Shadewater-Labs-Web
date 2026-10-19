@@ -73,6 +73,8 @@ export function handler(pilot, options) {
             if (req.method === "GET") {
                 if (path === "/me")
                     send(200, await pilot.me(token));
+                else if (path === "/active-room")
+                    send(200, await pilot.activeRoom(token));
                 else if (path === "/display")
                     send(200, await pilot.display(cookie(req, "fp_display")));
                 else if (/^\/rooms\/[a-z0-9-]+$/.test(path))

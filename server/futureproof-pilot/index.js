@@ -3,6 +3,7 @@ import { PgStore } from "./db.js";
 import { Pilot } from "./pilot.js";
 import { Realtime } from "./realtime.js";
 import { handler } from "./http.js";
+import { schedule } from './schedule.js';
 let ready;
 export default async function (request, response) {
     if (!ready) {
@@ -31,7 +32,7 @@ export default async function (request, response) {
                 connectionTimeoutMillis: 5000,
                 query_timeout: 10000,
             }), env.PILOT_EVENT_ID);
-            const pilot = new Pilot(store, "test");
+            const pilot = new Pilot(store, "test", schedule);
             ready = handler(pilot, {
                 origin: origin.origin,
                 secure: origin.protocol === "https:",
