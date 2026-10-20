@@ -100,13 +100,16 @@ export function handler(pilot, options) {
             const sessionCookie = (name, value) => `${name}=${value}; HttpOnly; SameSite=Lax; Path=${prefix}; Max-Age=86400${options.secure ? "; Secure" : ""}`;
             // The cookie is shared by tabs. Refuse a stale tab's action after another
             // tab signs in as someone else; the supplied ID is a guard, never authority.
-            if (path.startsWith("/rooms/") || path === "/logout") {
+            if (path.startsWith("/rooms/") || path === "/logout" || path === "/test-session") {
                 const actor = await pilot.me(token);
                 if (field("principalId") !== actor.id)
                     throw new PilotError("identity_changed");
             }
             let result;
-            if (path === "/join") {
+            if (path === "/test-session") {
+                result = await pilot.testSessionSwitch(token, field("expectedRoomId"), field("action"));
+            }
+            else if (path === "/join") {
                 const session = await pilot.join(field("code"), field("displayName"), data.optIn, ip);
                 res.setHeader("Set-Cookie", sessionCookie("fp_pilot", session.token));
                 result = session.principal;

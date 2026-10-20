@@ -222,8 +222,7 @@ export class Pilot {
             const person = this.person(s, token);
             if (person.kind === 'display')
                 return fail('forbidden');
-            const due = this.schedule.filter(x => Date.parse(x.startsAt) <= this.clock()).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt)).at(-1);
-            const id = due?.id || s.activeRoomId || Object.keys(s.rooms)[0];
+            const id = this.currentRoomId(s);
             if (!id)
                 return fail('unavailable');
             if (!s.rooms[id])
@@ -237,7 +236,47 @@ export class Pilot {
                 s.rooms[id].questionsOpen = true;
                 s.activeRoomId = id;
             }
-            return { roomId: id, rooms: Object.keys(s.rooms) };
+            return { roomId: id, rooms: Object.keys(s.rooms), testSwitch: Boolean(s.testSwitch), canTestSwitch: this.mode === 'test' && person.kind === 'operator' && person.role !== 'speaker' && person.rooms.includes('*') };
+        });
+    }
+    currentRoomId(s) {
+        return this.scheduledRoomId(s) || s.activeRoomId || Object.keys(s.rooms)[0];
+    }
+    scheduledRoomId(s) {
+        if (this.mode === 'test' && s.testSwitch)
+            return s.testSwitch.roomId;
+        return this.schedule.filter(x => Date.parse(x.startsAt) <= this.clock()).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt)).at(-1)?.id;
+    }
+    async testSessionSwitch(token, expectedRoomId, action) {
+        return this.run(s => {
+            const p = this.person(s, token);
+            if (this.mode !== 'test' || p.kind !== 'operator' || p.role === 'speaker' || !p.rooms.includes('*'))
+                fail('forbidden');
+            if (action !== 'next' && action !== 'resume')
+                fail('invalid');
+            if (this.currentRoomId(s) !== expectedRoomId)
+                fail('conflict');
+            if (action === 'next') {
+                const roomId = `test-session-${randomUUID()}`;
+                s.testSwitch = { roomId, returnRoomId: s.testSwitch?.returnRoomId || expectedRoomId };
+            }
+            else {
+                s.activeRoomId = s.testSwitch?.returnRoomId || s.activeRoomId;
+                delete s.testSwitch;
+            }
+            const id = this.currentRoomId(s);
+            if (!id)
+                return fail('unavailable');
+            if (!s.rooms[id])
+                s.rooms[id] = { id, revision: 0, chatOpen: true, questionsOpen: true, messages: [], questions: [], stage: null, paused: false };
+            for (const room of Object.values(s.rooms)) {
+                room.stage = null;
+                room.questionsOpen = room.id === id;
+                this.changed(s, room);
+            }
+            s.activeRoomId = id;
+            s.audit.push({ actor: p.id, action: `test-session-${action}`, target: id, at: Date.now() });
+            return { roomId: id };
         });
     }
     changed(s, r) {
@@ -317,8 +356,8 @@ export class Pilot {
             if (!parsed.success || !key || key.length > 100)
                 fail("invalid");
             const m = parsed.data;
-            const scheduled = this.schedule.filter(x => Date.parse(x.startsAt) <= this.clock()).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt)).at(-1);
-            if (m.type === 'question' && scheduled && scheduled.id !== roomId)
+            const scheduled = this.scheduledRoomId(s);
+            if (m.type === 'question' && scheduled && scheduled !== roomId)
                 fail('closed');
             const fingerprint = digest(JSON.stringify(m));
             const k = digest(`${p.id}:${roomId}:${key}`);
@@ -509,11 +548,11 @@ export class Pilot {
                 return fail("forbidden");
             const session = s.sessions[digest(token)];
             const r = this.room(s, session.roomId);
-            const scheduled = this.schedule.filter(x => Date.parse(x.startsAt) <= this.clock()).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt)).at(-1);
+            const scheduled = this.scheduledRoomId(s);
             return {
                 roomId: r.id,
                 revision: r.revision,
-                item: scheduled && scheduled.id !== r.id ? null : r.stage,
+                item: scheduled && scheduled !== r.id ? null : r.stage,
                 paused: r.paused,
                 validForMs: 15000,
             };
