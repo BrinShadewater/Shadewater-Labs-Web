@@ -38,7 +38,7 @@ export const emptyState = (eventId) => ({
     audit: [],
     reports: [],
 });
-const publicFishSpecies = ['salmon', 'pacific-herring', 'canary-rockfish', 'lingcod', 'pacific-halibut', 'pacific-spiny-dogfish', 'sablefish', 'albacore-tuna', 'pacific-spiny-lumpsucker', 'tiger-rockfish', 'sockeye-salmon'];
+const publicFishSpecies = ['salmon', 'pacific-herring', 'canary-rockfish', 'lingcod', 'pacific-halibut', 'pacific-spiny-dogfish', 'sablefish', 'albacore-tuna', 'pacific-spiny-lumpsucker', 'tiger-rockfish', 'sockeye-salmon', 'red-rock-crab'];
 const text = (max) => z.string().trim().min(1).max(max);
 const mutation = z.discriminatedUnion("type", [
     z.object({ type: z.literal("message"), text: text(1000), replyTo: text(100).optional() }).strict(),
@@ -390,6 +390,8 @@ export class Pilot {
             const color = parsedColor.data ?? p.fishNameColor;
             if (parsed.data === 'krugfish' && s.specialFishOwners?.krugfish !== p.id)
                 fail('forbidden');
+            if (parsed.data === 'red-rock-crab' && s.fishMail?.some(m => m.senderId === p.id && (m.deliverAt ?? m.createdAt) > this.clock()))
+                fail('conflict');
             if (p.fishSpecies !== parsed.data || p.fishNameColor !== color) {
                 this.rate(s, `fish-choice:${p.id}`, 20);
                 p.fishSpecies = parsed.data;
@@ -403,6 +405,8 @@ export class Pilot {
             const p = this.person(s, token);
             if (p.id !== viewerId)
                 fail('identity_changed');
+            if (p.fishSpecies === 'red-rock-crab')
+                fail('forbidden');
             if (p.kind === 'display')
                 fail('forbidden');
             const parsed = text(1000).safeParse(content);
