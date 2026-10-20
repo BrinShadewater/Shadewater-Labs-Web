@@ -289,6 +289,54 @@ export class Pilot {
             at: Date.now(),
         });
     }
+    activityView(s, viewer, chatOpen) {
+        const now = this.clock();
+        const valid = (id) => {
+            const person = s.people[id];
+            return person && !person.suspended && person.kind !== 'display' && Object.values(s.sessions).some(session => session.personId === id && session.expires > Date.now() && (person.kind !== 'participant' || (s.code && s.code.expires > Date.now() && session.version === s.code.version)));
+        };
+        s.activity ??= {};
+        for (const [id, value] of Object.entries(s.activity))
+            if (value.seenAt + 30000 <= now || !valid(id))
+                delete s.activity[id];
+        s.applause = (s.applause ?? []).filter(item => item.at + 6000 > now && valid(item.authorId)).slice(-20);
+        return { online: Object.keys(s.activity).length,
+            typing: chatOpen ? Object.entries(s.activity).filter(([id, value]) => id !== viewer.id && !viewer.mutes.includes(id) && value.typingUntil > now).map(([id]) => ({ id, name: s.people[id].displayName })).slice(0, 4) : [],
+            applause: s.applause.filter(item => !viewer.mutes.includes(item.authorId)).map(item => ({ id: item.id, emoji: item.emoji, expiresAt: item.at + 6000 })),
+            validForMs: 6000,
+        };
+    }
+    async activity(token, roomId, input) {
+        return this.run(s => {
+            const p = this.person(s, token);
+            if (p.kind === 'display')
+                return fail('forbidden');
+            const r = this.room(s, roomId);
+            const parsed = z.object({ active: z.boolean(), typing: z.boolean(), emoji: z.enum(['👏', '❤️', '💡']).optional() }).strict().safeParse(input);
+            if (!parsed.success)
+                return fail('invalid');
+            const { active, typing, emoji } = parsed.data;
+            if ((typing || emoji) && !r.chatOpen)
+                return fail('closed');
+            if (!active && (typing || emoji))
+                return fail('invalid');
+            this.rate(s, `${p.id}:activity`, 60);
+            this.activityView(s, p, r.chatOpen);
+            const previous = s.activity[p.id];
+            if (active)
+                s.activity[p.id] = { seenAt: this.clock(), typingUntil: typing ? this.clock() + 8000 : 0 };
+            else
+                delete s.activity[p.id];
+            if (emoji) {
+                this.rate(s, `${p.id}:applause`, 12);
+                s.applause.push({ id: randomUUID(), authorId: p.id, emoji, at: this.clock() });
+            }
+            // Ephemeral signals notify readers without invalidating moderator actions.
+            if (!previous || Boolean(previous.typingUntil > this.clock()) !== typing || !active || emoji)
+                s.outbox.push({ id: randomUUID(), roomId: r.id, revision: r.revision, at: Date.now() });
+            return { ok: true };
+        });
+    }
     async read(token, roomId, from, older = false) {
         return this.run((s) => {
             const p = this.person(s, token);
@@ -340,6 +388,7 @@ export class Pilot {
                     start = Math.max(0, start - 100);
             }
             return {
+                activity: this.activityView(s, p, r.chatOpen),
                 roomId: r.id,
                 viewerId: p.id,
                 revision: r.revision,

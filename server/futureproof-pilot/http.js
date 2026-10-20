@@ -143,6 +143,9 @@ export function handler(pilot, options) {
                     throw new PilotError("invalid");
                 const room = parts[2];
                 switch (parts[3]) {
+                    case "activity":
+                        result = await pilot.activity(token, room, data.activity);
+                        break;
                     case "create":
                         result = await pilot.createRoom(token, room);
                         break;
