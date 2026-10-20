@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceRevision": "129783148166b8c9b2c8b46e9b63edd07a4acc0c",
+  "sourceRevision": "6c2bd8afb93138298e60c325cffeaa3eef8bc3cb",
   "canonicalSiteUrl": "https://www.futureproof.website",
   "updatedOn": "2026-10-19",
   "program": {
@@ -10,7 +10,7 @@
     "updatedOn": "2026-10-19",
     "updatedLabel": "October 19, 2026",
     "sessionCount": 60,
-    "speakerCount": 35,
+    "speakerCount": 37,
     "window": {
       "start": "2026-10-28",
       "end": "2026-10-30",
@@ -241,21 +241,56 @@
             "durationMinutes": 25,
             "title": "AI Builders Fellowship: what they made",
             "kind": "talk",
-            "status": "tba",
-            "publicBlurb": "Two builders from the AI Builders Fellowship, Internet Archive Canada's program with BC + AI, each get ten minutes to show what they built after six weeks inside a hundred thousand Canadian government publications. Then the man who built the Archive takes the stage.",
+            "status": "working",
+            "publicBlurb": "Two builders from the AI Builders Fellowship, Internet Archive Canada's program with BC + AI, each get ten minutes to show what they built. Jacob Ortiz presents The Archive Argues With Itself: a way to compare Canada's public-health records across decades, open the scanned pages behind an AI answer and see where the archive cannot support one. Daniel Shavit presents What happened on your street? Vancouver through time, from the Archive's records: a film-led journey through Vancouver built from open data, council minutes, archive films and documents. Type an address, explore its history and follow each finding back to the Internet Archive. Then the man who built the Archive takes the stage.",
             "anchor": false,
             "hosting": false,
             "heldSeats": 0,
-            "seatNote": "Speaker to announce.",
-            "pendingSeats": 1,
-            "hash": "6c7baae8",
+            "seatNote": null,
+            "pendingSeats": 0,
+            "hash": "d7baa272",
             "displayTitle": "AI Builders Fellowship: what they made",
-            "format": "Talk",
+            "format": "Fellowship showcase",
             "signals": [
               "builders",
               "community"
             ],
-            "speakers": [],
+            "speakers": [
+              {
+                "id": "jacob-ortiz",
+                "name": "Jacob Ortiz",
+                "role": "AI Builders Fellow",
+                "affiliation": "AI Builders Fellowship",
+                "tease": "Jacob Ortiz, AI Builders Fellow. The Archive Argues With Itself puts Canada's public-health records side by side, links claims to their source pages and makes the gaps visible.",
+                "talkTitle": "The Archive Argues With Itself",
+                "href": "https://www.futureproof.website/speakers/jacob-ortiz/",
+                "personalHref": null,
+                "affiliationHref": null,
+                "portrait": {
+                  "alt": "Screenshot of Jacob Ortiz's Archive Argues With Itself project, introducing Canada's public-health record and a comparison of Alberta health-insurance publications from 1974 and 1999.",
+                  "aspect": "square",
+                  "kind": "artwork",
+                  "src": "https://www.futureproof.website/media/speakers/jacob-ortiz-project.jpg"
+                }
+              },
+              {
+                "id": "daniel-shavit",
+                "name": "Daniel Shavit",
+                "role": "AI Builders Fellow",
+                "affiliation": "Independent",
+                "tease": "Daniel Shavit, AI Builders Fellow. Type a Vancouver address and find the council decisions, films and archive documents behind its history, with a source for every discovery.",
+                "talkTitle": "What happened on your street? Vancouver through time, from the Archive's records",
+                "href": "https://www.futureproof.website/speakers/daniel-shavit/",
+                "personalHref": null,
+                "affiliationHref": null,
+                "portrait": {
+                  "alt": "Daniel Shavit",
+                  "aspect": "portrait45",
+                  "kind": "photo",
+                  "src": "https://www.futureproof.website/media/speakers/daniel-shavit.jpg"
+                }
+              }
+            ],
             "href": "https://www.futureproof.website/program/#wed-fellowship-demos",
             "venueId": null,
             "room": null
@@ -720,14 +755,14 @@
             "title": "Keeping your judgment",
             "kind": "talk",
             "status": "working",
-            "publicBlurb": "Kerris and Raj on the judgment AI keeps talking you out of, from inside two companies rolling it out.",
+            "publicBlurb": "Kerris on the judgment AI keeps talking you out of, from inside a company rolling it out.",
             "anchor": false,
             "hosting": false,
             "heldSeats": 0,
             "seatNote": null,
             "pendingSeats": 0,
-            "hash": "7e986e50",
-            "displayTitle": "Keeping your judgment",
+            "hash": "0307fbda",
+            "displayTitle": "The Skill AI Can't Give You (And Keeps Talking You Out Of)",
             "format": "Talk",
             "signals": [
               "literacy",
@@ -739,7 +774,7 @@
                 "name": "Kerris Hougardy",
                 "role": "Senior Vice President, People",
                 "affiliation": "Ting Internet · Tucows",
-                "tease": "Kerris Hougardy, senior vice president of people at Ting Internet and Tucows. With Raj Parmar, she makes the case for discernment: the one human skill that cannot be automated, and the one that decides whether AI at work helps or quietly erodes critical thinking.",
+                "tease": "Kerris Hougardy, senior vice president of people at Ting Internet and Tucows. She makes the case for discernment: the one human skill that cannot be automated, and the one that decides whether AI at work helps or quietly erodes critical thinking.",
                 "talkTitle": "The Skill AI Can't Give You (And Keeps Talking You Out Of)",
                 "href": "https://www.futureproof.website/speakers/kerris-hougardy/",
                 "personalHref": "https://www.linkedin.com/in/kerrishougardy/",
@@ -749,23 +784,6 @@
                   "aspect": "square",
                   "kind": "artwork",
                   "src": "https://www.futureproof.website/media/speakers/kerris-hougardy-featured-speaker.webp"
-                }
-              },
-              {
-                "id": "raj-parmar",
-                "name": "Raj Parmar",
-                "role": "HR Leader and Business Partner",
-                "affiliation": "Tucows",
-                "tease": "Raj Parmar, HR leader and business partner at Tucows. She builds AI literacy inside companies and bets on the people who know when to stop and say wait, let’s check that.",
-                "talkTitle": null,
-                "href": "https://www.futureproof.website/speakers/raj-parmar/",
-                "personalHref": "https://www.linkedin.com/in/rajvirparmar1/",
-                "affiliationHref": null,
-                "portrait": {
-                  "alt": "Futureproof Festival featured speaker square for Raj Parmar beside a rooftop rainwater commons of planted terraces and collection channels above the city, with the BC + AI ecosystem presenter mark.",
-                  "aspect": "square",
-                  "kind": "artwork",
-                  "src": "https://www.futureproof.website/media/speakers/raj-parmar-featured-speaker.webp"
                 }
               }
             ],
@@ -785,13 +803,13 @@
             "title": "Q&A",
             "kind": "qa",
             "status": "working",
-            "publicBlurb": "Then all three taking questions.",
+            "publicBlurb": "Then Shane and Kerris taking questions.",
             "anchor": false,
             "hosting": false,
             "heldSeats": 0,
             "seatNote": null,
             "pendingSeats": 0,
-            "hash": "c468a44b",
+            "hash": "5378ed93",
             "displayTitle": "Questions with the speakers",
             "format": "Audience Q&A",
             "signals": [
@@ -821,7 +839,7 @@
                 "name": "Kerris Hougardy",
                 "role": "Senior Vice President, People",
                 "affiliation": "Ting Internet · Tucows",
-                "tease": "Kerris Hougardy, senior vice president of people at Ting Internet and Tucows. With Raj Parmar, she makes the case for discernment: the one human skill that cannot be automated, and the one that decides whether AI at work helps or quietly erodes critical thinking.",
+                "tease": "Kerris Hougardy, senior vice president of people at Ting Internet and Tucows. She makes the case for discernment: the one human skill that cannot be automated, and the one that decides whether AI at work helps or quietly erodes critical thinking.",
                 "talkTitle": "The Skill AI Can't Give You (And Keeps Talking You Out Of)",
                 "href": "https://www.futureproof.website/speakers/kerris-hougardy/",
                 "personalHref": "https://www.linkedin.com/in/kerrishougardy/",
@@ -831,23 +849,6 @@
                   "aspect": "square",
                   "kind": "artwork",
                   "src": "https://www.futureproof.website/media/speakers/kerris-hougardy-featured-speaker.webp"
-                }
-              },
-              {
-                "id": "raj-parmar",
-                "name": "Raj Parmar",
-                "role": "HR Leader and Business Partner",
-                "affiliation": "Tucows",
-                "tease": "Raj Parmar, HR leader and business partner at Tucows. She builds AI literacy inside companies and bets on the people who know when to stop and say wait, let’s check that.",
-                "talkTitle": null,
-                "href": "https://www.futureproof.website/speakers/raj-parmar/",
-                "personalHref": "https://www.linkedin.com/in/rajvirparmar1/",
-                "affiliationHref": null,
-                "portrait": {
-                  "alt": "Futureproof Festival featured speaker square for Raj Parmar beside a rooftop rainwater commons of planted terraces and collection channels above the city, with the BC + AI ecosystem presenter mark.",
-                  "aspect": "square",
-                  "kind": "artwork",
-                  "src": "https://www.futureproof.website/media/speakers/raj-parmar-featured-speaker.webp"
                 }
               }
             ],
@@ -1127,17 +1128,17 @@
             "endsAt": "2026-10-29T13:45:00-07:00",
             "timeLabel": "1:30–1:45 PM",
             "durationMinutes": 15,
-            "title": "The afternoon reset",
+            "title": "The afternoon reset: Suzy Easton’s solo electronic debut",
             "kind": "party",
             "status": "working",
-            "publicBlurb": "Lunch is over and everybody needs waking up. Suzy Easton, fifteen minutes, all sound and texture, and then the afternoon.",
+            "publicBlurb": "Suzy Easton makes her solo electronic debut. A Vancouver musician and technologist brings years of playing in bands, recording and building instruments into fifteen minutes of new electronic music after lunch.",
             "anchor": false,
             "hosting": false,
             "heldSeats": 0,
             "seatNote": null,
             "pendingSeats": 0,
-            "hash": "3ce0cf91",
-            "displayTitle": "The afternoon reset",
+            "hash": "f81889ed",
+            "displayTitle": "The afternoon reset: Suzy Easton’s solo electronic debut",
             "format": "Live performance",
             "signals": [
               "culture"
@@ -1148,8 +1149,8 @@
                 "name": "Suzy Easton",
                 "role": "Musician and technologist",
                 "affiliation": "Independent",
-                "tease": "Suzy Easton, Vancouver musician and technologist. She solders her own pedals, hides the circuits inside repurposed appliances, and treats AI as one more instrument to play rather than a thing to prompt.",
-                "talkTitle": "the appliance latent space",
+                "tease": "Suzy Easton makes her solo electronic debut at Futureproof Festival, bringing years of playing in bands, recording and building instruments into a new performance.",
+                "talkTitle": null,
                 "href": "https://www.futureproof.website/speakers/suzy-easton/",
                 "personalHref": "https://www.suzyeaston.ca/",
                 "affiliationHref": null,
@@ -1523,17 +1524,17 @@
             "endsAt": "2026-10-29T16:05:00-07:00",
             "timeLabel": "3:45–4:05 PM",
             "durationMinutes": 20,
-            "title": "Who gets to tell the story",
+            "title": "BrainRot Revolution",
             "kind": "talk",
             "status": "working",
-            "publicBlurb": "Brett on synthetic media, surveillance, and what the documentary can still do about it.",
+            "publicBlurb": "Brett Gaylor brings BrainRot Revolution, his doctoral research on documentary games and critical data literacy. How can playful, participatory work help people question AI and imagine a different internet?",
             "anchor": false,
             "hosting": false,
             "heldSeats": 0,
             "seatNote": null,
             "pendingSeats": 0,
-            "hash": "142db710",
-            "displayTitle": "Twenty Years of Remix, and Who Shapes the Algorithm",
+            "hash": "c5f2a0fb",
+            "displayTitle": "BrainRot Revolution",
             "format": "Talk",
             "signals": [
               "culture",
@@ -1545,8 +1546,8 @@
                 "name": "Brett Gaylor",
                 "role": "VP Creative",
                 "affiliation": "Hololabs",
-                "tease": "Brett Gaylor, VP Creative at Hololabs. He’ll bring 20 years of remix culture, surveillance documentaries, and interactive storytelling to the question of who gets to shape the algorithm.",
-                "talkTitle": "Twenty Years of Remix, and Who Shapes the Algorithm",
+                "tease": "Brett Gaylor brings BrainRot Revolution, his doctoral research on documentary games and critical data literacy, to the question of how people can understand and reshape the systems shaping them.",
+                "talkTitle": null,
                 "href": "https://www.futureproof.website/speakers/brett-gaylor/",
                 "personalHref": "https://www.linkedin.com/in/brettgaylor/",
                 "affiliationHref": null,
@@ -1628,7 +1629,7 @@
             "heldSeats": 0,
             "seatNote": null,
             "pendingSeats": 0,
-            "hash": "b12678e0",
+            "hash": "5f4447db",
             "displayTitle": "Questions with the speakers",
             "format": "Audience Q&A",
             "signals": [
@@ -1641,8 +1642,8 @@
                 "name": "Brett Gaylor",
                 "role": "VP Creative",
                 "affiliation": "Hololabs",
-                "tease": "Brett Gaylor, VP Creative at Hololabs. He’ll bring 20 years of remix culture, surveillance documentaries, and interactive storytelling to the question of who gets to shape the algorithm.",
-                "talkTitle": "Twenty Years of Remix, and Who Shapes the Algorithm",
+                "tease": "Brett Gaylor brings BrainRot Revolution, his doctoral research on documentary games and critical data literacy, to the question of how people can understand and reshape the systems shaping them.",
+                "talkTitle": null,
                 "href": "https://www.futureproof.website/speakers/brett-gaylor/",
                 "personalHref": "https://www.linkedin.com/in/brettgaylor/",
                 "affiliationHref": null,
@@ -1789,35 +1790,35 @@
             "endsAt": "2026-10-30T09:30:00-07:00",
             "timeLabel": "9:20–9:30 AM",
             "durationMinutes": 10,
-            "title": "Thursday was where we are. Today is what we build.",
+            "title": "Opening welcome",
             "kind": "talk",
             "status": "set",
-            "publicBlurb": "Kris opens day two in ten minutes: what Thursday gave us, why honest is the word for today, and who is about to take the stage.",
+            "publicBlurb": "Manuel Axel Strain welcomes everyone to Friday morning at Futureproof Festival.",
             "anchor": false,
             "hosting": true,
             "heldSeats": 0,
             "seatNote": null,
             "pendingSeats": 0,
-            "hash": "90cb07d8",
-            "displayTitle": "Thursday was where we are. Today is what we build.",
+            "hash": "a5c6b247",
+            "displayTitle": "Opening welcome",
             "format": "Welcome",
             "signals": [],
             "speakers": [
               {
-                "id": "kris-krug",
-                "name": "Kris Krüg",
-                "role": "Founder & Festival Director",
-                "affiliation": "BC + AI Ecosystem Association",
-                "tease": "I’m Kris Krüg, founder of Futureproof and executive director of BC + AI. I started this festival to get artists, builders, skeptics, and curious weirdos into the same room to compare notes, disagree, and figure out what the hell we’re going to do with AI together.",
-                "talkTitle": "Why Humans Gather Now",
-                "href": "https://www.futureproof.website/speakers/kris-krug/",
-                "personalHref": "https://www.linkedin.com/in/kriskrug/",
-                "affiliationHref": "https://bc-ai.ca/",
+                "id": "manuel-axel-strain",
+                "name": "Manuel Axel Strain",
+                "role": "2-Spirit artist",
+                "affiliation": "xʷməθkʷəy̓əm (Musqueam), Simpcw, and Syilx",
+                "tease": "Manuel Axel Strain brings their artist's practice of memory, land, and relationships across beings to Futureproof Festival's Friday opening welcome.",
+                "talkTitle": null,
+                "href": "https://www.futureproof.website/speakers/manuel-axel-strain/",
+                "personalHref": "https://www.manuelaxelstrain.com/",
+                "affiliationHref": null,
                 "portrait": {
-                  "alt": "Kris Krüg",
+                  "alt": "Manuel Axel Strain",
                   "aspect": "portrait45",
                   "kind": "photo",
-                  "src": "https://www.futureproof.website/media/speakers/kris-krug.webp"
+                  "src": "https://www.futureproof.website/media/speakers/manuel-axel-strain.jpeg"
                 }
               }
             ],
@@ -3003,6 +3004,43 @@
   },
   "speakers": [
     {
+      "id": "manuel-axel-strain",
+      "name": "Manuel Axel Strain",
+      "title": "2-Spirit artist",
+      "affiliation": "xʷməθkʷəy̓əm (Musqueam), Simpcw, and Syilx",
+      "bio": "Manuel Axel Strain is a 2-Spirit artist from the lands and waters of the xʷməθkʷəy̓əm (Musqueam), Simpcw, and Syilx peoples. Their practice braids family memory, land-based ceremony, and anti-colonial aesthetics to re-imagine how we relate across beings and systems. They presented Remember Your Teachings: Listening Across Species: Interspecies Translation with Care at the Vancouver AI Community Meetup on September 24, 2025, at the H.R. MacMillan Space Centre.",
+      "href": "https://www.futureproof.website/speakers/manuel-axel-strain",
+      "photo": "https://www.futureproof.website/media/speakers/manuel-axel-strain.jpeg",
+      "publicProfile": {
+        "artworkAlt": "Manuel Axel Strain, wearing a tan vest and pink shirt, in the portrait published with their Vancouver AI meetup biography.",
+        "profileNote": "Manuel Axel Strain brings their artist's practice of memory, land, and relationships across beings to Futureproof Festival's Friday opening welcome.",
+        "programNote": null,
+        "audienceNote": "An invitation to consider how we relate across beings and systems, grounded in family memory and land.",
+        "talkTitle": null,
+        "artwork": "https://www.futureproof.website/media/speakers/manuel-axel-strain.jpeg",
+        "artworkAspect": "square",
+        "artworkCredit": null,
+        "links": [
+          {
+            "label": "Official website",
+            "url": "https://www.manuelaxelstrain.com/"
+          },
+          {
+            "label": "Vancouver AI meetup biography",
+            "url": "https://luma.com/vai21"
+          }
+        ],
+        "work": [
+          {
+            "label": "Artificial Intelligence for Interspecies Communication",
+            "note": "Their September 2025 Vancouver AI talk, recorded at the H.R. MacMillan Space Centre.",
+            "url": "https://www.youtube.com/watch?v=vY8Gv8CFbb4"
+          }
+        ],
+        "news": null
+      }
+    },
+    {
       "id": "amber-case",
       "name": "Amber Case",
       "title": "Founder",
@@ -3580,10 +3618,10 @@
       "photo": "https://www.futureproof.website/media/speakers/brett-gaylor.webp",
       "publicProfile": {
         "artworkAlt": "Futureproof Festival featured speaker square for Brett Gaylor beside a cave workshop whose rock arch opens onto a luminous kelp forest, with the BC + AI ecosystem presenter mark.",
-        "profileNote": "Brett Gaylor, VP Creative at Hololabs. He’ll bring 20 years of remix culture, surveillance documentaries, and interactive storytelling to the question of who gets to shape the algorithm.",
+        "profileNote": "Brett Gaylor brings BrainRot Revolution, his doctoral research on documentary games and critical data literacy, to the question of how people can understand and reshape the systems shaping them.",
         "programNote": null,
-        "audienceNote": "Twenty years of receipts that the documentary still has a job to do about surveillance and synthetic media, and what that job is now.",
-        "talkTitle": "Twenty Years of Remix, and Who Shapes the Algorithm",
+        "audienceNote": "Explore how documentary and games can help people question AI and imagine a different internet, through Brett Gaylor’s BrainRot Revolution research.",
+        "talkTitle": null,
         "artwork": "https://www.futureproof.website/media/speakers/brett-gaylor-featured-speaker.webp",
         "artworkAspect": "square",
         "artworkCredit": null,
@@ -4162,7 +4200,7 @@
       "photo": null,
       "publicProfile": {
         "artworkAlt": "Futureproof Festival featured speaker square for Kerris Hougardy beside cedar work platforms floating on a sunrise inlet around a turning basin of coral and seafoam currents, with the BC + AI ecosystem presenter mark.",
-        "profileNote": "Kerris Hougardy, senior vice president of people at Ting Internet and Tucows. With Raj Parmar, she makes the case for discernment: the one human skill that cannot be automated, and the one that decides whether AI at work helps or quietly erodes critical thinking.",
+        "profileNote": "Kerris Hougardy, senior vice president of people at Ting Internet and Tucows. She makes the case for discernment: the one human skill that cannot be automated, and the one that decides whether AI at work helps or quietly erodes critical thinking.",
         "programNote": null,
         "audienceNote": "A name for the judgment that makes you good at your job, and a case for discernment as the one skill that can't be automated.",
         "talkTitle": "The Skill AI Can't Give You (And Keeps Talking You Out Of)",
@@ -4186,33 +4224,6 @@
             "url": "https://www.youtube.com/watch?v=QHlTwufNQl0"
           }
         ],
-        "news": null
-      }
-    },
-    {
-      "id": "raj-parmar",
-      "name": "Raj Parmar",
-      "title": "HR Leader and Business Partner",
-      "affiliation": "Tucows",
-      "bio": "Raj Parmar is an HR leader and business partner at Tucows, where she helps people teams support their workforce through the push to adopt AI. She works with leaders and employees to build AI literacy, aimed at disarming resistance and building confidence so people move toward the future instead of fearing it. She sees humans and AI working side by side: a bot will outwork us every day, but it can't out-human us. She helps people build the skills that can't be replaced, betting the future belongs to the humans who know when to say “wait, let’s check that.” In a room deciding how far to trust these tools, she argues for the pause.",
-      "href": "https://www.futureproof.website/speakers/raj-parmar",
-      "photo": null,
-      "publicProfile": {
-        "artworkAlt": "Futureproof Festival featured speaker square for Raj Parmar beside a rooftop rainwater commons of planted terraces and collection channels above the city, with the BC + AI ecosystem presenter mark.",
-        "profileNote": "Raj Parmar, HR leader and business partner at Tucows. She builds AI literacy inside companies and bets on the people who know when to stop and say wait, let’s check that.",
-        "programNote": null,
-        "audienceNote": "Permission to be the person who says wait, let's check that, and a bet that the future belongs to them.",
-        "talkTitle": null,
-        "artwork": "https://www.futureproof.website/media/speakers/raj-parmar-featured-speaker.webp",
-        "artworkAspect": "square",
-        "artworkCredit": null,
-        "links": [
-          {
-            "label": "LinkedIn",
-            "url": "https://www.linkedin.com/in/rajvirparmar1/"
-          }
-        ],
-        "work": [],
         "news": null
       }
     },
@@ -4277,10 +4288,10 @@
       "photo": null,
       "publicProfile": {
         "artworkAlt": "Futureproof Festival featured speaker square for Suzy Easton holding a small keyboard beside a chrome toaster wired through patch cables to a pedal on a floating cedar platform over a sunrise inlet, with the BC + AI ecosystem presenter mark.",
-        "profileNote": "Suzy Easton, Vancouver musician and technologist. She solders her own pedals, hides the circuits inside repurposed appliances, and treats AI as one more instrument to play rather than a thing to prompt.",
+        "profileNote": "Suzy Easton makes her solo electronic debut at Futureproof Festival, bringing years of playing in bands, recording and building instruments into a new performance.",
         "programNote": null,
-        "audienceNote": "A musician's case that AI is one more instrument to play, and a reason to stop calling what she does prompting. She solders her own pedals.",
-        "talkTitle": "the appliance latent space",
+        "audienceNote": "Hear a Vancouver musician and technologist step into a new solo electronic project, drawing on years of recording, playing in bands and building her own instruments.",
+        "talkTitle": null,
         "artwork": "https://www.futureproof.website/media/speakers/suzy-easton-featured-speaker.webp",
         "artworkAspect": "square",
         "artworkCredit": null,
@@ -4674,57 +4685,6 @@
       }
     },
     {
-      "id": "kat-koppett",
-      "name": "Kat Koppett",
-      "title": "Founder & CEO",
-      "affiliation": "Koppett · Mopco Improv Theatre",
-      "bio": "Kat Koppett is the founder of Koppett, a consultancy that uses improv and storytelling to help people and teams perform, and the founder of the Human Interaction Initiative. She wrote Training to Imagine, the applied improv handbook in use for almost 25 years, and co-wrote The Facilitation Advantage with Therese Miclot. Her clients include Meta, Apple, Prezi, PwC, NASA, Global Giving, and the UN Development Fund. She co-directs and performs with the Mopco Improv Theatre in Schenectady, New York, and created Spontaneous Broadway, a completely improvised musical format that made her one of TheatreWeek Magazine's Unsung Heroes. Her career is practice in what people still owe each other with machines in the mix: listening hard, and building on what the other person hands you.",
-      "href": "https://www.futureproof.website/speakers/kat-koppett",
-      "photo": null,
-      "publicProfile": {
-        "artworkAlt": "Futureproof Festival featured-speaker artwork for Kat Koppett and The Human Interaction Gym, with people balancing and mirroring one another on a sunlit coastal path, the Futureproof constellation, and the BC + AI mark.",
-        "profileNote": "Kat Koppett founded Koppett and the Human Interaction Initiative. She uses improv and storytelling to keep people sharp with each other, and she wrote the book on it.",
-        "programNote": "Kat has no session scheduled in the current festival program.",
-        "audienceNote": "A reason to keep exercising the human-interaction muscles now that the machines are at work beside us, from someone who has spent a career teaching people how.",
-        "talkTitle": null,
-        "artwork": "https://www.futureproof.website/media/speakers/kat-koppett-featured-speaker.png",
-        "artworkAspect": "square",
-        "artworkCredit": null,
-        "links": [
-          {
-            "label": "Koppett",
-            "url": "https://www.koppett.com/"
-          },
-          {
-            "label": "LinkedIn",
-            "url": "https://www.linkedin.com/in/koppett/"
-          },
-          {
-            "label": "YouTube",
-            "url": "https://www.youtube.com/@katkoppett"
-          }
-        ],
-        "work": [
-          {
-            "label": "Training to Imagine",
-            "note": "The applied improv handbook, almost 25 years in use and now in a third edition, with 50+ exercises you can run with your own team.",
-            "url": "https://www.koppett.com/training-to-imagine"
-          },
-          {
-            "label": "The Facilitation Advantage",
-            "note": "Written with Therese Miclot in 2024: a how-to for turning not-so-great meetings, in person or on a screen, into productive ones.",
-            "url": "https://www.koppett.com/the-facilitation-advantage"
-          },
-          {
-            "label": "We Don't Have Personalities",
-            "note": "Five minutes at DisruptHR on why you aren't stuck with a fixed personality, and how practice changes what you can do in the moment.",
-            "url": "https://youtu.be/9wm7fDVhn9A"
-          }
-        ],
-        "news": null
-      }
-    },
-    {
       "id": "anthony-joseph",
       "name": "Anthony Joseph",
       "title": "Councillor",
@@ -4845,6 +4805,61 @@
         "work": [],
         "news": null
       }
+    },
+    {
+      "id": "daniel-shavit",
+      "name": "Daniel Shavit",
+      "title": "AI Builders Fellow",
+      "affiliation": "Independent",
+      "bio": "Daniel Shavit builds independent tools that make public records legible: city budgets, contracts and council decisions turned into accessible information. For the AI Builders Fellowship, he is building Tale of a City, a way to explore Vancouver through its own public records. Type an address and follow the history of a place through council minutes from the 1970s, archive films and documents, each linked back to its source in the Internet Archive. His festival presentation combines a prerecorded film, AI-enhanced textures and a look at the underlying dataset. The aim is to turn a library of government publications into local memory people care about, and a sourced foundation that AI can draw on when people ask what happened around them.",
+      "href": "https://www.futureproof.website/speakers/daniel-shavit",
+      "photo": "https://www.futureproof.website/media/speakers/daniel-shavit.jpg",
+      "publicProfile": {
+        "artworkAlt": "Daniel Shavit beside a city model and archive maps overlooking a sunlit Vancouver harbour, with flowing Futureproof lettering and the BC + AI presenter mark.",
+        "profileNote": "Daniel Shavit, AI Builders Fellow. Type a Vancouver address and find the council decisions, films and archive documents behind its history, with a source for every discovery.",
+        "programNote": null,
+        "audienceNote": "Look up a Vancouver street and follow its history through council minutes, films and archive documents. Explore public memory with AI while keeping the sources in view.",
+        "talkTitle": "What happened on your street? Vancouver through time, from the Archive's records",
+        "artwork": "https://www.futureproof.website/media/speakers/daniel-shavit-featured-speaker.png",
+        "artworkAspect": "square",
+        "artworkCredit": null,
+        "links": [],
+        "work": [],
+        "news": null
+      }
+    },
+    {
+      "id": "jacob-ortiz",
+      "name": "Jacob Ortiz",
+      "title": "AI Builders Fellow",
+      "affiliation": "AI Builders Fellowship",
+      "bio": "Jacob Ortiz built The Archive Argues With Itself during the AI Builders Fellowship, Internet Archive Canada's program with BC + AI. His open-source project explores Canada's public-health record through scanned government publications held by the Internet Archive. Ask a question and compare how official language changes across decades, with the source pages beside the answer. The tool makes gaps in dates, geography and coverage visible, and can decline questions the retrieved record cannot support. His festival demonstration follows Alberta health-insurance records across twenty-five years, opens the pages behind the claims and shows what happens when a question reaches beyond the archive's coverage.",
+      "href": "https://www.futureproof.website/speakers/jacob-ortiz",
+      "photo": null,
+      "publicProfile": {
+        "artworkAlt": "Screenshot of Jacob Ortiz's Archive Argues With Itself project, introducing Canada's public-health record and a comparison of Alberta health-insurance publications from 1974 and 1999.",
+        "profileNote": "Jacob Ortiz, AI Builders Fellow. The Archive Argues With Itself puts Canada's public-health records side by side, links claims to their source pages and makes the gaps visible.",
+        "programNote": null,
+        "audienceNote": "Compare what governments said across decades, check the scanned pages behind an AI answer and see where the public record is too thin to support one.",
+        "talkTitle": "The Archive Argues With Itself",
+        "artwork": "https://www.futureproof.website/media/speakers/jacob-ortiz-project.jpg",
+        "artworkAspect": "square",
+        "artworkCredit": null,
+        "links": [
+          {
+            "label": "Source code",
+            "url": "https://github.com/agentjakey/archive-argues-with-itself"
+          }
+        ],
+        "work": [
+          {
+            "label": "The Archive Argues With Itself",
+            "note": "A reading room for Canada's public-health record: compare decades, open source pages and see the gaps.",
+            "url": "https://archive-argues-with-itself-production.up.railway.app/"
+          }
+        ],
+        "news": null
+      }
     }
   ],
   "venues": [
@@ -4956,5 +4971,5 @@
     "accessibility": "kk@bc-ai.ca",
     "safety": "kk@bc-ai.ca"
   },
-  "dataHash": "07d24d13435c88f87ac2f57b60af4c64c6267082cb82016da4587a11a7747bef"
+  "dataHash": "ebbdcaba636dc9d588876ac94b9951dbff8cf191e367c5667091bb44a13167a9"
 }
