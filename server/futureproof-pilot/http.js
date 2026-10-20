@@ -78,7 +78,7 @@ export function handler(pilot, options) {
                 else if (path === "/display")
                     send(200, await pilot.display(cookie(req, "fp_display")));
                 else if (/^\/rooms\/[a-z0-9-]+$/.test(path))
-                    send(200, await pilot.read(token, path.split("/")[2]));
+                    send(200, await pilot.read(token, path.split("/")[2], url.searchParams.get('from') || undefined, url.searchParams.get('older') === '1'));
                 else if (path === "/health")
                     send(200, { mode: "test", realtime: Boolean(options.realtime) });
                 else

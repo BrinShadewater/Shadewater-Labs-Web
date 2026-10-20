@@ -288,7 +288,7 @@ export class Pilot {
             at: Date.now(),
         });
     }
-    async read(token, roomId) {
+    async read(token, roomId, from, older = false) {
         return this.run((s) => {
             const p = this.person(s, token);
             if (p.kind === "display")
@@ -319,6 +319,20 @@ export class Pilot {
                 verbal: i.verbal ?? false,
                 hidden: i.hidden,
             });
+            const allMessages = Object.values(s.rooms).flatMap(room => room.messages).sort((a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id));
+            const visible = allMessages.filter(i => isMod || (!i.hidden && !p.mutes.includes(i.authorId)));
+            let start = Math.max(0, visible.length - 100);
+            if (from === 'start')
+                start = 0;
+            else if (from) {
+                const anchor = allMessages.find(i => i.id === from);
+                if (!anchor)
+                    return fail('invalid');
+                const index = visible.findIndex(i => i.createdAt > anchor.createdAt || (i.createdAt === anchor.createdAt && i.id.localeCompare(anchor.id) >= 0));
+                start = Math.min(start, index < 0 ? visible.length : index);
+                if (older)
+                    start = Math.max(0, start - 100);
+            }
             return {
                 roomId: r.id,
                 viewerId: p.id,
@@ -327,10 +341,9 @@ export class Pilot {
                 chatOpen: r.chatOpen,
                 questionsOpen: r.questionsOpen,
                 pinned: Object.values(s.rooms).flatMap(room => room.messages).filter(i => i.id === r.pinnedId && !i.hidden && !p.mutes.includes(i.authorId)).map(safe)[0] ?? null,
-                messages: Object.values(s.rooms).flatMap(room => room.messages).sort((a, b) => a.createdAt - b.createdAt || a.id.localeCompare(b.id))
-                    .filter((i) => isMod || (!i.hidden && !p.mutes.includes(i.authorId)))
-                    .slice(-100)
-                    .map(safe),
+                messages: visible.slice(start).map(safe),
+                historyFrom: visible[start]?.id ?? 'start',
+                hasOlderMessages: start > 0,
                 questions: r.questions
                     .filter((i) => isMod ||
                     (!i.hidden &&
