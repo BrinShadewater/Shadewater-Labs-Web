@@ -126,6 +126,61 @@ export class Pilot {
             return { ok: true };
         });
     }
+    async restartOcean(token, principalId) {
+        return this.run(s => {
+            const p = this.person(s, token);
+            if (p.id !== principalId)
+                fail('identity_changed');
+            this.operator(p, '*');
+            this.rate(s, 'ocean-restart', 3);
+            const now = this.clock(), resumeAt = now + 5000;
+            for (const mail of s.fishMail ?? []) {
+                if (mail.cancelledAt || (mail.deliverAt ?? mail.createdAt) <= now)
+                    continue;
+                const remaining = mail.deliverAt - Math.max(now, mail.journeyAt ?? mail.createdAt);
+                mail.journeyAt = resumeAt;
+                mail.deliverAt = resumeAt + remaining;
+            }
+            s.oceanRestartedAt = now;
+            s.fishComposing = {};
+            return { resumeAt };
+        });
+    }
+    async fishPreferences(token, principalId, silenced) {
+        return this.run(s => {
+            const p = this.person(s, token);
+            if (p.id !== principalId)
+                fail('identity_changed');
+            if (p.kind === 'display')
+                fail('forbidden');
+            if (typeof silenced !== 'boolean')
+                fail('invalid');
+            p.fishNotificationsSilenced = silenced;
+            return { ok: true };
+        });
+    }
+    async blockFish(token, principalId, target, blocked) {
+        return this.run(s => {
+            const p = this.person(s, token);
+            if (p.id !== principalId)
+                fail('identity_changed');
+            if (p.kind === 'display')
+                fail('forbidden');
+            const other = Object.hasOwn(s.people, target) ? s.people[target] : undefined;
+            if (typeof blocked !== 'boolean' || !other || other.kind === 'display' || target === p.id)
+                fail('invalid');
+            p.fishBlocks = blocked ? [...new Set([...(p.fishBlocks ?? []), target])] : (p.fishBlocks ?? []).filter(id => id !== target);
+            if (blocked)
+                for (const mail of s.fishMail ?? []) {
+                    if (((mail.senderId === p.id && mail.recipientId === target) || (mail.senderId === target && mail.recipientId === p.id)) && (mail.deliverAt ?? mail.createdAt) > this.clock())
+                        mail.cancelledAt = this.clock();
+                }
+            return { ok: true };
+        });
+    }
+    fishBlocked(s, a, b) {
+        return Boolean(s.people[a]?.fishBlocks?.includes(b) || s.people[b]?.fishBlocks?.includes(a));
+    }
     async assignKrugfish(token, principalId, target) {
         return this.run(s => {
             const actor = this.person(s, token);
@@ -291,18 +346,17 @@ export class Pilot {
                 fail('forbidden');
             const attendees = this.oceanAttendees(s);
             const now = this.clock();
-            const privateMail = (s.fishMail ?? []).filter(m => m.senderId === p.id || m.recipientId === p.id);
-            const deliveries = privateMail.filter(m => (m.deliverAt ?? m.createdAt) > now).map(m => ({ id: m.id, senderId: m.senderId, recipientId: m.recipientId, createdAt: m.createdAt, deliverAt: m.deliverAt, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
-            const messages = privateMail.filter(m => m.senderId === p.id || (m.deliverAt ?? m.createdAt) <= now)
+            const privateMail = (s.fishMail ?? []).filter(m => (m.senderId === p.id || m.recipientId === p.id) && !this.fishBlocked(s, m.senderId, m.recipientId));
+            const deliveries = privateMail.filter(m => !m.cancelledAt && (m.deliverAt ?? m.createdAt) > now).map(m => ({ id: m.id, senderId: m.senderId, recipientId: m.recipientId, createdAt: m.journeyAt ?? m.createdAt, deliverAt: m.deliverAt, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
+            const messages = privateMail.filter(m => m.senderId === p.id || (!m.cancelledAt && (m.deliverAt ?? m.createdAt) <= now))
                 .map(({ key: _key, ...m }) => ({ ...m, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
-            return { availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
+            return { oceanRestartedAt: s.oceanRestartedAt ?? 0, notificationsSilenced: Boolean(p.fishNotificationsSilenced), blockedUsers: (p.fishBlocks ?? []).map(id => ({ id, displayName: s.people[id]?.displayName ?? 'Attendee' })), availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
         });
     }
     oceanAttendees(s, includeHidden = false) {
-        const active = new Set(Object.values(s.sessions).filter(session => session.expires > Date.now() &&
-            (s.people[session.personId]?.kind !== 'participant' || this.participantAccessValid(s, session.version)))
-            .map(session => session.personId));
-        const attendees = Object.values(s.people).filter(person => person.kind !== 'display' && !person.suspended && (includeHidden || !person.oceanHidden) && active.has(person.id))
+        // The event roster persists independently of login sessions, so fish and
+        // their delivery journeys remain visible throughout the festival.
+        const attendees = Object.values(s.people).filter(person => person.kind !== 'display' && !person.suspended && (includeHidden || !person.oceanHidden))
             .map(({ id, displayName, fishSpecies, fishNameColor }) => ({ id, displayName, fishSpecies, fishNameColor: fishNameColor ?? '#e7f6f2', composing: (s.fishComposing?.[id] ?? 0) > this.clock() })).sort((a, b) => a.displayName.localeCompare(b.displayName));
         return attendees;
     }
@@ -310,8 +364,8 @@ export class Pilot {
         const visible = new Set(attendees.map(person => person.id));
         // Retain only 16 seconds of completed public animation metadata so a newly
         // opened screen can reproduce a fish swimming away after its hand-off.
-        return (s.fishMail ?? []).filter(mail => (mail.deliverAt ?? mail.createdAt) > now - 16000 && visible.has(mail.senderId) && visible.has(mail.recipientId)).map(mail => ({
-            id: digest(`ocean:${mail.id}`).slice(0, 24), senderId: mail.senderId, recipientId: mail.recipientId, createdAt: mail.createdAt, deliverAt: mail.deliverAt,
+        return (s.fishMail ?? []).filter(mail => !mail.cancelledAt && !this.fishBlocked(s, mail.senderId, mail.recipientId) && (mail.deliverAt ?? mail.createdAt) > now - 16000 && visible.has(mail.senderId) && visible.has(mail.recipientId)).map(mail => ({
+            id: digest(`ocean:${mail.id}`).slice(0, 24), senderId: mail.senderId, recipientId: mail.recipientId, createdAt: mail.journeyAt ?? mail.createdAt, deliverAt: mail.deliverAt,
         }));
     }
     async readOcean(token) {
@@ -319,7 +373,7 @@ export class Pilot {
             this.person(s, token);
             const now = this.clock(), attendees = this.oceanAttendees(s);
             const deliveries = this.oceanDeliveries(s, now, attendees);
-            return { serverTime: now, validForMs: 15000, attendees, deliveries };
+            return { serverTime: now, oceanRestartedAt: s.oceanRestartedAt ?? 0, validForMs: 15000, attendees, deliveries };
         });
     }
     async composingFish(token, viewerId, composing) {
@@ -390,7 +444,7 @@ export class Pilot {
             const color = parsedColor.data ?? p.fishNameColor;
             if (parsed.data === 'krugfish' && s.specialFishOwners?.krugfish !== p.id)
                 fail('forbidden');
-            if (parsed.data === 'red-rock-crab' && s.fishMail?.some(m => m.senderId === p.id && (m.deliverAt ?? m.createdAt) > this.clock()))
+            if (parsed.data === 'red-rock-crab' && s.fishMail?.some(m => !m.cancelledAt && m.senderId === p.id && (m.deliverAt ?? m.createdAt) > this.clock()))
                 fail('conflict');
             if (p.fishSpecies !== parsed.data || p.fishNameColor !== color) {
                 this.rate(s, `fish-choice:${p.id}`, 20);
@@ -413,6 +467,8 @@ export class Pilot {
             if (!parsed.success || !/^[a-zA-Z0-9-]{8,100}$/.test(key))
                 return fail('invalid');
             const mail = s.fishMail ??= [];
+            if (this.fishBlocked(s, p.id, recipientId))
+                fail('invalid');
             const previous = mail.find(m => m.senderId === p.id && m.key === key);
             if (previous) {
                 if (previous.recipientId !== recipientId || previous.text !== parsed.data)
@@ -427,9 +483,10 @@ export class Pilot {
             if (mail.length >= 10000)
                 fail('unavailable');
             const id = randomUUID(), createdAt = this.clock();
+            const journeyAt = Math.max(createdAt, (s.oceanRestartedAt ?? 0) + 5000);
             // Persist a one-to-ten-minute journey once; retries keep the original arrival.
-            const deliverAt = createdAt + 60_000 + (parseInt(digest(id).slice(0, 8), 16) % 540_001);
-            const message = { id, senderId: p.id, recipientId, text: parsed.data, createdAt, deliverAt, readAt: null, key };
+            const deliverAt = journeyAt + 60_000 + (parseInt(digest(id).slice(0, 8), 16) % 540_001);
+            const message = { id, senderId: p.id, recipientId, text: parsed.data, createdAt, journeyAt, deliverAt, readAt: null, key };
             mail.push(message);
             return { id: message.id, createdAt, deliverAt };
         });
@@ -442,7 +499,7 @@ export class Pilot {
             if (p.kind === 'display')
                 fail('forbidden');
             const message = s.fishMail?.find(m => m.id === id && m.recipientId === p.id);
-            if (!message || (message.deliverAt ?? message.createdAt) > this.clock())
+            if (!message || message.cancelledAt || this.fishBlocked(s, message.senderId, message.recipientId) || (message.deliverAt ?? message.createdAt) > this.clock())
                 return fail('invalid');
             message.readAt ??= Date.now();
             return { ok: true };

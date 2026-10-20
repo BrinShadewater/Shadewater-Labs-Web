@@ -122,6 +122,15 @@ export function handler(pilot, options) {
             else if (path === "/test/attendee-view") {
                 result = await pilot.leaveTestModView(token, field('principalId'));
             }
+            else if (path === "/fish-mail/restart") {
+                result = await pilot.restartOcean(token, field('principalId'));
+            }
+            else if (path === "/fish-mail/preferences") {
+                result = await pilot.fishPreferences(token, field('principalId'), data.silenced);
+            }
+            else if (path === "/fish-mail/block") {
+                result = await pilot.blockFish(token, field('principalId'), field('target'), data.blocked);
+            }
             else if (path === "/fish-mail/moderate") {
                 result = await pilot.moderateFish(token, field('principalId'), field('target'), data.hidden);
             }
