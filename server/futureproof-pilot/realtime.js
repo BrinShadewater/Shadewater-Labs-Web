@@ -4,7 +4,7 @@ export class Realtime {
     client;
     constructor(pilot, key) {
         this.pilot = pilot;
-        this.client = new Rest({ key });
+        this.client = new Rest({ key, httpRequestTimeout: 2000, httpMaxRetryCount: 0 });
     }
     async token(token, roomId) {
         const scope = await this.pilot.tokenScope(token, roomId);
@@ -14,13 +14,16 @@ export class Realtime {
             capability: JSON.stringify({ [scope.channel]: ["subscribe"] }),
         });
     }
-    async drain() {
+    async drain(limit = 50, budgetMs = 10000) {
         const batch = await this.pilot.store.transaction(async (s) => ({
             eventId: s.eventId,
-            items: s.outbox.slice(0, 50),
+            items: s.outbox.slice(0, Math.max(1, Math.min(50, limit))),
         }));
         const done = [];
+        const started = Date.now();
         for (const item of batch.items) {
+            if (Date.now() - started >= budgetMs)
+                break;
             try {
                 await this.client.channels
                     .get(`pilot:${batch.eventId}:room:${item.roomId}`)
@@ -31,12 +34,13 @@ export class Realtime {
                 break;
             }
         }
-        await this.pilot.store.transaction(async (s) => {
+        const pending = await this.pilot.store.transaction(async (s) => {
             s.outbox = s.outbox.filter((i) => !done.includes(i.id));
+            return s.outbox.length;
         });
         return {
             delivered: done.length,
-            pending: batch.items.length - done.length,
+            pending,
         };
     }
 }

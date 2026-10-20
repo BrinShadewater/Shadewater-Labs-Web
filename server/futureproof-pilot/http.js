@@ -167,7 +167,7 @@ export function handler(pilot, options) {
             // Notifications cannot roll back or turn a committed mutation into a failed send.
             if (options.realtime)
                 try {
-                    await options.realtime.drain();
+                    await options.realtime.drain(3, 2000);
                 }
                 catch {
                     /* durable outbox + foreground polling recover */
