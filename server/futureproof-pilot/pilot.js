@@ -172,6 +172,9 @@ export class Pilot {
         if (++r.count > max)
             fail("rate_limited");
     }
+    participantAccessValid(s, version) {
+        return this.testAccess().enabled || Boolean(s.code && version === s.code.version && s.code.expires > Date.now());
+    }
     person(s, token) {
         if (!s.enabled)
             fail("closed");
@@ -182,9 +185,7 @@ export class Pilot {
         if (!p || p.suspended)
             return fail("unauthorized");
         if (p.kind === "participant" &&
-            (!s.code ||
-                session.version !== s.code.version ||
-                s.code.expires < Date.now()))
+            !this.participantAccessValid(s, session.version))
             return fail("unauthorized");
         return p;
     }
@@ -207,7 +208,7 @@ export class Pilot {
         s.people[p.id] = p;
         s.sessions[digest(token)] = {
             personId: p.id,
-            expires: Math.min(Date.now() + 86400000, p.kind === "participant" ? s.code.expires : Infinity),
+            expires: Math.min(Date.now() + 86400000, p.kind === "participant" && !this.testAccess().enabled ? s.code.expires : Infinity),
             version: s.code?.version ?? 0,
             roomId,
         };
@@ -226,7 +227,7 @@ export class Pilot {
             const parsed = text(60).safeParse(name);
             if (!parsed.success || typeof optIn !== "boolean" || code.length > 200)
                 fail("invalid");
-            if (!s.code || s.code.expires < Date.now() || (!this.testAccess().enabled && !verify(code, s.code.hash)))
+            if (!this.testAccess().enabled && (!s.code || s.code.expires < Date.now() || !verify(code, s.code.hash)))
                 fail("unauthorized");
             return this.issue(s, {
                 id: randomUUID(),
@@ -299,7 +300,7 @@ export class Pilot {
     }
     oceanAttendees(s, includeHidden = false) {
         const active = new Set(Object.values(s.sessions).filter(session => session.expires > Date.now() &&
-            (s.people[session.personId]?.kind !== 'participant' || (s.code && session.version === s.code.version && s.code.expires > Date.now())))
+            (s.people[session.personId]?.kind !== 'participant' || this.participantAccessValid(s, session.version)))
             .map(session => session.personId));
         const attendees = Object.values(s.people).filter(person => person.kind !== 'display' && !person.suspended && (includeHidden || !person.oceanHidden) && active.has(person.id))
             .map(({ id, displayName, fishSpecies, fishNameColor }) => ({ id, displayName, fishSpecies, fishNameColor: fishNameColor ?? '#e7f6f2', composing: (s.fishComposing?.[id] ?? 0) > this.clock() })).sort((a, b) => a.displayName.localeCompare(b.displayName));
@@ -550,7 +551,7 @@ export class Pilot {
         const now = this.clock();
         const valid = (id) => {
             const person = s.people[id];
-            return person && !person.suspended && person.kind !== 'display' && Object.values(s.sessions).some(session => session.personId === id && session.expires > Date.now() && (person.kind !== 'participant' || (s.code && s.code.expires > Date.now() && session.version === s.code.version)));
+            return person && !person.suspended && person.kind !== 'display' && Object.values(s.sessions).some(session => session.personId === id && session.expires > Date.now() && (person.kind !== 'participant' || this.participantAccessValid(s, session.version)));
         };
         s.activity ??= {};
         for (const [id, value] of Object.entries(s.activity))
