@@ -40,7 +40,8 @@ export const emptyState = (eventId) => ({
 });
 const text = (max) => z.string().trim().min(1).max(max);
 const mutation = z.discriminatedUnion("type", [
-    z.object({ type: z.literal("message"), text: text(1000) }).strict(),
+    z.object({ type: z.literal("message"), text: text(1000), replyTo: text(100).optional() }).strict(),
+    z.object({ type: z.literal('reaction'), id: text(100), emoji: z.enum(['👍', '❤️', '👏', '💡', '😂', '🤔']), enabled: z.boolean() }).strict(),
     z.object({ type: z.literal("question"), text: text(500) }).strict(),
     z
         .object({ type: z.literal("vote"), id: text(100), enabled: z.boolean() })
@@ -300,6 +301,11 @@ export class Pilot {
                 p.role !== "speaker" &&
                 (p.rooms.includes("*") || p.rooms.includes(roomId));
             const safe = (i) => ({
+                reply: i.replyTo ? (() => {
+                    const parent = Object.values(s.rooms).flatMap(room => room.messages).find(message => message.id === i.replyTo);
+                    return parent && !parent.hidden && !p.mutes.includes(parent.authorId) ? { id: parent.id, author: s.people[parent.authorId]?.displayName ?? 'Participant', text: parent.text.slice(0, 160) } : { id: i.replyTo, author: '', text: null };
+                })() : null,
+                reactions: Object.entries(i.reactions ?? {}).map(([emoji, people]) => ({ emoji, count: people.length, reacted: people.includes(p.id) })).filter(reaction => reaction.count > 0),
                 id: i.id,
                 text: i.text,
                 author: s.people[i.authorId]?.displayName ?? "Participant",
@@ -387,7 +393,13 @@ export class Pilot {
                 this.rate(s, `${p.id}:${m.type}`, m.type === "message" ? 10 : 3);
                 if (m.type === "message")
                     this.rate(s, `${p.id}:burst`, 3, 10000);
+                if (m.type === 'message' && m.replyTo) {
+                    const parent = Object.values(s.rooms).flatMap(room => room.messages).find(message => message.id === m.replyTo);
+                    if (!parent || parent.hidden || p.mutes.includes(parent.authorId))
+                        return fail('invalid');
+                }
                 const item = {
+                    ...(m.type === 'message' && m.replyTo ? { replyTo: m.replyTo } : {}),
                     id,
                     authorId: p.id,
                     text: m.text,
@@ -397,6 +409,18 @@ export class Pilot {
                     voters: [],
                 };
                 (m.type === "message" ? r.messages : r.questions).push(item);
+            }
+            else if (m.type === 'reaction') {
+                if (!r.chatOpen)
+                    fail('closed');
+                const target = Object.values(s.rooms).flatMap(room => room.messages).find(message => message.id === m.id);
+                if (!target || target.hidden || p.mutes.includes(target.authorId))
+                    return fail('invalid');
+                this.rate(s, `${p.id}:reaction`, 30);
+                target.reactions ??= {};
+                const people = target.reactions[m.emoji] ?? [];
+                target.reactions[m.emoji] = m.enabled ? [...new Set([...people, p.id])] : people.filter(person => person !== p.id);
+                id = target.id;
             }
             else if (m.type === "mute") {
                 if (m.id === p.id || !s.people[m.id])
