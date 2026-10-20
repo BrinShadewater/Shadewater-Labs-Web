@@ -38,7 +38,7 @@ export const emptyState = (eventId) => ({
     audit: [],
     reports: [],
 });
-const publicFishSpecies = ['salmon', 'pacific-herring', 'canary-rockfish', 'lingcod', 'pacific-halibut', 'pacific-spiny-dogfish', 'sablefish', 'albacore-tuna', 'pacific-spiny-lumpsucker', 'tiger-rockfish', 'sockeye-salmon', 'red-rock-crab'];
+const publicFishSpecies = ['salmon', 'pacific-herring', 'canary-rockfish', 'lingcod', 'pacific-halibut', 'pacific-spiny-dogfish', 'sablefish', 'albacore-tuna', 'pacific-spiny-lumpsucker', 'tiger-rockfish', 'sockeye-salmon', 'red-rock-crab', 'moon-jellyfish'];
 const text = (max) => z.string().trim().min(1).max(max);
 const mutation = z.discriminatedUnion("type", [
     z.object({ type: z.literal("message"), text: text(1000), replyTo: text(100).optional() }).strict(),
