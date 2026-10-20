@@ -5,6 +5,13 @@ export class PgStore {
         this.pool = pool;
         this.eventId = eventId;
     }
+    async read(fn) {
+        const result = await this.pool.query('SELECT state FROM futureproof_pilot_events WHERE id=$1', [this.eventId]);
+        const state = result.rows[0]?.state;
+        if (!state || state.eventId !== this.eventId)
+            throw new Error('Pilot event unavailable');
+        return fn(state);
+    }
     async transaction(fn) {
         const client = await this.pool.connect();
         try {

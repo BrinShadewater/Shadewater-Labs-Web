@@ -83,6 +83,9 @@ export class Pilot {
             fail(result.error);
         return result.value;
     }
+    inspect(fn) {
+        return this.store.read ? this.store.read(async (s) => fn(s)) : this.run(fn);
+    }
     rate(s, key, max, ms = 60000) {
         const now = Date.now();
         for (const [k, v] of Object.entries(s.rates))
@@ -180,7 +183,7 @@ export class Pilot {
         });
     }
     async me(token) {
-        return this.run((s) => {
+        return this.inspect((s) => {
             const p = this.person(s, token);
             return {
                 id: p.id,
@@ -219,6 +222,17 @@ export class Pilot {
         });
     }
     async activeRoom(token) {
+        const unchanged = await this.inspect(s => {
+            const person = this.person(s, token);
+            if (person.kind === 'display')
+                return fail('forbidden');
+            const id = this.currentRoomId(s);
+            if (!id || !s.rooms[id] || s.activeRoomId !== id)
+                return null;
+            return { roomId: id, rooms: Object.keys(s.rooms), testSwitch: Boolean(s.testSwitch), canTestSwitch: this.mode === 'test' && person.kind === 'operator' && person.role !== 'speaker' && person.rooms.includes('*') };
+        });
+        if (unchanged)
+            return unchanged;
         return this.run(s => {
             const person = this.person(s, token);
             if (person.kind === 'display')
@@ -338,7 +352,7 @@ export class Pilot {
         });
     }
     async read(token, roomId, from, older = false) {
-        return this.run((s) => {
+        return this.inspect((s) => {
             const p = this.person(s, token);
             if (p.kind === "display")
                 fail("forbidden");
@@ -628,7 +642,7 @@ export class Pilot {
         });
     }
     async display(token) {
-        return this.run((s) => {
+        return this.inspect((s) => {
             const p = this.person(s, token);
             if (p.kind !== "display")
                 return fail("forbidden");
@@ -645,7 +659,7 @@ export class Pilot {
         });
     }
     async tokenScope(token, roomId) {
-        return this.run((s) => {
+        return this.inspect((s) => {
             const p = this.person(s, token);
             if (p.kind === "display")
                 fail("forbidden");
