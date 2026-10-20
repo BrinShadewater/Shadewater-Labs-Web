@@ -135,7 +135,7 @@ export function handler(pilot, options) {
                 result = await pilot.fishCode(token, field("principalId"));
             }
             else if (path === "/fish-mail/choose") {
-                result = await pilot.chooseFish(token, field('principalId'), field('species'));
+                result = await pilot.chooseFish(token, field('principalId'), field('species'), data.nameColor);
             }
             else if (path === "/fish-mail/send") {
                 result = await pilot.sendFishMail(token, field('principalId'), field('recipientId'), field('text'), field('key'));

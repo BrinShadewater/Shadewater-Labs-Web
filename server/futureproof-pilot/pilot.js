@@ -38,7 +38,7 @@ export const emptyState = (eventId) => ({
     audit: [],
     reports: [],
 });
-const publicFishSpecies = ['salmon', 'pacific-herring', 'canary-rockfish', 'lingcod', 'pacific-halibut', 'pacific-spiny-dogfish', 'sablefish', 'albacore-tuna'];
+const publicFishSpecies = ['salmon', 'pacific-herring', 'canary-rockfish', 'lingcod', 'pacific-halibut', 'pacific-spiny-dogfish', 'sablefish', 'albacore-tuna', 'pacific-spiny-lumpsucker', 'tiger-rockfish', 'sockeye-salmon'];
 const text = (max) => z.string().trim().min(1).max(max);
 const mutation = z.discriminatedUnion("type", [
     z.object({ type: z.literal("message"), text: text(1000), replyTo: text(100).optional() }).strict(),
@@ -202,6 +202,7 @@ export class Pilot {
     issue(s, p, roomId) {
         const token = randomBytes(32).toString("hex");
         p.fishSpecies ??= s.people[p.id]?.fishSpecies;
+        p.fishNameColor ??= s.people[p.id]?.fishNameColor;
         p.fishCode ??= s.people[p.id]?.fishCode;
         s.people[p.id] = p;
         s.sessions[digest(token)] = {
@@ -293,7 +294,7 @@ export class Pilot {
             const deliveries = privateMail.filter(m => (m.deliverAt ?? m.createdAt) > now).map(m => ({ id: m.id, senderId: m.senderId, recipientId: m.recipientId, createdAt: m.createdAt, deliverAt: m.deliverAt, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
             const messages = privateMail.filter(m => m.senderId === p.id || (m.deliverAt ?? m.createdAt) <= now)
                 .map(({ key: _key, ...m }) => ({ ...m, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
-            return { availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
+            return { availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
         });
     }
     oceanAttendees(s, includeHidden = false) {
@@ -301,7 +302,7 @@ export class Pilot {
             (s.people[session.personId]?.kind !== 'participant' || (s.code && session.version === s.code.version && s.code.expires > Date.now())))
             .map(session => session.personId));
         const attendees = Object.values(s.people).filter(person => person.kind !== 'display' && !person.suspended && (includeHidden || !person.oceanHidden) && active.has(person.id))
-            .map(({ id, displayName, fishSpecies }) => ({ id, displayName, fishSpecies, composing: (s.fishComposing?.[id] ?? 0) > this.clock() })).sort((a, b) => a.displayName.localeCompare(b.displayName));
+            .map(({ id, displayName, fishSpecies, fishNameColor }) => ({ id, displayName, fishSpecies, fishNameColor: fishNameColor ?? '#e7f6f2', composing: (s.fishComposing?.[id] ?? 0) > this.clock() })).sort((a, b) => a.displayName.localeCompare(b.displayName));
         return attendees;
     }
     oceanDeliveries(s, now, attendees) {
@@ -372,7 +373,7 @@ export class Pilot {
             return { id: person.id, displayName: person.displayName, fishSpecies: person.fishSpecies };
         });
     }
-    async chooseFish(token, viewerId, species) {
+    async chooseFish(token, viewerId, species, nameColor) {
         return this.run(s => {
             const p = this.person(s, token);
             if (p.id !== viewerId)
@@ -382,13 +383,18 @@ export class Pilot {
             const parsed = z.enum([...publicFishSpecies, 'krugfish']).safeParse(species);
             if (!parsed.success)
                 return fail('invalid');
+            const parsedColor = z.enum(['#e7f6f2', '#a8e6cf', '#f6d28d', '#ffb5a7', '#d3b9ff', '#a8d8ff', '#ffc2df']).optional().safeParse(nameColor);
+            if (!parsedColor.success)
+                return fail('invalid');
+            const color = parsedColor.data ?? p.fishNameColor;
             if (parsed.data === 'krugfish' && s.specialFishOwners?.krugfish !== p.id)
                 fail('forbidden');
-            if (p.fishSpecies !== parsed.data) {
+            if (p.fishSpecies !== parsed.data || p.fishNameColor !== color) {
                 this.rate(s, `fish-choice:${p.id}`, 20);
                 p.fishSpecies = parsed.data;
+                p.fishNameColor = color;
             }
-            return { fishSpecies: p.fishSpecies };
+            return { fishSpecies: p.fishSpecies, fishNameColor: p.fishNameColor ?? '#e7f6f2' };
         });
     }
     async sendFishMail(token, viewerId, recipientId, content, key) {
@@ -609,6 +615,7 @@ export class Pilot {
                 text: i.text,
                 author: s.people[i.authorId]?.displayName ?? "Participant",
                 authorId: i.authorId,
+                authorFishSpecies: s.people[i.authorId]?.fishSpecies ?? null,
                 authorRole: s.people[i.authorId]?.kind === 'operator' ? (s.people[i.authorId]?.role ?? 'moderator') : null,
                 createdAt: i.createdAt,
                 status: i.status,
