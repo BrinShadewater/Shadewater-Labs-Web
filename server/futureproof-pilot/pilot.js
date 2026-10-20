@@ -621,6 +621,7 @@ export class Pilot {
                 author: s.people[i.authorId]?.displayName ?? "Participant",
                 authorId: i.authorId,
                 authorFishSpecies: s.people[i.authorId]?.fishSpecies ?? null,
+                authorNameColor: s.people[i.authorId]?.fishNameColor ?? null,
                 authorRole: s.people[i.authorId]?.kind === 'operator' ? (s.people[i.authorId]?.role ?? 'moderator') : null,
                 createdAt: i.createdAt,
                 status: i.status,
