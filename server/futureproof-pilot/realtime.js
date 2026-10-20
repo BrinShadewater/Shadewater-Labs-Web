@@ -15,10 +15,14 @@ export class Realtime {
         });
     }
     async drain(limit = 50, budgetMs = 10000) {
-        const batch = await this.pilot.store.transaction(async (s) => ({
+        const snapshot = async (s) => ({
             eventId: s.eventId,
+            pending: s.outbox.length,
             items: s.outbox.slice(0, Math.max(1, Math.min(50, limit))),
-        }));
+        });
+        const batch = await (this.pilot.store.read ? this.pilot.store.read(snapshot) : this.pilot.store.transaction(snapshot));
+        if (!batch.items.length)
+            return { delivered: 0, pending: 0 };
         const done = [];
         const started = Date.now();
         for (const item of batch.items) {
@@ -34,6 +38,8 @@ export class Realtime {
                 break;
             }
         }
+        if (!done.length)
+            return { delivered: 0, pending: batch.pending };
         const pending = await this.pilot.store.transaction(async (s) => {
             s.outbox = s.outbox.filter((i) => !done.includes(i.id));
             return s.outbox.length;

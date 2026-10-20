@@ -337,6 +337,18 @@ export class Pilot {
         });
     }
     // Private mail never enters room snapshots, stage projection or the public outbox.
+    async readFishMailChanges(token, viewerId, known) {
+        const full = await this.readFishMail(token, viewerId);
+        const revisions = { attendees: digest(JSON.stringify(full.attendees)), mail: digest(JSON.stringify([viewerId, full.messages, full.deliveries])), journeys: digest(JSON.stringify(full.oceanDeliveries)) };
+        return { ...full, revisions, attendees: known.attendees === revisions.attendees ? undefined : full.attendees,
+            messages: known.mail === revisions.mail ? undefined : full.messages, deliveries: known.mail === revisions.mail ? undefined : full.deliveries,
+            oceanDeliveries: known.journeys === revisions.journeys ? undefined : full.oceanDeliveries };
+    }
+    async readOceanChanges(token, known) {
+        const full = await this.readOcean(token);
+        const revisions = { attendees: digest(JSON.stringify(full.attendees)), journeys: digest(JSON.stringify(full.deliveries)) };
+        return { ...full, revisions, attendees: known.attendees === revisions.attendees ? undefined : full.attendees, deliveries: known.journeys === revisions.journeys ? undefined : full.deliveries };
+    }
     async readFishMail(token, viewerId) {
         return this.inspect(s => {
             const p = this.person(s, token);

@@ -71,6 +71,7 @@ export function handler(pilot, options) {
                 return;
             }
             if (req.method === "GET") {
+                const known = Object.fromEntries(['attendees', 'mail', 'journeys'].map(key => [key, url.searchParams.get(key) ?? '']));
                 if (path === "/test-access")
                     send(200, pilot.testAccess());
                 else if (path === "/me")
@@ -80,9 +81,9 @@ export function handler(pilot, options) {
                 else if (path === "/fish-mail/find")
                     send(200, await pilot.findFish(token, url.searchParams.get("code") ?? ""));
                 else if (path === "/fish-mail/ocean")
-                    send(200, await pilot.readOcean(cookie(req, "fp_display") || token));
+                    send(200, url.searchParams.get('compact') === '1' ? await pilot.readOceanChanges(cookie(req, "fp_display") || token, known) : await pilot.readOcean(cookie(req, "fp_display") || token));
                 else if (path === "/fish-mail")
-                    send(200, await pilot.readFishMail(token, url.searchParams.get('viewerId') ?? ''));
+                    send(200, url.searchParams.get('compact') === '1' ? await pilot.readFishMailChanges(token, url.searchParams.get('viewerId') ?? '', known) : await pilot.readFishMail(token, url.searchParams.get('viewerId') ?? ''));
                 else if (path === "/active-room")
                     send(200, await pilot.activeRoom(token));
                 else if (path === "/display")
@@ -211,7 +212,7 @@ export function handler(pilot, options) {
                 }
             }
             // Notifications cannot roll back or turn a committed mutation into a failed send.
-            if (options.realtime)
+            if (options.realtime && !path.startsWith('/fish-mail/'))
                 try {
                     await options.realtime.drain(3, 2000);
                 }
