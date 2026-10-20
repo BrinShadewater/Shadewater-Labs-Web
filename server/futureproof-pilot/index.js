@@ -32,7 +32,7 @@ export default async function (request, response) {
                 connectionTimeoutMillis: 5000,
                 query_timeout: 10000,
             }), env.PILOT_EVENT_ID);
-            const pilot = new Pilot(store, "test", schedule);
+            const pilot = new Pilot(store, "test", schedule, Date.now, env.PILOT_TEST_OPEN_ACCESS === "1");
             ready = handler(pilot, {
                 origin: origin.origin,
                 secure: origin.protocol === "https:",

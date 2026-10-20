@@ -71,8 +71,18 @@ export function handler(pilot, options) {
                 return;
             }
             if (req.method === "GET") {
-                if (path === "/me")
+                if (path === "/test-access")
+                    send(200, pilot.testAccess());
+                else if (path === "/me")
                     send(200, await pilot.me(token));
+                else if (path === "/fish-mail/moderation")
+                    send(200, await pilot.fishModeration(token));
+                else if (path === "/fish-mail/find")
+                    send(200, await pilot.findFish(token, url.searchParams.get("code") ?? ""));
+                else if (path === "/fish-mail/ocean")
+                    send(200, await pilot.readOcean(cookie(req, "fp_display") || token));
+                else if (path === "/fish-mail")
+                    send(200, await pilot.readFishMail(token, url.searchParams.get('viewerId') ?? ''));
                 else if (path === "/active-room")
                     send(200, await pilot.activeRoom(token));
                 else if (path === "/display")
@@ -106,7 +116,34 @@ export function handler(pilot, options) {
                     throw new PilotError("identity_changed");
             }
             let result;
-            if (path === "/test-session") {
+            if (path === "/test/mod-view") {
+                result = await pilot.enterTestModView(token, field("principalId"));
+            }
+            else if (path === "/test/attendee-view") {
+                result = await pilot.leaveTestModView(token, field('principalId'));
+            }
+            else if (path === "/fish-mail/moderate") {
+                result = await pilot.moderateFish(token, field('principalId'), field('target'), data.hidden);
+            }
+            else if (path === "/fish-mail/assign-krugfish") {
+                result = await pilot.assignKrugfish(token, field('principalId'), field('target'));
+            }
+            else if (path === "/fish-mail/composing") {
+                result = await pilot.composingFish(token, field("principalId"), data.composing);
+            }
+            else if (path === "/fish-mail/code") {
+                result = await pilot.fishCode(token, field("principalId"));
+            }
+            else if (path === "/fish-mail/choose") {
+                result = await pilot.chooseFish(token, field('principalId'), field('species'));
+            }
+            else if (path === "/fish-mail/send") {
+                result = await pilot.sendFishMail(token, field('principalId'), field('recipientId'), field('text'), field('key'));
+            }
+            else if (path === "/fish-mail/read") {
+                result = await pilot.markFishMailRead(token, field('principalId'), field('id'));
+            }
+            else if (path === "/test-session") {
                 result = await pilot.testSessionSwitch(token, field("expectedRoomId"), field("action"));
             }
             else if (path === "/join") {
