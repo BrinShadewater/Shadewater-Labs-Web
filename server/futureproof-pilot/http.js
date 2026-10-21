@@ -73,7 +73,7 @@ export function handler(pilot, options) {
             if (req.method === "GET") {
                 const known = Object.fromEntries(['attendees', 'mail', 'journeys'].map(key => [key, url.searchParams.get(key) ?? '']));
                 if (path === "/test-access")
-                    send(200, pilot.testAccess());
+                    send(200, { ...pilot.testAccess(), moderationEnabled: pilot.testModerationAccess().enabled });
                 else if (path === "/me")
                     send(200, await pilot.me(token));
                 else if (path === "/fish-mail/moderation")
@@ -117,7 +117,15 @@ export function handler(pilot, options) {
                     throw new PilotError("identity_changed");
             }
             let result;
-            if (path === "/test/mod-view") {
+            if (path === "/fish-mail/recovery-key") {
+                result = await pilot.createFishRecovery(token, field("principalId"));
+            }
+            else if (path === "/fish-mail/recover") {
+                const session = await pilot.recoverFish(field("key").trim(), ip);
+                res.setHeader("Set-Cookie", sessionCookie("fp_pilot", session.token));
+                result = session.principal;
+            }
+            else if (path === "/test/mod-view") {
                 result = await pilot.enterTestModView(token, field("principalId"));
             }
             else if (path === "/test/attendee-view") {

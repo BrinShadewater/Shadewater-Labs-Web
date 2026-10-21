@@ -64,19 +64,24 @@ export class Pilot {
     schedule;
     clock;
     openTestAccess;
-    constructor(store, mode, schedule = [], clock = Date.now, openTestAccess = false) {
+    openTestModeration;
+    constructor(store, mode, schedule = [], clock = Date.now, openTestAccess = false, openTestModeration = openTestAccess) {
         this.store = store;
         this.mode = mode;
         this.schedule = schedule;
         this.clock = clock;
         this.openTestAccess = openTestAccess;
+        this.openTestModeration = openTestModeration;
     }
     testAccess() {
         return { enabled: this.mode === "test" && this.openTestAccess };
     }
+    testModerationAccess() {
+        return { enabled: this.testAccess().enabled && this.openTestModeration };
+    }
     async enterTestModView(token, principalId) {
         return this.run(s => {
-            if (!this.testAccess().enabled)
+            if (!this.testModerationAccess().enabled)
                 fail("forbidden");
             const p = this.person(s, token);
             if (p.id !== principalId)
@@ -242,6 +247,13 @@ export class Pilot {
         const p = s.people[session.personId];
         if (!p || p.suspended)
             return fail("unauthorized");
+        // Retire identities elevated by the testing shortcut; assigned operators have no marker.
+        if (p.testModerator && !this.testModerationAccess().enabled) {
+            p.kind = "participant";
+            delete p.role;
+            p.rooms = [];
+            delete p.testModerator;
+        }
         if (p.kind === "participant" &&
             !this.participantAccessValid(s, session.version))
             return fail("unauthorized");
@@ -270,8 +282,45 @@ export class Pilot {
             version: s.code?.version ?? 0,
             roomId,
         };
-        const { id, eventId, kind, displayName } = p;
-        return { token, principal: { id, eventId, kind, displayName } };
+        const { id, eventId, kind, displayName, role } = p;
+        return { token, principal: { id, eventId, kind, displayName, ...(role ? { role } : {}) } };
+    }
+    async createFishRecovery(token, principalId) {
+        return this.run(s => {
+            const p = this.person(s, token);
+            if (p.id !== principalId)
+                fail('identity_changed');
+            if (p.kind !== 'participant')
+                fail('forbidden');
+            this.rate(s, `fish-recovery-create:${p.id}`, 5);
+            const key = 'FPF1-' + randomBytes(32).toString('base64url');
+            p.fishRecoveryHash = digest('fish-recovery:' + key);
+            return { key };
+        });
+    }
+    async recoverFish(key, ip) {
+        return this.run(s => {
+            if (this.mode !== 'test')
+                fail('forbidden');
+            if (!s.enabled)
+                fail('closed');
+            this.rate(s, `fish-recovery-ip:${ip}`, 180);
+            if (!/^FPF1-[A-Za-z0-9_-]{43}$/.test(key))
+                fail('unauthorized');
+            if (!this.testAccess().enabled && (!s.code || s.code.expires < Date.now()))
+                fail('unauthorized');
+            const hash = digest('fish-recovery:' + key);
+            const p = Object.values(s.people).find(person => person.fishRecoveryHash === hash);
+            if (!p || p.suspended || p.eventId !== s.eventId || (p.kind !== 'participant' && !p.testModerator))
+                return fail('unauthorized');
+            if (p.testModerator) {
+                p.kind = 'participant';
+                delete p.role;
+                p.rooms = [];
+                delete p.testModerator;
+            }
+            return this.issue(s, p);
+        });
     }
     async join(code, name, optIn, ip) {
         return this.run((s) => {
@@ -279,7 +328,9 @@ export class Pilot {
                 fail("forbidden");
             if (!s.enabled)
                 fail("closed");
-            this.rate(s, `join-ip:${ip}`, 5);
+            this.rate(s, `join-ip:${ip}`, this.testAccess().enabled ? 180 : 5);
+            if (this.testAccess().enabled)
+                this.rate(s, "join-event", 300);
             if (!this.testAccess().enabled)
                 this.rate(s, `join-code:${code}`, 20);
             const parsed = text(60).safeParse(name);
@@ -365,7 +416,7 @@ export class Pilot {
             const deliveries = privateMail.filter(m => !m.cancelledAt && (m.deliverAt ?? m.createdAt) > now).map(m => ({ id: m.id, senderId: m.senderId, recipientId: m.recipientId, createdAt: m.journeyAt ?? m.createdAt, deliverAt: m.deliverAt, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
             const messages = privateMail.filter(m => m.senderId === p.id || (!m.cancelledAt && (m.deliverAt ?? m.createdAt) <= now))
                 .map(({ key: _key, ...m }) => ({ ...m, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
-            return { oceanRestartedAt: s.oceanRestartedAt ?? 0, notificationsSilenced: Boolean(p.fishNotificationsSilenced), blockedUsers: (p.fishBlocks ?? []).map(id => ({ id, displayName: s.people[id]?.displayName ?? 'Attendee' })), availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
+            return { recoveryReady: Boolean(p.fishRecoveryHash), oceanRestartedAt: s.oceanRestartedAt ?? 0, notificationsSilenced: Boolean(p.fishNotificationsSilenced), blockedUsers: (p.fishBlocks ?? []).map(id => ({ id, displayName: s.people[id]?.displayName ?? 'Attendee' })), availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
         });
     }
     oceanAttendees(s, includeHidden = false) {
