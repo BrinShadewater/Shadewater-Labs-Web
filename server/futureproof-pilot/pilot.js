@@ -217,6 +217,9 @@ export class Pilot {
     inspect(fn) {
         return this.store.read ? this.store.read(async (s) => fn(s)) : this.run(fn);
     }
+    inspectFish(fn) {
+        return this.store.readFish ? this.store.readFish(this.clock(), async (s) => fn(s)) : this.inspect(fn);
+    }
     rate(s, key, max, ms = 60000) {
         const now = Date.now();
         for (const [k, v] of Object.entries(s.rates))
@@ -350,7 +353,7 @@ export class Pilot {
         return { ...full, revisions, attendees: known.attendees === revisions.attendees ? undefined : full.attendees, deliveries: known.journeys === revisions.journeys ? undefined : full.deliveries };
     }
     async readFishMail(token, viewerId) {
-        return this.inspect(s => {
+        return this.inspectFish(s => {
             const p = this.person(s, token);
             if (p.id !== viewerId)
                 fail('identity_changed');
@@ -381,7 +384,7 @@ export class Pilot {
         }));
     }
     async readOcean(token) {
-        return this.inspect(s => {
+        return this.inspectFish(s => {
             this.person(s, token);
             const now = this.clock(), attendees = this.oceanAttendees(s);
             const deliveries = this.oceanDeliveries(s, now, attendees);
@@ -389,6 +392,21 @@ export class Pilot {
         });
     }
     async composingFish(token, viewerId, composing) {
+        if (this.store.writeFishComposing) {
+            const personId = await this.inspect(s => {
+                const p = this.person(s, token);
+                if (p.id !== viewerId)
+                    fail('identity_changed');
+                if (p.kind === 'display')
+                    fail('forbidden');
+                if (typeof composing !== 'boolean')
+                    fail('invalid');
+                return p.id;
+            });
+            await this.store.writeFishComposing(personId, composing, this.clock());
+            return { ok: true };
+        }
+        // Compatibility for simple stores without a separate presence backend.
         return this.run(s => {
             const p = this.person(s, token);
             if (p.id !== viewerId)
