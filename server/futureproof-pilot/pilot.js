@@ -393,15 +393,30 @@ export class Pilot {
     // Private mail never enters room snapshots, stage projection or the public outbox.
     async readFishMailChanges(token, viewerId, known) {
         const full = await this.readFishMail(token, viewerId);
-        const revisions = { attendees: digest(JSON.stringify(full.attendees)), mail: digest(JSON.stringify([viewerId, full.messages, full.deliveries])), journeys: digest(JSON.stringify(full.oceanDeliveries)) };
-        return { ...full, revisions, attendees: known.attendees === revisions.attendees ? undefined : full.attendees,
+        const presence = this.compactPresence(full.attendees, known);
+        const revisions = { ...presence.revisions, mail: digest(JSON.stringify([viewerId, full.messages, full.deliveries])), journeys: digest(JSON.stringify(full.oceanDeliveries)) };
+        return { ...full, ...presence, revisions,
             messages: known.mail === revisions.mail ? undefined : full.messages, deliveries: known.mail === revisions.mail ? undefined : full.deliveries,
             oceanDeliveries: known.journeys === revisions.journeys ? undefined : full.oceanDeliveries };
     }
     async readOceanChanges(token, known) {
         const full = await this.readOcean(token);
-        const revisions = { attendees: digest(JSON.stringify(full.attendees)), journeys: digest(JSON.stringify(full.deliveries)) };
-        return { ...full, revisions, attendees: known.attendees === revisions.attendees ? undefined : full.attendees, deliveries: known.journeys === revisions.journeys ? undefined : full.deliveries };
+        const presence = this.compactPresence(full.attendees, known);
+        const revisions = { ...presence.revisions, journeys: digest(JSON.stringify(full.deliveries)) };
+        return { ...full, ...presence, revisions, deliveries: known.journeys === revisions.journeys ? undefined : full.deliveries };
+    }
+    compactPresence(people, known) {
+        // Explicit capability negotiation keeps installed older clients compatible.
+        const separated = Object.hasOwn(known, 'presence');
+        const attendees = separated ? people.map(({ composing: _composing, ...profile }) => ({ ...profile, composing: false })) : people;
+        const composingIds = people.filter(p => p.composing).map(p => p.id).sort();
+        // Namespace the baseline so a rollback to legacy composing flags forces a
+        // complete roster, even if every participant has just stopped typing.
+        const revisions = { attendees: (separated ? 'p:' : '') + digest(JSON.stringify(attendees)) };
+        if (separated)
+            revisions.presence = digest(JSON.stringify(composingIds));
+        return { revisions, attendees: known.attendees === revisions.attendees ? undefined : attendees,
+            composingIds: separated && known.presence !== revisions.presence ? composingIds : undefined };
     }
     async readFishMail(token, viewerId) {
         return this.inspectFish(s => {

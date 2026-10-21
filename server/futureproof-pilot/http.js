@@ -72,6 +72,8 @@ export function handler(pilot, options) {
             }
             if (req.method === "GET") {
                 const known = Object.fromEntries(['attendees', 'mail', 'journeys'].map(key => [key, url.searchParams.get(key) ?? '']));
+                if (url.searchParams.has('presence'))
+                    known.presence = url.searchParams.get('presence') ?? '';
                 if (path === "/test-access")
                     send(200, { ...pilot.testAccess(), moderationEnabled: pilot.testModerationAccess().enabled });
                 else if (path === "/me")
