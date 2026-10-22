@@ -645,12 +645,16 @@ export class Pilot {
                 s.rooms[id] = { id, revision: 0, chatOpen: true, questionsOpen: true, messages: [], questions: [], stage: null, paused: false };
             if (s.activeRoomId !== id) {
                 for (const room of Object.values(s.rooms)) {
+                    const affected = Boolean(room.stage) || (room.id !== id && room.questionsOpen);
                     room.stage = null;
                     if (room.id !== id)
                         room.questionsOpen = false;
+                    if (affected && room.id !== id)
+                        this.changed(s, room);
                 }
-                s.rooms[id].questionsOpen = true;
+                s.rooms[id].questionsOpen = !s.rooms[id].questionsClosedByModerator;
                 s.activeRoomId = id;
+                this.changed(s, s.rooms[id]);
             }
             return { roomId: id, rooms: Object.keys(s.rooms), testSwitch: Boolean(s.testSwitch), canTestSwitch: this.mode === 'test' && person.kind === 'operator' && person.role !== 'speaker' && person.rooms.includes('*') };
         });
@@ -661,7 +665,8 @@ export class Pilot {
     scheduledRoomId(s) {
         if (this.mode === 'test' && s.testSwitch)
             return s.testSwitch.roomId;
-        return this.schedule.filter(x => Date.parse(x.startsAt) <= this.clock()).sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt)).at(-1)?.id;
+        const ordered = [...this.schedule].sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
+        return ordered.filter(x => Date.parse(x.startsAt) <= this.clock()).at(-1)?.id || ordered[0]?.id;
     }
     async testSessionSwitch(token, expectedRoomId, action) {
         return this.run(s => {
@@ -687,7 +692,7 @@ export class Pilot {
                 s.rooms[id] = { id, revision: 0, chatOpen: true, questionsOpen: true, messages: [], questions: [], stage: null, paused: false };
             for (const room of Object.values(s.rooms)) {
                 room.stage = null;
-                room.questionsOpen = room.id === id;
+                room.questionsOpen = room.id === id && !room.questionsClosedByModerator;
                 this.changed(s, room);
             }
             s.activeRoomId = id;
@@ -731,6 +736,9 @@ export class Pilot {
             if (!parsed.success)
                 return fail('invalid');
             const { active, typing, emoji } = parsed.data;
+            const scheduled = this.scheduledRoomId(s);
+            if ((typing || emoji) && scheduled && scheduled !== roomId)
+                return fail('closed');
             if ((typing || emoji) && !r.chatOpen)
                 return fail('closed');
             if (!active && (typing || emoji))
@@ -842,7 +850,7 @@ export class Pilot {
                 fail("invalid");
             const m = parsed.data;
             const scheduled = this.scheduledRoomId(s);
-            if (m.type === 'question' && scheduled && scheduled !== roomId)
+            if (['message', 'question', 'reaction'].includes(m.type) && scheduled && scheduled !== roomId)
                 fail('closed');
             const fingerprint = digest(JSON.stringify(m));
             const k = digest(`${p.id}:${roomId}:${key}`);
@@ -948,6 +956,14 @@ export class Pilot {
                 this.operator(p, sourceRoom.id);
             if (action === "open" || action === "close") {
                 r.chatOpen = r.questionsOpen = action === "open";
+                r.questionsClosedByModerator = action === 'close';
+            }
+            else if (action === 'open-chat' || action === 'close-chat') {
+                r.chatOpen = action === 'open-chat';
+            }
+            else if (action === 'open-questions' || action === 'close-questions') {
+                r.questionsOpen = action === 'open-questions';
+                r.questionsClosedByModerator = action === 'close-questions';
             }
             else if (action === "unpin")
                 r.pinnedId = null;
@@ -978,6 +994,21 @@ export class Pilot {
                         item.status !== "pending")
                         fail("invalid");
                     item.status = "open";
+                }
+                else if (action === 'delete') {
+                    if (sourceRoom)
+                        sourceRoom.messages = sourceRoom.messages.filter(message => message.id !== item.id);
+                    else
+                        r.questions = r.questions.filter(question => question.id !== item.id);
+                    for (const other of Object.values(s.rooms)) {
+                        const affected = other.stage?.id === item.id || other.pinnedId === item.id || other === sourceRoom;
+                        if (other.pinnedId === item.id)
+                            other.pinnedId = null;
+                        if (other.stage?.id === item.id)
+                            other.stage = null;
+                        if (affected && other !== r)
+                            this.changed(s, other);
+                    }
                 }
                 else if (action === "reject" || action === "hide") {
                     item.hidden = true;
