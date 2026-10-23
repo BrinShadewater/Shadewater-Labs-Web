@@ -71,7 +71,7 @@ export function handler(pilot, options) {
                 return;
             }
             if (req.method === "GET") {
-                const known = Object.fromEntries(['attendees', 'mail', 'journeys'].map(key => [key, url.searchParams.get(key) ?? '']));
+                const known = Object.fromEntries(['attendees', 'mail', 'journeys', 'announcements'].map(key => [key, url.searchParams.get(key) ?? '']));
                 if (url.searchParams.has('presence'))
                     known.presence = url.searchParams.get('presence') ?? '';
                 if (path === "/test-access")
@@ -82,6 +82,8 @@ export function handler(pilot, options) {
                     send(200, await pilot.fishModeration(token));
                 else if (path === "/fish-mail/find")
                     send(200, await pilot.findFish(token, url.searchParams.get("code") ?? ""));
+                else if (path === "/fish-mail/social-links")
+                    send(200, await pilot.readFishSocialLinks(token, url.searchParams.get('viewerId') ?? ''));
                 else if (path === "/fish-mail/ocean")
                     send(200, url.searchParams.get('compact') === '1' ? await pilot.readOceanChanges(cookie(req, "fp_display") || token, known) : await pilot.readOcean(cookie(req, "fp_display") || token));
                 else if (path === "/fish-mail")
@@ -154,11 +156,14 @@ export function handler(pilot, options) {
             else if (path === "/fish-mail/code") {
                 result = await pilot.fishCode(token, field("principalId"));
             }
+            else if (path === "/fish-mail/social-links") {
+                result = await pilot.saveFishSocialLinks(token, field('principalId'), data.links);
+            }
             else if (path === "/fish-mail/choose") {
                 result = await pilot.chooseFish(token, field('principalId'), field('species'), data.nameColor);
             }
             else if (path === "/fish-mail/send") {
-                result = await pilot.sendFishMail(token, field('principalId'), field('recipientId'), field('text'), field('key'));
+                result = await pilot.sendFishMail(token, field('principalId'), field('recipientId'), field('text'), field('key'), data.publicMessage === true);
             }
             else if (path === "/fish-mail/read") {
                 result = await pilot.markFishMailRead(token, field('principalId'), field('id'));

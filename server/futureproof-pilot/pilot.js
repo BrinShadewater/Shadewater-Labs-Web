@@ -1,5 +1,7 @@
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual, createHash, } from "node:crypto";
 import { z } from "zod";
+import { socialProfileUrl } from './socialProfiles.js';
+import { futureproofId, futureproofName, scheduleAnnouncement, publicAnnouncements } from './futureproofMail.js';
 export class PilotError extends Error {
     code;
     constructor(code) {
@@ -139,13 +141,20 @@ export class Pilot {
             this.operator(p, '*');
             this.rate(s, 'ocean-restart', 3);
             const now = this.clock(), resumeAt = now + 5000;
+            const reschedule = [];
             for (const mail of s.fishMail ?? []) {
                 if (mail.cancelledAt || (mail.deliverAt ?? mail.createdAt) <= now)
                     continue;
                 const remaining = mail.deliverAt - Math.max(now, mail.journeyAt ?? mail.createdAt);
                 mail.journeyAt = resumeAt;
                 mail.deliverAt = resumeAt + remaining;
+                if (mail.recipientId === futureproofId) {
+                    delete mail.broadcastAt;
+                    reschedule.push(mail);
+                }
             }
+            for (const mail of reschedule)
+                scheduleAnnouncement(mail, s.fishMail ?? []);
             s.oceanRestartedAt = now;
             s.fishComposing = {};
             return { resumeAt };
@@ -275,6 +284,7 @@ export class Pilot {
         p.fishSpecies ??= s.people[p.id]?.fishSpecies;
         p.fishNameColor ??= s.people[p.id]?.fishNameColor;
         p.fishCode ??= s.people[p.id]?.fishCode;
+        p.fishSocialLinks ??= s.people[p.id]?.fishSocialLinks;
         s.people[p.id] = p;
         s.sessions[digest(token)] = {
             personId: p.id,
@@ -394,16 +404,16 @@ export class Pilot {
     async readFishMailChanges(token, viewerId, known) {
         const full = await this.readFishMail(token, viewerId);
         const presence = this.compactPresence(full.attendees, known);
-        const revisions = { ...presence.revisions, mail: digest(JSON.stringify([viewerId, full.messages, full.deliveries])), journeys: digest(JSON.stringify(full.oceanDeliveries)) };
+        const revisions = { ...presence.revisions, mail: digest(JSON.stringify([viewerId, full.messages, full.deliveries])), journeys: digest(JSON.stringify(full.oceanDeliveries)), announcements: digest(JSON.stringify(full.announcements)) };
         return { ...full, ...presence, revisions,
             messages: known.mail === revisions.mail ? undefined : full.messages, deliveries: known.mail === revisions.mail ? undefined : full.deliveries,
-            oceanDeliveries: known.journeys === revisions.journeys ? undefined : full.oceanDeliveries };
+            oceanDeliveries: known.journeys === revisions.journeys ? undefined : full.oceanDeliveries, announcements: known.announcements === revisions.announcements ? undefined : full.announcements };
     }
     async readOceanChanges(token, known) {
         const full = await this.readOcean(token);
         const presence = this.compactPresence(full.attendees, known);
-        const revisions = { ...presence.revisions, journeys: digest(JSON.stringify(full.deliveries)) };
-        return { ...full, ...presence, revisions, deliveries: known.journeys === revisions.journeys ? undefined : full.deliveries };
+        const revisions = { ...presence.revisions, journeys: digest(JSON.stringify(full.deliveries)), announcements: digest(JSON.stringify(full.announcements)) };
+        return { ...full, ...presence, revisions, deliveries: known.journeys === revisions.journeys ? undefined : full.deliveries, announcements: known.announcements === revisions.announcements ? undefined : full.announcements };
     }
     compactPresence(people, known) {
         // Explicit capability negotiation keeps installed older clients compatible.
@@ -428,10 +438,10 @@ export class Pilot {
             const attendees = this.oceanAttendees(s);
             const now = this.clock();
             const privateMail = (s.fishMail ?? []).filter(m => (m.senderId === p.id || m.recipientId === p.id) && !this.fishBlocked(s, m.senderId, m.recipientId));
-            const deliveries = privateMail.filter(m => !m.cancelledAt && (m.deliverAt ?? m.createdAt) > now).map(m => ({ id: m.id, senderId: m.senderId, recipientId: m.recipientId, createdAt: m.journeyAt ?? m.createdAt, deliverAt: m.deliverAt, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
+            const deliveries = privateMail.filter(m => !m.cancelledAt && (m.deliverAt ?? m.createdAt) > now).map(m => ({ id: m.id, senderId: m.senderId, recipientId: m.recipientId, createdAt: m.journeyAt ?? m.createdAt, deliverAt: m.deliverAt, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: m.recipientId === futureproofId ? futureproofName : s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
             const messages = privateMail.filter(m => m.senderId === p.id || (!m.cancelledAt && (m.deliverAt ?? m.createdAt) <= now))
-                .map(({ key: _key, ...m }) => ({ ...m, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
-            return { recoveryReady: Boolean(p.fishRecoveryHash), oceanRestartedAt: s.oceanRestartedAt ?? 0, notificationsSilenced: Boolean(p.fishNotificationsSilenced), blockedUsers: (p.fishBlocks ?? []).map(id => ({ id, displayName: s.people[id]?.displayName ?? 'Attendee' })), availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
+                .map(({ key: _key, ...m }) => ({ ...m, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: m.recipientId === futureproofId ? futureproofName : s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
+            return { announcements: publicAnnouncements(s.fishMail ?? [], s.people, now), recoveryReady: Boolean(p.fishRecoveryHash), oceanRestartedAt: s.oceanRestartedAt ?? 0, notificationsSilenced: Boolean(p.fishNotificationsSilenced), blockedUsers: (p.fishBlocks ?? []).map(id => ({ id, displayName: s.people[id]?.displayName ?? 'Attendee' })), availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
         });
     }
     oceanAttendees(s, includeHidden = false) {
@@ -445,7 +455,7 @@ export class Pilot {
         const visible = new Set(attendees.map(person => person.id));
         // Retain only 16 seconds of completed public animation metadata so a newly
         // opened screen can reproduce a fish swimming away after its hand-off.
-        return (s.fishMail ?? []).filter(mail => !mail.cancelledAt && !this.fishBlocked(s, mail.senderId, mail.recipientId) && (mail.deliverAt ?? mail.createdAt) > now - 16000 && visible.has(mail.senderId) && visible.has(mail.recipientId)).map(mail => ({
+        return (s.fishMail ?? []).filter(mail => !mail.cancelledAt && !this.fishBlocked(s, mail.senderId, mail.recipientId) && (mail.deliverAt ?? mail.createdAt) > now - 16000 && visible.has(mail.senderId) && (visible.has(mail.recipientId) || mail.recipientId === futureproofId)).map(mail => ({
             id: digest(`ocean:${mail.id}`).slice(0, 24), senderId: mail.senderId, recipientId: mail.recipientId, createdAt: mail.journeyAt ?? mail.createdAt, deliverAt: mail.deliverAt,
         }));
     }
@@ -454,7 +464,7 @@ export class Pilot {
             this.person(s, token);
             const now = this.clock(), attendees = this.oceanAttendees(s);
             const deliveries = this.oceanDeliveries(s, now, attendees);
-            return { serverTime: now, oceanRestartedAt: s.oceanRestartedAt ?? 0, validForMs: 15000, attendees, deliveries };
+            return { serverTime: now, oceanRestartedAt: s.oceanRestartedAt ?? 0, validForMs: 15000, attendees, deliveries, announcements: publicAnnouncements(s.fishMail ?? [], s.people, now) };
         });
     }
     async composingFish(token, viewerId, composing) {
@@ -524,6 +534,35 @@ export class Pilot {
             return { id: person.id, displayName: person.displayName, fishSpecies: person.fishSpecies };
         });
     }
+    async readFishSocialLinks(token, viewerId) {
+        return this.inspect(s => {
+            const p = this.person(s, token);
+            if (p.id !== viewerId)
+                fail('identity_changed');
+            if (p.kind === 'display')
+                fail('forbidden');
+            return { links: p.fishSocialLinks ?? [] };
+        });
+    }
+    async saveFishSocialLinks(token, viewerId, input) {
+        return this.run(s => {
+            const p = this.person(s, token);
+            if (p.id !== viewerId)
+                fail('identity_changed');
+            if (p.kind === 'display')
+                fail('forbidden');
+            const parsed = z.array(z.object({ label: text(40), url: text(500) }).strict()).max(5).safeParse(input);
+            if (!parsed.success)
+                return fail('invalid');
+            const links = parsed.data.map(link => { const url = socialProfileUrl(link.url); if (!url)
+                return fail('invalid'); return { label: link.label, url }; });
+            if (JSON.stringify(p.fishSocialLinks ?? []) !== JSON.stringify(links)) {
+                this.rate(s, `fish-social:${p.id}`, 20);
+                p.fishSocialLinks = links;
+            }
+            return { links };
+        });
+    }
     async chooseFish(token, viewerId, species, nameColor) {
         return this.run(s => {
             const p = this.person(s, token);
@@ -550,7 +589,7 @@ export class Pilot {
             return { fishSpecies: p.fishSpecies, fishNameColor: p.fishNameColor ?? '#e7f6f2' };
         });
     }
-    async sendFishMail(token, viewerId, recipientId, content, key) {
+    async sendFishMail(token, viewerId, recipientId, content, key, publicMessage = false) {
         return this.run(s => {
             const p = this.person(s, token);
             if (p.id !== viewerId)
@@ -559,7 +598,10 @@ export class Pilot {
                 fail('forbidden');
             if (p.kind === 'display')
                 fail('forbidden');
-            const parsed = text(1000).safeParse(content);
+            const toFutureproof = recipientId === futureproofId;
+            if (toFutureproof && publicMessage !== true)
+                fail('invalid');
+            const parsed = text(toFutureproof ? 400 : 1000).safeParse(content);
             if (!parsed.success || !/^[a-zA-Z0-9-]{8,100}$/.test(key))
                 return fail('invalid');
             const mail = s.fishMail ??= [];
@@ -572,18 +614,22 @@ export class Pilot {
                 return { id: previous.id, createdAt: previous.createdAt, deliverAt: previous.deliverAt ?? previous.createdAt };
             }
             const recipient = Object.hasOwn(s.people, recipientId) ? s.people[recipientId] : undefined;
-            if (!recipient || recipient.suspended || recipient.kind === 'display' || recipientId === p.id)
+            if (!toFutureproof && (!recipient || recipient.suspended || recipient.kind === 'display' || recipientId === p.id))
                 fail('invalid');
             // Recipients may go offline after selection; their private inbox retains delivery.
             this.rate(s, `fish-mail:${p.id}`, 10);
+            if (toFutureproof)
+                this.rate(s, `futureproof-mail:${p.id}`, 3);
             if (mail.length >= 10000)
                 fail('unavailable');
             const id = randomUUID(), createdAt = this.clock();
             const journeyAt = Math.max(createdAt, (s.oceanRestartedAt ?? 0) + 5000);
             // Persist a one-to-ten-minute journey once; retries keep the original arrival.
-            const deliverAt = journeyAt + 60_000 + (parseInt(digest(id).slice(0, 8), 16) % 540_001);
+            const deliverAt = journeyAt + (toFutureproof ? 15_000 + (parseInt(digest(id).slice(0, 8), 16) % 15_001) : 60_000 + (parseInt(digest(id).slice(0, 8), 16) % 540_001));
             const message = { id, senderId: p.id, recipientId, text: parsed.data, createdAt, journeyAt, deliverAt, readAt: null, key };
             mail.push(message);
+            if (toFutureproof)
+                scheduleAnnouncement(message, mail);
             return { id: message.id, createdAt, deliverAt };
         });
     }
