@@ -1,5 +1,5 @@
 export const futureproofId = 'futureproof-space-centre';
-export const futureproofName = 'Space Centre (Futureproof)';
+export const futureproofName = 'Futureproof';
 export const announcementMs = 6000;
 // Slots are assigned on writes, never by a screen reading the queue. Keeping
 // them stable prevents reconnects, hiding a sender or polling order from replaying mail.

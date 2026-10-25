@@ -285,6 +285,7 @@ export class Pilot {
         p.fishNameColor ??= s.people[p.id]?.fishNameColor;
         p.fishCode ??= s.people[p.id]?.fishCode;
         p.fishSocialLinks ??= s.people[p.id]?.fishSocialLinks;
+        p.fishWelcomeReadAt ??= s.people[p.id]?.fishWelcomeReadAt;
         s.people[p.id] = p;
         s.sessions[digest(token)] = {
             personId: p.id,
@@ -293,7 +294,7 @@ export class Pilot {
             roomId,
         };
         const { id, eventId, kind, displayName, role } = p;
-        return { token, principal: { id, eventId, kind, displayName, ...(role ? { role } : {}) } };
+        return { token, principal: { id, eventId, kind, displayName, ...(role ? { role } : {}), fishWelcomeUnread: p.kind !== 'display' && !p.fishWelcomeReadAt && !p.fishNotificationsSilenced } };
     }
     async createFishRecovery(token, principalId) {
         return this.run(s => {
@@ -391,6 +392,7 @@ export class Pilot {
                 kind: p.kind,
                 displayName: p.displayName,
                 role: p.role,
+                fishWelcomeUnread: p.kind !== 'display' && !p.fishWelcomeReadAt && !p.fishNotificationsSilenced,
             };
         });
     }
@@ -441,7 +443,7 @@ export class Pilot {
             const deliveries = privateMail.filter(m => !m.cancelledAt && (m.deliverAt ?? m.createdAt) > now).map(m => ({ id: m.id, senderId: m.senderId, recipientId: m.recipientId, createdAt: m.journeyAt ?? m.createdAt, deliverAt: m.deliverAt, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: m.recipientId === futureproofId ? futureproofName : s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
             const messages = privateMail.filter(m => m.senderId === p.id || (!m.cancelledAt && (m.deliverAt ?? m.createdAt) <= now))
                 .map(({ key: _key, ...m }) => ({ ...m, senderName: s.people[m.senderId]?.displayName ?? 'Attendee', recipientName: m.recipientId === futureproofId ? futureproofName : s.people[m.recipientId]?.displayName ?? 'Attendee', senderFishSpecies: s.people[m.senderId]?.fishSpecies, recipientFishSpecies: s.people[m.recipientId]?.fishSpecies }));
-            return { announcements: publicAnnouncements(s.fishMail ?? [], s.people, now), recoveryReady: Boolean(p.fishRecoveryHash), oceanRestartedAt: s.oceanRestartedAt ?? 0, notificationsSilenced: Boolean(p.fishNotificationsSilenced), blockedUsers: (p.fishBlocks ?? []).map(id => ({ id, displayName: s.people[id]?.displayName ?? 'Attendee' })), availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
+            return { welcome: { readAt: p.fishWelcomeReadAt ?? null }, announcements: publicAnnouncements(s.fishMail ?? [], s.people, now), recoveryReady: Boolean(p.fishRecoveryHash), oceanRestartedAt: s.oceanRestartedAt ?? 0, notificationsSilenced: Boolean(p.fishNotificationsSilenced), blockedUsers: (p.fishBlocks ?? []).map(id => ({ id, displayName: s.people[id]?.displayName ?? 'Attendee' })), availableFishSpecies: s.specialFishOwners?.krugfish === p.id ? [...publicFishSpecies, 'krugfish'] : [...publicFishSpecies], viewerId: p.id, viewerFishSpecies: p.fishSpecies, viewerNameColor: p.fishNameColor ?? '#e7f6f2', serverTime: now, attendees, messages, deliveries, oceanDeliveries: this.oceanDeliveries(s, now, attendees) };
         });
     }
     oceanAttendees(s, includeHidden = false) {
@@ -640,6 +642,10 @@ export class Pilot {
                 fail('identity_changed');
             if (p.kind === 'display')
                 fail('forbidden');
+            if (id === 'futureproof-welcome') {
+                p.fishWelcomeReadAt ??= this.clock();
+                return { ok: true };
+            }
             const message = s.fishMail?.find(m => m.id === id && m.recipientId === p.id);
             if (!message || message.cancelledAt || this.fishBlocked(s, message.senderId, message.recipientId) || (message.deliverAt ?? message.createdAt) > this.clock())
                 return fail('invalid');
