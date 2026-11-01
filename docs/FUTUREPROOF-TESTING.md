@@ -1,9 +1,12 @@
-# Temporary Futureproof companion
+# Retired Futureproof test installation
 
-The reviewed public companion is hosted at https://shadewaterlabs.com/Testing (redirects to /Testing/program so the landing page stays inside its /Testing/ service-worker scope under this site's slash normalization).
+The temporary Futureproof companion at `/Testing` was removed on 2026-10-31.
+The compiled snapshot, test API handler, server modules, and app routing are retired.
+`/Testing` and its former app routes now return the host's normal 404 response.
 
-`public/Testing` is a compiled static snapshot, not an independently editable app source. Source lives in Alex's Futureproof App workspace. Build there with COMPANION_BASE=/Testing/ and COMPANION_PREVIEW=1 using `npm run build -- --outDir dist-testing`, then copy the output into public/Testing, excluding Cloudflare-only _headers. Keep old fingerprinted assets when updating so existing tabs can recover. Test program refresh and PWA activation before deploying.
+Keep `public/Testing/sw.js` and its no-store header available so previously installed
+service workers can update, clear only Futureproof/scoped Workbox caches, unregister,
+and reload controlled pages. Device-local attendee saves and external databases are
+not deleted. Offline installations receive retirement when they reconnect and update.
 
-The temporary pages are noindex and deliberately omitted from the public sitemap and navigation. This is a test installation, not the final festival origin. Device-local saves do not transfer from localhost or to a different origin. No private attendee data is included. The service worker and manifest are scoped to /Testing/.
-
-To retire: remove the Testing redirect/rewrites/headers and static snapshot, and deploy a service-worker retirement response first for existing installations. Do not remove unrelated host routes or change the site's security policy.
+The independent Futureproof source workspace is unchanged.
