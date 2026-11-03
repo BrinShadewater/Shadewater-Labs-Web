@@ -81,8 +81,13 @@ on `codex/*` branches, outside the project tree, so a directory scan will not sh
 
 ## Build notes
 
-**There is no longer a `predev`/`prebuild` step.** Those ran `sync:seo-skill` and
+The retired `predev`/`prebuild` steps ran `sync:seo-skill` and
 `sync:explainers`, which existed solely to feed the two retired product pages — the explainer
 generator regenerated its PDFs into `public/` on every build, so retiring the pages meant
-retiring the pipeline or the deleted assets would have come straight back. `npm run dev` and
-`npm run build` are now exactly what they say. Committing and pushing is Alex's call.
+retiring the pipeline or the deleted assets would have come straight back. `npm run build` now has a `prebuild` refresh of repository update dates; it can query GitHub.
+For offline validation, run `node node_modules/typescript/bin/tsc -b`,
+`node node_modules/vite/bin/vite.js build`, then `node --test tests/*.test.mjs`.
+The Vite build renders all five initial page bodies from the actual React components in
+`src/prerender.tsx`, and generates every head (including home) from `getSeoConfig`.
+Keep the route list and source/rendered parity tests aligned when adding a page.
+Committing and pushing is Alex's call.

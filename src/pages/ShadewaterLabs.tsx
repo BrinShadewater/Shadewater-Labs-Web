@@ -1,4 +1,4 @@
-import { useState, useEffect, type CSSProperties } from 'react';
+import { useState, useEffect, type CSSProperties, type MouseEvent } from 'react';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
@@ -301,6 +301,11 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
   const prev = () => { setPaused(true); setIdx((i) => (i - 1 + total) % total); };
   const next = () => { setPaused(true); setIdx((i) => (i + 1) % total); };
+  const navigateCatalogue = (event: MouseEvent<HTMLAnchorElement>, page: string) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    onNavigate(page);
+  };
 
   const getCard = (offset: number) => cards[(idx + offset + total) % total];
 
@@ -458,12 +463,12 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
         </div>
 
         <div style={{ marginTop: 28, display: 'flex', gap: 16, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
-          <button onClick={() => onNavigate('projects')} style={home.catalogueBtn}>
+          <a href="/projects" onClick={(event) => navigateCatalogue(event, 'projects')} style={home.catalogueBtn}>
             All projects <span style={home.catalogueArrow}>{'→'}</span>
-          </button>
-          <button onClick={() => onNavigate('websites')} style={home.catalogueBtn}>
+          </a>
+          <a href="/websites" onClick={(event) => navigateCatalogue(event, 'websites')} style={home.catalogueBtn}>
             All websites <span style={home.catalogueArrow}>{'→'}</span>
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -669,7 +674,7 @@ const home: Record<string, CSSProperties> = {
     border: '1px solid hsl(186 60% 50% / 0.38)',
     color: 'hsl(186 90% 68%)',
     fontFamily: MONO, fontSize: 13.5, letterSpacing: '0.16em',
-    fontWeight: 600, cursor: 'pointer',
+    fontWeight: 600, cursor: 'pointer', textDecoration: 'none',
     transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease',
   },
   catalogueArrow: { fontSize: 15, transform: 'translateY(-1px)' },
