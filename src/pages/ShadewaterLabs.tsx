@@ -1,5 +1,5 @@
 import CurrentProjects from '@/components/CurrentProjects';
-import { useState, useEffect, type CSSProperties, type MouseEvent } from 'react';
+import { useState, type CSSProperties, type MouseEvent } from 'react';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
@@ -283,19 +283,10 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     b.updated.localeCompare(a.updated),
   );
   const [idx, setIdx] = useState(0);
-  const [paused, setPaused] = useState(false);
   const total = cards.length;
 
-  useEffect(() => {
-    if (paused) return;
-    // WCAG 2.2.2: don't auto-advance for people who asked for reduced motion.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const t = setInterval(() => setIdx((i) => (i + 1) % total), 4000);
-    return () => clearInterval(t);
-  }, [paused, total]);
-
-  const prev = () => { setPaused(true); setIdx((i) => (i - 1 + total) % total); };
-  const next = () => { setPaused(true); setIdx((i) => (i + 1) % total); };
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+  const next = () => setIdx((i) => (i + 1) % total);
   const navigateCatalogue = (event: MouseEvent<HTMLAnchorElement>, page: string) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
@@ -306,7 +297,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
   return (
     <section id="labs-projects" style={home.section} className="home-section">
-      <SectionHead kicker="Work" title="Projects and managed sites" sub="Every card goes to a real page. Click any of them." />
+      <SectionHead kicker="Work" title="Projects and managed sites" sub="Browse the cards for links to featured sites and repositories." />
       <style>{`
         .carousel-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         @media (max-width: 900px) {
@@ -318,13 +309,10 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
           .carousel-slot-1 { display: none !important; }
         }
       `}</style>
-      <div
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocus={() => setPaused(true)}
-        onBlur={() => setPaused(false)}
-        style={{ position: 'relative' }}
-      >
+      <div role="group" aria-label="Featured work" aria-roledescription="carousel" style={{ position: 'relative' }}>
+        <p className="sr-only" role="status">
+          {getCard(0).name}, {idx + 1} of {total}
+        </p>
         <div className="carousel-track">
           {[0, 1, 2].map((offset) => {
             const c = getCard(offset);
@@ -412,18 +400,20 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginTop: 28 }}>
           <button
+            type="button"
             onClick={prev}
-            aria-label="Previous"
-            style={{ background: 'hsl(200 30% 10%)', border: '1px solid hsl(186 50% 40% / 0.3)', color: 'hsl(186 60% 75%)', borderRadius: 999, width: 36, height: 36, cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            aria-label="Previous featured item"
+            style={home.carouselArrow}
           >
             {'←'}
           </button>
-          <div style={{ display: 'flex' }}>
-            {cards.map((_, i) => (
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {cards.map((card, i) => (
               <button
-                key={i}
-                onClick={() => { setPaused(true); setIdx(i); }}
-                aria-label={'Go to slide ' + (i + 1)}
+                key={card.key}
+                type="button"
+                onClick={() => setIdx(i)}
+                aria-label={`Show ${card.name}`}
                 aria-current={i === idx ? 'true' : undefined}
                 style={{
                   background: 'none',
@@ -449,9 +439,10 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
             ))}
           </div>
           <button
+            type="button"
             onClick={next}
-            aria-label="Next"
-            style={{ background: 'hsl(200 30% 10%)', border: '1px solid hsl(186 50% 40% / 0.3)', color: 'hsl(186 60% 75%)', borderRadius: 999, width: 36, height: 36, cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            aria-label="Next featured item"
+            style={home.carouselArrow}
           >
             {'→'}
           </button>
@@ -663,6 +654,11 @@ const home: Record<string, CSSProperties> = {
     gap: 8,
   },
   projectLink: { display: 'inline-flex', alignItems: 'center', marginLeft: 'auto', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
+  carouselArrow: {
+    background: 'hsl(200 30% 10%)', border: '1px solid hsl(186 50% 40% / 0.3)', color: 'hsl(186 60% 75%)',
+    borderRadius: 999, flex: '0 0 36px', height: 36, cursor: 'pointer', fontSize: 16,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+  },
   catalogueBtn: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
     padding: '15px 30px', borderRadius: 999,
