@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useMemo, useState, useRef, useEffect, type CSSProperties, type ReactNode } from 'react';
+import { useMemo, useState, useRef, useEffect, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SMALL_HEIGHT,
   SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC,
@@ -65,6 +65,7 @@ export function ADNav({
   active?: string;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const navLinks: Array<{ label: string; page: string }> = [
     { label: 'Labs', page: 'labs' },
     { label: 'Projects', page: 'projects' },
@@ -72,8 +73,27 @@ export function ADNav({
     { label: 'Toolkit', page: 'toolkit' },
     { label: 'About', page: 'about' },
   ];
+  const followLink = (event: MouseEvent<HTMLAnchorElement>, page: string) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    onNavigate(page);
+    setMenuOpen(false);
+  };
+
   return (
-    <nav style={ad.nav}>
+    <nav
+      aria-label="Primary"
+      style={ad.nav}
+      onKeyDown={(event) => {
+        if (!menuOpen || event.key !== 'Escape') return;
+        event.preventDefault();
+        setMenuOpen(false);
+        menuButton.current?.focus();
+      }}
+      onBlur={(event) => {
+        if (menuOpen && !event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false);
+      }}
+    >
       <style>{`
         .ad-hamburger {
           display: none;
@@ -91,7 +111,7 @@ export function ADNav({
         @media (max-width: 768px) {
           .ad-navInner { flex-wrap: wrap !important; }
           .ad-hamburger { display: flex !important; align-items: center; justify-content: center; }
-          .ad-navLinks { display: none !important; order: 3; width: 100% !important; }
+          .ad-navLinks { display: none !important; width: 100% !important; }
           .ad-navLinks.ad-navOpen {
             display: flex !important;
             flex-direction: column !important;
@@ -100,20 +120,14 @@ export function ADNav({
             border-top: 1px solid hsl(186 50% 40% / 0.15) !important;
             margin-top: 4px !important;
           }
-          .ad-navLinks.ad-navOpen a { width: 100% !important; text-align: left !important; }
-          .ad-navBrand { order: 1; }
+          .ad-navLinks.ad-navOpen a { width: 100% !important; text-align: left !important; margin-left: 0 !important; }
         }
       `}</style>
       <div style={ad.navInner} className="ad-navInner">
         <a
           href="/"
           style={ad.brand}
-          className="ad-navBrand"
-          onClick={(e) => {
-            e.preventDefault();
-            onNavigate('labs');
-            setMenuOpen(false);
-          }}
+          onClick={(event) => followLink(event, 'labs')}
         >
           <img
             src={SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC}
@@ -140,14 +154,17 @@ export function ADNav({
           </span>
         </a>
         <button
+          ref={menuButton}
+          type="button"
           className="ad-hamburger"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
+          aria-controls="primary-navigation-links"
         >
           {menuOpen ? '✕' : '☰'}
         </button>
-        <div style={ad.navLinks} className={`ad-navLinks${menuOpen ? ' ad-navOpen' : ''}`}>
+        <div id="primary-navigation-links" style={ad.navLinks} className={`ad-navLinks${menuOpen ? ' ad-navOpen' : ''}`}>
           {navLinks.map((link) => {
             const isActive = link.page === active;
             const href = link.page === 'labs' ? '/' : `/${link.page}`;
@@ -155,11 +172,8 @@ export function ADNav({
               <a
                 key={link.page}
                 href={href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate(link.page);
-                  setMenuOpen(false);
-                }}
+                onClick={(event) => followLink(event, link.page)}
+                aria-current={isActive ? 'page' : undefined}
                 style={{ ...ad.navLink, ...(isActive ? ad.navLinkActive : null) }}
               >
                 {link.label}
