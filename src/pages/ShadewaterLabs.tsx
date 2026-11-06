@@ -103,17 +103,11 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
         <div style={home.heroCtas}>
           <a
-            href="#labs-projects"
-            onClick={(e) => {
-              e.preventDefault();
-              document
-                .getElementById('labs-projects')
-                ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
+            href="#current-projects"
             style={ad.btnPrimary}
           >
-            <span>Explore the lab</span>
-            <span style={home.btnArrow}>→</span>
+            <span>See current projects</span>
+            <span aria-hidden="true" style={home.btnArrow}>↓</span>
           </a>
           <a
             href="/projects"
@@ -124,7 +118,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
             style={ad.btnGhost}
           >
             <span style={{ fontFamily: MONO, fontSize: 12, opacity: 0.7 }}>›</span>
-            Browse the projects
+            Browse open-source tools
           </a>
         </div>
 

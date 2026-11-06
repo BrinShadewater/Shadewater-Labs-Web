@@ -23,6 +23,14 @@ for (const [label, destination] of [['All projects', '/projects'], ['All website
   });
 }
 
+for (const route of ['', 'projects/']) {
+  test(`${route || 'home'} links directly to current projects before JavaScript`, async () => {
+    const html = await readFile(new URL(`../dist/${route}index.html`, import.meta.url), 'utf8');
+    assert.match(html, /<a\b[^>]*\bhref="#current-projects"[^>]*>[\s\S]*?<\/a>/);
+    assert.equal((html.match(/\bid="current-projects"/g) || []).length, 1);
+  });
+}
+
 for (const [route, heading, detail] of routes) {
   test(`${route || 'home'} serves its own actual page before JavaScript`, async () => {
     const html = await readFile(new URL(`../dist/${route ? route + '/' : ''}index.html`, import.meta.url), 'utf8');

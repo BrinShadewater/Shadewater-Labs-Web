@@ -5,6 +5,7 @@ import {
   AuroraPage,
   MONO,
   TG_DIM,
+  ad,
   adTone,
   pp,
 } from '@/components/aurora/chrome';
@@ -170,6 +171,9 @@ export default function Projects({ onNavigate }: ProjectsProps) {
             .pp-projectsGrid { grid-template-columns: repeat(2, 1fr) !important; }
           }
         `}</style>
+        <a href="#current-projects" style={{ ...ad.btnGhost, marginBottom: 20 }}>
+          See current projects <span aria-hidden="true">↓</span>
+        </a>
         <div style={pp.toolbar} className="pp-toolbar">
           <div style={pp.toolbarMono}>
             {shippingCount > 0 && (
