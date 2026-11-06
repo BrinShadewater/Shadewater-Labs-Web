@@ -1,0 +1,9 @@
+:root { color-scheme: dark; font: 16px/1.65 system-ui, sans-serif; color: #e1e8f2; background: #101621; }
+body { margin: 0; }
+main { box-sizing: border-box; max-width: 46rem; margin: auto; padding: clamp(1.25rem, 5vw, 3.5rem); }
+header, nav { border-block-end: 1px solid #384456; padding-block-end: 1rem; }
+header p { margin-block: 2rem .25rem; color: #b9c6d8; }
+h1 { font: 500 clamp(2rem, 6vw, 3rem)/1.15 Georgia, serif; margin: 0; }
+a { color: #b6d1ff; overflow-wrap: anywhere; text-underline-offset: .18em; }
+p { margin-block: 1rem; }
+nav { border-block: 1px solid #384456; padding-block: 1rem; margin-block-start: 2rem; }

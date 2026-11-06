@@ -95,6 +95,14 @@
     {
       "source": "/about",
       "destination": "/index.html"
+    },
+    {
+      "source": "/sl-notebook/privacy",
+      "destination": "/sl-notebook/privacy.html"
+    },
+    {
+      "source": "/sl-notebook/terms",
+      "destination": "/sl-notebook/terms.html"
     }
   ],
   "outputDirectory": "dist"
