@@ -273,7 +273,7 @@ export default function About({ onNavigate }: AboutProps) {
             </div>
 
             <p style={paraStyle}>
-              Alex is currently developing an experimental feature project that explores a hybrid production approach combining traditional practical filmmaking techniques with emerging AI video generation tools. The project focuses on finding ways to integrate new technologies into the filmmaking process while preserving the collaborative, human-driven foundations of cinematic storytelling.
+              Recent work includes BrineSpace, an underwater station-restoration game; the open-source tools developed alongside it; Data Goblin’s bilingual reader; and InkMaster’s canvas-based print-prep workflow. GIST and the e-ink desk device are earlier experiments, with their current limits recorded on the projects page.
             </p>
             <p style={{ ...paraStyle, color: 'hsl(45 14% 68%)', fontSize: 14.5 }}>
               His work combines technical problem solving with cinematic thinking, with a focus on building thoughtful, future-facing systems that bridge technology, storytelling, and human creativity. Shadewater Labs serves as both a production studio and experimental sandbox — a space for developing new ideas across film, software, design, and emerging media.
@@ -345,4 +345,3 @@ export default function About({ onNavigate }: AboutProps) {
     </AuroraPage>
   );
 }
-

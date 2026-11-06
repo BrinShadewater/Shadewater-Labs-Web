@@ -1,3 +1,4 @@
+import CurrentProjects from '@/components/CurrentProjects';
 import { useState, useEffect, type CSSProperties, type MouseEvent } from 'react';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
@@ -43,8 +44,8 @@ const AD_TRACKS = [
   },
   {
     id: 'experiments',
-    title: 'Future Tech Experiments',
-    body: 'A workshop for prototypes: emerging-tech ideas, rough spikes, and the occasional graduate.',
+    title: 'Games & Hardware',
+    body: 'BrineSpace below the surface, reusable game-art tools, and an e-ink device taking shape on the desk.',
     accent: '150 65% 55%',
   },
 ];
@@ -97,8 +98,8 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
         </h1>
 
         <p style={home.heroLede}>
-          Brin Shadewater builds AI rigs, web apps, and creative-tech prototypes in public. The
-          releases are on GitHub, the sites are live, and the rough edges are left in.
+          Brin Shadewater builds games, agent tools, websites, and hardware experiments.
+          Play BrineSpace, explore the released tools, or follow the prototypes taking shape.
         </p>
 
         <div style={home.heroCtas}>
@@ -124,7 +125,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
             style={ad.btnGhost}
           >
             <span style={{ fontFamily: MONO, fontSize: 12, opacity: 0.7 }}>›</span>
-            Read the lab log
+            Browse the projects
           </a>
         </div>
 
@@ -149,7 +150,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
             />
             <HudCell k="Last updated" v={newest.updated} sub={newest.name} />
             <HudCell
-              k="Newest release"
+              k="Latest repo activity"
               v={newestRelease.name}
               sub={newestRelease.licence + ' · ' + newestRelease.language}
             />
@@ -243,8 +244,9 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       name: r.name,
       blurb: r.summary,
       accent: r.accent,
-      thumbnail: `/${r.thumb}.webp`,
-      thumbnailSrcSet: thumbSrcSet(r.thumb),
+      thumbnail: r.thumb ? `/${r.thumb}.webp` : undefined,
+      thumbnailSrcSet: r.thumb ? thumbSrcSet(r.thumb) : undefined,
+      glyph: r.glyph,
       statusLabel: 'RELEASED',
       statusTone: 'hsl(150 70% 55%)',
       onClick: () => { window.open(r.url, '_blank', 'noopener,noreferrer'); },
@@ -527,6 +529,7 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
       <ADHero onNavigate={onNavigate} />
       <ADTracks />
       <ADProjects onNavigate={onNavigate} />
+      <CurrentProjects />
       <ADComing />
       <ADFooter />
     </div>

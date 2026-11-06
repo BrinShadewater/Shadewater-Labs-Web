@@ -23,6 +23,14 @@ export interface Tool {
 
 export const tools: Tool[] = [
   {
+    id: 'codex', name: 'Codex', url: 'https://openai.com/codex/', category: 'Agents & code',
+    use: 'Repository work, implementation, and verification across the sites, agent tools, and BrineSpace.',
+  },
+  {
+    id: 'godot', name: 'Godot', url: 'https://godotengine.org/', category: 'Build & ship',
+    use: 'The engine behind BrineSpace: station simulation, room placement, interface work, and desktop builds.',
+  },
+  {
     id: 'higgsfield',
     name: 'Higgsfield',
     url: 'https://higgsfield.ai',
@@ -41,13 +49,13 @@ export const tools: Tool[] = [
     name: 'Claude Code',
     url: 'https://claude.com/claude-code',
     category: 'Agents & code',
-    use: 'The main agent surface for building and maintaining these sites and tools. Most of the skills published under this account are written for it.',
+    use: 'An agent workspace for building and maintaining sites and tools. The published skills include Claude Code workflows alongside portable instructions and standalone helpers.',
   },
   {
     id: 'vercel',
     name: 'Vercel',
     url: 'https://vercel.com',
     category: 'Build & ship',
-    use: 'Deploy-on-push for every site listed here. Redirects and headers live in each repo, so hosting config is reviewable in the same diff as the code.',
+    use: 'Git-connected deployment for the studio’s web apps. Redirects and headers live in each repo, so hosting config is reviewable in the same diff as the code.',
   },
 ];

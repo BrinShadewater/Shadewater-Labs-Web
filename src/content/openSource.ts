@@ -25,7 +25,9 @@ export interface OpenSourceRelease {
   /** HSL triplet. Lives here so the Projects page and the home carousel cannot drift apart. */
   accent: string;
   /** Base name of the thumbnail in public/, without the width suffix or extension. */
-  thumb: string;
+  thumb?: string;
+  /** Text mark when no dedicated artwork is published. */
+  glyph?: string;
   /** Drives the filter row on /projects, which renders only the tags in use. */
   categories: string[];
   /** Two or three words for the sitewide ticker. */
@@ -38,6 +40,20 @@ export function thumbSrcSet(base: string): string {
 }
 
 export const openSourceReleases: OpenSourceRelease[] = [
+  {
+    id: 'game-asset-pipeline',
+    name: 'Shadewater Game Asset Pipeline',
+    repo: 'BrinShadewater/Shadewater-Game-Asset-Pipeline',
+    url: 'https://github.com/BrinShadewater/Shadewater-Game-Asset-Pipeline',
+    licence: 'MIT',
+    language: 'Python',
+    summary: 'Reusable skills and offline helpers for 2D game assets, extracted from BrineSpace. Plan rooms and characters, preserve sources, slice animation strips, and check geometry. Automated checks support visual review; they do not replace it.',
+    updated: lastPush('game-asset-pipeline'),
+    accent: '184 75% 62%',
+    glyph: '2D',
+    categories: ['games', 'pipelines', 'agents'],
+    kicker: 'game assets',
+  },
   {
     id: 'lucid-sheep',
     name: 'Lucid Sheep',

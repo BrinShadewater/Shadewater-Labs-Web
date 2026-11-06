@@ -16,7 +16,7 @@ Primary: people evaluating Brin Shadewater's web, SEO, image-pipeline, and
 creative-technical work — potential clients, collaborators, and the curious arriving
 from a shipped project (Strange Harvest, Ink Master Studio, the WebP tooling).
 
-Secondary: Brin herself — the site doubles as an operating surface where project
+Secondary: Brin himself — the site doubles as an operating surface where project
 explainers, SEO snapshots, and proof assets live. *(inferred from README's "both
 portfolio and operating surface")*
 

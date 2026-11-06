@@ -1,3 +1,4 @@
+import CurrentProjects from '@/components/CurrentProjects';
 import { useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import {
@@ -48,7 +49,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       summary: r.summary,
       meta: [`${r.licence} licence`, r.language, r.repo],
       accent: r.accent,
-      thumbnail: { src: `/${r.thumb}.webp`, srcSet: thumbSrcSet(r.thumb) },
+      thumbnail: r.thumb ? { src: `/${r.thumb}.webp`, srcSet: thumbSrcSet(r.thumb) } : undefined,
+      glyph: r.glyph,
       status: 'RELEASED',
       tone: 'green',
       categories: r.categories,
@@ -156,7 +158,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       sectionLabel="Projects"
       eyebrow="CATALOG"
       title="Tools, in the open."
-      lede="Open-source tools built for the work here, then published. Each one is a real repository you can read, install, and run."
+      lede="Open-source tools built for the work here, then published. Each release links to its repository. Games and prototypes below have their own status labels."
     >
       <section style={pp.section}>
         <style>{`
@@ -329,7 +331,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           ))}
         </div>
       </section>
+      <CurrentProjects />
     </AuroraPage>
   );
 }
-

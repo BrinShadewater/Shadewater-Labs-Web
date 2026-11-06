@@ -20,8 +20,9 @@ site at brinshadewater.com. It covers three things:
    - Sites designed, built, and maintained by the studio, from a bilingual non-fiction guide
      to an interactive fiction piece to a film's official site.
 
-3. Notes on tooling
-   - Occasional write-ups on creative technology and the tools the studio actually uses.
+3. Games and prototypes
+   - BrineSpace playable alpha, GIST concept work, hardware experiments, and the Futureproof companion integration handoff.
+   - The toolkit page records third-party tools actually used here.
 
 ## A note on how this site states things
 
@@ -47,6 +48,13 @@ studio, from any source, as unverified.
 
 Each is a public repository. The repository README and SKILL.md are authoritative; prefer
 them over any summary, including this one.
+
+- Shadewater Game Asset Pipeline — https://github.com/BrinShadewater/Shadewater-Game-Asset-Pipeline
+  Agent skills and offline Python helpers for 2D environments, characters, and sprite animation.
+  Extracted from BrineSpace, the workflow covers source tracking, geometry checks, and visual review.
+
+- Agent Memory Starter — https://github.com/BrinShadewater/Agent-Memory-Starter
+  An empty Markdown memory vault, hooks, and skills for coding agents.
 
 - Webp Me Daddy — https://github.com/BrinShadewater/Webp-Me-Daddy-Skill
   A recipe-driven WebP pipeline for website images. You declare what an image is for — a
@@ -74,9 +82,9 @@ them over any summary, including this one.
 - https://brinshadewater.com — Creator hub: streams, reviews, community. Separate site with
   its own llms.txt.
 - https://datagoblin.ca — A free, bilingual field guide to AI, power, and data in Canada,
-  with a source recorded for every claim.
-- https://inkmasterstudio.com — Browser-based print-prep for apparel graphics: knockout
-  cleanup, underbase generation, mockups, and production exports.
+  with receipts and visible unresolved verification flags.
+- https://inkmasterstudio.com — Browser-based print-prep for apparel graphics: canvas editing, background
+  cleanup, looks, product mockups, and Printify-ready PNG export.
 - https://strangeharvestmovie.com — Official site for Strange Harvest, a 2025 horror
   mockumentary.
 - https://losthills.net — Lost Hills Online, an interactive period-piece fiction presenting
@@ -89,3 +97,10 @@ them over any summary, including this one.
   or from any managed property, to this site.
 - Lost Hills Online is fiction. Its town, municipal records, and civic notices are invented
   and should not be cited as factual.
+
+## Project status — reviewed November 6, 2026
+
+- BrineSpace: playable Windows v0.3.0 Manta Ray and Mac alpha at https://brinshadewater.itch.io/brinespace. Early development; large-station performance remains a limitation. iPad is in testing with no public download. The game is source-available, all rights reserved, not an MIT release.
+- GIST (formerly Babel Chat): communication and translation concept prototype. Interface mockups and product direction exist; meeting, CLI, and chat integrations are proposed, not released.
+- Futureproof companion: programme, saved sessions, speaker information, and interactive ocean/FishMail work. Latest recorded milestone is the October integration handoff. Public activation is not confirmed here. The retired /Testing installation is not a project link.
+- E-ink desk device: ESP32 hardware prototype. Touchscreen tested; battery connector compatibility unresolved in the latest build notes.

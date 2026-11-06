@@ -32,6 +32,7 @@ async function main() {
   // id there is missing here.
   const REPOS = {
     // Open-source releases
+    "game-asset-pipeline": "BrinShadewater/Shadewater-Game-Asset-Pipeline",
     "lucid-sheep": "BrinShadewater/Lucid-Sheep-Skill",
     "webp-me-daddy-skill": "BrinShadewater/Webp-Me-Daddy-Skill",
     "shadewater-seo-skill": "BrinShadewater/Shadewater-SEO-Skill",

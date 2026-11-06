@@ -33,17 +33,17 @@ export const managedWebsites = [
     role: 'Field guide',
     status: 'Live',
     description:
-      'A free, bilingual field guide to AI, power, and data in Canada. Twenty-one chapters with a receipt behind every claim, plus a glossary, source ledger, and a claim-testing toolkit.',
+      'A free, bilingual field guide to AI, power, and data in Canada. Chapters, a glossary, receipts, search, notes, and listening tools. Open verification flags stay visible in the reader.',
     updated: lastPush('datagoblin'),
   },
   {
     id: 'inkmasterstudio',
     name: 'InkMaster Studio',
     url: 'https://inkmasterstudio.com',
-    role: 'Product site',
-    status: 'Beta',
+    role: 'Print-prep editor',
+    status: 'Live',
     description:
-      'A focused web product for apparel artwork cleanup, DTG print prep, underbase generation, mockup previews, and export workflows.',
+      'A browser-based canvas editor for creator artwork: layers, background cleanup, looks, T-shirt mockups, and Printify-ready PNG exports. Projects stay local; AI cleanup is optional.',
     updated: lastPush('inkmasterstudio'),
   },
   {

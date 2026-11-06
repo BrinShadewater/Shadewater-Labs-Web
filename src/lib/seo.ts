@@ -2,6 +2,7 @@
 // per-route shells and the runtime <Seo> read one source of truth, and Vite's config loader
 // resolves relative paths only — a "@/" specifier there reads as a bare package and the build
 // fails. Same reason brinshadewater.com's seo.ts is relative.
+import { currentProjects } from '../content/currentProjects';
 import { tools } from '../content/tools';
 import { managedWebsites } from '../content/websites';
 import { openSourceReleases } from '../content/openSource';
@@ -28,7 +29,7 @@ type SeoConfig = {
 const BRAND_NAME = 'Brin Shadewater';
 const ORGANIZATION_NAME = 'Shadewater Labs';
 const LABS_DESCRIPTION =
-  'AI tools, coding projects, creative technology experiments, and digital product prototypes from Shadewater Labs.';
+  'Games, open-source agent tools, managed websites, and creative technology prototypes from Shadewater Labs in Vancouver.';
 const SAME_AS_LINKS = [
   'https://www.youtube.com/@brinshadewater',
   'https://x.com/brinshadewater',
@@ -120,7 +121,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
-            itemListElement: openSourceReleases.map((release, index) => ({
+            itemListElement: [...openSourceReleases, ...currentProjects.filter(project => project.url)].map((release, index) => ({
               '@type': 'ListItem',
               position: index + 1,
               url: release.url,
@@ -154,7 +155,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
-            itemListElement: openSourceReleases.map((release, index) => ({
+            itemListElement: [...openSourceReleases, ...currentProjects.filter(project => project.url)].map((release, index) => ({
               '@type': 'ListItem',
               position: index + 1,
               url: release.url,

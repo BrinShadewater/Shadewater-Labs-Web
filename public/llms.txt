@@ -1,19 +1,21 @@
 # Shadewater Labs
 
-> The studio site for Brin Shadewater's AI tools, open-source agent skills, and managed web
+> The studio site for Brin Shadewater's games, open-source agent skills, prototypes, and managed web
 > properties. Every figure shown on the site is derived from the site's content files or
 > fetched from GitHub at build time rather than written by hand.
 
 ## Main sections
 - [Home](https://shadewaterlabs.com/): What the lab works on, current status, and recent work.
-- [Projects](https://shadewaterlabs.com/projects): Open-source releases, each linking to its repository.
+- [Projects](https://shadewaterlabs.com/projects): Released tools, playable builds, and prototypes with explicit status labels.
 - [Websites](https://shadewaterlabs.com/websites): Web properties designed, built, and maintained here.
 - [Toolkit](https://shadewaterlabs.com/toolkit): The third-party tools used on real work here, with what each is for.
 - [About](https://shadewaterlabs.com/about): Background on Shadewater Labs and Brin Shadewater.
 
 ## Open-source releases
-All MIT licensed, written in Python, published as agent skills for Claude Code and Codex.
 
+All listed releases are MIT licensed.
+
+- [Shadewater Game Asset Pipeline](https://github.com/BrinShadewater/Shadewater-Game-Asset-Pipeline): Agent skills and offline Python helpers for 2D environments, characters, and sprite animation. Extracted from BrineSpace, the workflow covers source tracking, geometry checks, and visual review.
 - [Webp Me Daddy](https://github.com/BrinShadewater/Webp-Me-Daddy-Skill): Recipe-driven WebP pipeline for website images — optimised variants, responsive sets, structured metadata, accessibility-safe alt text, and lintable output contracts.
 - [Shadewater SEO Skill](https://github.com/BrinShadewater/Shadewater-SEO-Skill): Evidence-backed SEO audits for websites, articles, and GitHub repositories, producing a branded report dashboard and agent handoff files. A fork; upstream authors credited in its LICENSE and README.
 - [Transparent Gif Loop](https://github.com/BrinShadewater/Transparent-Gif-Loop-Skill): Strips matte-black backgrounds, heals loop seams, and retimes animated GIFs and WebPs into clean transparent loops.
@@ -35,3 +37,10 @@ All MIT licensed, written in Python, published as agent skills for Claude Code a
   own llms.txt.
 - [Sitemap](https://shadewaterlabs.com/sitemap.xml): Full crawlable URL list.
 - [llms-full.txt](https://shadewaterlabs.com/llms-full.txt): Extended site summary.
+
+## Project status — reviewed November 6, 2026
+
+- BrineSpace: playable Windows v0.3.0 Manta Ray and Mac alpha at https://brinshadewater.itch.io/brinespace. Early development; large-station performance remains a limitation. iPad is in testing with no public download. The game is source-available, all rights reserved, not an MIT release.
+- GIST (formerly Babel Chat): communication and translation concept prototype. Interface mockups and product direction exist; meeting, CLI, and chat integrations are proposed, not released.
+- Futureproof companion: programme, saved sessions, speaker information, and interactive ocean/FishMail work. Latest recorded milestone is the October integration handoff. Public activation is not confirmed here. The retired /Testing installation is not a project link.
+- E-ink desk device: ESP32 hardware prototype. Touchscreen tested; battery connector compatibility unresolved in the latest build notes.
