@@ -3,6 +3,7 @@ import { useState, type CSSProperties, type MouseEvent } from 'react';
 import { managedWebsites } from '@/content/websites';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
+import { PAGE_HEADING_ID } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES,
@@ -90,7 +91,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
           style={{ ...home.heroLogo, objectFit: 'cover', width: 245, height: 350 }}
         />
 
-        <h1 tabIndex={-1} style={home.heroTitle} className="home-heroTitle">
+        <h1 id={PAGE_HEADING_ID} tabIndex={-1} style={home.heroTitle} className="home-heroTitle">
           The studio for <span style={home.heroAccent}>weird-good</span>
           <br />
           AI tools and tech experiments.

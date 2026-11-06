@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Seo from './components/Seo';
-import { buildRouteHref, parseLocation } from './lib/routes';
+import { buildRouteHref, PAGE_HEADING_ID, parseLocation } from './lib/routes';
 import { getSeoConfig } from './lib/seo';
 
 // Keep the import factories so the same chunks can be both lazy-rendered and
@@ -60,11 +60,16 @@ function RouteHeadingFocus({ page }: { page: string }) {
   const previousPage = useRef(page);
 
   useLayoutEffect(() => {
-    if (previousPage.current === page) return;
+    const pageChanged = previousPage.current !== page;
     previousPage.current = page;
-    // Fragment links already have their own focus destination.
-    if (window.location.hash) return;
-    document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
+    const hash = window.location.hash;
+    const headingFragment = hash === `#${PAGE_HEADING_ID}`;
+    if (!headingFragment && (!pageChanged || hash)) return;
+
+    const heading = document.getElementById(PAGE_HEADING_ID);
+    heading?.focus({ preventScroll: true });
+    // React replaces the prerendered heading when opening a bookmarked skip link.
+    if (headingFragment) heading?.scrollIntoView();
   }, [page]);
 
   return null;

@@ -5,7 +5,7 @@ import {
   SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC,
   SHADEWATER_LABS_MARK_CROPPED_SMALL_WIDTH,
 } from '@/lib/brandAssets';
-import { LABS_ORIGIN, BRIN_ORIGIN } from '@/lib/routes';
+import { LABS_ORIGIN, BRIN_ORIGIN, PAGE_HEADING_ID } from '@/lib/routes';
 import { openSourceReleases } from '@/content/openSource';
 
 /* ------------------------------------------------------------------ */
@@ -94,6 +94,9 @@ export function ADNav({
         if (menuOpen && !event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false);
       }}
     >
+      <a className="skip-link" href={`#${PAGE_HEADING_ID}`} style={ad.btnPrimary}>
+        Skip to content
+      </a>
       <style>{`
         .ad-hamburger {
           display: none;
@@ -470,7 +473,7 @@ function PageHero({
           <span style={pp.crumbCur}>{sectionLabel}</span>
         </div>
         <p style={pp.eyebrow}>{eyebrow}</p>
-        <h1 tabIndex={-1} style={pp.h1}>{title}</h1>
+        <h1 id={PAGE_HEADING_ID} tabIndex={-1} style={pp.h1}>{title}</h1>
         <p style={pp.lede}>{lede}</p>
       </div>
       <div style={pp.heroBeam} />
