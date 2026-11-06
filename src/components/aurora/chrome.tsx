@@ -470,7 +470,7 @@ function PageHero({
           <span style={pp.crumbCur}>{sectionLabel}</span>
         </div>
         <p style={pp.eyebrow}>{eyebrow}</p>
-        <h1 style={pp.h1}>{title}</h1>
+        <h1 tabIndex={-1} style={pp.h1}>{title}</h1>
         <p style={pp.lede}>{lede}</p>
       </div>
       <div style={pp.heroBeam} />

@@ -90,7 +90,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
           style={{ ...home.heroLogo, objectFit: 'cover', width: 245, height: 350 }}
         />
 
-        <h1 style={home.heroTitle} className="home-heroTitle">
+        <h1 tabIndex={-1} style={home.heroTitle} className="home-heroTitle">
           The studio for <span style={home.heroAccent}>weird-good</span>
           <br />
           AI tools and tech experiments.

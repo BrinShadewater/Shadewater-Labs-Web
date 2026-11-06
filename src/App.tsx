@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Seo from './components/Seo';
 import { buildRouteHref, parseLocation } from './lib/routes';
 import { getSeoConfig } from './lib/seo';
@@ -54,6 +54,20 @@ function getRouteState() {
     currentPage: page,
     selectedNoteId: noteId,
   };
+}
+
+function RouteHeadingFocus({ page }: { page: string }) {
+  const previousPage = useRef(page);
+
+  useLayoutEffect(() => {
+    if (previousPage.current === page) return;
+    previousPage.current = page;
+    // Fragment links already have their own focus destination.
+    if (window.location.hash) return;
+    document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
+  }, [page]);
+
+  return null;
 }
 
 function App() {
@@ -156,6 +170,7 @@ function App() {
       <main className="flex-grow">
         <Suspense fallback={<DelayedPageFallback />}>
           {renderPage()}
+          <RouteHeadingFocus page={currentPage} />
         </Suspense>
       </main>
     </div>
