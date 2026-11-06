@@ -61,9 +61,9 @@ export const managedWebsites = [
     name: 'Strange Harvest Merch Store',
     url: 'https://strangeharvestmovie.myshopify.com',
     role: 'Shopify store',
-    status: 'Live',
+    status: 'Password protected',
     description:
-      'Official merchandise store for Strange Harvest, built on Shopify. Apparel, prints, and collectibles tied to the film.',
+      'The official Strange Harvest merchandise store on Shopify currently requires a password for public access.',
     updated: lastPush('strangeharvestmerch'),
   },
   {

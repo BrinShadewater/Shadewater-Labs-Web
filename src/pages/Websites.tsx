@@ -31,6 +31,7 @@ interface SiteRow {
 const TONE_BY_STATUS: Record<string, AdToneKey> = {
   Live: 'green',
   Beta: 'amber',
+  'Password protected': 'amber',
 };
 
 const ACCENTS: Record<string, string> = {
@@ -219,7 +220,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
       sectionLabel="Websites"
       eyebrow="MANAGED WEB"
       title="Managed web properties."
-      lede="The public web surfaces currently designed, productized, and maintained through Shadewater Labs."
+      lede="Web properties designed and maintained through Shadewater Labs."
     >
       <section style={pp.section}>
         <style>{`

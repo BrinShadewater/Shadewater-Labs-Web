@@ -4,33 +4,23 @@
 
 ```shell
 npm run lint
-npm run build
+npm test
 ```
 
-The build runs the SEO-skill and explainer sync scripts before compiling. Review generated files before committing them.
+`npm test` builds the site and checks the prerendered pages and retired routes.
 
-## Generated Assets
+## Generated Repository Dates
 
-Important scripts:
-
-```shell
-npm run sync:seo-skill
-npm run sync:explainers
-```
-
-Use them when project explainers or SEO skill material changes. Do not treat generated diffs as noise; they are part of the public proof surface.
+The build runs `scripts/refresh-updated.mjs` before compiling. It fetches GitHub push dates and keeps the committed value when a repository lookup fails. Review changes to `src/content/generated/updated.json` before committing.
 
 ## Content Freshness
 
 Review periodically:
 
-- Project page links
+- Project links and managed-site access, including redirects to password or sign-in pages
 - Screenshots and thumbnails
-- Explainer PDFs
-- SEO report examples
 - `public/llms.txt` and `public/llms-full.txt`
 - `public/sitemap.xml`
-- Tech-news items
 
 ## Visual QA
 

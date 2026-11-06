@@ -58,13 +58,12 @@ const AD_TRACKS = [
  */
 function useLabStatus() {
   const liveSites = managedWebsites.filter((s) => s.status === 'Live').length;
-  const betaSites = managedWebsites.length - liveSites;
   const newest = managedWebsites.reduce((a, b) => (b.updated > a.updated ? b : a));
-  return { liveSites, betaSites, newest };
+  return { liveSites, newest };
 }
 
 function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
-  const { liveSites, betaSites, newest } = useLabStatus();
+  const { liveSites, newest } = useLabStatus();
   const newestRelease = openSourceReleases.reduce((a, b) => (b.updated > a.updated ? b : a));
   return (
     <section style={home.hero}>
@@ -141,7 +140,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
             <HudCell
               k="Sites managed"
               v={String(managedWebsites.length)}
-              sub={`${liveSites} live · ${betaSites} in beta`}
+              sub={`${liveSites} live`}
             />
             <HudCell
               k="Open source"
