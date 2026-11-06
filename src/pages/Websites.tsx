@@ -162,7 +162,8 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl }: Brow
           <img
             src={thumbnail}
             srcSet={thumbnailSrcSet}
-            sizes="(min-width: 1024px) 540px, (min-width: 640px) 50vw, 100vw"
+            // A 260px-tall cover crop needs at least 462px of a 16:9 source.
+            sizes="(min-width: 1180px) 550px, (min-width: 701px) max(462px, calc((100vw - 86px) / 2)), max(462px, calc(100vw - 68px))"
             alt=""
             loading="lazy"
             decoding="async"

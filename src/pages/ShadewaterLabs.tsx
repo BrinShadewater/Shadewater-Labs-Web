@@ -342,7 +342,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                     <img
                       src={c.thumbnail}
                       srcSet={c.thumbnailSrcSet}
-                      sizes="(min-width: 1024px) 340px, 90vw"
+                      sizes="auto, (min-width: 901px) 310px, (min-width: 601px) 40vw, 80vw"
                       alt=""
                       loading="lazy"
                       decoding="async"

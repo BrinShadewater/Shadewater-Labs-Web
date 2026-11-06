@@ -118,7 +118,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       <img
         src={p.thumbnail.src}
         srcSet={p.thumbnail.srcSet}
-        sizes="(min-width: 1024px) 340px, 90vw"
+        // The 180px-tall cover crop needs a 320px-wide 16:9 source even in narrow slots.
+        sizes="(min-width: 769px) 320px, (min-width: 480px) max(320px, 40vw), max(320px, 80vw)"
         alt=""
         loading="lazy"
         decoding="async"
