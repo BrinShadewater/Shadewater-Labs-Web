@@ -119,7 +119,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
         src={p.thumbnail.src}
         srcSet={p.thumbnail.srcSet}
         // The 180px-tall cover crop needs a 320px-wide 16:9 source even in narrow slots.
-        sizes="(min-width: 769px) 320px, (min-width: 480px) max(320px, 40vw), max(320px, 80vw)"
+        sizes="(min-width: 1024px) 320px, (min-width: 640px) max(320px, calc((100vw - 186px) / 2)), max(320px, calc(100vw - 116px))"
         alt=""
         loading="lazy"
         decoding="async"
@@ -164,12 +164,15 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     >
       <section style={pp.section}>
         <style>{`
-          @media (max-width: 768px) {
-            .pp-projectsGrid { grid-template-columns: 1fr !important; }
-            .pp-toolbar { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+          .pp-projectsGrid { grid-template-columns: minmax(0, 1fr); }
+          @media (min-width: 640px) {
+            .pp-projectsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           }
-          @media (min-width: 480px) and (max-width: 768px) {
-            .pp-projectsGrid { grid-template-columns: repeat(2, 1fr) !important; }
+          @media (min-width: 1024px) {
+            .pp-projectsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+          }
+          @media (max-width: 768px) {
+            .pp-toolbar { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
           }
         `}</style>
         <a href="#current-projects" style={{ ...ad.btnGhost, marginBottom: 20 }}>

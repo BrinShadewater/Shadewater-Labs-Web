@@ -409,7 +409,6 @@ export function AuroraPage({
           .pp-heroInner { padding: 40px 20px 48px !important; }
           .pp-h1 { font-size: clamp(1.8rem, 7vw, 3rem) !important; }
           /* Grids */
-          .pp-projectsGrid { grid-template-columns: 1fr !important; }
           .pp-sitesGrid { grid-template-columns: 1fr !important; }
           .pp-trackGrid { grid-template-columns: 1fr !important; }
           .pp-section { padding: 48px 20px 0 !important; }
@@ -572,7 +571,7 @@ export const pp: Record<string, CSSProperties> = {
     boxShadow: '0 6px 20px hsl(186 90% 50% / 0.35)',
   },
 
-  projectsGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 },
+  projectsGrid: { display: 'grid', gap: 18 },
   projectCard: {
     // Column layout so the footer can be pinned to the bottom: grid stretches the
     // cards to equal height, and marginTop:auto on the footer keeps the links on
