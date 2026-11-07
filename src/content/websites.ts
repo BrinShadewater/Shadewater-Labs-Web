@@ -13,7 +13,7 @@ export const managedWebsites = [
     role: 'Creator hub',
     status: 'Live',
     description:
-      'The main Brin Shadewater home base for streams, reviews, community updates, sponsor information, and creator identity.',
+      'Brin Shadewater’s creator site for late-night streams, game and film reviews, and community updates.',
     updated: lastPush('brinshadewater'),
   },
   {
@@ -23,7 +23,7 @@ export const managedWebsites = [
     role: 'Technology studio',
     status: 'Live',
     description:
-      'The dedicated home for Labs projects, AI tools, managed websites, product experiments, and future technology notes.',
+      'The studio site for BrineSpace, open-source tools, managed websites, and creative technology prototypes.',
     updated: lastPush('shadewaterlabs'),
   },
   {
@@ -43,7 +43,7 @@ export const managedWebsites = [
     role: 'Print-prep editor',
     status: 'Live',
     description:
-      'A browser-based canvas editor for creator artwork: layers, background cleanup, looks, T-shirt mockups, and Printify-ready PNG exports. Projects stay local; AI cleanup is optional.',
+      'A canvas editor for apparel artwork with layers, background removal, upscaling, mockups, and Printify-ready PNG exports. Projects are saved in the browser. Optional AI cleanup sends the image to a server-side service.',
     updated: lastPush('inkmasterstudio'),
   },
   {
@@ -53,7 +53,7 @@ export const managedWebsites = [
     role: 'Film site',
     status: 'Live',
     description:
-      'A dedicated movie website for the Strange Harvest project, maintained as part of the Shadewater Labs managed web portfolio.',
+      'The official site for the 2025 horror mockumentary, with the trailer, viewing options, DVD information, press coverage, and behind-the-scenes material.',
     updated: lastPush('strangeharvestmovie'),
   },
   {

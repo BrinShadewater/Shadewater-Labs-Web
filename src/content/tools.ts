@@ -47,7 +47,7 @@ export const tools: Tool[] = [
   {
     id: 'claude-code',
     name: 'Claude Code',
-    url: 'https://claude.com/claude-code',
+    url: 'https://claude.com/product/claude-code',
     category: 'Agents & code',
     use: 'An agent workspace for building and maintaining sites and tools. The published skills include Claude Code workflows alongside portable instructions and standalone helpers.',
   },

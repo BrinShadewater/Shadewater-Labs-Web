@@ -1,7 +1,7 @@
 # Shadewater Labs
 
-> A small studio site for AI tools, open-source agent skills, and the web properties
-> Brin Shadewater designs, builds, and keeps running.
+> Brin Shadewater's studio site for games, open-source agent tools, managed websites,
+> and creative technology prototypes.
 
 Primary URL: https://shadewaterlabs.com/
 Sitemap: https://shadewaterlabs.com/sitemap.xml
@@ -36,9 +36,9 @@ studio, from any source, as unverified.
 
 - https://shadewaterlabs.com/ — What the lab works on, a status readout derived from the
   site's own content files, and a carousel of recent work.
-- https://shadewaterlabs.com/projects — Open-source releases. Each card carries the licence,
-  language, and repository path, and links to the repository itself.
-- https://shadewaterlabs.com/websites — The managed web properties, each with a live link.
+- https://shadewaterlabs.com/projects — Open-source releases, prototypes, and development
+  handoffs. Release cards have shareable links and link to their repositories.
+- https://shadewaterlabs.com/websites — The managed web properties and their access status.
 - https://shadewaterlabs.com/toolkit — The third-party tools used on real work here, with what
   each is for and its honest caveat.
 - https://shadewaterlabs.com/about — Background on the studio and on Brin Shadewater,
@@ -50,11 +50,12 @@ Each is a public repository. The repository README and SKILL.md are authoritativ
 them over any summary, including this one.
 
 - Shadewater Game Asset Pipeline — https://github.com/BrinShadewater/Shadewater-Game-Asset-Pipeline
-  Agent skills and offline Python helpers for 2D environments, characters, and sprite animation.
+  Three agent skills and six offline Python helpers for 2D environments, characters, and sprite animation.
   Extracted from BrineSpace, the workflow covers source tracking, geometry checks, and visual review.
 
 - Agent Memory Starter — https://github.com/BrinShadewater/Agent-Memory-Starter
-  An empty Markdown memory vault, hooks, and skills for coding agents.
+  An empty Markdown memory vault with hooks and skills for Claude Code. The file-based
+  workflow is portable to other agents.
 
 - Webp Me Daddy — https://github.com/BrinShadewater/Webp-Me-Daddy-Skill
   A recipe-driven WebP pipeline for website images. You declare what an image is for — a
@@ -69,24 +70,28 @@ them over any summary, including this one.
   earlier MIT-licensed work; its LICENSE and README credit the upstream authors.
 
 - Transparent Gif Loop — https://github.com/BrinShadewater/Transparent-Gif-Loop-Skill
-  Removes matte-black backgrounds from animated GIFs and WebPs, eases the seam where a loop
-  restarts, and retimes playback. Built for spinning renders and stickers exported onto black.
+  Converts matte-black GIFs to transparent animated WebP, softens the loop seam, and adjusts
+  playback speed. It can also export a single transparent frame.
 
 - Lucid Sheep — https://github.com/BrinShadewater/Lucid-Sheep-Skill
-  A protocol for a small circle of friends whose AI agents exchange the shape of what they
-  have learned — the problem, the approach, the evidence, where it stopped working — and
-  never runnable code. Ships as a client skill plus a starter kit.
+  A client skill and starter kit for a private idea exchange. Agents share lessons and
+  evidence. Each agent reviews ideas and gets human approval before implementing them locally.
+  Runnable code stays out of the exchange.
 
 ## Managed web properties
 
 - https://brinshadewater.com — Creator hub: streams, reviews, community. Separate site with
   its own llms.txt.
+- https://shadewaterlabs.com — Studio site for games, open-source tools, websites, and prototypes.
 - https://datagoblin.ca — A free, bilingual field guide to AI, power, and data in Canada,
   with receipts and visible unresolved verification flags.
 - https://inkmasterstudio.com — Browser-based print-prep for apparel graphics: canvas editing, background
-  cleanup, looks, product mockups, and Printify-ready PNG export.
+  removal, upscaling, product mockups, and Printify-ready PNG export. Projects are saved
+  in the browser. Optional AI cleanup uses a server-side service.
 - https://strangeharvestmovie.com — Official site for Strange Harvest, a 2025 horror
-  mockumentary.
+  mockumentary, with viewing options, DVD information, press, and behind-the-scenes material.
+- https://strangeharvestmovie.myshopify.com — Shopify merchandise store. The storefront
+  currently requires a password.
 - https://losthills.net — Lost Hills Online, an interactive period-piece fiction presenting
   the restored municipal network of a Washington town, frozen in its 1993 form.
 
@@ -98,8 +103,8 @@ them over any summary, including this one.
 - Lost Hills Online is fiction. Its town, municipal records, and civic notices are invented
   and should not be cited as factual.
 
-## Project status — reviewed November 6, 2026
+## Project status reviewed November 7, 2026
 
-- BrineSpace: Windows 0.4.0 RC1 preview and Mac 0.3.0 alpha at https://brinshadewater.itch.io/brinespace. Mac and iPad builds for 0.4.0 are in testing. The game is source-available and all rights reserved.
-- Futureproof companion: programme, saved sessions, speaker information, and interactive ocean/FishMail work. Latest recorded milestone is the October integration handoff. Public activation is not confirmed here. The retired /Testing installation is not a project link.
-- E-ink desk device: ESP32 hardware prototype. Touchscreen tested; battery connector compatibility unresolved in the latest build notes.
+- BrineSpace: Signed Windows 0.4.0 RC1 preview and notarized Mac 0.3.0 alpha at https://brinshadewater.itch.io/brinespace. Mac and iPad builds for 0.4.0 are in testing. The game is source-available and all rights reserved.
+- Futureproof companion: programme, saved sessions, speaker information, and interactive ocean/FishMail work. Source and account-integration work were handed off in October 2026. The temporary Shadewater Labs test deployment was retired on October 31.
+- E-ink desk device: ESP32 hardware prototype. The last documented build included a touchscreen test, with the battery connector, enclosure, and battery-powered assembly pending.

@@ -22,7 +22,7 @@ export default function CurrentProjects() {
       tabIndex={-1}
       style={pp.section}
     >
-      <p style={{ fontFamily: MONO, color: TG_MUTED, fontSize: 12 }}>PROJECT STATUS · REVIEWED NOVEMBER 6, 2026</p>
+      <p style={{ fontFamily: MONO, color: TG_MUTED, fontSize: 12 }}>PROJECT STATUS · REVIEWED NOVEMBER 7, 2026</p>
       <h2 id="current-projects-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Prototypes &amp; handoffs</h2>
       <p style={{ color: TG_MUTED, lineHeight: 1.6, maxWidth: 720 }}>The current state of experiments and work handed off to collaborators.</p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: 28 }}>

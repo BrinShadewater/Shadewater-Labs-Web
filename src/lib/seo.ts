@@ -116,7 +116,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
             '@type': 'CollectionPage',
             name: 'Shadewater Labs',
             url: buildCanonicalUrl('labs', undefined, 'labs'),
-            description: 'A catalog of AI tools, coding projects, and future-tech experiments by Brin Shadewater.',
+            description: LABS_DESCRIPTION,
           },
           {
             '@context': 'https://schema.org',
@@ -137,7 +137,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       return {
         title: `Projects | ${ORGANIZATION_NAME}`,
         description:
-          'Explore the active Shadewater Labs catalog of AI tools, coding projects, creative technology builds, and product experiments.',
+          'Browse released open-source tools, prototypes, and development handoffs from Shadewater Labs.',
         canonical: buildCanonicalUrl('projects', undefined, 'labs'),
         image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
         imageAlt: SHADEWATER_LABS_MARK_ALT,
@@ -150,7 +150,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
             '@type': 'CollectionPage',
             name: 'Shadewater Labs Projects',
             url: buildCanonicalUrl('projects', undefined, 'labs'),
-            description: 'The active catalog of Shadewater Labs projects and experiments.',
+            description: 'Open-source releases, prototypes, and development handoffs from Shadewater Labs.',
           },
           {
             '@context': 'https://schema.org',
@@ -171,7 +171,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       return {
         title: `Websites | ${ORGANIZATION_NAME}`,
         description:
-          'Managed web properties from Shadewater Labs, including Brin Shadewater, Shadewater Labs, and InkMaster Studio.',
+          'Websites designed and maintained through Shadewater Labs, including Data Goblin, InkMaster Studio, and the official Strange Harvest film site.',
         canonical: buildCanonicalUrl('websites', undefined, 'labs'),
         image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
         imageAlt: SHADEWATER_LABS_MARK_ALT,

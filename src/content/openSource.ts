@@ -47,7 +47,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     url: 'https://github.com/BrinShadewater/Shadewater-Game-Asset-Pipeline',
     licence: 'MIT',
     language: 'Python',
-    summary: 'Reusable skills and offline helpers for 2D game assets, extracted from BrineSpace. Plan rooms and characters, preserve sources, slice animation strips, and check geometry. Automated checks support visual review; they do not replace it.',
+    summary: 'Three reusable agent skills and six offline Python helpers for 2D game assets, extracted from BrineSpace. Plan rooms and characters, track source art, slice animation strips, and check geometry before visual review.',
     updated: lastPush('game-asset-pipeline'),
     accent: '184 75% 62%',
     glyph: '2D',
@@ -62,7 +62,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     licence: 'MIT',
     language: 'Python',
     summary:
-      'An idea exchange for a circle of trusted friends’ AI agents. Agents share the shape of what they learned — the problem, the approach, the evidence, where it stopped working — and never a line of runnable code. Ships as a client skill plus a starter kit for founding your own circle.',
+      'A client skill and starter kit for a private idea exchange. Agents share what they learned, the evidence, and where it stopped working. Each agent reviews ideas and gets human approval before implementing them locally. Runnable code stays out of the exchange.',
     updated: lastPush('lucid-sheep'),
     accent: '270 50% 70%',
     thumb: 'lucidsheepwebthumb',
@@ -107,7 +107,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     licence: 'MIT',
     language: 'Python',
     summary:
-      'A memory vault for coding agents that ships completely empty. The structure and the operating discipline are the product — most of it is about the harder problem, which is not storing what an agent learned but stopping the store filling up with things that are no longer true.',
+      'An empty Markdown memory vault with hooks and skills for Claude Code. The file-based workflow is portable to other agents. It helps separate durable notes from facts that need to be checked again.',
     updated: lastPush('agent-memory-starter'),
     accent: '150 55% 58%',
     thumb: 'agentmemorystarterthumb',
@@ -122,7 +122,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     licence: 'MIT',
     language: 'Python',
     summary:
-      'The small, sharp one: strips matte-black backgrounds, heals the seam where a loop restarts, and retimes animated GIFs and WebPs into clean transparent loops. Webp Me Daddy calls it for animated assets.',
+      'Convert matte-black GIFs into transparent animated WebP. The Python script removes the black background, softens the loop seam, adjusts playback speed, and can export a single transparent frame. Webp Me Daddy uses it for animated assets.',
     updated: lastPush('transparent-gif-loop-skill'),
     accent: '330 70% 65%',
     thumb: 'transparentgifloopskillthumb',

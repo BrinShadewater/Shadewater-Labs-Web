@@ -1,8 +1,8 @@
 export const brineSpace = {
   id: 'brinespace',
   name: 'BrineSpace',
-  summary: 'Draft rooms and rebuild an underwater station as BRINE, a damaged AI core. Carry discoveries into the next expedition.',
-  detail: 'The Windows 0.4.0 RC1 preview and Mac 0.3.0 alpha are available on itch.io. Mac and iPad builds for 0.4.0 are in testing.',
+  summary: 'Draft room cards and keep an underwater colony alive as BRINE, a damaged AI core. Earn Archived Data on expeditions to unlock blueprints, crew, and companions.',
+  detail: 'The signed Windows 0.4.0 RC1 preview and notarized Mac 0.3.0 alpha are available on itch.io. Mac and iPad builds for 0.4.0 are in testing.',
   url: 'https://brinshadewater.itch.io/brinespace',
 } as const;
 
@@ -14,7 +14,7 @@ export const currentProjects = [
     category: 'Festival software',
     status: 'Integration handoff',
     summary: 'A festival companion with a programme, saved sessions, speaker information, and an interactive ocean with FishMail.',
-    detail: 'The latest recorded milestone is the October source handoff and account-integration work. Public activation has not been confirmed here.',
+    detail: 'Source and account-integration work were handed off in October 2026. The temporary Shadewater Labs test deployment was retired on October 31.',
   },
   {
     id: 'eink-device',
@@ -22,6 +22,6 @@ export const currentProjects = [
     category: 'Hardware experiments',
     status: 'Hardware prototype',
     summary: 'An ESP32 e-ink device with custom software and a planned 3D-printed enclosure.',
-    detail: 'The touchscreen has been tested. Battery connector compatibility remains unresolved in the latest build notes; the wireless assembly is not complete.',
+    detail: 'The last documented build included a touchscreen test. The battery connector, enclosure, and battery-powered assembly were still pending.',
   },
 ] as const;
