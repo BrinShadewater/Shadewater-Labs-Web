@@ -1,10 +1,12 @@
 import CurrentProjects from '@/components/CurrentProjects';
-import { useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
+import { useLayoutEffect, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
+import { buildPath } from '@/lib/routes';
 import {
   AuroraPage,
   MONO,
   TG_DIM,
+  TG_MUTED,
   ad,
   adTone,
   pp,
@@ -40,6 +42,41 @@ interface ProjectCard {
 export default function Projects({ onNavigate }: ProjectsProps) {
 
   const [activeFilter, setActiveFilter] = useState('all');
+  const [linkedSlug, setLinkedSlug] = useState<string | null>(null);
+  const [shareFeedback, setShareFeedback] = useState<{ slug: string; manualUrl?: string } | null>(null);
+
+  useLayoutEffect(() => {
+    const followFragment = () => {
+      const slug = window.location.hash.slice(1);
+      const release = openSourceReleases.find((item) => item.id === slug);
+      setLinkedSlug(release?.id ?? null);
+      if (release) {
+        setActiveFilter((filter) => release.categories.includes(filter) ? filter : 'all');
+      }
+    };
+
+    followFragment();
+    window.addEventListener('hashchange', followFragment);
+    return () => window.removeEventListener('hashchange', followFragment);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!linkedSlug) return;
+    const card = document.getElementById(linkedSlug);
+    card?.focus({ preventScroll: true });
+    card?.scrollIntoView({ block: 'start' });
+  }, [linkedSlug]);
+
+  const copyProjectLink = async (slug: string) => {
+    const url = new URL(buildPath('projects'), window.location.origin);
+    url.hash = slug;
+    try {
+      await navigator.clipboard.writeText(url.href);
+      setShareFeedback({ slug });
+    } catch {
+      setShareFeedback({ slug, manualUrl: url.href });
+    }
+  };
 
   const cards: ProjectCard[] = [
     ...openSourceReleases.map((r): ProjectCard => ({
@@ -165,6 +202,11 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       <section style={pp.section}>
         <style>{`
           .pp-projectsGrid { grid-template-columns: minmax(0, 1fr); }
+          .pp-releaseCard:focus-visible, .pp-releaseCard:target {
+            outline: 2px solid hsl(186 80% 65%);
+            outline-offset: 3px;
+          }
+          [data-prerender-route] .pp-copyProjectLink { display: none; }
           @media (min-width: 640px) {
             .pp-projectsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           }
@@ -209,9 +251,21 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           </div>
         </div>
 
+        <p className="sr-only" role="status">
+          {shareFeedback && (shareFeedback.manualUrl
+            ? 'Automatic copying is unavailable. The project URL is ready to select.'
+            : 'Project link copied.')}
+        </p>
         <div style={pp.projectsGrid} className="pp-projectsGrid">
           {visibleCards.map((p) => (
-            <article key={p.slug} style={pp.projectCard}>
+            <article
+              key={p.slug}
+              id={p.slug}
+              tabIndex={-1}
+              aria-labelledby={`${p.slug}-title`}
+              className="pp-releaseCard"
+              style={pp.projectCard}
+            >
               <div
                 style={{
                   ...pp.projectGlow,
@@ -251,6 +305,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               {linkWrap(
                 p,
                 <h3
+                  id={`${p.slug}-title`}
                   style={{
                     ...pp.projectName,
                     ...(p.page || p.externalUrl ? { cursor: 'pointer' } : null),
@@ -304,6 +359,15 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               ) : null}
 
               <div style={pp.projectFoot}>
+                <button
+                  type="button"
+                  className="pp-copyProjectLink"
+                  aria-label={`Copy link to ${p.name}`}
+                  onClick={() => void copyProjectLink(p.slug)}
+                  style={{ color: TG_MUTED, fontSize: 14, cursor: 'pointer', minHeight: 32 }}
+                >
+                  Copy link {shareFeedback?.slug === p.slug && !shareFeedback.manualUrl && <span aria-hidden="true">✓</span>}
+                </button>
                 {p.page ? (
                   <a
                     href={'/' + p.page}
@@ -335,6 +399,16 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                   </span>
                 )}
               </div>
+              {shareFeedback?.slug === p.slug && shareFeedback.manualUrl && (
+                <input
+                  type="url"
+                  aria-label={`Project URL for ${p.name}`}
+                  readOnly
+                  value={shareFeedback.manualUrl}
+                  onFocus={(event) => event.currentTarget.select()}
+                  style={{ position: 'relative', width: '100%', marginTop: 8, padding: 8, border: '1px solid currentColor', borderRadius: 6, fontSize: 14 }}
+                />
+              )}
             </article>
           ))}
         </div>
