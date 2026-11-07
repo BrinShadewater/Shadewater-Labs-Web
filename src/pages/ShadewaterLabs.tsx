@@ -213,6 +213,8 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     accent: string;
     thumbnail?: string;
     thumbnailSrcSet?: string;
+    thumbnailAlt?: string;
+    thumbnailPosition?: CSSProperties['objectPosition'];
     logo?: { src: string; srcSet?: string };
     glyph?: string;
     statusLabel: string;
@@ -293,7 +295,10 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       name: brineSpace.name,
       blurb: `${brineSpace.summary} ${brineSpace.detail}`,
       accent: '184 75% 62%',
-      glyph: 'BRINE',
+      thumbnail: '/brinespace-windows-preview.webp',
+      thumbnailSrcSet: thumbSrcSet('brinespace-windows-preview'),
+      thumbnailAlt: 'Four connected rooms in BrineSpace, viewed from above.',
+      thumbnailPosition: 'center bottom',
       statusLabel: 'PLAYABLE PREVIEW',
       statusTone: 'hsl(150 70% 55%)',
       onClick: () => { window.open(brineSpace.url, '_blank', 'noopener,noreferrer'); },
@@ -363,10 +368,10 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                       src={c.thumbnail}
                       srcSet={c.thumbnailSrcSet}
                       sizes="auto, (min-width: 901px) 310px, (min-width: 601px) 40vw, 80vw"
-                      alt=""
+                      alt={c.thumbnailAlt ?? ''}
                       loading="lazy"
                       decoding="async"
-                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: c.thumbnailPosition ?? 'top' }}
                     />
                   ) : c.logo ? (
                     <img src={c.logo.src} srcSet={c.logo.srcSet} sizes="14rem" alt="" loading="lazy" decoding="async" style={home.projectLogo} />
