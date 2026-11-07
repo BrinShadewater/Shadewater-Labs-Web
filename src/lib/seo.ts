@@ -2,7 +2,7 @@
 // per-route shells and the runtime <Seo> read one source of truth, and Vite's config loader
 // resolves relative paths only — a "@/" specifier there reads as a bare package and the build
 // fails. Same reason brinshadewater.com's seo.ts is relative.
-import { currentProjects } from '../content/currentProjects';
+import { brineSpace } from '../content/currentProjects';
 import { tools } from '../content/tools';
 import { managedWebsites } from '../content/websites';
 import { openSourceReleases } from '../content/openSource';
@@ -121,7 +121,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
-            itemListElement: [...openSourceReleases, ...currentProjects.filter(project => project.url)].map((release, index) => ({
+            itemListElement: [brineSpace, ...openSourceReleases].map((release, index) => ({
               '@type': 'ListItem',
               position: index + 1,
               url: release.url,
@@ -155,7 +155,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           {
             '@context': 'https://schema.org',
             '@type': 'ItemList',
-            itemListElement: [...openSourceReleases, ...currentProjects.filter(project => project.url)].map((release, index) => ({
+            itemListElement: openSourceReleases.map((release, index) => ({
               '@type': 'ListItem',
               position: index + 1,
               url: release.url,

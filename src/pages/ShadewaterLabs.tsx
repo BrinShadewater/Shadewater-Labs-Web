@@ -1,7 +1,7 @@
 import CurrentProjects from '@/components/CurrentProjects';
 import { useState, type CSSProperties, type MouseEvent } from 'react';
 import { managedWebsites } from '@/content/websites';
-import { BRINESPACE_PLAY_URL } from '@/content/currentProjects';
+import { brineSpace } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
 import { PAGE_HEADING_ID } from '@/lib/routes';
@@ -101,13 +101,13 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
         <p style={home.heroLede}>
           Brin Shadewater builds games, agent tools, websites, and hardware experiments.{' '}
           <a href="#current-projects" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>
-            See current projects
+            See prototypes and handoffs
           </a>.
         </p>
 
         <div style={home.heroCtas}>
           <a
-            href={BRINESPACE_PLAY_URL}
+            href={brineSpace.url}
             target="_blank"
             rel="noopener noreferrer"
             style={ad.btnPrimary}
@@ -207,7 +207,6 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
   interface CarouselCard {
     key: string;
-    updated: string;
     badge: string;
     name: string;
     blurb: string;
@@ -224,6 +223,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     href: string;
     external?: boolean;
   }
+  type DatedCarouselCard = CarouselCard & { updated: string };
 
   const THUMBS: Record<string, { src: string; srcSet: string }> = {
     brinshadewater: { src: '/brinshadewaterwebthumb.webp', srcSet: '/brinshadewaterwebthumb-320w.webp 320w, /brinshadewaterwebthumb-480w.webp 480w, /brinshadewaterwebthumb.webp 800w' },
@@ -235,27 +235,25 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     losthills: { src: '/losthillswebthumb.webp', srcSet: '/losthillswebthumb-320w.webp 320w, /losthillswebthumb-480w.webp 480w, /losthillswebthumb.webp 800w' },
   };
 
-  const projectCards: CarouselCard[] = [
-    ...openSourceReleases.map((r): CarouselCard => ({
-      key: r.id,
-      updated: r.updated,
-      badge: 'OPEN SOURCE',
-      name: r.name,
-      blurb: r.summary,
-      accent: r.accent,
-      thumbnail: r.thumb ? `/${r.thumb}.webp` : undefined,
-      thumbnailSrcSet: r.thumb ? thumbSrcSet(r.thumb) : undefined,
-      glyph: r.glyph,
-      statusLabel: 'RELEASED',
-      statusTone: 'hsl(150 70% 55%)',
-      onClick: () => { window.open(r.url, '_blank', 'noopener,noreferrer'); },
-      ctaLabel: 'View on GitHub',
-      href: r.url,
-      external: true,
-    })),
-  ];
+  const projectCards = openSourceReleases.map((r): DatedCarouselCard => ({
+    key: r.id,
+    updated: r.updated,
+    badge: 'OPEN SOURCE',
+    name: r.name,
+    blurb: r.summary,
+    accent: r.accent,
+    thumbnail: r.thumb ? `/${r.thumb}.webp` : undefined,
+    thumbnailSrcSet: r.thumb ? thumbSrcSet(r.thumb) : undefined,
+    glyph: r.glyph,
+    statusLabel: 'RELEASED',
+    statusTone: 'hsl(150 70% 55%)',
+    onClick: () => { window.open(r.url, '_blank', 'noopener,noreferrer'); },
+    ctaLabel: 'View on GitHub',
+    href: r.url,
+    external: true,
+  }));
 
-  const siteCards: CarouselCard[] = managedWebsites.map((s) => {
+  const siteCards = managedWebsites.map((s): DatedCarouselCard => {
     const thumb = THUMBS[s.id];
     const ACCENTS: Record<string, string> = {
       brinshadewater: '186 85% 60%',
@@ -284,10 +282,27 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     };
   });
 
-  // Newest first. ISO YYYY-MM-DD sorts lexicographically, so this is chronological.
-  const cards: CarouselCard[] = [...projectCards, ...siteCards].sort((a, b) =>
+  // Feature the playable game first, then sort releases and sites by repo activity.
+  const recentCards = [...projectCards, ...siteCards].sort((a, b) =>
     b.updated.localeCompare(a.updated),
   );
+  const cards: CarouselCard[] = [
+    {
+      key: brineSpace.id,
+      badge: 'GAME',
+      name: brineSpace.name,
+      blurb: `${brineSpace.summary} ${brineSpace.detail}`,
+      accent: '184 75% 62%',
+      glyph: 'BRINE',
+      statusLabel: 'PLAYABLE PREVIEW',
+      statusTone: 'hsl(150 70% 55%)',
+      onClick: () => { window.open(brineSpace.url, '_blank', 'noopener,noreferrer'); },
+      ctaLabel: 'Play on itch.io',
+      href: brineSpace.url,
+      external: true,
+    },
+    ...recentCards,
+  ];
   const [idx, setIdx] = useState(0);
   const total = cards.length;
 
@@ -475,8 +490,8 @@ function ADComing() {
         <div style={home.comingHead}>
           <SectionHead
             kicker="Now"
-            title="In the queue"
-            sub="What the lab is actually working on. No ship dates — intent is checkable, a date is a promise."
+            title="Work in progress"
+            sub="Development and maintenance underway."
             align="left"
           />
         </div>

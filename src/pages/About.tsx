@@ -273,7 +273,7 @@ export default function About({ onNavigate }: AboutProps) {
             </div>
 
             <p style={paraStyle}>
-              Recent work includes BrineSpace, an underwater station-restoration game; the open-source tools developed alongside it; Data Goblin’s bilingual reader; and InkMaster’s canvas-based print-prep workflow. GIST and the e-ink desk device are earlier experiments, with their current limits recorded on the projects page.
+              Recent work includes BrineSpace, an underwater station-restoration game, and the open-source tools developed alongside it. Other projects include Data Goblin’s bilingual reader, InkMaster’s canvas-based print-prep workflow, and an e-ink desk device prototype.
             </p>
             <p style={{ ...paraStyle, color: 'hsl(45 14% 68%)', fontSize: 14.5 }}>
               His work combines technical problem solving with cinematic thinking, with a focus on building thoughtful, future-facing systems that bridge technology, storytelling, and human creativity. Shadewater Labs serves as both a production studio and experimental sandbox — a space for developing new ideas across film, software, design, and emerging media.

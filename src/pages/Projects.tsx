@@ -160,7 +160,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       sectionLabel="Projects"
       eyebrow="CATALOG"
       title="Tools, in the open."
-      lede="Open-source tools built for the work here, then published. Each release links to its repository. Games and prototypes below have their own status labels."
+      lede="Open-source tools built for the work here, then published. Each release links to its repository."
     >
       <section style={pp.section}>
         <style>{`
@@ -176,7 +176,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           }
         `}</style>
         <a href="#current-projects" style={{ ...ad.btnGhost, marginBottom: 20 }}>
-          See current projects <span aria-hidden="true">↓</span>
+          See prototypes and handoffs <span aria-hidden="true">↓</span>
         </a>
         <div style={pp.toolbar} className="pp-toolbar">
           <div style={pp.toolbarMono}>

@@ -21,7 +21,7 @@ site at brinshadewater.com. It covers three things:
      to an interactive fiction piece to a film's official site.
 
 3. Games and prototypes
-   - BrineSpace playable alpha, GIST concept work, hardware experiments, and the Futureproof companion integration handoff.
+   - BrineSpace playable preview, hardware experiments, and the Futureproof companion integration handoff.
    - The toolkit page records third-party tools actually used here.
 
 ## A note on how this site states things
@@ -101,6 +101,5 @@ them over any summary, including this one.
 ## Project status — reviewed November 6, 2026
 
 - BrineSpace: Windows 0.4.0 RC1 preview and Mac 0.3.0 alpha at https://brinshadewater.itch.io/brinespace. Mac and iPad builds for 0.4.0 are in testing. The game is source-available and all rights reserved.
-- GIST (formerly Babel Chat): communication and translation concept prototype. Interface mockups and product direction exist; meeting, CLI, and chat integrations are proposed, not released.
 - Futureproof companion: programme, saved sessions, speaker information, and interactive ocean/FishMail work. Latest recorded milestone is the October integration handoff. Public activation is not confirmed here. The retired /Testing installation is not a project link.
 - E-ink desk device: ESP32 hardware prototype. Touchscreen tested; battery connector compatibility unresolved in the latest build notes.
