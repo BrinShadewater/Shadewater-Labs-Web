@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 
 const routes = [
-  ['', /The studio for weird-good/, /AI tools and tech experiments/],
+  ['', /The studio for weird-good/, /games, tools, and experiments/],
   ['projects', /Tools, in the open\./, /Lucid Sheep/],
   ['websites', /Managed web properties\./, /InkMaster Studio/],
   ['toolkit', /The toolkit\./, /Third-party tools/],

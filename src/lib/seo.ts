@@ -28,6 +28,7 @@ type SeoConfig = {
 
 const BRAND_NAME = 'Brin Shadewater';
 const ORGANIZATION_NAME = 'Shadewater Labs';
+const LABS_TITLE = 'Shadewater Labs | Games, Open-Source Tools & Experiments';
 const LABS_DESCRIPTION =
   'Games, open-source agent tools, managed websites, and creative technology prototypes from Shadewater Labs in Vancouver.';
 const SAME_AS_LINKS = [
@@ -102,7 +103,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
   switch (page) {
     case 'labs':
       return {
-        title: `Shadewater Labs | AI Tools, Web Apps & Tech Experiments`,
+        title: LABS_TITLE,
         description: LABS_DESCRIPTION,
         canonical: buildCanonicalUrl('labs', undefined, 'labs'),
         image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
@@ -267,7 +268,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       };
     default:
       return {
-        title: `Shadewater Labs | AI Tools, Web Apps & Tech Experiments`,
+        title: LABS_TITLE,
         description: LABS_DESCRIPTION,
         canonical: `${LABS_ORIGIN}/`,
         image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
