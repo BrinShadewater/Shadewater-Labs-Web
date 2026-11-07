@@ -1,7 +1,7 @@
 import CurrentProjects from '@/components/CurrentProjects';
 import { useLayoutEffect, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
-import { buildPath } from '@/lib/routes';
+import { buildProjectHref } from '@/lib/routes';
 import {
   AuroraPage,
   MONO,
@@ -68,8 +68,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   }, [linkedSlug]);
 
   const copyProjectLink = async (slug: string) => {
-    const url = new URL(buildPath('projects'), window.location.origin);
-    url.hash = slug;
+    const url = new URL(buildProjectHref(slug), window.location.origin);
     try {
       await navigator.clipboard.writeText(url.href);
       setShareFeedback({ slug });

@@ -69,6 +69,10 @@ export function buildPath(page: string, _noteId?: string, _site: SiteKey = 'labs
   return LABS_STATIC_PATHS[page] ?? LABS_STATIC_PATHS.labs;
 }
 
+export function buildProjectHref(slug: string) {
+  return `${buildPath('projects')}#${slug}`;
+}
+
 export function getOwnerSite(_page: string): SiteKey {
   return 'labs';
 }

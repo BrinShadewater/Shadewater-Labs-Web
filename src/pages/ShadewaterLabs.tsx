@@ -4,7 +4,7 @@ import { managedWebsites } from '@/content/websites';
 import { brineSpace } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
-import { PAGE_HEADING_ID } from '@/lib/routes';
+import { buildProjectHref, PAGE_HEADING_ID } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES,
@@ -219,11 +219,11 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     glyph?: string;
     statusLabel: string;
     statusTone: string;
-    onClick: () => void;
     ctaLabel: string;
     /** Real destination, so the card title is a focusable link and not a click-only div. */
     href: string;
     external?: boolean;
+    repoUrl?: string;
   }
   type DatedCarouselCard = CarouselCard & { updated: string };
 
@@ -249,10 +249,9 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     glyph: r.glyph,
     statusLabel: 'RELEASED',
     statusTone: 'hsl(150 70% 55%)',
-    onClick: () => { window.open(r.url, '_blank', 'noopener,noreferrer'); },
-    ctaLabel: 'View on GitHub',
-    href: r.url,
-    external: true,
+    ctaLabel: 'View project',
+    href: buildProjectHref(r.id),
+    repoUrl: r.url,
   }));
 
   const siteCards = managedWebsites.map((s): DatedCarouselCard => {
@@ -277,7 +276,6 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       thumbnailSrcSet: thumb?.srcSet,
       statusLabel: s.status.toUpperCase(),
       statusTone: s.status === 'Live' ? 'hsl(150 70% 55%)' : 'hsl(36 85% 62%)',
-      onClick: () => { window.open(s.url, '_blank', 'noopener,noreferrer'); },
       ctaLabel: 'Visit site',
       href: s.url,
       external: true,
@@ -301,7 +299,6 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       thumbnailPosition: 'center bottom',
       statusLabel: 'PLAYABLE PREVIEW',
       statusTone: 'hsl(150 70% 55%)',
-      onClick: () => { window.open(brineSpace.url, '_blank', 'noopener,noreferrer'); },
       ctaLabel: 'Play on itch.io',
       href: brineSpace.url,
       external: true,
@@ -323,7 +320,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
   return (
     <section id="labs-projects" style={home.section} className="home-section">
-      <SectionHead kicker="Work" title="Projects and managed sites" sub="Browse the cards for links to featured sites and repositories." />
+      <SectionHead kicker="Work" title="Projects and managed sites" sub="Explore open-source projects, play BrineSpace, and visit managed sites." />
       <style>{`
         .carousel-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         @media (max-width: 900px) {
@@ -346,7 +343,12 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
               <article
                 key={'slot-' + offset}
                 className={'carousel-slot-' + offset}
-                onClick={c.onClick}
+                onClick={(event) => {
+                  // Let title and action links handle their own navigation.
+                  if (!(event.target instanceof Element) || event.target.closest('a')) return;
+                  if (c.external) window.open(c.href, '_blank', 'noopener,noreferrer');
+                  else window.location.assign(c.href);
+                }}
                 style={{
                   ...home.projectCard,
                   cursor: 'pointer',
@@ -385,15 +387,6 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                   <a
                     href={c.href}
                     {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    onClick={(e) => {
-                      // The card's onClick is a mouse convenience; the link is the real
-                      // control. Stop propagation so we don't navigate twice.
-                      e.stopPropagation();
-                      if (!c.external) {
-                        e.preventDefault();
-                        c.onClick();
-                      }
-                    }}
                     style={{ color: 'inherit', textDecoration: 'none', outlineOffset: 4 }}
                   >
                     {c.name}
@@ -404,20 +397,27 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                   <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(' + c.accent + ' / 0.6)' }}>
                     {offset === 0 ? '● ' : '○ '}{(idx + offset) % total + 1}/{total}
                   </span>
-                  <a
-                    href={c.href}
-                    {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (!c.external) {
-                        e.preventDefault();
-                        c.onClick();
-                      }
-                    }}
-                    style={{ ...home.projectLink, color: 'hsl(' + c.accent + ')' }}
-                  >
-                    {c.ctaLabel} <span style={{ marginLeft: 4 }}>{'↗'}</span>
-                  </a>
+                  <div style={home.projectActions}>
+                    <a
+                      href={c.href}
+                      {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      aria-label={c.repoUrl ? `View project: ${c.name}` : undefined}
+                      style={{ ...home.projectLink, color: 'hsl(' + c.accent + ')' }}
+                    >
+                      {c.ctaLabel} <span aria-hidden="true" style={{ marginLeft: 4 }}>{c.external ? '↗' : '→'}</span>
+                    </a>
+                    {c.repoUrl && (
+                      <a
+                        href={c.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`GitHub repository for ${c.name}`}
+                        style={home.projectRepoLink}
+                      >
+                        GitHub <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </article>
             );
@@ -679,7 +679,9 @@ const home: Record<string, CSSProperties> = {
     marginTop: 'auto', paddingTop: 16, borderTop: '1px solid hsl(186 30% 30% / 0.3)',
     gap: 8,
   },
-  projectLink: { display: 'inline-flex', alignItems: 'center', marginLeft: 'auto', fontWeight: 600, fontSize: 14, cursor: 'pointer', textDecoration: 'none' },
+  projectActions: { display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'center', gap: '4px 12px', marginLeft: 'auto' },
+  projectLink: { display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: 14, textDecoration: 'none' },
+  projectRepoLink: { color: TG_MUTED, fontSize: 13, textDecoration: 'none' },
   carouselArrow: {
     background: 'hsl(200 30% 10%)', border: '1px solid hsl(186 50% 40% / 0.3)', color: 'hsl(186 60% 75%)',
     borderRadius: 999, flex: '0 0 36px', height: 36, cursor: 'pointer', fontSize: 16,
