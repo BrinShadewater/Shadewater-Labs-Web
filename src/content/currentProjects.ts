@@ -15,7 +15,7 @@ export const currentProjects = [
     status: '2026 festival edition',
     summary: 'The companion for Vancouver’s October 28–30, 2026 Futureproof Festival, with a searchable programme, speaker profiles, and a personal schedule.',
     detail: 'Built for the 2026 festival. Visit Futureproof for the programme, event photos, and festival updates.',
-    image: { src: '/futureproof-companion-hero.webp', alt: 'The Festival Companion programme with day tabs, search, and the My Plan sidebar.' },
+    image: { src: '/futureproof-companion-dark.webp', alt: 'The Festival Companion programme in dark mode, with day tabs, search, and the My Plan sidebar.' },
     link: { label: 'Visit Futureproof', href: 'https://www.futureproof.website/' },
   },
   {
@@ -26,7 +26,7 @@ export const currentProjects = [
     summary: 'An interactive aquarium built into the Futureproof Festival Companion. Attendees choose a fish and send private notes that travel across the ocean before arriving in the recipient’s inbox.',
     detail: 'Try the Shadewater Labs demo. Pick a nickname, choose a fish, and send a note to another swimmer.',
     image: { src: '/fishmail-demo-hero.webp', alt: 'Illustrated fish swimming through the FishMail aquarium among kelp and coral.' },
-    link: { label: 'Try FishMail', href: '/Fishmail' },
+    link: { label: 'Try FishMail', href: '/fishmail' },
   },
   {
     id: 'eink-device',

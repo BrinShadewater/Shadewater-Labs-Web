@@ -55,6 +55,11 @@
   ],
   "redirects": [
     {
+      "source": "/Fishmail/:path*",
+      "destination": "/fishmail/:path*",
+      "permanent": true
+    },
+    {
       "source": "/shadewater-seo-report",
       "destination": "/projects",
       "permanent": true
@@ -81,12 +86,12 @@
       "destination": "/api/fishmail-demo?route=:path*"
     },
     {
-      "source": "/Fishmail",
-      "destination": "/Fishmail/index.html"
+      "source": "/fishmail",
+      "destination": "/fishmail/index.html"
     },
     {
-      "source": "/Fishmail/ocean",
-      "destination": "/Fishmail/index.html"
+      "source": "/fishmail/ocean",
+      "destination": "/fishmail/index.html"
     },
     {
       "source": "/",

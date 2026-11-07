@@ -24,8 +24,8 @@ The companion includes the searchable programme, speaker profiles, and a persona
 
 ## Shadewater Labs FishMail demo
 
-[The public demo](https://shadewaterlabs.com/Fishmail) reuses the former testing application's FishMail interface and storage code. The separate Neon event row is `shadewater-fishmail-demo-v1`. The first request creates it if needed using the existing server credentials and schema. The browser uses the same polling model as the former FishMail view. The legacy Ably key stays server side.
+[The public demo](https://shadewaterlabs.com/fishmail) reuses the former testing application's FishMail interface and storage code. The separate Neon event row is `shadewater-fishmail-demo-v1`. The first request creates it if needed using the existing server credentials and schema. The browser uses the same polling model as the former FishMail view. The legacy Ably key stays server side.
 
 The FishMail API permits guest joining, fish selection, private messages, recovery, and the ocean display. It uses its own cookie and excludes festival announcements, operator routes, and shared chat. The festival's original URLs above are retained here as a historical reference.
 
-The generated client is in `public/Fishmail`. It was built from a staged copy of the local Futureproof Companion source with only the FishMail and Big Ocean routes, the demo API path, and guest controls. The project card images use a signed-out programme screenshot and the restored aquarium populated with fictional local test fish.
+The generated client is in `public/fishmail`. It was built from a staged copy of the local Futureproof Companion source with only the FishMail and Big Ocean routes, the demo API path, and guest controls. The project card images use a signed-out programme screenshot in dark mode and the restored aquarium populated with fictional local test fish.
