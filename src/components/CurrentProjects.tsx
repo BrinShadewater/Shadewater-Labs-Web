@@ -1,16 +1,17 @@
 import { useEffect, useRef } from 'react';
 import { currentProjects } from '@/content/currentProjects';
-import { MONO, TG_MUTED, pp } from '@/components/aurora/chrome';
+import { MONO, TG_MUTED, ad, pp } from '@/components/aurora/chrome';
 
 export default function CurrentProjects() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (section && window.location.hash === '#' + section.id) {
-      // React replaces the prerendered section after the browser resolves the fragment.
-      section.focus({ preventScroll: true });
-      section.scrollIntoView();
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (target && section?.contains(target)) {
+      // React replaces prerendered targets after the browser resolves the fragment.
+      target.focus({ preventScroll: true });
+      target.scrollIntoView();
     }
   }, []);
 
@@ -27,14 +28,28 @@ export default function CurrentProjects() {
       <p style={{ color: TG_MUTED, lineHeight: 1.6, maxWidth: 720 }}>The current state of experiments and work handed off to collaborators.</p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: 28 }}>
         {currentProjects.map(project => (
-          <article key={project.id} style={{ ...pp.projectCard, padding: 26 }}>
+          <article
+            key={project.id}
+            id={project.id}
+            aria-labelledby={`${project.id}-heading`}
+            tabIndex={-1}
+            style={{ ...pp.projectCard, padding: 26 }}
+          >
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'space-between', fontFamily: MONO, fontSize: 11, color: TG_MUTED }}>
               <span>{project.category}</span>
               <span style={{ color: 'hsl(36 70% 75%)' }}>{project.status}</span>
             </div>
-            <h3 style={{ ...pp.projectName, marginTop: 20 }}>{project.name}</h3>
+            <h3 id={`${project.id}-heading`} style={{ ...pp.projectName, marginTop: 20 }}>{project.name}</h3>
             <p style={pp.projectBlurb}>{project.summary}</p>
             <p style={{ color: TG_MUTED, lineHeight: 1.6, fontSize: 14 }}>{project.detail}</p>
+            {'link' in project && (
+              <a
+                href={project.link.href}
+                style={{ ...ad.btnGhost, alignSelf: 'flex-start', marginTop: 16 }}
+              >
+                {project.link.label} <span aria-hidden="true">↗</span>
+              </a>
+            )}
           </article>
         ))}
       </div>

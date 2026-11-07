@@ -10,11 +10,21 @@ export const brineSpace = {
 export const currentProjects = [
   {
     id: 'futureproof',
-    name: 'Futureproof companion',
+    name: 'Futureproof Festival Companion',
     category: 'Festival software',
-    status: 'Integration handoff',
-    summary: 'A festival companion with a programme, saved sessions, speaker information, and an interactive ocean with FishMail.',
-    detail: 'Source and account-integration work were handed off in October 2026. The temporary Shadewater Labs test deployment was retired on October 31.',
+    status: '2026 festival edition',
+    summary: 'The companion for Vancouver’s October 28–30, 2026 Futureproof Festival, with a searchable programme, speaker profiles, and a personal schedule.',
+    detail: 'The festival hosts the companion on its own site. The programme is available without an attendee account while the festival keeps it online.',
+    link: { label: 'Open festival companion', href: 'https://www.futureproof.website/app/' },
+  },
+  {
+    id: 'fishmail',
+    name: 'FishMail',
+    category: 'Interactive ocean',
+    status: '2026 festival edition',
+    summary: 'An interactive aquarium built into the Futureproof Festival Companion. Attendees choose a fish and send private notes that travel across the ocean before arriving in the recipient’s inbox.',
+    detail: 'The festival hosts this edition alongside the companion. Sending and receiving FishMail requires a Futureproof attendee sign-in.',
+    link: { label: 'Open FishMail', href: 'https://www.futureproof.website/app/fish-mail/' },
   },
   {
     id: 'eink-device',

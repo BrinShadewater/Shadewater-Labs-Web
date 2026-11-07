@@ -106,5 +106,6 @@ them over any summary, including this one.
 ## Project status reviewed November 7, 2026
 
 - BrineSpace: Signed Windows 0.4.0 RC1 preview and notarized Mac 0.3.0 alpha at https://brinshadewater.itch.io/brinespace. Mac and iPad builds for 0.4.0 are in testing. The game is source-available and all rights reserved.
-- Futureproof companion: programme, saved sessions, speaker information, and interactive ocean/FishMail work. Source and account-integration work were handed off in October 2026. The temporary Shadewater Labs test deployment was retired on October 31.
+- [Futureproof Festival Companion](https://shadewaterlabs.com/projects#futureproof): Searchable programme, speaker profiles, and a personal schedule for the October 28–30, 2026 Vancouver festival. The [festival-hosted companion](https://www.futureproof.website/app/) has a public programme while the festival keeps the app online.
+- [FishMail](https://shadewaterlabs.com/projects#fishmail): An interactive aquarium inside the companion. Attendees select a fish and send private notes that travel across the ocean before arriving. The [festival edition](https://www.futureproof.website/app/fish-mail/) requires an attendee sign-in for messaging.
 - E-ink desk device: ESP32 hardware prototype. The last documented build included a touchscreen test, with the battery connector, enclosure, and battery-powered assembly pending.
