@@ -27,7 +27,7 @@ export type AuroraNavigate = (page: string) => void;
 // Derived, because the hardcoded version outlived the pages it advertised: it was
 // still naming a product page months after that page was retired, on every route.
 const AD_SIGNALS = [
-  'Games, open-source tools, and experiments',
+  'AI tools and creative-tech experiments',
   ...openSourceReleases.map((r) => `${r.name} · ${r.kicker}`),
   'Managed websites, built and maintained',
 ];

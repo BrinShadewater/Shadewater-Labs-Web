@@ -95,7 +95,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
         <h1 id={PAGE_HEADING_ID} tabIndex={-1} style={home.heroTitle} className="home-heroTitle">
           The studio for <span style={home.heroAccent}>weird-good</span>
           <br />
-          games, tools, and experiments.
+          AI tools and tech experiments.
         </h1>
 
         <p style={home.heroLede}>
