@@ -1,6 +1,7 @@
 import CurrentProjects from '@/components/CurrentProjects';
 import { useState, type CSSProperties, type MouseEvent } from 'react';
 import { managedWebsites } from '@/content/websites';
+import { BRINESPACE_PLAY_URL } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
 import { PAGE_HEADING_ID } from '@/lib/routes';
@@ -98,17 +99,21 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
         </h1>
 
         <p style={home.heroLede}>
-          Brin Shadewater builds games, agent tools, websites, and hardware experiments.
-          Play BrineSpace, explore the released tools, or follow the prototypes taking shape.
+          Brin Shadewater builds games, agent tools, websites, and hardware experiments.{' '}
+          <a href="#current-projects" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+            See current projects
+          </a>.
         </p>
 
         <div style={home.heroCtas}>
           <a
-            href="#current-projects"
+            href={BRINESPACE_PLAY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             style={ad.btnPrimary}
           >
-            <span>See current projects</span>
-            <span aria-hidden="true" style={home.btnArrow}>↓</span>
+            <span>Play BrineSpace</span>
+            <span aria-hidden="true" style={home.btnArrow}>↗</span>
           </a>
           <a
             href="/projects"

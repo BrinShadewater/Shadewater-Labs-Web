@@ -1,3 +1,5 @@
+export const BRINESPACE_PLAY_URL = 'https://brinshadewater.itch.io/brinespace';
+
 /** Public-facing summaries; evidence and limits are recorded in docs/CONTENT-REVIEW-2026-11-06.md. */
 export const currentProjects = [
   {
@@ -6,8 +8,8 @@ export const currentProjects = [
     category: 'Game development',
     status: 'Playable alpha',
     summary: 'An underwater station-restoration roguelite. Play BRINE, a damaged AI core rebuilding through room drafting, resource management, and discoveries that carry between expeditions.',
-    detail: 'Windows v0.3.0 Manta Ray and a Mac alpha are available on itch.io. Large-station performance is still being worked on; iPad remains in testing with no public download.',
-    url: 'https://brinshadewater.itch.io/brinespace',
+    detail: 'The Windows 0.4.0 RC1 preview and Mac 0.3.0 alpha are available on itch.io. Mac and iPad builds for 0.4.0 are in testing.',
+    url: BRINESPACE_PLAY_URL,
     linkLabel: 'Play on itch.io',
   },
   {
