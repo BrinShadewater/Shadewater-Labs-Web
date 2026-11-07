@@ -20,7 +20,7 @@ export default function CurrentProjects() {
       id="current-projects"
       aria-labelledby="current-projects-heading"
       tabIndex={-1}
-      style={{ ...pp.section, scrollMarginTop: 80 }}
+      style={pp.section}
     >
       <p style={{ fontFamily: MONO, color: TG_MUTED, fontSize: 12 }}>PROJECT STATUS · REVIEWED NOVEMBER 6, 2026</p>
       <h2 id="current-projects-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Prototypes &amp; handoffs</h2>

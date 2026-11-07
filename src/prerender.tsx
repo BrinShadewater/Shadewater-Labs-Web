@@ -17,6 +17,8 @@ export function renderRoute(page: string) {
       <noscript><style>{`
         .ad-hamburger { display: none !important; }
         @media (max-width: 768px) {
+          html { --ad-nav-height: 0px; }
+          .ad-nav { position: relative; }
           .ad-navLinks { display: flex !important; flex-direction: column; gap: 4px !important; }
         }
       `}</style></noscript>

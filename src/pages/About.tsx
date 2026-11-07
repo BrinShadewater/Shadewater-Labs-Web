@@ -305,7 +305,6 @@ export default function About({ onNavigate }: AboutProps) {
               tabIndex={-1}
               style={{
                 marginTop: 34,
-                scrollMarginTop: 80,
                 padding: '22px 24px',
                 borderRadius: 18,
                 background: 'hsl(200 30% 8% / 0.7)',

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useContext, useMemo, useState, useRef, useEffect, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
+import { useContext, useMemo, useState, useRef, useEffect, useLayoutEffect, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SMALL_HEIGHT,
   SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC,
@@ -80,7 +80,26 @@ export function ADNav({
   active?: string;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
+
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const root = document.documentElement;
+    const updateHeight = () => {
+      root.style.setProperty('--ad-nav-height', `${nav.offsetHeight}px`);
+    };
+    // Set the offset before the page restores a bookmarked heading.
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(nav);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty('--ad-nav-height');
+    };
+  }, []);
+
   const navLinks: Array<{ label: string; page: string }> = [
     { label: 'Labs', page: 'labs' },
     { label: 'Projects', page: 'projects' },
@@ -97,7 +116,9 @@ export function ADNav({
 
   return (
     <nav
+      ref={navRef}
       aria-label="Primary"
+      className={menuOpen ? 'ad-nav ad-navMenuOpen' : 'ad-nav'}
       style={ad.nav}
       onKeyDown={(event) => {
         if (!menuOpen || event.key !== 'Escape') return;
@@ -124,6 +145,7 @@ export function ADNav({
           flex-shrink: 0;
         }
         @media (max-width: 768px) {
+          .ad-navMenuOpen { max-height: 100dvh; overflow-y: auto; }
           .ad-navInner { flex-wrap: wrap !important; }
           .ad-hamburger { display: flex !important; align-items: center; justify-content: center; }
           .ad-navLinks { display: none !important; width: 100% !important; }
@@ -845,7 +867,8 @@ export const ad: Record<string, CSSProperties> = {
     backgroundImage: 'linear-gradient(180deg, #02080f 0%, #03101a 60%, #020a13 100%)',
     minHeight: '100%',
     position: 'relative',
-    overflow: 'hidden',
+    // Clip the background without creating a scroll container for the sticky nav.
+    overflow: 'clip',
   },
 
   ticker: {
@@ -868,7 +891,7 @@ export const ad: Record<string, CSSProperties> = {
   tickerSep: { color: 'hsl(186 30% 30%)' },
 
   nav: {
-    position: 'sticky', top: 0, zIndex: 20,
+    zIndex: 20,
     // Nearly-opaque so the backdrop-filter has little work to do. The blurred
     // mesh blobs behind this bar animate forever, and a wide translucent
     // backdrop-filter forces a re-blur of that region every frame while
