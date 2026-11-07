@@ -5,7 +5,7 @@ import {
   SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC,
   SHADEWATER_LABS_MARK_CROPPED_SMALL_WIDTH,
 } from '@/lib/brandAssets';
-import { LABS_ORIGIN, BRIN_ORIGIN, PAGE_HEADING_ID } from '@/lib/routes';
+import { LABS_ORIGIN, BRIN_ORIGIN, CONTACT_SECTION_ID, PAGE_HEADING_ID } from '@/lib/routes';
 import { openSourceReleases } from '@/content/openSource';
 
 /* ------------------------------------------------------------------ */
@@ -221,6 +221,12 @@ export function ADFooter() {
               shadewaterlabs.com
             </a>
           </span>
+          <a
+            href={`/about#${CONTACT_SECTION_ID}`}
+            style={{ ...ad.footerCell, color: TG_MUTED, textDecoration: 'underline', textUnderlineOffset: 3 }}
+          >
+            Contact
+          </a>
         </div>
       </div>
     </footer>

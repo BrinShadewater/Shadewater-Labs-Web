@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import {
   AuroraPage,
   MONO,
@@ -6,13 +6,23 @@ import {
   ad,
 } from '@/components/aurora/chrome';
 import type { AuroraNavigate } from '@/components/aurora/chrome';
-import { CONTACT_EMAIL } from '@/lib/routes';
+import { CONTACT_EMAIL, CONTACT_SECTION_ID } from '@/lib/routes';
 
 interface AboutProps {
   onNavigate: AuroraNavigate;
 }
 
 export default function About({ onNavigate }: AboutProps) {
+  const contactRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const contact = contactRef.current;
+    if (contact && window.location.hash === `#${CONTACT_SECTION_ID}`) {
+      // Restore the fragment target after React replaces the prerendered page.
+      contact.focus({ preventScroll: true });
+      contact.scrollIntoView();
+    }
+  }, []);
 
   const ACCENT = '186 90% 60%';
 
@@ -288,17 +298,22 @@ export default function About({ onNavigate }: AboutProps) {
               </a>
             </div>
 
-            {/* Until 2026-07-31 the whole domain had no way to reach anyone. */}
-            <div
+            <section
+              ref={contactRef}
+              id={CONTACT_SECTION_ID}
+              aria-labelledby="contact-heading"
+              tabIndex={-1}
               style={{
                 marginTop: 34,
+                scrollMarginTop: 80,
                 padding: '22px 24px',
                 borderRadius: 18,
                 background: 'hsl(200 30% 8% / 0.7)',
                 border: '1px solid hsl(186 50% 40% / 0.28)',
               }}
             >
-              <p
+              <h3
+                id="contact-heading"
                 style={{
                   fontFamily: MONO,
                   fontSize: 11,
@@ -308,7 +323,7 @@ export default function About({ onNavigate }: AboutProps) {
                 }}
               >
                 GET IN TOUCH
-              </p>
+              </h3>
               <p style={{ ...paraStyle, margin: '0 0 14px' }}>
                 For project work, collaboration, or anything about the tools published here.
               </p>
@@ -338,7 +353,7 @@ export default function About({ onNavigate }: AboutProps) {
                 Bug reports for a published tool are better as a GitHub issue on that
                 repository — they reach the code with the context attached.
               </p>
-            </div>
+            </section>
           </div>
         </div>
       </section>
