@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['public/Testing/**', 'dist', 'dist-preview', 'tailwind.config.js']),
+  globalIgnores(['public/Testing/**', 'public/Fishmail/assets/**', 'dist', 'dist-preview', 'tailwind.config.js']),
   {
     files: ['**/*.{js,mjs,cjs}'],
     ignores: ['scripts/**'],
@@ -16,6 +16,11 @@ export default defineConfig([
       sourceType: 'module',
       globals: globals.browser,
     },
+  },
+  {
+    files: ['api/**/*.js', 'server/**/*.js'],
+    languageOptions: { ecmaVersion: 'latest', globals: globals.node },
+    rules: { 'no-unused-vars': ['error', { ignoreRestSiblings: true }] },
   },
   {
     files: ['scripts/**/*.{js,mjs,cjs}'],

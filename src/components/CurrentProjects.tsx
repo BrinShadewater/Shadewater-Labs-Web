@@ -39,6 +39,17 @@ export default function CurrentProjects() {
               <span>{project.category}</span>
               <span style={{ color: 'hsl(36 70% 75%)' }}>{project.status}</span>
             </div>
+            {'image' in project && (
+              <img
+                src={project.image.src}
+                alt={project.image.alt}
+                width={960}
+                height={540}
+                loading="lazy"
+                decoding="async"
+                style={{ width: '100%', height: 'auto', borderRadius: 12, marginTop: 16 }}
+              />
+            )}
             <h3 id={`${project.id}-heading`} style={{ ...pp.projectName, marginTop: 20 }}>{project.name}</h3>
             <p style={pp.projectBlurb}>{project.summary}</p>
             <p style={{ color: TG_MUTED, lineHeight: 1.6, fontSize: 14 }}>{project.detail}</p>
@@ -47,7 +58,7 @@ export default function CurrentProjects() {
                 href={project.link.href}
                 style={{ ...ad.btnGhost, alignSelf: 'flex-start', marginTop: 16 }}
               >
-                {project.link.label} <span aria-hidden="true">↗</span>
+                {project.link.label} <span aria-hidden="true">{project.link.href.startsWith('/') ? '→' : '↗'}</span>
               </a>
             )}
           </article>

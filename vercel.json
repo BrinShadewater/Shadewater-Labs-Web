@@ -77,6 +77,18 @@
   ],
   "rewrites": [
     {
+      "source": "/api/fishmail/:path*",
+      "destination": "/api/fishmail-demo?route=:path*"
+    },
+    {
+      "source": "/Fishmail",
+      "destination": "/Fishmail/index.html"
+    },
+    {
+      "source": "/Fishmail/ocean",
+      "destination": "/Fishmail/index.html"
+    },
+    {
       "source": "/",
       "destination": "/index.html"
     },
@@ -105,5 +117,8 @@
       "destination": "/sl-notebook/terms.html"
     }
   ],
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "functions": {
+    "api/fishmail-demo.js": { "maxDuration": 30 }
+  }
 }
