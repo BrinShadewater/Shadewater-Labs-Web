@@ -55,6 +55,11 @@
   ],
   "redirects": [
     {
+      "source": "/Fishmail",
+      "destination": "/fishmail",
+      "permanent": true
+    },
+    {
       "source": "/Fishmail/:path*",
       "destination": "/fishmail/:path*",
       "permanent": true
