@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Seo from './components/Seo';
+import { MotionContext, useMotionPreference } from './lib/motion';
 import { buildRouteHref, PAGE_HEADING_ID, parseLocation } from './lib/routes';
 import { getSeoConfig } from './lib/seo';
 
@@ -76,6 +77,7 @@ function RouteHeadingFocus({ page }: { page: string }) {
 }
 
 function App() {
+  const motion = useMotionPreference();
   const siteKey = 'labs';
   const [{ currentPage, selectedNoteId }, setRouteState] = useState(getRouteState);
 
@@ -147,7 +149,7 @@ function App() {
     if (`${window.location.pathname}${window.location.search}` !== nextUrl.pathname) {
       window.history.pushState({}, '', nextUrl.pathname);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: motion.paused ? 'auto' : 'smooth' });
   };
 
   const seo = getSeoConfig(currentPage, selectedNoteId, siteKey);
@@ -170,13 +172,15 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col">
+    <div className="relative min-h-screen flex flex-col" data-motion={motion.paused ? 'paused' : 'running'}>
       <Seo {...seo} />
       <main className="flex-grow">
-        <Suspense fallback={<DelayedPageFallback />}>
-          {renderPage()}
-          <RouteHeadingFocus page={currentPage} />
-        </Suspense>
+        <MotionContext.Provider value={motion}>
+          <Suspense fallback={<DelayedPageFallback />}>
+            {renderPage()}
+            <RouteHeadingFocus page={currentPage} />
+          </Suspense>
+        </MotionContext.Provider>
       </main>
     </div>
   );

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useMemo, useState, useRef, useEffect, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
+import { useContext, useMemo, useState, useRef, useEffect, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import {
   SHADEWATER_LABS_MARK_CROPPED_SMALL_HEIGHT,
   SHADEWATER_LABS_MARK_CROPPED_SMALL_SRC,
@@ -7,6 +7,7 @@ import {
 } from '@/lib/brandAssets';
 import { LABS_ORIGIN, BRIN_ORIGIN, CONTACT_SECTION_ID, PAGE_HEADING_ID } from '@/lib/routes';
 import { openSourceReleases } from '@/content/openSource';
+import { MotionContext } from '@/lib/motion';
 
 /* ------------------------------------------------------------------ */
 /* Aurora Drift — shared chrome (ticker, nav, footer, backgrounds)    */
@@ -41,19 +42,33 @@ export const adTone = {
 export type AdToneKey = keyof typeof adTone;
 
 export function ADTicker() {
+  const motion = useContext(MotionContext);
   const lane = AD_SIGNALS.concat(AD_SIGNALS);
   return (
-    <div style={ad.ticker} aria-hidden="true">
-      <div style={ad.tickerLane} className="ad-tickerLane">
-        {lane.map((s, i) => (
-          <span key={i} style={ad.tickerItem}>
-            <span style={ad.tickerDot} />
-            <span>{s}</span>
-            <span style={ad.tickerSep}>·</span>
-          </span>
-        ))}
+    <>
+      <a className="skip-link" href={`#${PAGE_HEADING_ID}`} style={ad.btnPrimary}>
+        Skip to content
+      </a>
+      <div style={ad.ticker}>
+        <div className="ad-tickerViewport" aria-hidden="true">
+          <div style={ad.tickerLane} className="ad-tickerLane">
+            {lane.map((s, i) => (
+              <span key={i} style={ad.tickerItem}>
+                <span style={ad.tickerDot} />
+                <span>{s}</span>
+                <span style={ad.tickerSep}>·</span>
+              </span>
+            ))}
+          </div>
+          <span className="ad-tickerStatic">Shadewater Labs</span>
+        </div>
+        {motion && (
+          <button type="button" className="ad-motionButton" onClick={motion.toggle}>
+            {motion.paused ? 'Resume motion' : 'Pause motion'}
+          </button>
+        )}
       </div>
-    </div>
+    </>
   );
 }
 
@@ -94,9 +109,6 @@ export function ADNav({
         if (menuOpen && !event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false);
       }}
     >
-      <a className="skip-link" href={`#${PAGE_HEADING_ID}`} style={ad.btnPrimary}>
-        Skip to content
-      </a>
       <style>{`
         .ad-hamburger {
           display: none;
@@ -313,11 +325,11 @@ export function ConstellationField() {
 }
 
 export function ParticleField() {
+  const paused = useContext(MotionContext)?.paused ?? true;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (paused || !canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     let w = canvas.offsetWidth;
@@ -362,7 +374,8 @@ export function ParticleField() {
     };
     draw();
     return () => { cancelAnimationFrame(rafId); window.removeEventListener('resize', onResize); };
-  }, []);
+  }, [paused]);
+  if (paused) return null;
   return (
     <canvas
       ref={canvasRef}
@@ -836,7 +849,7 @@ export const ad: Record<string, CSSProperties> = {
   },
 
   ticker: {
-    position: 'relative', overflow: 'hidden',
+    position: 'relative', display: 'flex',
     background: 'hsl(186 50% 12% / 0.6)',
     borderBottom: '1px solid hsl(186 50% 40% / 0.25)',
     height: 30,

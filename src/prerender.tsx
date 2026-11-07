@@ -12,7 +12,7 @@ export function renderRoute(page: string) {
   const Page = pages[page as keyof typeof pages];
   if (!Page) throw new Error(`No prerender component for ${page}`);
   return renderToStaticMarkup(
-    <div data-prerender-route={page} className="relative min-h-screen flex flex-col">
+    <div data-prerender-route={page} data-motion="paused" className="relative min-h-screen flex flex-col">
       <main className="flex-grow"><Page onNavigate={() => {}} /></main>
       <noscript><style>{`
         .ad-hamburger { display: none !important; }
