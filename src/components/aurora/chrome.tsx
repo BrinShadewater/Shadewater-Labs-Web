@@ -20,6 +20,8 @@ export const TG_TEXT = 'hsl(45 25% 96%)';
 export const TG_MUTED = 'hsl(200 18% 70%)';
 export const TG_DIM = 'hsl(200 14% 55%)';
 export const AD_BG = '#020a13';
+// The full row needs about 836px. Leave room for a classic scrollbar.
+export const AD_NAV_MENU_MAX_WIDTH = 860;
 
 export type AuroraNavigate = (page: string) => void;
 
@@ -144,7 +146,7 @@ export function ADNav({
           margin-left: auto;
           flex-shrink: 0;
         }
-        @media (max-width: 768px) {
+        @media (max-width: ${AD_NAV_MENU_MAX_WIDTH}px) {
           .ad-navMenuOpen { max-height: 100dvh; overflow-y: auto; }
           .ad-navInner { flex-wrap: wrap !important; }
           .ad-hamburger { display: flex !important; align-items: center; justify-content: center; }

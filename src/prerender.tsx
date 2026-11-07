@@ -1,4 +1,5 @@
 import { renderToStaticMarkup } from 'react-dom/server';
+import { AD_NAV_MENU_MAX_WIDTH } from './components/aurora/chrome';
 import ShadewaterLabs from './pages/ShadewaterLabs';
 import Projects from './pages/Projects';
 import Websites from './pages/Websites';
@@ -16,7 +17,7 @@ export function renderRoute(page: string) {
       <main className="flex-grow"><Page onNavigate={() => {}} /></main>
       <noscript><style>{`
         .ad-hamburger { display: none !important; }
-        @media (max-width: 768px) {
+        @media (max-width: ${AD_NAV_MENU_MAX_WIDTH}px) {
           html { --ad-nav-height: 0px; }
           .ad-nav { position: relative; }
           .ad-navLinks { display: flex !important; flex-direction: column; gap: 4px !important; }
