@@ -353,22 +353,23 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     <section id="labs-projects" style={home.section} className="home-section">
       <SectionHead kicker="Work" title="Projects and managed sites" sub="Play BrineSpace, try FishMail, browse open-source tools, and visit managed sites." />
       <style>{`
-        .carousel-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .carousel-track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
         @media (max-width: 900px) {
-          .carousel-track { grid-template-columns: repeat(2, 1fr); }
+          .carousel-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           .carousel-slot-2 { display: none !important; }
         }
         @media (max-width: 600px) {
-          .carousel-track { grid-template-columns: 1fr; }
+          .carousel-track { grid-template-columns: minmax(0, 1fr); }
           .carousel-slot-1 { display: none !important; }
-          .carousel-picker { max-width: 204px; margin-inline: auto; }
+          .home-catalogue { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px !important; }
+          .home-catalogue > a:last-child { grid-column: 1 / -1; justify-self: center; }
         }
       `}</style>
       <div role="group" aria-label="Featured work" aria-roledescription="carousel" style={{ position: 'relative' }}>
         <p className="sr-only" role="status" aria-atomic="true">
           {getCard(0).name}, {idx + 1} of {total}
         </p>
-        <div role="group" aria-label="Featured work controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+        <div role="group" aria-label="Featured work controls" style={home.carouselControls}>
           <button
             type="button"
             onClick={prev}
@@ -378,9 +379,15 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
           >
             {'←'}
           </button>
-          <span aria-hidden="true" style={{ color: TG_MUTED, fontFamily: MONO, fontSize: 12 }}>
-            {idx + 1} / {total}
-          </span>
+          <select
+            aria-label="Choose a featured item"
+            aria-controls="featured-work-track"
+            value={idx}
+            onChange={(event) => setIdx(Number(event.currentTarget.value))}
+            style={home.carouselSelect}
+          >
+            {cards.map((card, i) => <option key={card.key} value={i}>{card.name}</option>)}
+          </select>
           <button
             type="button"
             onClick={next}
@@ -411,8 +418,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                   transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 }}
               >
-                <div style={{ ...home.projectGlow, background: 'radial-gradient(85% 70% at 50% 0%, hsl(' + c.accent + ' / 0.35), transparent 65%)' }} />
-                <div style={home.projectScan} />
+                <div style={{ ...home.projectGlow, background: 'radial-gradient(90% 68% at 50% 0%, hsl(' + c.accent + ' / 0.19), transparent 72%)' }} />
                 <div style={home.projectTop}>
                   <span style={home.projectBadge}>{c.badge}</span>
                   <span style={home.projectStatus}>
@@ -494,39 +500,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
           })}
         </div>
 
-        <div className="carousel-picker" role="group" aria-label="Choose a featured item" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: 20 }}>
-          {cards.map((card, i) => (
-            <button
-              key={card.key}
-              type="button"
-              onClick={() => setIdx(i)}
-              aria-label={`Show ${card.name}`}
-              aria-current={i === idx ? 'true' : undefined}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: 8,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <span
-                style={{
-                  display: 'block',
-                  width: i === idx ? 20 : 8,
-                  height: 8,
-                  borderRadius: 999,
-                  background: i === idx ? 'hsl(186 90% 60%)' : 'hsl(186 25% 48%)',
-                  transition: 'all 0.25s ease',
-                }}
-              />
-            </button>
-          ))}
-        </div>
-
-        <div style={{ marginTop: 28, display: 'flex', gap: 16, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div className="home-catalogue" style={{ marginTop: 20, display: 'flex', gap: 12, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
           <a href="/projects" onClick={(event) => navigateCatalogue(event, 'projects')} style={home.catalogueBtn}>
             All projects <span style={home.catalogueArrow}>{'→'}</span>
           </a>
@@ -687,11 +661,6 @@ const home: Record<string, CSSProperties> = {
     ...pp.projectCard,
   },
   projectGlow: { position: 'absolute', inset: 0, pointerEvents: 'none' },
-  projectScan: {
-    position: 'absolute', inset: 0,
-    backgroundImage: 'repeating-linear-gradient(0deg, transparent 0px, transparent 3px, hsl(0 0% 100% / 0.018) 3px, hsl(0 0% 100% / 0.018) 4px)',
-    pointerEvents: 'none',
-  },
   projectTop: { position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 },
   projectBadge: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.28em', color: 'hsl(36 50% 75%)' },
   projectStatus: {
@@ -729,18 +698,24 @@ const home: Record<string, CSSProperties> = {
     background: 'hsl(186 45% 20% / 0.55)', border: '1px solid hsl(186 60% 50% / 0.38)',
   },
   projectSecondaryLink: { color: TG_MUTED, fontSize: 13, textDecoration: 'none' },
+  carouselControls: { display: 'flex', alignItems: 'center', gap: 8, maxWidth: 460, margin: '0 auto 16px' },
+  carouselSelect: {
+    flex: '1 1 0', minWidth: 0, minHeight: 44, padding: '7px 12px', borderRadius: 10,
+    colorScheme: 'dark', color: 'var(--ad-copy)', background: '#102630', border: 'var(--ad-card-border)',
+    fontSize: 15, cursor: 'pointer',
+  },
   carouselArrow: {
     background: 'hsl(200 30% 10%)', border: '1px solid hsl(186 50% 40% / 0.3)', color: 'hsl(186 60% 75%)',
-    borderRadius: 999, flex: '0 0 36px', height: 36, cursor: 'pointer', fontSize: 16,
+    borderRadius: 10, flex: '0 0 44px', height: 44, cursor: 'pointer', fontSize: 17,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
   catalogueBtn: {
-    display: 'inline-flex', alignItems: 'center', gap: 10,
-    padding: '15px 30px', borderRadius: 999,
+    display: 'inline-flex', justifyContent: 'center', alignItems: 'center', gap: 8,
+    minHeight: 44, padding: '8px 16px', borderRadius: 999,
     background: 'hsl(200 30% 9% / 0.75)',
     border: '1px solid hsl(186 60% 50% / 0.38)',
     color: 'hsl(186 90% 68%)',
-    fontFamily: MONO, fontSize: 13.5, letterSpacing: '0.16em',
+    fontSize: 14,
     fontWeight: 600, cursor: 'pointer', textDecoration: 'none',
     transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease',
   },

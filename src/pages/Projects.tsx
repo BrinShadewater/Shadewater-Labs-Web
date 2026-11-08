@@ -247,7 +247,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
             .pp-projectsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
           }
           @media (max-width: 768px) {
-            .pp-toolbar { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+            .pp-toolbar { flex-direction: column !important; align-items: flex-start !important; }
           }
         `}</style>
         <h2 id="open-source-heading" style={pp.sectionTitle}>Open-source tools</h2>
@@ -267,8 +267,6 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                 aria-controls="open-source-results"
                 onClick={() => setActiveFilter(f)}
                 style={{
-                  background: 'none',
-                  border: 'none',
                   ...pp.filterPill,
                   ...(activeFilter === f ? pp.filterActive : null),
                   userSelect: 'none',
@@ -297,12 +295,11 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                 style={{
                   ...pp.projectGlow,
                   background:
-                    'radial-gradient(85% 70% at 50% 0%, hsl(' +
+                    'radial-gradient(90% 68% at 50% 0%, hsl(' +
                     p.accent +
-                    ' / 0.32), transparent 65%)',
+                    ' / 0.19), transparent 72%)',
                 }}
               />
-              <div style={pp.projectScan} />
               <div style={pp.projectTop}>
                 <span style={pp.projectStage}>{p.stage}</span>
                 <span style={pp.statusPill}>

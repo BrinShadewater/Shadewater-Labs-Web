@@ -568,27 +568,25 @@ export const pp: Record<string, CSSProperties> = {
 
   toolbar: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    padding: '12px 18px', marginBottom: 22, borderRadius: 14,
+    padding: '10px 12px', marginBottom: 20, borderRadius: 14,
     background: 'hsl(200 30% 8% / 0.6)',
     border: '1px solid hsl(186 50% 40% / 0.2)',
-    flexWrap: 'wrap', gap: 12,
+    flexWrap: 'wrap', gap: '8px 16px',
   },
   toolbarChip: {
-    fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(186 50% 78%)',
-    padding: '5px 12px', borderRadius: 999,
-    background: 'hsl(200 30% 6% / 0.7)', border: '1px solid hsl(186 40% 35% / 0.3)',
+    fontSize: 14, color: 'var(--ad-copy)', paddingInline: 4,
   },
-  toolbarFilters: { display: 'flex', gap: 6, flexWrap: 'wrap' },
+  toolbarFilters: { display: 'flex', gap: 5, flexWrap: 'wrap' },
   filterPill: {
-    fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em',
-    padding: '6px 12px', borderRadius: 999,
-    color: 'hsl(186 30% 70%)',
+    fontSize: 14, fontWeight: 600,
+    minWidth: 40, minHeight: 40, padding: '6px 9px', borderRadius: 9,
+    color: 'var(--ad-copy)', background: '#102630', border: 'var(--ad-card-border)',
     cursor: 'pointer',
   },
   filterActive: {
     color: '#04101b',
     background: 'linear-gradient(135deg, hsl(186 95% 75%), hsl(192 80% 60%))',
-    boxShadow: '0 6px 20px hsl(186 90% 50% / 0.35)',
+    borderColor: 'hsl(186 80% 65%)',
   },
 
   projectsGrid: { display: 'grid', gap: 18 },
@@ -602,11 +600,6 @@ export const pp: Record<string, CSSProperties> = {
     overflow: 'hidden',
   },
   projectGlow: { position: 'absolute', inset: 0, pointerEvents: 'none' },
-  projectScan: {
-    position: 'absolute', inset: 0,
-    backgroundImage: 'repeating-linear-gradient(0deg, transparent 0px, transparent 3px, hsl(0 0% 100% / 0.018) 3px, hsl(0 0% 100% / 0.018) 4px)',
-    pointerEvents: 'none',
-  },
   projectTop: {
     position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
     marginBottom: 14, flexWrap: 'nowrap', gap: 10, minHeight: 27,
