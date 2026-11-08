@@ -71,11 +71,30 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
               <figcaption><span>Station view</span><span>Windows 0.4.0 RC1</span></figcaption>
             </figure>
           </div>
-          <dl className="brine-platforms" aria-label="Preview availability">
-            <div><dt>Windows</dt><dd>Signed preview available</dd></div>
-            <div><dt>Mac</dt><dd>Signed and notarized preview available</dd></div>
-            <div><dt>iPad</dt><dd>In testing · no public build yet</dd></div>
-          </dl>
+          <section className="brine-download-notes" aria-labelledby="brine-download-heading">
+            <h2 id="brine-download-heading">Before you download</h2>
+            <div className="brine-platforms">
+              <section aria-labelledby="brine-windows-heading">
+                <h3 id="brine-windows-heading">Windows <span>2.1 GB</span></h3>
+                <p className="brine-platform-status">Signed preview</p>
+                <ol>
+                  <li>Download and extract the entire ZIP.</li>
+                  <li>Open <code>BrineSpace.exe</code> from the extracted folder. Keep the included files together.</li>
+                </ol>
+              </section>
+              <section aria-labelledby="brine-mac-heading">
+                <h3 id="brine-mac-heading">Mac <span>2.5 GB</span></h3>
+                <p className="brine-platform-status">Signed and notarized preview</p>
+                <p>Tested on Apple M4. The download includes Intel binaries, and testing on physical Intel Macs is still pending.</p>
+                <p>Large stations can use several gigabytes of memory and may stutter, especially at higher simulation speeds.</p>
+              </section>
+              <section aria-labelledby="brine-ipad-heading">
+                <h3 id="brine-ipad-heading">iPad</h3>
+                <p className="brine-platform-status">In testing</p>
+                <p>A public download date is yet to be announced.</p>
+              </section>
+            </div>
+          </section>
         </div>
       </header>
 

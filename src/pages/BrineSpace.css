@@ -118,22 +118,59 @@
   color: var(--brine-copy);
 }
 
-.brine-platforms {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: clamp(20px, 4vw, 36px);
+.brine-download-notes {
+  margin-top: clamp(24px, 4vw, 40px);
 }
 
-.brine-platforms div {
-  padding: 13px 16px;
+.brine-download-notes h2 {
+  color: #f5fbfc;
+  font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.brine-platforms {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 0.7fr);
+  gap: 10px;
+}
+
+.brine-platforms > section {
+  padding: 14px 16px;
   border: 1px solid var(--brine-line);
   border-radius: 10px;
   background: hsl(193 50% 13% / 0.75);
+  color: var(--brine-copy);
+  font-size: 14px;
+  line-height: 1.55;
 }
 
-.brine-platforms dt { font-weight: 700; color: #f5fbfc; }
-.brine-platforms dd { font-size: 14px; color: var(--brine-copy); }
+.brine-platforms h3 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f5fbfc;
+}
+
+.brine-platforms h3 span {
+  color: var(--brine-accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.brine-platforms .brine-platform-status {
+  color: var(--brine-amber);
+  margin: 3px 0 8px;
+}
+
+.brine-platforms p + p { margin-top: 8px; }
+.brine-platforms ol { list-style: decimal; padding-left: 20px; }
+.brine-platforms li + li { margin-top: 4px; }
 
 .brine-content {
   padding-block: clamp(42px, 7vw, 82px) 0;
@@ -223,15 +260,10 @@
   .brine-hero-grid,
   .brine-step,
   .brine-notes { grid-template-columns: minmax(0, 1fr); }
+  .brine-platforms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .brine-platforms > section:last-child { grid-column: 1 / -1; }
 }
 
 @media (max-width: 520px) {
-  .brine-platforms { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-  .brine-platforms div {
-    display: grid;
-    grid-template-columns: 76px minmax(0, 1fr);
-    gap: 10px;
-    align-items: baseline;
-    padding: 9px 12px;
-  }
+  .brine-platforms { grid-template-columns: minmax(0, 1fr); }
 }
