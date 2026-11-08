@@ -1,14 +1,37 @@
+import { useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
 import { webpExample } from '@/content/webpExample';
-import { buildProjectHref } from '@/lib/routes';
+import { buildProjectHref, LABS_ORIGIN } from '@/lib/routes';
 
 const { title, description, source, preview, variants } = webpExample;
 const srcSet = variants.map(({ src, width }) => `${src} ${width}w`).join(', ');
+const snippetSrcSet = variants.map(({ src, width }) => `${LABS_ORIGIN}${src} ${width}w`).join(',\n    ');
+const htmlSnippet = `<img
+  src="${LABS_ORIGIN}${preview.src}"
+  srcset="
+    ${snippetSrcSet}"
+  sizes="(max-width: 440px) calc(100vw - 40px), 400px"
+  width="${preview.width}"
+  height="${preview.height}"
+  alt="${preview.alt}"
+  style="width: min(calc(100vw - 40px), 400px); max-width: 100%; height: auto;"
+>`;
 const formatSize = (bytes: number) => `${(bytes / 1000).toFixed(1)} kB`;
 const cellStyle = { padding: '10px 8px', borderBottom: 'var(--ad-card-border)', textAlign: 'left' } as const;
 const imageStyle = { display: 'block', width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'contain', borderRadius: 10, background: '#08131d' } as const;
 
 export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate }) {
+  const [copyStatus, setCopyStatus] = useState('');
+
+  const copyHtml = async () => {
+    try {
+      await navigator.clipboard.writeText(htmlSnippet);
+      setCopyStatus('HTML copied.');
+    } catch {
+      setCopyStatus('Select the HTML below and copy it manually.');
+    }
+  };
+
   return (
     <AuroraPage active="projects" onNavigate={onNavigate} sectionLabel="Webp Me Daddy example" eyebrow="WORKED EXAMPLE · IMAGE OPTIMIZATION" title={title} lede={description}>
       <article style={{ ...pp.section, maxWidth: 960 }}>
@@ -43,6 +66,21 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
             </tbody>
           </table>
           <p style={{ color: TG_MUTED, fontSize: 14, marginTop: 12 }}>These are the sizes from this run. The best file for a visitor depends on the display width and pixel density.</p>
+        </section>
+        <section aria-labelledby="webp-example-html" style={{ marginTop: 32 }}>
+          <h2 id="webp-example-html" style={pp.sectionTitle}>Use this on your site</h2>
+          <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
+            <code>srcset</code> lists the four files and their pixel widths. <code>sizes</code> tells the browser how wide the image will appear in your layout. Together they help it choose a file for the available space and screen pixel density.
+          </p>
+          <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
+            This example uses a card up to 400 pixels wide, with 20 pixels of space on each side on narrow screens. If you host the files yourself, replace the image URLs and adjust <code>sizes</code> to match your layout.
+          </p>
+          <style>{'[data-prerender-route] .webp-copy-html { display: none; }'}</style>
+          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px 14px', marginTop: 16 }}>
+            <button type="button" className="webp-copy-html" onClick={() => void copyHtml()} style={ad.btnGhost}>Copy HTML</button>
+            <span role="status" style={{ color: TG_MUTED, fontSize: 14 }}>{copyStatus}</span>
+          </div>
+          <pre style={{ ...pp.projectCard, display: 'block', padding: 16, marginTop: 12, color: 'var(--ad-copy)', fontSize: 13, lineHeight: 1.6, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>{htmlSnippet}</code></pre>
         </section>
         <a href={buildProjectHref('webp-me-daddy-skill')} style={{ ...ad.btnGhost, marginTop: 24 }}><span aria-hidden="true">←</span> Back to Webp Me Daddy</a>
       </article>
