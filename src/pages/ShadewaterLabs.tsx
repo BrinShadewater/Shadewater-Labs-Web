@@ -358,19 +358,44 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
         @media (max-width: 600px) {
           .carousel-track { grid-template-columns: 1fr; }
           .carousel-slot-1 { display: none !important; }
+          .carousel-picker { max-width: 204px; margin-inline: auto; }
         }
       `}</style>
       <div role="group" aria-label="Featured work" aria-roledescription="carousel" style={{ position: 'relative' }}>
-        <p className="sr-only" role="status">
+        <p className="sr-only" role="status" aria-atomic="true">
           {getCard(0).name}, {idx + 1} of {total}
         </p>
-        <div className="carousel-track">
+        <div role="group" aria-label="Featured work controls" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+          <button
+            type="button"
+            onClick={prev}
+            aria-label="Previous featured item"
+            aria-controls="featured-work-track"
+            style={home.carouselArrow}
+          >
+            {'←'}
+          </button>
+          <span aria-hidden="true" style={{ color: TG_MUTED, fontFamily: MONO, fontSize: 12 }}>
+            {idx + 1} / {total}
+          </span>
+          <button
+            type="button"
+            onClick={next}
+            aria-label="Next featured item"
+            aria-controls="featured-work-track"
+            style={home.carouselArrow}
+          >
+            {'→'}
+          </button>
+        </div>
+        <div id="featured-work-track" className="carousel-track">
           {[0, 1, 2].map((offset) => {
             const c = getCard(offset);
             return (
               <article
                 key={'slot-' + offset}
                 className={'carousel-slot-' + offset}
+                aria-labelledby={`featured-${c.key}-title`}
                 onClick={(event) => {
                   // Let title and action links handle their own navigation.
                   if (!(event.target instanceof Element) || event.target.closest('a')) return;
@@ -411,7 +436,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                     </div>
                   )}
                 </div>
-                <h3 style={home.projectName}>
+                <h3 id={`featured-${c.key}-title`} style={home.projectName}>
                   <a
                     href={c.href}
                     {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
@@ -422,7 +447,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                 </h3>
                 <p style={home.projectBlurb}>{c.blurb}</p>
                 <div style={home.projectFoot}>
-                  <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(' + c.accent + ' / 0.6)' }}>
+                  <span aria-hidden="true" style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(' + c.accent + ' / 0.6)' }}>
                     {offset === 0 ? '● ' : '○ '}{(idx + offset) % total + 1}/{total}
                   </span>
                   <div style={home.projectActions}>
@@ -466,54 +491,36 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
           })}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginTop: 28 }}>
-          <button
-            type="button"
-            onClick={prev}
-            aria-label="Previous featured item"
-            style={home.carouselArrow}
-          >
-            {'←'}
-          </button>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {cards.map((card, i) => (
-              <button
-                key={card.key}
-                type="button"
-                onClick={() => setIdx(i)}
-                aria-label={`Show ${card.name}`}
-                aria-current={i === idx ? 'true' : undefined}
+        <div className="carousel-picker" role="group" aria-label="Choose a featured item" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: 20 }}>
+          {cards.map((card, i) => (
+            <button
+              key={card.key}
+              type="button"
+              onClick={() => setIdx(i)}
+              aria-label={`Show ${card.name}`}
+              aria-current={i === idx ? 'true' : undefined}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 8,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <span
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 8,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: 'block',
+                  width: i === idx ? 20 : 8,
+                  height: 8,
+                  borderRadius: 999,
+                  background: i === idx ? 'hsl(186 90% 60%)' : 'hsl(186 25% 48%)',
+                  transition: 'all 0.25s ease',
                 }}
-              >
-                <span
-                  style={{
-                    display: 'block',
-                    width: i === idx ? 20 : 8,
-                    height: 8,
-                    borderRadius: 999,
-                    background: i === idx ? 'hsl(186 90% 60%)' : 'hsl(186 25% 48%)',
-                    transition: 'all 0.25s ease',
-                  }}
-                />
-              </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            onClick={next}
-            aria-label="Next featured item"
-            style={home.carouselArrow}
-          >
-            {'→'}
-          </button>
+              />
+            </button>
+          ))}
         </div>
 
         <div style={{ marginTop: 28, display: 'flex', gap: 16, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
