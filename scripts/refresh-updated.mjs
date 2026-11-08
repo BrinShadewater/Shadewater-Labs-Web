@@ -6,8 +6,8 @@
  * hand-entered. Until 2026-09-05 those dates WERE hand-typed in the content files and
  * had drifted by up to five months. This script makes the claim true.
  *
- * Runs on `prebuild`. Reads GitHub's public API, one request per repo, unauthenticated
- * (60/hour per IP is plenty for eight repos) or with GITHUB_TOKEN when present, which is
+ * Runs on `prebuild`. Reads GitHub's public API, one concurrent request per repo,
+ * unauthenticated or with GITHUB_TOKEN when present, which is
  * what lets the two private repos resolve on a developer machine:
  *
  *   GITHUB_TOKEN=$(gh auth token) npm run refresh:updated
@@ -64,10 +64,7 @@ async function main() {
   const headers = { Accept: "application/vnd.github+json", "User-Agent": "shadewaterlabs.com build" };
   if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 
-  const next = {};
-  const kept = [];
-  const missing = [];
-  for (const [id, repo] of Object.entries(REPOS)) {
+  const dates = await Promise.all(Object.entries(REPOS).map(async ([id, repo]) => {
     let date = null;
     try {
       const response = await fetch(`https://api.github.com/repos/${repo}`, { headers, signal: AbortSignal.timeout(8000) });
@@ -78,6 +75,13 @@ async function main() {
     } catch {
       // Offline or timed out: fall through to the committed value.
     }
+    return [id, date];
+  }));
+
+  const next = {};
+  const kept = [];
+  const missing = [];
+  for (const [id, date] of dates) {
     if (date) {
       next[id] = date;
     } else if (previous[id]) {
