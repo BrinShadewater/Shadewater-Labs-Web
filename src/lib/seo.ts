@@ -36,6 +36,12 @@ const labsShareImage = {
   imageWidth: SHADEWATER_LABS_MARK_WIDTH,
   imageHeight: SHADEWATER_LABS_MARK_HEIGHT,
 };
+const labsShareCard = {
+  image: `${LABS_ORIGIN}/shadewater-labs-share-card.jpg`,
+  imageAlt: 'Shadewater Labs. Games, open-source tools, and creative tech.',
+  imageWidth: 1200,
+  imageHeight: 630,
+};
 const LABS_DESCRIPTION =
   'Games, open-source agent tools, managed websites, and creative technology prototypes from Shadewater Labs in Vancouver.';
 const SAME_AS_LINKS = [
@@ -113,7 +119,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         title: `Shadewater Labs | AI Tools, Web Apps & Tech Experiments`,
         description: LABS_DESCRIPTION,
         canonical: buildCanonicalUrl('labs', undefined, 'labs'),
-        ...labsShareImage,
+        ...labsShareCard,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         keywords: 'Shadewater Labs, AI tools, coding projects, creative technology, Brin Shadewater',
@@ -146,7 +152,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         description:
           'Play BrineSpace and FishMail, then browse open-source tools, prototypes, and development handoffs from Shadewater Labs.',
         canonical: buildCanonicalUrl('projects', undefined, 'labs'),
-        ...labsShareImage,
+        ...labsShareCard,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         keywords: 'Shadewater Labs projects, AI tools, coding projects, product experiments',
