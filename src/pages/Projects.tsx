@@ -1,6 +1,7 @@
 import CurrentProjects, { PlayableProjects } from '@/components/CurrentProjects';
+import { CaseStudyCard } from '@/components/CaseStudyCard';
 import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
-import { brineSpaceAssetCase, futureproofCompanion } from '@/content/currentProjects';
+import { brineSpaceAssetCase, futureproofCase } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { buildPath, buildProjectHref, CASE_STUDIES_SECTION_ID, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
 import {
@@ -19,19 +20,6 @@ interface ProjectsProps {
 }
 
 const jumpLinkStyle = { ...ad.btnGhost, padding: '9px 13px', fontSize: 14 };
-const caseStudies = [
-  {
-    ...brineSpaceAssetCase,
-    page: 'brinespace-asset-case',
-  },
-  {
-    title: 'Futureproof Festival Companion & FishMail',
-    description: 'See how festival attendees planned their day and sent notes through a shared aquarium.',
-    image: { ...futureproofCompanion.image, width: 960, height: 540 },
-    page: 'futureproof',
-    clickAction: 'read-case-study',
-  },
-];
 
 interface ProjectCard {
   slug: string;
@@ -240,16 +228,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       <section id={CASE_STUDIES_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="case-studies-heading">
         <h2 id="case-studies-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Case studies</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: 16 }}>
-          {caseStudies.map(({ title, description, image, page, clickAction }) => (
-            <article key={page} aria-labelledby={`${page}-case-heading`} style={{ ...pp.projectCard, padding: 26 }}>
-              <img {...image} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'contain', borderRadius: 12, background: '#0a1e29' }} />
-              <h3 id={`${page}-case-heading`} style={{ ...pp.projectName, marginTop: 20 }}>{title}</h3>
-              <p style={{ ...pp.projectBlurb, paddingBottom: 16 }}>{description}</p>
-              <a href={buildPath(page)} data-project-click={clickAction} aria-label={`Read the case study – ${title}`} style={{ ...ad.btnGhost, alignSelf: 'flex-start', marginTop: 'auto' }}>
-                Read the case study <span aria-hidden="true">→</span>
-              </a>
-            </article>
-          ))}
+          <CaseStudyCard study={brineSpaceAssetCase} />
+          <CaseStudyCard study={futureproofCase} clickAction="read-case-study" />
         </div>
       </section>
       <section id={OPEN_SOURCE_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="open-source-heading">

@@ -1,5 +1,6 @@
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
-import { brineSpaceAssetCase } from '@/content/currentProjects';
+import { MoreFromLab } from '@/components/CaseStudyCard';
+import { brineSpaceAssetCase, futureproofCase } from '@/content/currentProjects';
 import { gameAssetPipelineUrl } from '@/content/openSource';
 import { buildPath } from '@/lib/routes';
 
@@ -67,6 +68,7 @@ export default function BrineSpaceAssetCase({ onNavigate }: { onNavigate: Aurora
           <a href={buildPath('brinespace')} style={{ ...pp.projectLink, textDecoration: 'underline' }}>Back to BrineSpace</a>
         </div>
       </article>
+      <MoreFromLab study={futureproofCase} />
     </AuroraPage>
   );
 }

@@ -1,6 +1,6 @@
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
-import { fishMail, futureproofCompanion } from '@/content/currentProjects';
-import { buildPath } from '@/lib/routes';
+import { MoreFromLab } from '@/components/CaseStudyCard';
+import { brineSpaceAssetCase, fishMail, futureproofCase, futureproofCompanion } from '@/content/currentProjects';
 
 const features = [
   {
@@ -24,7 +24,7 @@ export default function Futureproof({ onNavigate }: { onNavigate: AuroraNavigate
       onNavigate={onNavigate}
       sectionLabel="Futureproof"
       eyebrow="CASE STUDY · VANCOUVER · OCTOBER 28–30, 2026"
-      title="Futureproof Festival Companion & FishMail"
+      title={futureproofCase.title}
       lede="A festival companion for planning what to see and a shared aquarium for sending notes to other attendees."
     >
       <article style={{ ...pp.section, maxWidth: 960 }}>
@@ -53,10 +53,8 @@ export default function Futureproof({ onNavigate }: { onNavigate: AuroraNavigate
             </a>
           </section>
         ))}
-        <a href={buildPath('projects')} style={{ color: TG_MUTED, textUnderlineOffset: 3 }}>
-          <span aria-hidden="true">← </span>Back to Projects
-        </a>
       </article>
+      <MoreFromLab study={brineSpaceAssetCase} />
     </AuroraPage>
   );
 }

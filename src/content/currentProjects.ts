@@ -15,6 +15,7 @@ export const brineSpace = {
 } as const;
 
 export const brineSpaceAssetCase = {
+  page: 'brinespace-asset-case',
   title: 'How BrineSpace assets are made',
   description: 'Follow the Desalination Unit from its original wall art through four rotation checks to the finished room in BrineSpace.',
   image: {
@@ -49,6 +50,13 @@ export const futureproofCompanion = {
   detail: 'Built for the 2026 festival. Visit Futureproof for the programme, event photos, and festival updates.',
   image: { src: '/futureproof-companion-dark.webp', alt: 'The Festival Companion programme in dark mode, with day tabs, search, and the My Plan sidebar.' },
   link: { label: 'Visit Futureproof', href: 'https://www.futureproof.website/' },
+} as const;
+
+export const futureproofCase = {
+  page: 'futureproof',
+  title: 'Futureproof Festival Companion & FishMail',
+  description: 'See how festival attendees planned their day and sent notes through a shared aquarium.',
+  image: { ...futureproofCompanion.image, width: 960, height: 540 },
 } as const;
 
 /** Public-facing summaries; evidence and limits are recorded in docs/CONTENT-REVIEW-2026-11-06.md. */
