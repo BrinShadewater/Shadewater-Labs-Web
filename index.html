@@ -34,15 +34,14 @@
     />
     <meta name="twitter:image" content="https://shadewaterlabs.com/shadewater-labs-text-logo.webp" />
     <meta name="twitter:image:alt" content="Shadewater Labs" />
-    <!-- The home page's LCP element is the hero text logo, which React inserts after the bundle
-         runs. Preloading it here lets the browser fetch it with the HTML instead of ~1 s later.
-         Sub-routes pay for one small image they do not show; the home page is most of the traffic. -->
+    <!-- Start the homepage hero image with the HTML. The route build removes this on interior pages. -->
     <link
+      id="labs-hero-preload"
       rel="preload"
       as="image"
       href="/shadewater-labs-text-logo-cropped-245w.webp"
       imagesrcset="/shadewater-labs-text-logo-cropped-245w.webp 245w, /shadewater-labs-text-logo-cropped-490w.webp 490w, /shadewater-labs-text-logo-cropped.webp 602w"
-      imagesizes="245px"
+      imagesizes="(max-width: 362px) 145px, (max-width: 512px) 40vw, 205px"
       fetchpriority="high"
     />
     <link rel="canonical" href="https://shadewaterlabs.com/" />

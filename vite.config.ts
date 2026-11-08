@@ -20,6 +20,7 @@ function setMeta(html: string, key: string, content: string) {
 function pageHead(shell: string, page: string) {
   const cfg = getSeoConfig(page, '', 'labs')
   let html = shell.replace(/<title>[^<]*<\/title>/, `<title>${escapeAttr(cfg.title)}</title>`)
+  if (page !== 'labs') html = html.replace(/<link\s+id="labs-hero-preload"[^>]*>\s*/, '')
   html = html.replace(
     /<link rel="canonical" href="[^"]*" \/>/,
     `<link rel="canonical" href="${escapeAttr(cfg.canonical)}" />`,

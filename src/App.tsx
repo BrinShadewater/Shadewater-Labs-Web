@@ -1,22 +1,11 @@
-import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from 'react';
 import Seo from './components/Seo';
+import type { AuroraNavigate } from './components/aurora/chrome';
 import { MotionContext, useMotionPreference } from './lib/motion';
+import { pageImports } from './lib/pageImports';
 import { recordProjectClick } from './lib/projectClicks';
 import { buildRouteHref, PAGE_HEADING_ID, parseLocation } from './lib/routes';
 import { getSeoConfig } from './lib/seo';
-
-// Keep the import factories so the same chunks can be both lazy-rendered and
-// prefetched on idle. Warming these after first paint means page switches
-// resolve synchronously, so the Suspense fallback almost never appears.
-const pageImports = {
-  labs: () => import('./pages/ShadewaterLabs'),
-  projects: () => import('./pages/Projects'),
-  futureproof: () => import('./pages/Futureproof'),
-  websites: () => import('./pages/Websites'),
-  toolkit: () => import('./pages/Toolkit'),
-  about: () => import('./pages/About'),
-  notFound: () => import('./pages/NotFound'),
-};
 
 const ShadewaterLabs = lazy(pageImports.labs);
 const Projects = lazy(pageImports.projects);
@@ -24,7 +13,7 @@ const Futureproof = lazy(pageImports.futureproof);
 const Websites = lazy(pageImports.websites);
 const Toolkit = lazy(pageImports.toolkit);
 const About = lazy(pageImports.about);
-const NotFound = lazy(pageImports.notFound);
+const NotFound = lazy(pageImports['not-found']);
 
 // Subtle, on-theme fallback that only appears if a chunk genuinely takes a
 // moment to load — avoids flashing a loader on fast navigations.
@@ -79,7 +68,10 @@ function RouteHeadingFocus({ page }: { page: string }) {
   return null;
 }
 
-function App() {
+function App({ initialPage, InitialPage }: {
+  initialPage: string;
+  InitialPage: ComponentType<{ onNavigate: AuroraNavigate }>;
+}) {
   const motion = useMotionPreference();
   const siteKey = 'labs';
   const [{ currentPage, selectedNoteId }, setRouteState] = useState(getRouteState);
@@ -111,31 +103,6 @@ function App() {
     };
   }, [siteKey]);
 
-  // Warm the other page chunks once the browser is idle so switching pages
-  // resolves without suspending (no "Loading" flash on navigation).
-  useEffect(() => {
-    const warm = () => {
-      for (const load of Object.values(pageImports)) {
-        load().catch(() => {
-          /* prefetch is best-effort; ignore network/chunk errors */
-        });
-      }
-    };
-
-    const win = window as typeof window & {
-      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
-      cancelIdleCallback?: (handle: number) => void;
-    };
-
-    if (typeof win.requestIdleCallback === 'function') {
-      const handle = win.requestIdleCallback(warm, { timeout: 2500 });
-      return () => win.cancelIdleCallback?.(handle);
-    }
-
-    const timer = window.setTimeout(warm, 1500);
-    return () => window.clearTimeout(timer);
-  }, []);
-
   const handleNavigate = (page: string, noteId?: string) => {
     const nextHref = buildRouteHref(page, noteId, siteKey);
     const nextUrl = new URL(nextHref, window.location.origin);
@@ -158,6 +125,7 @@ function App() {
   const seo = getSeoConfig(currentPage, selectedNoteId, siteKey);
 
   const renderPage = () => {
+    if (currentPage === initialPage) return <InitialPage onNavigate={handleNavigate} />;
     switch (currentPage) {
       case 'labs':
         return <ShadewaterLabs onNavigate={handleNavigate} />;
