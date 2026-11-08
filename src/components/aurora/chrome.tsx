@@ -581,7 +581,6 @@ export const pp: Record<string, CSSProperties> = {
     border: '1px solid hsl(186 50% 40% / 0.2)',
     flexWrap: 'wrap', gap: 12,
   },
-  toolbarMono: { display: 'flex', gap: 10, flexWrap: 'wrap' },
   toolbarChip: {
     fontFamily: MONO, fontSize: 11, letterSpacing: '0.18em', color: 'hsl(186 50% 78%)',
     padding: '5px 12px', borderRadius: 999,

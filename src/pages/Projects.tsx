@@ -109,9 +109,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   const visibleCards =
     activeFilter === 'all' ? cards : cards.filter((p) => p.categories.includes(activeFilter));
 
-  const SHIPPED = ['SHIPPING', 'OPERATIONAL', 'RELEASED'];
-  const shippingCount = visibleCards.filter((p) => SHIPPED.includes(p.status)).length;
-  const betaCount = visibleCards.length - shippingCount;
+  const resultCount = visibleCards.length;
+  const filterLabel = activeFilter === 'seo' ? 'SEO' : activeFilter;
 
   const handleCardNav = (page: string) => (e: MouseEvent) => {
     e.preventDefault();
@@ -232,21 +231,19 @@ export default function Projects({ onNavigate }: ProjectsProps) {
         `}</style>
         <h2 id="open-source-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Open-source tools</h2>
         <div style={pp.toolbar} className="pp-toolbar">
-          <div style={pp.toolbarMono}>
-            {shippingCount > 0 && (
-              <span style={pp.toolbarChip}>shipping · {shippingCount}</span>
-            )}
-            {betaCount > 0 && <span style={pp.toolbarChip}>beta · {betaCount}</span>}
-            {shippingCount === 0 && betaCount === 0 && (
-              <span style={pp.toolbarChip}>no results</span>
-            )}
-          </div>
-          <div style={pp.toolbarFilters}>
+          <p role="status" aria-atomic="true" style={{ ...pp.toolbarChip, margin: 0 }}>
+            {resultCount} {resultCount === 1 ? 'tool' : 'tools'} shown
+            <span className="sr-only">
+              {activeFilter === 'all' ? ' across all categories.' : ` for ${filterLabel}.`}
+            </span>
+          </p>
+          <div role="group" aria-label="Filter open-source tools" style={pp.toolbarFilters}>
             {filters.map((f) => (
               <button
                 key={f}
                 type="button"
                 aria-pressed={activeFilter === f}
+                aria-controls="open-source-results"
                 onClick={() => setActiveFilter(f)}
                 style={{
                   background: 'none',
@@ -267,7 +264,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
             ? 'Automatic copying is unavailable. The project URL is ready to select.'
             : 'Project link copied.')}
         </p>
-        <div style={pp.projectsGrid} className="pp-projectsGrid">
+        <div id="open-source-results" style={pp.projectsGrid} className="pp-projectsGrid">
           {visibleCards.map((p) => (
             <article
               key={p.slug}
