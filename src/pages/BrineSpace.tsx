@@ -9,18 +9,21 @@ const expedition = [
     title: 'Draft a room',
     alt: 'Three room cards below a small station built around its central core.',
     caption: 'Every hand gives you a different set of blueprints. Compare the cost and what each room produces, then rotate your choice to match an open doorway. A room you can afford now may be more useful than the one you were waiting for.',
+    detail: 'The hand at the bottom offers a Current Turbine, a Salvage Drone Bay, and Life Support.',
   },
   {
     id: 'station',
     title: 'Keep the station running',
     alt: 'An expanded underwater station with room details open and resource gauges along the top.',
     caption: 'Expansion changes the balance of power, oxygen, water, and food. Recover crew, put drones to work, and look for rooms that support each other. The Desalination Unit, for example, gives you another way to make water if you can supply the power.',
+    detail: 'The inspector on the right shows the Desalination Unit giving 2 Water and taking 2 Power.',
   },
   {
     id: 'archive',
     title: 'Archive the expedition',
     alt: 'The Expedition Archived report showing Archived Data rewards and a link to upgrades.',
     caption: 'End an expedition to see what you earned. Archived Data carries forward, so you can unlock blueprints, crew, and companions before you draw your next hand.',
+    detail: 'This report shows 11 Archived Data earned and the Closed Air Loop pattern discovered.',
   },
 ] as const;
 
@@ -82,7 +85,7 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
           <h2 id="expedition-heading" tabIndex={-1}>How an expedition works</h2>
           <p className="brine-section-intro">Three moments from the Windows 0.4.0 RC1 preview, from your first room choice to the upgrades you take into the next run.</p>
           <div className="brine-expedition">
-            {expedition.map(({ id, title, alt, caption }, index) => (
+            {expedition.map(({ id, title, alt, caption, detail }, index) => (
               <figure className="brine-step" key={id}>
                 <img
                   src={`/brinespace-expedition-${id}.webp`}
@@ -98,6 +101,16 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
                   <span className="brine-step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                   <h3>{title}</h3>
                   <p>{caption}</p>
+                  <p className="brine-shot-detail"><strong>Look for</strong> {detail}</p>
+                  <a
+                    className="brine-text-link brine-shot-link"
+                    href={`/brinespace-expedition-${id}.webp`}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={`Open full screenshot for ${title} in a new tab`}
+                  >
+                    Open full screenshot <span aria-hidden="true">↗</span>
+                  </a>
                 </figcaption>
               </figure>
             ))}
