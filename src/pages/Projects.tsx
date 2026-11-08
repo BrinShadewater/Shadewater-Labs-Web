@@ -40,6 +40,7 @@ interface ProjectCard {
   page?: string;
   /** External destination, for open-source releases whose artifact is the repo. */
   externalUrl?: string;
+  guide?: { label: string; href: string };
   name: string;
   stage: string;
   summary: string;
@@ -139,6 +140,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     ...openSourceReleases.map((r): ProjectCard => ({
       slug: r.id,
       externalUrl: r.url,
+      guide: r.guide,
       name: r.name,
       stage: 'OPEN SOURCE',
       summary: r.summary,
@@ -411,10 +413,19 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               )}
 
               <p style={pp.projectBlurb}>{p.summary}</p>
-              {p.slug === 'game-asset-pipeline' && (
-                <a href={buildPath('brinespace-asset-case')} style={{ ...pp.projectLink, margin: '10px 0 0', alignSelf: 'flex-start', gap: 5, color: 'hsl(' + p.accent + ')' }}>
-                  Read the asset case study <span aria-hidden="true">→</span>
-                </a>
+              {(p.guide || p.slug === 'game-asset-pipeline') && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: 10, color: `hsl(${p.accent})` }}>
+                  {p.guide && (
+                    <a href={p.guide.href} target="_blank" rel="noopener noreferrer" style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
+                      {p.guide.label} <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  {p.slug === 'game-asset-pipeline' && (
+                    <a href={buildPath('brinespace-asset-case')} style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
+                      Read the asset case study <span aria-hidden="true">→</span>
+                    </a>
+                  )}
+                </div>
               )}
 
               {typeof p.progress === 'number' ? (

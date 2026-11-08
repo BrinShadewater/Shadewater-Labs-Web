@@ -16,6 +16,7 @@ export interface OpenSourceRelease {
   name: string;
   repo: string;
   url: string;
+  guide?: { label: string; href: string };
   /** SPDX-ish label as shown on the repo. */
   licence: string;
   language: string;
@@ -47,6 +48,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     name: 'Shadewater Game Asset Pipeline',
     repo: 'BrinShadewater/Shadewater-Game-Asset-Pipeline',
     url: gameAssetPipelineUrl,
+    guide: { label: 'Try the offline demo', href: `${gameAssetPipelineUrl}#-try-it-without-an-agent` },
     licence: 'MIT',
     language: 'Python',
     summary: 'Three reusable agent skills and six offline Python helpers for 2D game assets, extracted from BrineSpace. Plan rooms and characters, track source art, slice animation strips, and check geometry before visual review.',
@@ -76,6 +78,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     name: 'Webp Me Daddy Skill',
     repo: 'BrinShadewater/Webp-Me-Daddy-Skill',
     url: 'https://github.com/BrinShadewater/Webp-Me-Daddy-Skill',
+    guide: { label: 'Read the quick start', href: 'https://github.com/BrinShadewater/Webp-Me-Daddy-Skill#-quick-start' },
     licence: 'MIT',
     language: 'Python',
     summary:
@@ -91,6 +94,7 @@ export const openSourceReleases: OpenSourceRelease[] = [
     name: 'Shadewater SEO Skill',
     repo: 'BrinShadewater/Shadewater-SEO-Skill',
     url: 'https://github.com/BrinShadewater/Shadewater-SEO-Skill',
+    guide: { label: 'Read installation steps', href: 'https://github.com/BrinShadewater/Shadewater-SEO-Skill#-install' },
     licence: 'MIT',
     language: 'Python',
     summary:
