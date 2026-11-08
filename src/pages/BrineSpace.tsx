@@ -146,7 +146,18 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
               <li>Use <strong>Save &amp; Quit</strong> to resume later with <strong>Continue Loop</strong>. Choose <strong>End Expedition</strong> when you’re ready to see your rewards.</li>
             </ol>
           </section>
-          <section aria-labelledby="brinespace-pipeline-heading">
+          <section aria-labelledby="brinespace-feedback-heading">
+            <p className="brine-kicker">Player feedback</p>
+            <h2 id="brinespace-feedback-heading">Help shape the next loop</h2>
+            <p>What did you build? Where did you get stuck? What broke?</p>
+            <p>If you hit a bug, include your platform, build version, and what happened just before it.</p>
+            <div className="brine-feedback-action">
+              <a href={`${brineSpace.url}#comments`} style={ad.btnGhost}>
+                Share feedback on itch.io <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </section>
+          <section className="brine-pipeline-note" aria-labelledby="brinespace-pipeline-heading">
             <p className="brine-kicker">From the lab</p>
             <h2 id="brinespace-pipeline-heading">Tools built along the way</h2>
             <p>The Shadewater Game Asset Pipeline grew out of making BrineSpace’s rooms and characters. It packages reusable tools for planning 2D assets, slicing animation strips, and checking room geometry.</p>

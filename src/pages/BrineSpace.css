@@ -252,9 +252,12 @@
 .brine-notes h2 { font-size: clamp(1.45rem, 3vw, 2rem); }
 .brine-notes h2 + p,
 .brine-notes h2 + ol { margin-top: 12px; }
+.brine-notes p + p { margin-top: 8px; }
 .brine-notes ol { list-style: decimal; padding-left: 22px; }
 .brine-notes li + li { margin-top: 8px; }
 .brine-notes .brine-text-link { display: inline-block; margin-top: 16px; }
+.brine-feedback-action { margin-top: 16px; }
+.brine-pipeline-note { grid-column: 1 / -1; }
 
 @media (max-width: 768px) {
   .brine-hero-grid,
