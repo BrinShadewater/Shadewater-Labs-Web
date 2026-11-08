@@ -1,6 +1,22 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 700;
+  src: url('@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 600;
+  src: url('@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+}
+
 :root {
   /* Base palette - blue/teal tones */
   --bg: 210 66% 7%;           /* #04121F - midnight navy background */

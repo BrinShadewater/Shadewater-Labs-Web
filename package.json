@@ -16,9 +16,8 @@
     "prebuild": "node scripts/refresh-updated.mjs"
   },
   "dependencies": {
-    "@fontsource/cormorant-garamond": "^5.3.0",
-    "@fontsource/jetbrains-mono": "^5.3.0",
-    "@fontsource/space-grotesk": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
     "ably": "^2.30.0",
     "pg": "^8.23.1",
     "react": "^19.2.8",
