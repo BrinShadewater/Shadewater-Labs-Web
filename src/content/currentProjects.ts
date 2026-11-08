@@ -4,7 +4,11 @@ export const brineSpace = {
   summary: 'Draft room cards and keep an underwater colony alive as BRINE, a damaged AI core. Earn Archived Data on expeditions to unlock blueprints, crew, and companions.',
   detail: 'The signed Windows 0.4.0 RC1 preview and notarized Mac 0.3.0 alpha are available on itch.io. Mac and iPad builds for 0.4.0 are in testing.',
   url: 'https://brinshadewater.itch.io/brinespace',
-  image: { src: '/brinespace-windows-preview.webp', alt: 'Four connected rooms in BrineSpace, viewed from above.' },
+  image: {
+    src: '/brinespace-windows-preview.webp',
+    srcSet: '/brinespace-windows-preview-320w.webp 320w, /brinespace-windows-preview-480w.webp 480w, /brinespace-windows-preview-640w.webp 640w, /brinespace-windows-preview.webp 800w',
+    alt: 'Four connected rooms in BrineSpace, viewed from above.',
+  },
 } as const;
 
 export const fishMail = {
@@ -14,7 +18,11 @@ export const fishMail = {
   status: 'Playable demo',
   summary: 'An interactive aquarium built into the Futureproof Festival Companion. Attendees choose a fish and send private notes that travel across the ocean before arriving in the recipient’s inbox.',
   detail: 'Try the Shadewater Labs demo. Pick a nickname, choose a fish, and send a note to another swimmer.',
-  image: { src: '/fishmail-demo-hero.webp', alt: 'Illustrated fish swimming through the FishMail aquarium among kelp and coral.' },
+  image: {
+    src: '/fishmail-demo-hero.webp',
+    srcSet: '/fishmail-demo-card-320w.webp 320w, /fishmail-demo-card-480w.webp 480w, /fishmail-demo-card-640w.webp 640w, /fishmail-demo-hero.webp 960w',
+    alt: 'Illustrated fish swimming through the FishMail aquarium among kelp and coral.',
+  },
   link: { label: 'Try FishMail', href: '/fishmail', clickAction: 'try-fishmail' },
 } as const;
 

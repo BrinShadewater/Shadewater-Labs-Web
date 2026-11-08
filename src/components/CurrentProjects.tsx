@@ -10,7 +10,7 @@ type StatusProject = {
   status: string;
   summary: string;
   detail: string;
-  image?: { src: string; alt: string };
+  image?: { src: string; srcSet?: string; alt: string };
   link?: { label: string; href: string; clickAction?: string };
 };
 
@@ -93,6 +93,8 @@ function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, p
             {project.image && (
               <img
                 src={project.image.src}
+                srcSet={project.image.srcSet}
+                sizes={project.image.srcSet ? 'auto, (max-width: 659px) calc(100vw - 94px), (max-width: 768px) calc(50vw - 84px), (max-width: 1180px) calc(50vw - 96px), 494px' : undefined}
                 alt={project.image.alt}
                 width={960}
                 height={540}
