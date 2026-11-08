@@ -93,6 +93,26 @@ html {
   top: 0;
 }
 
+:root {
+  --ad-gutter: 32px;
+  --ad-nav-padding: 14px;
+  --ad-section-space: 40px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --ad-gutter: 20px;
+    --ad-nav-padding: 12px;
+    --ad-section-space: 24px;
+  }
+
+  .ad-footerInner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+}
+
 button:focus-visible,
 a:focus-visible,
 [role='button']:focus-visible {

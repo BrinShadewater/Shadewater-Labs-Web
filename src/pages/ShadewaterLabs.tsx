@@ -79,7 +79,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
           <span style={home.heroChipMono}>Vancouver, BC</span>
         </div>
 
-        {/* The LCP element on the home page: sized for its 245x350 slot and fetched first. */}
+        {/* The responsive lockup is the primary image in the hero. */}
         <img
           src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
           srcSet={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET}
@@ -89,7 +89,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
           height={350}
           fetchPriority="high"
           decoding="async"
-          style={{ ...home.heroLogo, objectFit: 'cover', width: 245, height: 350 }}
+          style={home.heroLogo}
         />
 
         <h1 id={PAGE_HEADING_ID} tabIndex={-1} style={home.heroTitle} className="home-heroTitle">
@@ -524,7 +524,6 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
     <div style={ad.root}>
       <style>{`
         @media (max-width: 768px) {
-          .home-heroInner { padding: 40px 20px 60px !important; }
           .home-heroTitle { font-size: clamp(2rem, 9vw, 3.5rem) !important; line-height: 1.08 !important; }
           .home-hudGrid { grid-template-columns: repeat(2, 1fr) !important; }
           .home-trackGrid { grid-template-columns: 1fr !important; }
@@ -550,15 +549,15 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
 
 const home: Record<string, CSSProperties> = {
   hero: { position: 'relative', overflow: 'hidden', paddingBottom: 0 },
-  heroInner: { position: 'relative', zIndex: 1, maxWidth: 1180, margin: '0 auto', padding: '64px 32px 88px', textAlign: 'center' },
+  heroInner: { position: 'relative', zIndex: 1, maxWidth: 1180, margin: '0 auto', padding: 'clamp(24px, 4vw, 48px) var(--ad-gutter) clamp(56px, 7vw, 88px)', textAlign: 'center' },
   heroChip: {
-    display: 'inline-flex', alignItems: 'center', gap: 12,
-    padding: '8px 16px', borderRadius: 999,
+    display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', gap: '4px 10px',
+    padding: '8px 14px', borderRadius: 999,
     background: 'hsl(200 30% 8% / 0.75)',
     border: '1px solid hsl(186 80% 60% / 0.35)',
     boxShadow: '0 0 30px hsl(186 90% 50% / 0.18)',
-    fontFamily: MONO, fontSize: 11, letterSpacing: '0.24em',
-    color: 'hsl(186 60% 85%)', marginBottom: 30,
+    fontFamily: MONO, fontSize: 11, letterSpacing: '0.16em',
+    color: 'hsl(186 60% 85%)', marginBottom: 18,
   },
   heroChipPulse: {
     width: 8, height: 8, borderRadius: 999, background: 'hsl(150 80% 60%)',
@@ -568,11 +567,11 @@ const home: Record<string, CSSProperties> = {
   heroChipText: { color: '#fff', fontWeight: 600 },
   heroChipMono: { color: 'hsl(186 25% 60%)' },
   heroLogo: {
-    height: 240, width: 'auto', display: 'block', margin: '0 auto 6px',
+    width: 'clamp(145px, 40vw, 205px)', height: 'auto', display: 'block', margin: '0 auto 6px',
     filter: 'drop-shadow(0 30px 80px hsl(186 95% 55% / 0.5)) drop-shadow(0 6px 24px hsl(220 80% 60% / 0.35))',
   },
   heroTitle: {
-    fontSize: 68, lineHeight: 1.02, letterSpacing: '-0.03em', fontWeight: 700,
+    fontSize: 'clamp(2.25rem, 6.2vw, 4.25rem)', lineHeight: 1.02, letterSpacing: '-0.03em', fontWeight: 700,
     margin: '12px auto 0', maxWidth: 980, textWrap: 'balance' as CSSProperties['textWrap'], color: '#fff',
   },
   heroAccent: {
@@ -580,10 +579,10 @@ const home: Record<string, CSSProperties> = {
     WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
   },
   heroLede: {
-    margin: '24px auto 0', maxWidth: 720, color: 'hsl(45 22% 86%)',
-    fontSize: 18, lineHeight: 1.55, textWrap: 'pretty' as CSSProperties['textWrap'],
+    margin: '18px auto 0', maxWidth: 720, color: 'hsl(45 22% 86%)',
+    fontSize: 'clamp(1rem, 2vw, 1.125rem)', lineHeight: 1.55, textWrap: 'pretty' as CSSProperties['textWrap'],
   },
-  heroCtas: { display: 'flex', gap: 14, justifyContent: 'center', marginTop: 36, flexWrap: 'wrap' },
+  heroCtas: { display: 'flex', gap: 12, justifyContent: 'center', marginTop: 24, flexWrap: 'wrap' },
   btnArrow: { transform: 'translateY(-1px)' },
 
   hud: {

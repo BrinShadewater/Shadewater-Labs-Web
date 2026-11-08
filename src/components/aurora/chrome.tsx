@@ -446,21 +446,9 @@ export function AuroraPage({
       <style>{`
         /* ---- Aurora mobile pass ---- */
         @media (max-width: 768px) {
-          /* Nav — layout is handled by ADNav's own <style>, just adjust padding */
-          .ad-navInner { padding: 12px 16px !important; }
-          /* Page hero */
-          .pp-heroInner { padding: 40px 20px 48px !important; }
-          .pp-h1 { font-size: clamp(1.8rem, 7vw, 3rem) !important; }
           /* Grids */
           .pp-sitesGrid { grid-template-columns: 1fr !important; }
           .pp-trackGrid { grid-template-columns: 1fr !important; }
-          .pp-section { padding: 48px 20px 0 !important; }
-          /* Footer */
-          .ad-footerInner { flex-direction: column !important; gap: 20px !important; }
-        }
-        @media (max-width: 540px) {
-          .pp-h1 { font-size: 1.7rem !important; }
-          .pp-lede { font-size: 15px !important; }
         }
       `}</style>
       <ADTicker />
@@ -472,7 +460,7 @@ export function AuroraPage({
         sectionLabel={sectionLabel}
         onNavigate={onNavigate}
       />
-      <div style={pp.body}>{children}</div>
+      <div>{children}</div>
       <ADFooter />
     </div>
   );
@@ -526,8 +514,6 @@ function PageHero({
 /* ----- Page-level shared style sheet (`pp`) ----- */
 
 export const pp: Record<string, CSSProperties> = {
-  body: { paddingTop: 8 },
-
   hero: { position: 'relative', overflow: 'hidden', paddingBottom: 0 },
   heroAurora: { position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, contain: 'strict' as CSSProperties['contain'] },
   blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
@@ -548,7 +534,7 @@ export const pp: Record<string, CSSProperties> = {
   heroInner: {
     position: 'relative', zIndex: 1,
     maxWidth: 1180, margin: '0 auto',
-    padding: '52px 32px 56px',
+    padding: 'clamp(28px, 4vw, 52px) var(--ad-gutter) clamp(24px, 3vw, 40px)',
     textAlign: 'left',
   },
   crumb: {
@@ -574,7 +560,7 @@ export const pp: Record<string, CSSProperties> = {
     color: 'hsl(186 60% 78%)', margin: '0 0 14px',
   },
   h1: {
-    fontSize: 64, lineHeight: 1.02, letterSpacing: '-0.03em', fontWeight: 700,
+    fontSize: 'clamp(2.25rem, 6.4vw, 4rem)', lineHeight: 1.05, letterSpacing: '-0.03em', fontWeight: 700,
     margin: 0, maxWidth: 980, color: '#fff',
     background: 'linear-gradient(180deg, #fff 30%, hsl(186 30% 80%) 100%)',
     WebkitBackgroundClip: 'text', backgroundClip: 'text',
@@ -582,11 +568,11 @@ export const pp: Record<string, CSSProperties> = {
     textWrap: 'balance' as CSSProperties['textWrap'],
   },
   lede: {
-    margin: '20px 0 0', maxWidth: 720,
-    color: 'hsl(45 22% 86%)', fontSize: 18, lineHeight: 1.55,
+    margin: '16px 0 0', maxWidth: 720,
+    color: 'hsl(45 22% 86%)', fontSize: 'clamp(1rem, 2vw, 1.125rem)', lineHeight: 1.55,
   },
 
-  section: { position: 'relative', maxWidth: 1180, margin: '0 auto', padding: '56px 32px 0', zIndex: 1 },
+  section: { position: 'relative', maxWidth: 1180, margin: '0 auto', padding: 'var(--ad-section-space) var(--ad-gutter) 0', zIndex: 1 },
 
   toolbar: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -904,7 +890,7 @@ export const ad: Record<string, CSSProperties> = {
     borderBottom: '1px solid hsl(186 50% 40% / 0.18)',
   },
   navInner: {
-    maxWidth: 1180, margin: '0 auto', padding: '14px 32px',
+    maxWidth: 1180, margin: '0 auto', padding: 'var(--ad-nav-padding) var(--ad-gutter)',
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     flexWrap: 'wrap', gap: 16,
   },
@@ -980,7 +966,7 @@ export const ad: Record<string, CSSProperties> = {
     background: 'linear-gradient(90deg, transparent, hsl(186 90% 60% / 0.5), transparent)',
   },
   footerInner: {
-    maxWidth: 1180, margin: '0 auto', padding: '32px 32px 28px',
+    maxWidth: 1180, margin: '0 auto', padding: '32px var(--ad-gutter) 28px',
     display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
     flexWrap: 'wrap' as CSSProperties['flexWrap'],
   },

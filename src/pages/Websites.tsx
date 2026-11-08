@@ -91,9 +91,10 @@ interface BrowserFrameProps {
   thumbnail: string;
   thumbnailSrcSet: string;
   fullUrl: string;
+  eager: boolean;
 }
 
-function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl }: BrowserFrameProps) {
+function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager }: BrowserFrameProps) {
   const dot: CSSProperties = {
     width: 8,
     height: 8,
@@ -154,7 +155,7 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl }: Brow
         <div
           style={{
             position: 'relative',
-            height: 260,
+            height: 'clamp(180px, 42vw, 260px)',
             background: 'hsl(200 30% 9%)',
             overflow: 'hidden',
           }}
@@ -162,10 +163,10 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl }: Brow
           <img
             src={thumbnail}
             srcSet={thumbnailSrcSet}
-            // A 260px-tall cover crop needs at least 462px of a 16:9 source.
-            sizes="(min-width: 1180px) 550px, (min-width: 701px) max(462px, calc((100vw - 86px) / 2)), max(462px, calc(100vw - 68px))"
+            // The desktop cover crop needs at least 462px of a 16:9 source.
+            sizes="(min-width: 1180px) 550px, (min-width: 701px) max(462px, calc((100vw - 86px) / 2)), max(320px, calc(100vw - 40px))"
             alt=""
-            loading="lazy"
+            loading={eager ? 'eager' : 'lazy'}
             decoding="async"
             width={800}
             height={450}
@@ -230,7 +231,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
           }
         `}</style>
         <div style={sitesGrid} className="sites-grid">
-          {sites.map((s) => (
+          {sites.map((s, index) => (
             <article
               key={s.id}
               style={{ ...pp.siteCard, padding: 0, overflow: 'hidden' }}
@@ -248,6 +249,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
                 thumbnail={s.thumbnail}
                 thumbnailSrcSet={s.thumbnailSrcSet}
                 fullUrl={s.fullUrl}
+                eager={index < 2}
               />
 
               {/* Grows to fill the card so siteFoot's auto margin has slack to push into. */}
