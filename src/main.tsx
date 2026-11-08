@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './pages/BrineSpace.css'
 import App from './App.tsx'
 import { pageImports } from './lib/pageImports'
 import { parseLocation } from './lib/routes'
