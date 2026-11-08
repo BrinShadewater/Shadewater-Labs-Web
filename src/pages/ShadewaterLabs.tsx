@@ -1,7 +1,7 @@
 import CurrentProjects from '@/components/CurrentProjects';
 import { useState, type CSSProperties, type MouseEvent } from 'react';
 import { managedWebsites } from '@/content/websites';
-import { brineSpace } from '@/content/currentProjects';
+import { brineSpace, fishMail } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
 import { buildProjectHref, PAGE_HEADING_ID } from '@/lib/routes';
@@ -223,6 +223,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     /** Real destination, so the card title is a focusable link and not a click-only div. */
     href: string;
     external?: boolean;
+    projectHref?: string;
     repoUrl?: string;
   }
   type DatedCarouselCard = CarouselCard & { updated: string };
@@ -282,7 +283,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     };
   });
 
-  // Feature the playable game first, then sort releases and sites by repo activity.
+  // Feature the playable projects first, then sort releases and sites by repo activity.
   const recentCards = [...projectCards, ...siteCards].sort((a, b) =>
     b.updated.localeCompare(a.updated),
   );
@@ -303,6 +304,21 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       href: brineSpace.url,
       external: true,
     },
+    {
+      key: fishMail.id,
+      badge: fishMail.category.toUpperCase(),
+      name: fishMail.name,
+      blurb: `${fishMail.summary} ${fishMail.detail}`,
+      accent: '186 85% 65%',
+      thumbnail: fishMail.image.src,
+      thumbnailAlt: fishMail.image.alt,
+      thumbnailPosition: 'center',
+      statusLabel: fishMail.status.toUpperCase(),
+      statusTone: 'hsl(150 70% 55%)',
+      ctaLabel: fishMail.link.label,
+      href: fishMail.link.href,
+      projectHref: buildProjectHref(fishMail.id),
+    },
     ...recentCards,
   ];
   const [idx, setIdx] = useState(0);
@@ -320,7 +336,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
   return (
     <section id="labs-projects" style={home.section} className="home-section">
-      <SectionHead kicker="Work" title="Projects and managed sites" sub="Explore open-source projects, play BrineSpace, and visit managed sites." />
+      <SectionHead kicker="Work" title="Projects and managed sites" sub="Play BrineSpace, try FishMail, browse open-source tools, and visit managed sites." />
       <style>{`
         .carousel-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         @media (max-width: 900px) {
@@ -402,17 +418,30 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                       href={c.href}
                       {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       aria-label={c.repoUrl ? `View project: ${c.name}` : undefined}
-                      style={{ ...home.projectLink, color: 'hsl(' + c.accent + ')' }}
+                      style={{
+                        ...home.projectLink,
+                        ...(c.projectHref ? home.projectPlayButton : {}),
+                        color: 'hsl(' + c.accent + ')',
+                      }}
                     >
                       {c.ctaLabel} <span aria-hidden="true" style={{ marginLeft: 4 }}>{c.external ? '↗' : '→'}</span>
                     </a>
+                    {c.projectHref && (
+                      <a
+                        href={c.projectHref}
+                        aria-label={`View project: ${c.name}`}
+                        style={home.projectSecondaryLink}
+                      >
+                        View project <span aria-hidden="true">→</span>
+                      </a>
+                    )}
                     {c.repoUrl && (
                       <a
                         href={c.repoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`GitHub repository for ${c.name}`}
-                        style={home.projectRepoLink}
+                        style={home.projectSecondaryLink}
                       >
                         GitHub <span aria-hidden="true">↗</span>
                       </a>
@@ -680,7 +709,11 @@ const home: Record<string, CSSProperties> = {
   },
   projectActions: { display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'center', gap: '4px 12px', marginLeft: 'auto' },
   projectLink: { display: 'inline-flex', alignItems: 'center', fontWeight: 600, fontSize: 14, textDecoration: 'none' },
-  projectRepoLink: { color: TG_MUTED, fontSize: 13, textDecoration: 'none' },
+  projectPlayButton: {
+    padding: '8px 12px', borderRadius: 999,
+    background: 'hsl(186 45% 20% / 0.55)', border: '1px solid hsl(186 60% 50% / 0.38)',
+  },
+  projectSecondaryLink: { color: TG_MUTED, fontSize: 13, textDecoration: 'none' },
   carouselArrow: {
     background: 'hsl(200 30% 10%)', border: '1px solid hsl(186 50% 40% / 0.3)', color: 'hsl(186 60% 75%)',
     borderRadius: 999, flex: '0 0 36px', height: 36, cursor: 'pointer', fontSize: 16,
