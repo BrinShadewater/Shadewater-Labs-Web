@@ -2,7 +2,7 @@
 // per-route shells and the runtime <Seo> read one source of truth, and Vite's config loader
 // resolves relative paths only — a "@/" specifier there reads as a bare package and the build
 // fails. Same reason brinshadewater.com's seo.ts is relative.
-import { brineSpace } from '../content/currentProjects';
+import { brineSpace, futureproofCompanion } from '../content/currentProjects';
 import { tools } from '../content/tools';
 import { managedWebsites } from '../content/websites';
 import { openSourceReleases } from '../content/openSource';
@@ -167,6 +167,17 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           personSchema(),
         ],
       };
+    case 'futureproof':
+      return {
+        title: `Futureproof Festival Companion & FishMail | ${ORGANIZATION_NAME}`,
+        description: 'A look at the programme, personal schedule, and FishMail aquarium built for Vancouver’s 2026 Futureproof Festival.',
+        canonical: buildCanonicalUrl('futureproof'),
+        image: `${LABS_ORIGIN}${futureproofCompanion.image.src}`,
+        imageAlt: futureproofCompanion.image.alt,
+        siteName: ORGANIZATION_NAME,
+        type: 'article',
+        jsonLd: [websiteSchema(), organizationSchema()],
+      };
     case 'websites':
       return {
         title: `Websites | ${ORGANIZATION_NAME}`,
@@ -285,7 +296,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
  * index.html itself, so it is not listed here; everything else in LABS_PAGES is.
  */
 export function getLabsPrerenderTargets(): { path: string; page: string }[] {
-  return ['projects', 'websites', 'toolkit', 'about'].map((page) => ({
+  return ['projects', 'futureproof', 'websites', 'toolkit', 'about'].map((page) => ({
     path: buildPath(page, undefined, 'labs'),
     page,
   }));
@@ -295,6 +306,7 @@ export function getLabsSitemapPaths() {
   return [
     buildPath('labs', undefined, 'labs'),
     buildPath('projects', undefined, 'labs'),
+    buildPath('futureproof'),
     buildPath('websites', undefined, 'labs'),
     buildPath('toolkit', undefined, 'labs'),
     buildPath('about', undefined, 'labs'),

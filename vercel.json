@@ -107,6 +107,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/projects/futureproof",
+      "destination": "/projects/futureproof/index.html"
+    },
+    {
       "source": "/websites",
       "destination": "/index.html"
     },

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { brineSpace, currentProjects, fishMail } from '@/content/currentProjects';
+import { brineSpace, currentProjects, fishMail, futureproofCompanion } from '@/content/currentProjects';
 import { MONO, TG_MUTED, ad, pp } from '@/components/aurora/chrome';
+import { buildPath } from '@/lib/routes';
 
 type StatusProject = {
   id: string;
@@ -18,6 +19,7 @@ export function PlayableProjects() {
     <ProjectSection
       id="play-and-explore"
       title="Play & explore"
+      caseStudyProjectId={fishMail.id}
       projects={[
         {
           ...brineSpace,
@@ -38,16 +40,18 @@ export default function CurrentProjects({ includeFishMail = true }: { includeFis
       title="Prototypes & handoffs"
       eyebrow="PROJECT STATUS · REVIEWED NOVEMBER 7, 2026"
       description="The current state of experiments and work handed off to collaborators."
+      caseStudyProjectId={includeFishMail ? undefined : futureproofCompanion.id}
       projects={includeFishMail ? currentProjects : currentProjects.filter(project => project.id !== fishMail.id)}
     />
   );
 }
 
-function ProjectSection({ id, title, eyebrow, description, projects }: {
+function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, projects }: {
   id: string;
   title: string;
   eyebrow?: string;
   description?: string;
+  caseStudyProjectId?: string;
   projects: readonly StatusProject[];
 }) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -101,12 +105,16 @@ function ProjectSection({ id, title, eyebrow, description, projects }: {
             <p style={pp.projectBlurb}>{project.summary}</p>
             <p style={{ color: TG_MUTED, lineHeight: 1.6, fontSize: 14, paddingBottom: project.link ? 16 : 0 }}>{project.detail}</p>
             {project.link && (
-              <a
-                href={project.link.href}
-                style={{ ...ad.btnGhost, alignSelf: 'flex-start', marginTop: 'auto' }}
-              >
-                {project.link.label} <span aria-hidden="true">{project.link.href.startsWith('/') ? '→' : '↗'}</span>
-              </a>
+              <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px 16px', marginTop: 'auto' }}>
+                <a href={project.link.href} style={ad.btnGhost}>
+                  {project.link.label} <span aria-hidden="true">{project.link.href.startsWith('/') ? '→' : '↗'}</span>
+                </a>
+                {project.id === caseStudyProjectId && (
+                  <a href={buildPath('futureproof')} style={{ color: TG_MUTED, fontSize: 14, textUnderlineOffset: 3 }}>
+                    Read the case study
+                  </a>
+                )}
+              </div>
             )}
           </article>
         ))}

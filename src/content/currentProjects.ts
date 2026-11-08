@@ -18,18 +18,20 @@ export const fishMail = {
   link: { label: 'Try FishMail', href: '/fishmail' },
 } as const;
 
+export const futureproofCompanion = {
+  id: 'futureproof',
+  name: 'Futureproof Festival Companion',
+  category: 'Festival software',
+  status: '2026 festival edition',
+  summary: 'The companion for Vancouver’s October 28–30, 2026 Futureproof Festival, with a searchable programme, speaker profiles, and a personal schedule.',
+  detail: 'Built for the 2026 festival. Visit Futureproof for the programme, event photos, and festival updates.',
+  image: { src: '/futureproof-companion-dark.webp', alt: 'The Festival Companion programme in dark mode, with day tabs, search, and the My Plan sidebar.' },
+  link: { label: 'Visit Futureproof', href: 'https://www.futureproof.website/' },
+} as const;
+
 /** Public-facing summaries; evidence and limits are recorded in docs/CONTENT-REVIEW-2026-11-06.md. */
 export const currentProjects = [
-  {
-    id: 'futureproof',
-    name: 'Futureproof Festival Companion',
-    category: 'Festival software',
-    status: '2026 festival edition',
-    summary: 'The companion for Vancouver’s October 28–30, 2026 Futureproof Festival, with a searchable programme, speaker profiles, and a personal schedule.',
-    detail: 'Built for the 2026 festival. Visit Futureproof for the programme, event photos, and festival updates.',
-    image: { src: '/futureproof-companion-dark.webp', alt: 'The Festival Companion programme in dark mode, with day tabs, search, and the My Plan sidebar.' },
-    link: { label: 'Visit Futureproof', href: 'https://www.futureproof.website/' },
-  },
+  futureproofCompanion,
   fishMail,
   {
     id: 'eink-device',

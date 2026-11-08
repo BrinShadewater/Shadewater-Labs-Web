@@ -6,7 +6,7 @@ import vm from 'node:vm';
 test('retired Testing app has no serving routes or bundled files', async () => {
   const config = JSON.parse(await readFile('vercel.json', 'utf8'));
   for (const rule of [...config.redirects, ...config.rewrites]) {
-    assert.doesNotMatch(rule.source, /Testing|futureproof/);
+    assert.doesNotMatch(rule.source, /^\/(?:api\/)?(?:testing|futureproof)/i);
   }
   assert.deepEqual(await readdir('public/Testing'), ['sw.js']);
 });

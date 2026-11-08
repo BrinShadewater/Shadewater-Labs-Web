@@ -2,11 +2,12 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { AD_NAV_MENU_MAX_WIDTH } from './components/aurora/chrome';
 import ShadewaterLabs from './pages/ShadewaterLabs';
 import Projects from './pages/Projects';
+import Futureproof from './pages/Futureproof';
 import Websites from './pages/Websites';
 import Toolkit from './pages/Toolkit';
 import About from './pages/About';
 
-const pages = { labs: ShadewaterLabs, projects: Projects, websites: Websites, toolkit: Toolkit, about: About };
+const pages = { labs: ShadewaterLabs, projects: Projects, futureproof: Futureproof, websites: Websites, toolkit: Toolkit, about: About };
 
 /** Build-only rendering of the same components used by the interactive app. */
 export function renderRoute(page: string) {

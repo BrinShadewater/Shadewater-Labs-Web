@@ -10,6 +10,7 @@ import { getSeoConfig } from './lib/seo';
 const pageImports = {
   labs: () => import('./pages/ShadewaterLabs'),
   projects: () => import('./pages/Projects'),
+  futureproof: () => import('./pages/Futureproof'),
   websites: () => import('./pages/Websites'),
   toolkit: () => import('./pages/Toolkit'),
   about: () => import('./pages/About'),
@@ -18,6 +19,7 @@ const pageImports = {
 
 const ShadewaterLabs = lazy(pageImports.labs);
 const Projects = lazy(pageImports.projects);
+const Futureproof = lazy(pageImports.futureproof);
 const Websites = lazy(pageImports.websites);
 const Toolkit = lazy(pageImports.toolkit);
 const About = lazy(pageImports.about);
@@ -160,6 +162,8 @@ function App() {
         return <ShadewaterLabs onNavigate={handleNavigate} />;
       case 'projects':
         return <Projects onNavigate={handleNavigate} />;
+      case 'futureproof':
+        return <Futureproof onNavigate={handleNavigate} />;
       case 'websites':
         return <Websites onNavigate={handleNavigate} />;
       case 'toolkit':

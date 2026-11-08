@@ -82,7 +82,8 @@ function prerenderShells(): Plugin {
       })
       try {
         const { renderRoute } = await renderer.ssrLoadModule('/src/prerender.tsx')
-        for (const target of [{ path: '/', page: 'labs' }, ...getLabsPrerenderTargets()]) {
+        const targets = [{ path: '/', page: 'labs' }, ...getLabsPrerenderTargets()]
+        for (const target of targets) {
           let html = pageHead(shell, target.page)
           if (!html.includes('<!--route-body-->')) throw new Error('Missing route body marker')
           html = html.replace('<!--route-body-->', () => renderRoute(target.page))
@@ -90,7 +91,7 @@ function prerenderShells(): Plugin {
           mkdirSync(dir, { recursive: true })
           writeFileSync(path.join(dir, 'index.html'), html)
         }
-        this.info('labs-prerender-shells: 5 complete route bodies and heads written')
+        this.info(`labs-prerender-shells: ${targets.length} complete route bodies and heads written`)
       } finally { await renderer.close() }
     },
   }
