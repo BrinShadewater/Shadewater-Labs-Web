@@ -4,7 +4,7 @@ import { managedWebsites } from '@/content/websites';
 import { brineSpace, fishMail } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
-import { buildProjectHref, PAGE_HEADING_ID } from '@/lib/routes';
+import { buildProjectHref, OPEN_SOURCE_SECTION_ID, PAGE_HEADING_ID } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES,
@@ -64,7 +64,7 @@ function useLabStatus() {
   return { liveSites, newest };
 }
 
-function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
+function ADHero() {
   const { liveSites, newest } = useLabStatus();
   const newestRelease = openSourceReleases.reduce((a, b) => (b.updated > a.updated ? b : a));
   return (
@@ -116,11 +116,7 @@ function ADHero({ onNavigate }: { onNavigate: AuroraNavigate }) {
             <span aria-hidden="true" style={home.btnArrow}>↗</span>
           </a>
           <a
-            href="/projects"
-            onClick={(e) => {
-              e.preventDefault();
-              onNavigate('projects');
-            }}
+            href={buildProjectHref(OPEN_SOURCE_SECTION_ID)}
             style={ad.btnGhost}
           >
             <span style={{ fontFamily: MONO, fontSize: 12, opacity: 0.7 }}>›</span>
@@ -564,7 +560,7 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
       `}</style>
       <ADTicker />
       <ADNav onNavigate={onNavigate} active="labs" />
-      <ADHero onNavigate={onNavigate} />
+      <ADHero />
       <ADTracks />
       <ADProjects onNavigate={onNavigate} />
       <CurrentProjects />

@@ -1,7 +1,7 @@
 import CurrentProjects, { PlayableProjects } from '@/components/CurrentProjects';
 import { useLayoutEffect, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
-import { buildProjectHref } from '@/lib/routes';
+import { buildProjectHref, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
 import {
   AuroraPage,
   MONO,
@@ -16,6 +16,8 @@ import type { AdToneKey, AuroraNavigate } from '@/components/aurora/chrome';
 interface ProjectsProps {
   onNavigate: AuroraNavigate;
 }
+
+const jumpLinkStyle = { ...ad.btnGhost, padding: '9px 13px', fontSize: 14 };
 
 interface ProjectCard {
   slug: string;
@@ -52,6 +54,12 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       setLinkedSlug(release?.id ?? null);
       if (release) {
         setActiveFilter((filter) => release.categories.includes(filter) ? filter : 'all');
+      }
+      if (slug === OPEN_SOURCE_SECTION_ID) {
+        // Restore the target after React replaces the prerendered section.
+        const section = document.getElementById(slug);
+        section?.focus({ preventScroll: true });
+        section?.scrollIntoView({ block: 'start' });
       }
     };
 
@@ -198,8 +206,13 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       title="Projects from the lab."
       lede="Play a demo, browse open-source tools, or explore prototypes and handoffs."
     >
+      <nav aria-label="On this page" style={{ ...pp.section, paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        <a href="#play-and-explore" style={jumpLinkStyle}>Play &amp; explore</a>
+        <a href={`#${OPEN_SOURCE_SECTION_ID}`} style={jumpLinkStyle}>Open-source tools</a>
+        <a href="#current-projects" style={jumpLinkStyle}>Prototypes &amp; handoffs</a>
+      </nav>
       <PlayableProjects />
-      <section style={pp.section} aria-labelledby="open-source-heading">
+      <section id={OPEN_SOURCE_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="open-source-heading">
         <style>{`
           .pp-projectsGrid { grid-template-columns: minmax(0, 1fr); }
           .pp-releaseCard:focus-visible, .pp-releaseCard:target {
@@ -218,9 +231,6 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           }
         `}</style>
         <h2 id="open-source-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Open-source tools</h2>
-        <a href="#current-projects" style={{ ...ad.btnGhost, marginBottom: 20 }}>
-          See prototypes and handoffs <span aria-hidden="true">↓</span>
-        </a>
         <div style={pp.toolbar} className="pp-toolbar">
           <div style={pp.toolbarMono}>
             {shippingCount > 0 && (
