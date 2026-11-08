@@ -107,6 +107,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/projects/brinespace",
+      "destination": "/projects/brinespace/index.html"
+    },
+    {
       "source": "/projects/futureproof",
       "destination": "/projects/futureproof/index.html"
     },

@@ -12,6 +12,7 @@ type StatusProject = {
   detail: string;
   image?: { src: string; srcSet?: string; alt: string };
   link?: { label: string; href: string; clickAction?: string };
+  projectPage?: string;
 };
 
 export function PlayableProjects() {
@@ -26,6 +27,7 @@ export function PlayableProjects() {
           category: 'Underwater survival',
           status: 'Playable preview',
           link: { label: 'Play BrineSpace', href: brineSpace.url, clickAction: 'play-brinespace' },
+          projectPage: buildPath('brinespace'),
         },
         fishMail,
       ]}
@@ -111,6 +113,11 @@ function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, p
                 <a href={project.link.href} data-project-click={project.link.clickAction} style={ad.btnGhost}>
                   {project.link.label} <span aria-hidden="true">{project.link.href.startsWith('/') ? '→' : '↗'}</span>
                 </a>
+                {project.projectPage && (
+                  <a href={project.projectPage} style={{ color: TG_MUTED, fontSize: 14, textUnderlineOffset: 3 }}>
+                    Explore BrineSpace
+                  </a>
+                )}
                 {project.id === caseStudyProjectId && (
                   <a href={buildPath('futureproof')} data-project-click="read-case-study" style={{ color: TG_MUTED, fontSize: 14, textUnderlineOffset: 3 }}>
                     Read the case study

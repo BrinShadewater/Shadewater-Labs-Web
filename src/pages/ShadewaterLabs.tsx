@@ -4,7 +4,7 @@ import { managedWebsites } from '@/content/websites';
 import { brineSpace, fishMail } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
-import { buildProjectHref, OPEN_SOURCE_SECTION_ID, PAGE_HEADING_ID } from '@/lib/routes';
+import { buildPath, buildProjectHref, OPEN_SOURCE_SECTION_ID, PAGE_HEADING_ID } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES,
@@ -313,6 +313,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       clickAction: 'play-brinespace',
       href: brineSpace.url,
       external: true,
+      projectHref: buildPath('brinespace'),
     },
     {
       key: fishMail.id,

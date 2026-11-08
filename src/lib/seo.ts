@@ -167,6 +167,17 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           personSchema(),
         ],
       };
+    case 'brinespace':
+      return {
+        title: `BrineSpace | ${ORGANIZATION_NAME}`,
+        description: 'Explore BrineSpace, a card-driven underwater colony builder. See how expeditions work and find the Windows and Mac preview on itch.io.',
+        canonical: buildCanonicalUrl('brinespace'),
+        image: `${LABS_ORIGIN}/brinespace-expedition-draft.webp`,
+        imageAlt: 'A BrineSpace station with three room cards ready to draft.',
+        siteName: ORGANIZATION_NAME,
+        type: 'website',
+        jsonLd: [websiteSchema(), organizationSchema()],
+      };
     case 'futureproof':
       return {
         title: `Futureproof Festival Companion & FishMail | ${ORGANIZATION_NAME}`,
@@ -296,7 +307,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
  * index.html itself, so it is not listed here; everything else in LABS_PAGES is.
  */
 export function getLabsPrerenderTargets(): { path: string; page: string }[] {
-  return ['projects', 'futureproof', 'websites', 'toolkit', 'about'].map((page) => ({
+  return ['projects', 'brinespace', 'futureproof', 'websites', 'toolkit', 'about'].map((page) => ({
     path: buildPath(page, undefined, 'labs'),
     page,
   }));
@@ -306,6 +317,7 @@ export function getLabsSitemapPaths() {
   return [
     buildPath('labs', undefined, 'labs'),
     buildPath('projects', undefined, 'labs'),
+    buildPath('brinespace'),
     buildPath('futureproof'),
     buildPath('websites', undefined, 'labs'),
     buildPath('toolkit', undefined, 'labs'),

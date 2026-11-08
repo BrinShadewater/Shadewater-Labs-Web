@@ -10,7 +10,7 @@ export const queueItems: QueueItem[] = [
   {
     id: 'brinespace-performance',
     name: 'BrineSpace — performance and platform work',
-    note: 'Large-station performance, longer expeditions, and Mac and iPad testing for 0.4.0.',
+    note: 'Large-station performance, longer expeditions, and iPad testing for 0.4.0.',
     status: 'In progress',
   },
   {

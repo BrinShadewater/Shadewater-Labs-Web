@@ -10,6 +10,7 @@ export type SiteKey = 'brin' | 'labs';
 const LABS_STATIC_PATHS: Record<string, string> = {
   labs: '/',
   projects: '/projects',
+  brinespace: '/projects/brinespace',
   futureproof: '/projects/futureproof',
   websites: '/websites',
   toolkit: '/toolkit',
@@ -19,6 +20,7 @@ const LABS_STATIC_PATHS: Record<string, string> = {
 const LABS_PAGES = new Set([
   'labs',
   'projects',
+  'brinespace',
   'futureproof',
   'websites',
   'toolkit',
@@ -55,6 +57,8 @@ export function parseLocation(pathname: string, _hash = '') {
   switch (cleaned) {
     case 'projects':
       return { page: 'projects', noteId: '' };
+    case 'projects/brinespace':
+      return { page: 'brinespace', noteId: '' };
     case 'projects/futureproof':
       return { page: 'futureproof', noteId: '' };
     case 'websites':

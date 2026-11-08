@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 
 const origin = 'https://shadewaterlabs.com';
 const pagesByAction = {
-  'play-brinespace': ['/', '/projects'],
+  'play-brinespace': ['/', '/projects', '/projects/brinespace'],
   'try-fishmail': ['/', '/projects', '/projects/futureproof'],
   'browse-open-source': ['/'],
   'read-case-study': ['/projects'],
