@@ -413,7 +413,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               )}
 
               <p style={pp.projectBlurb}>{p.summary}</p>
-              {(p.guide || p.slug === 'game-asset-pipeline') && (
+              {(p.guide || p.slug === 'game-asset-pipeline' || p.slug === 'webp-me-daddy-skill') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: 10, color: `hsl(${p.accent})` }}>
                   {p.guide && (
                     <a href={p.guide.href} target="_blank" rel="noopener noreferrer" style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
@@ -423,6 +423,11 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                   {p.slug === 'game-asset-pipeline' && (
                     <a href={buildPath('brinespace-asset-case')} style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
                       Read the asset case study <span aria-hidden="true">→</span>
+                    </a>
+                  )}
+                  {p.slug === 'webp-me-daddy-skill' && (
+                    <a href={buildPath('webp-example')} style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
+                      See a real example <span aria-hidden="true">→</span>
                     </a>
                   )}
                 </div>

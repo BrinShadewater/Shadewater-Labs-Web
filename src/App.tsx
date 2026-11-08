@@ -11,6 +11,7 @@ const ShadewaterLabs = lazy(pageImports.labs);
 const Projects = lazy(pageImports.projects);
 const BrineSpace = lazy(pageImports.brinespace);
 const BrineSpaceAssetCase = lazy(pageImports['brinespace-asset-case']);
+const WebpExample = lazy(pageImports['webp-example']);
 const Futureproof = lazy(pageImports.futureproof);
 const Websites = lazy(pageImports.websites);
 const Toolkit = lazy(pageImports.toolkit);
@@ -137,6 +138,8 @@ function App({ initialPage, InitialPage }: {
         return <BrineSpace onNavigate={handleNavigate} />;
       case 'brinespace-asset-case':
         return <BrineSpaceAssetCase onNavigate={handleNavigate} />;
+      case 'webp-example':
+        return <WebpExample onNavigate={handleNavigate} />;
       case 'futureproof':
         return <Futureproof onNavigate={handleNavigate} />;
       case 'websites':

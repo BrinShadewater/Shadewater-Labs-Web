@@ -3,6 +3,7 @@
 // resolves relative paths only — a "@/" specifier there reads as a bare package and the build
 // fails. Same reason brinshadewater.com's seo.ts is relative.
 import { brineSpace, brineSpaceAssetCase, futureproofCompanion } from '../content/currentProjects';
+import { webpExample } from '../content/webpExample';
 import { tools } from '../content/tools';
 import { managedWebsites } from '../content/websites';
 import { openSourceReleases } from '../content/openSource';
@@ -205,6 +206,19 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         type: 'article',
         jsonLd: [websiteSchema(), organizationSchema()],
       };
+    case 'webp-example':
+      return {
+        title: `${webpExample.title} | ${ORGANIZATION_NAME}`,
+        description: webpExample.description,
+        canonical: buildCanonicalUrl('webp-example'),
+        image: `${LABS_ORIGIN}${webpExample.preview.src}`,
+        imageAlt: webpExample.preview.alt,
+        imageWidth: webpExample.preview.width,
+        imageHeight: webpExample.preview.height,
+        siteName: ORGANIZATION_NAME,
+        type: 'article',
+        jsonLd: [websiteSchema(), organizationSchema()],
+      };
     case 'futureproof':
       return {
         title: `Futureproof Festival Companion & FishMail | ${ORGANIZATION_NAME}`,
@@ -331,7 +345,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
  * index.html itself, so it is not listed here; everything else in LABS_PAGES is.
  */
 export function getLabsPrerenderTargets(): { path: string; page: string }[] {
-  return ['projects', 'brinespace', 'brinespace-asset-case', 'futureproof', 'websites', 'toolkit', 'about'].map((page) => ({
+  return ['projects', 'brinespace', 'brinespace-asset-case', 'webp-example', 'futureproof', 'websites', 'toolkit', 'about'].map((page) => ({
     path: buildPath(page, undefined, 'labs'),
     page,
   }));
@@ -343,6 +357,7 @@ export function getLabsSitemapPaths() {
     buildPath('projects', undefined, 'labs'),
     buildPath('brinespace'),
     buildPath('brinespace-asset-case'),
+    buildPath('webp-example'),
     buildPath('futureproof'),
     buildPath('websites', undefined, 'labs'),
     buildPath('toolkit', undefined, 'labs'),

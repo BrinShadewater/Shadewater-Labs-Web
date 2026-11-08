@@ -4,6 +4,7 @@ import ShadewaterLabs from './pages/ShadewaterLabs';
 import Projects from './pages/Projects';
 import BrineSpace from './pages/BrineSpace';
 import BrineSpaceAssetCase from './pages/BrineSpaceAssetCase';
+import WebpExample from './pages/WebpExample';
 import Futureproof from './pages/Futureproof';
 import Websites from './pages/Websites';
 import Toolkit from './pages/Toolkit';
@@ -14,6 +15,7 @@ const pages = {
   projects: Projects,
   brinespace: BrineSpace,
   'brinespace-asset-case': BrineSpaceAssetCase,
+  'webp-example': WebpExample,
   futureproof: Futureproof,
   websites: Websites,
   toolkit: Toolkit,

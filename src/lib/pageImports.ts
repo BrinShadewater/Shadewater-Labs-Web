@@ -3,6 +3,7 @@ export const pageImports = {
   projects: () => import('../pages/Projects'),
   brinespace: () => import('../pages/BrineSpace'),
   'brinespace-asset-case': () => import('../pages/BrineSpaceAssetCase'),
+  'webp-example': () => import('../pages/WebpExample'),
   futureproof: () => import('../pages/Futureproof'),
   websites: () => import('../pages/Websites'),
   toolkit: () => import('../pages/Toolkit'),
