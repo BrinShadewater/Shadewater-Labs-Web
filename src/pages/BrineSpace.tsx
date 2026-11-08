@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { ADFooter, ADNav, ADTicker, ad, type AuroraNavigate } from '@/components/aurora/chrome';
 import { brineSpace } from '@/content/currentProjects';
-import { buildProjectHref, PAGE_HEADING_ID } from '@/lib/routes';
+import { buildPath, buildProjectHref, PAGE_HEADING_ID } from '@/lib/routes';
 
 const downloadHeadingId = 'brine-download-heading';
 const expeditionHeadingId = 'expedition-heading';
@@ -179,9 +179,14 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
             <p className="brine-kicker">From the lab</p>
             <h2 id="brinespace-pipeline-heading">Tools built along the way</h2>
             <p>The Shadewater Game Asset Pipeline grew out of making BrineSpace’s rooms and characters. It packages reusable tools for planning 2D assets, slicing animation strips, and checking room geometry.</p>
-            <a href={buildProjectHref('game-asset-pipeline')} className="brine-text-link">
-              View the open-source asset pipeline <span aria-hidden="true">→</span>
-            </a>
+            <div style={{ display: 'flex', flexWrap: 'wrap', columnGap: 20 }}>
+              <a href={buildPath('brinespace-asset-case')} className="brine-text-link">
+                Read the asset case study <span aria-hidden="true">→</span>
+              </a>
+              <a href={buildProjectHref('game-asset-pipeline')} className="brine-text-link">
+                View the open-source asset pipeline <span aria-hidden="true">→</span>
+              </a>
+            </div>
           </section>
         </div>
       </article>

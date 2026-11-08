@@ -19,7 +19,7 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 
 const ORIGIN = 'https://shadewaterlabs.com';
-const ROUTES = ['projects', 'websites', 'toolkit', 'about'];
+const ROUTES = ['projects', 'projects/brinespace/asset-pipeline', 'websites', 'toolkit', 'about'];
 
 const shell = (route) => new URL(`../dist/${route}/index.html`, import.meta.url);
 const homeShell = new URL('../dist/index.html', import.meta.url);

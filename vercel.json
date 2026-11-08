@@ -111,6 +111,10 @@
       "destination": "/projects/brinespace/index.html"
     },
     {
+      "source": "/projects/brinespace/asset-pipeline",
+      "destination": "/projects/brinespace/asset-pipeline/index.html"
+    },
+    {
       "source": "/projects/futureproof",
       "destination": "/projects/futureproof/index.html"
     },

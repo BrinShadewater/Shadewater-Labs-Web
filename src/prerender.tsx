@@ -3,12 +3,22 @@ import { AD_NAV_MENU_MAX_WIDTH } from './components/aurora/chrome';
 import ShadewaterLabs from './pages/ShadewaterLabs';
 import Projects from './pages/Projects';
 import BrineSpace from './pages/BrineSpace';
+import BrineSpaceAssetCase from './pages/BrineSpaceAssetCase';
 import Futureproof from './pages/Futureproof';
 import Websites from './pages/Websites';
 import Toolkit from './pages/Toolkit';
 import About from './pages/About';
 
-const pages = { labs: ShadewaterLabs, projects: Projects, brinespace: BrineSpace, futureproof: Futureproof, websites: Websites, toolkit: Toolkit, about: About };
+const pages = {
+  labs: ShadewaterLabs,
+  projects: Projects,
+  brinespace: BrineSpace,
+  'brinespace-asset-case': BrineSpaceAssetCase,
+  futureproof: Futureproof,
+  websites: Websites,
+  toolkit: Toolkit,
+  about: About,
+};
 
 /** Build-only rendering of the same components used by the interactive app. */
 export function renderRoute(page: string) {

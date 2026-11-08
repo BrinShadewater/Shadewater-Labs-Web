@@ -2,7 +2,7 @@
 // per-route shells and the runtime <Seo> read one source of truth, and Vite's config loader
 // resolves relative paths only — a "@/" specifier there reads as a bare package and the build
 // fails. Same reason brinshadewater.com's seo.ts is relative.
-import { brineSpace, futureproofCompanion } from '../content/currentProjects';
+import { brineSpace, brineSpaceAssetCase, futureproofCompanion } from '../content/currentProjects';
 import { tools } from '../content/tools';
 import { managedWebsites } from '../content/websites';
 import { openSourceReleases } from '../content/openSource';
@@ -192,6 +192,19 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         type: 'website',
         jsonLd: [websiteSchema(), organizationSchema()],
       };
+    case 'brinespace-asset-case':
+      return {
+        title: `${brineSpaceAssetCase.title} | ${ORGANIZATION_NAME}`,
+        description: brineSpaceAssetCase.description,
+        canonical: buildCanonicalUrl('brinespace-asset-case'),
+        image: `${LABS_ORIGIN}${brineSpaceAssetCase.image.src}`,
+        imageAlt: brineSpaceAssetCase.image.alt,
+        imageWidth: brineSpaceAssetCase.image.width,
+        imageHeight: brineSpaceAssetCase.image.height,
+        siteName: ORGANIZATION_NAME,
+        type: 'article',
+        jsonLd: [websiteSchema(), organizationSchema()],
+      };
     case 'futureproof':
       return {
         title: `Futureproof Festival Companion & FishMail | ${ORGANIZATION_NAME}`,
@@ -318,7 +331,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
  * index.html itself, so it is not listed here; everything else in LABS_PAGES is.
  */
 export function getLabsPrerenderTargets(): { path: string; page: string }[] {
-  return ['projects', 'brinespace', 'futureproof', 'websites', 'toolkit', 'about'].map((page) => ({
+  return ['projects', 'brinespace', 'brinespace-asset-case', 'futureproof', 'websites', 'toolkit', 'about'].map((page) => ({
     path: buildPath(page, undefined, 'labs'),
     page,
   }));
@@ -329,6 +342,7 @@ export function getLabsSitemapPaths() {
     buildPath('labs', undefined, 'labs'),
     buildPath('projects', undefined, 'labs'),
     buildPath('brinespace'),
+    buildPath('brinespace-asset-case'),
     buildPath('futureproof'),
     buildPath('websites', undefined, 'labs'),
     buildPath('toolkit', undefined, 'labs'),

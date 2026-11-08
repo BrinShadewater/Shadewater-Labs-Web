@@ -1,7 +1,7 @@
 import CurrentProjects, { PlayableProjects } from '@/components/CurrentProjects';
 import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
-import { buildProjectHref, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
+import { buildPath, buildProjectHref, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
 import {
   AuroraPage,
   MONO,
@@ -333,6 +333,11 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               )}
 
               <p style={pp.projectBlurb}>{p.summary}</p>
+              {p.slug === 'game-asset-pipeline' && (
+                <a href={buildPath('brinespace-asset-case')} style={{ ...pp.projectLink, margin: '10px 0 0', alignSelf: 'flex-start', gap: 5, color: 'hsl(' + p.accent + ')' }}>
+                  Read the asset case study <span aria-hidden="true">→</span>
+                </a>
+              )}
 
               {typeof p.progress === 'number' ? (
                 <div style={pp.progressRow}>

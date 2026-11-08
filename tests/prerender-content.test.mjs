@@ -6,6 +6,7 @@ const routes = [
   ['', /The studio for weird-good/, /AI tools and tech experiments/],
   ['projects', /Projects from the lab\./, /Lucid Sheep/],
   ['projects/brinespace', /BrineSpace/, /Archive the expedition/],
+  ['projects/brinespace/asset-pipeline', /How BrineSpace assets are made/, /The finished room in-game/],
   ['projects/futureproof', /Futureproof Festival Companion &amp; FishMail/, /Sending a note through the aquarium/],
   ['websites', /Managed web properties\./, /InkMaster Studio/],
   ['toolkit', /The toolkit\./, /Third-party tools/],

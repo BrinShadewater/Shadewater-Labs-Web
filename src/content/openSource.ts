@@ -39,12 +39,14 @@ export function thumbSrcSet(base: string): string {
   return `/${base}-320w.webp 320w, /${base}-480w.webp 480w, /${base}.webp 800w`;
 }
 
+export const gameAssetPipelineUrl = 'https://github.com/BrinShadewater/Shadewater-Game-Asset-Pipeline';
+
 export const openSourceReleases: OpenSourceRelease[] = [
   {
     id: 'game-asset-pipeline',
     name: 'Shadewater Game Asset Pipeline',
     repo: 'BrinShadewater/Shadewater-Game-Asset-Pipeline',
-    url: 'https://github.com/BrinShadewater/Shadewater-Game-Asset-Pipeline',
+    url: gameAssetPipelineUrl,
     licence: 'MIT',
     language: 'Python',
     summary: 'Three reusable agent skills and six offline Python helpers for 2D game assets, extracted from BrineSpace. Plan rooms and characters, track source art, slice animation strips, and check geometry before visual review.',

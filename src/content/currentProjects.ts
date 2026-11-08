@@ -14,6 +14,17 @@ export const brineSpace = {
   },
 } as const;
 
+export const brineSpaceAssetCase = {
+  title: 'How BrineSpace assets are made',
+  description: 'Follow the Desalination Unit from its original wall art through four rotation checks to the finished room in BrineSpace.',
+  image: {
+    src: '/brinespace-desalination-in-game.webp',
+    alt: 'The finished Desalination Unit selected in a BrineSpace station, with its inspector open.',
+    width: 1200,
+    height: 676,
+  },
+} as const;
+
 export const fishMail = {
   id: 'fishmail',
   name: 'FishMail',
