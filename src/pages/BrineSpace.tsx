@@ -3,6 +3,9 @@ import { ADFooter, ADNav, ADTicker, ad, type AuroraNavigate } from '@/components
 import { brineSpace } from '@/content/currentProjects';
 import { buildProjectHref, PAGE_HEADING_ID } from '@/lib/routes';
 
+const downloadHeadingId = 'brine-download-heading';
+const expeditionHeadingId = 'expedition-heading';
+
 const expedition = [
   {
     id: 'draft',
@@ -29,8 +32,9 @@ const expedition = [
 
 export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate }) {
   useEffect(() => {
-    if (window.location.hash !== '#expedition-heading') return;
-    const heading = document.getElementById('expedition-heading');
+    const id = window.location.hash.slice(1);
+    if (id !== downloadHeadingId && id !== expeditionHeadingId) return;
+    const heading = document.getElementById(id);
     heading?.focus({ preventScroll: true });
     heading?.scrollIntoView();
   }, []);
@@ -53,7 +57,10 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
                 <a href={brineSpace.url} data-project-click="play-brinespace" style={ad.btnPrimary}>
                   Download on itch.io <span aria-hidden="true">↗</span>
                 </a>
-                <a href="#expedition-heading" className="brine-text-link">See how it plays <span aria-hidden="true">↓</span></a>
+                <div className="brine-jump-links">
+                  <a href={`#${downloadHeadingId}`} className="brine-text-link">Check platform details <span aria-hidden="true">↓</span></a>
+                  <a href={`#${expeditionHeadingId}`} className="brine-text-link">See how it plays <span aria-hidden="true">↓</span></a>
+                </div>
               </div>
               <p className="brine-build-note">{brineSpace.previewVersion} preview · Free to download</p>
             </div>
@@ -71,8 +78,8 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
               <figcaption><span>Station view</span><span>Windows 0.4.0 RC1</span></figcaption>
             </figure>
           </div>
-          <section className="brine-download-notes" aria-labelledby="brine-download-heading">
-            <h2 id="brine-download-heading">Before you download</h2>
+          <section className="brine-download-notes" aria-labelledby={downloadHeadingId}>
+            <h2 id={downloadHeadingId} tabIndex={-1}>Before you download</h2>
             <div className="brine-platforms">
               <section aria-labelledby="brine-windows-heading">
                 <h3 id="brine-windows-heading">Windows <span>2.1 GB</span></h3>
@@ -110,9 +117,9 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
       </header>
 
       <article className="brine-wrap brine-content">
-        <section aria-labelledby="expedition-heading">
+        <section aria-labelledby={expeditionHeadingId}>
           <p className="brine-kicker">The gameplay loop</p>
-          <h2 id="expedition-heading" tabIndex={-1}>How an expedition works</h2>
+          <h2 id={expeditionHeadingId} tabIndex={-1}>How an expedition works</h2>
           <p className="brine-section-intro">Three moments from the Windows 0.4.0 RC1 preview, from your first room choice to the upgrades you take into the next run.</p>
           <div className="brine-expedition">
             {expedition.map(({ id, title, alt, caption, detail }, index) => (
