@@ -102,8 +102,12 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
           <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
             This example uses a card up to 400 pixels wide, with 20 pixels of space on each side on narrow screens. If you host the files yourself, replace the image URLs and adjust <code>sizes</code> to match your layout.
           </p>
+          <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
+            The ZIP includes the original JPEG, all four WebPs, and a standalone demo. Unzip it and open <code>index.html</code> to try the example offline.
+          </p>
           <style>{'[data-prerender-route] .webp-copy-html { display: none; }'}</style>
           <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px 14px', marginTop: 16 }}>
+            <a href="/webp-example/webp-me-daddy-example.zip" download style={ad.btnGhost}>Download example files <span aria-hidden="true">↓</span></a>
             <button type="button" className="webp-copy-html" onClick={() => void copyHtml()} style={ad.btnGhost}>Copy HTML</button>
             <span role="status" style={{ color: TG_MUTED, fontSize: 14 }}>{copyStatus}</span>
           </div>
