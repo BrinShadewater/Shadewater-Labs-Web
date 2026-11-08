@@ -159,9 +159,9 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
             <p className="brine-kicker">First run</p>
             <h2 id="brinespace-start-heading">Start a new loop</h2>
             <ol>
-              <li>Open the <strong>Tutorial Guide</strong> in Settings for illustrated help.</li>
-              <li>Choose <strong>New Loop</strong> and check the cost and door positions before placing your first room.</li>
-              <li>Use <strong>Save &amp; Quit</strong> to resume later with <strong>Continue Loop</strong>. Choose <strong>End Expedition</strong> when you’re ready to see your rewards.</li>
+              <li>Find the illustrated <strong>Tutorial Guide</strong> in Settings, either from the title screen or during a run.</li>
+              <li>Choose <strong>New Loop</strong>. Check the room card’s cost and line up a door with the station. On Windows, use <kbd>R</kbd> to rotate the room or <kbd>Esc</kbd> to put the card down without placing it.</li>
+              <li>Taking a break? Choose <strong>Save &amp; Quit</strong> from the pause menu and use <strong>Continue Loop</strong> to pick up later. <strong>End Expedition</strong> finishes the run and opens the rewards report.</li>
             </ol>
           </section>
           <section aria-labelledby="brinespace-feedback-heading">
