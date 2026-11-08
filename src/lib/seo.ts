@@ -137,7 +137,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       return {
         title: `Projects | ${ORGANIZATION_NAME}`,
         description:
-          'Browse released open-source tools, prototypes, and development handoffs from Shadewater Labs.',
+          'Play BrineSpace and FishMail, then browse open-source tools, prototypes, and development handoffs from Shadewater Labs.',
         canonical: buildCanonicalUrl('projects', undefined, 'labs'),
         image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
         imageAlt: SHADEWATER_LABS_MARK_ALT,
@@ -150,7 +150,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
             '@type': 'CollectionPage',
             name: 'Shadewater Labs Projects',
             url: buildCanonicalUrl('projects', undefined, 'labs'),
-            description: 'Open-source releases, prototypes, and development handoffs from Shadewater Labs.',
+            description: 'Playable demos, open-source releases, prototypes, and development handoffs from Shadewater Labs.',
           },
           {
             '@context': 'https://schema.org',

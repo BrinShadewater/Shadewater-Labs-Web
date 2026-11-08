@@ -6,7 +6,7 @@
 
 ## Main sections
 - [Home](https://shadewaterlabs.com/): What the lab works on, current status, and recent work.
-- [Projects](https://shadewaterlabs.com/projects): Open-source release cards, prototypes, and development handoffs.
+- [Projects](https://shadewaterlabs.com/projects): Playable demos, open-source release cards, prototypes, and development handoffs.
 - [Websites](https://shadewaterlabs.com/websites): Web properties designed, built, and maintained here.
 - [Toolkit](https://shadewaterlabs.com/toolkit): The third-party tools used on real work here, with what each is for.
 - [About](https://shadewaterlabs.com/about): Background on Shadewater Labs and Brin Shadewater.

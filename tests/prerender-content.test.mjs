@@ -4,7 +4,7 @@ import { test } from 'node:test';
 
 const routes = [
   ['', /The studio for weird-good/, /AI tools and tech experiments/],
-  ['projects', /Tools, in the open\./, /Lucid Sheep/],
+  ['projects', /Projects from the lab\./, /Lucid Sheep/],
   ['websites', /Managed web properties\./, /InkMaster Studio/],
   ['toolkit', /The toolkit\./, /Third-party tools/],
   ['about', /The person behind the lab\./, /Vancouver/],

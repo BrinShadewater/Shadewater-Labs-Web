@@ -4,6 +4,18 @@ export const brineSpace = {
   summary: 'Draft room cards and keep an underwater colony alive as BRINE, a damaged AI core. Earn Archived Data on expeditions to unlock blueprints, crew, and companions.',
   detail: 'The signed Windows 0.4.0 RC1 preview and notarized Mac 0.3.0 alpha are available on itch.io. Mac and iPad builds for 0.4.0 are in testing.',
   url: 'https://brinshadewater.itch.io/brinespace',
+  image: { src: '/brinespace-windows-preview.webp', alt: 'Four connected rooms in BrineSpace, viewed from above.' },
+} as const;
+
+export const fishMail = {
+  id: 'fishmail',
+  name: 'FishMail',
+  category: 'Interactive ocean',
+  status: 'Playable demo',
+  summary: 'An interactive aquarium built into the Futureproof Festival Companion. Attendees choose a fish and send private notes that travel across the ocean before arriving in the recipient’s inbox.',
+  detail: 'Try the Shadewater Labs demo. Pick a nickname, choose a fish, and send a note to another swimmer.',
+  image: { src: '/fishmail-demo-hero.webp', alt: 'Illustrated fish swimming through the FishMail aquarium among kelp and coral.' },
+  link: { label: 'Try FishMail', href: '/fishmail' },
 } as const;
 
 /** Public-facing summaries; evidence and limits are recorded in docs/CONTENT-REVIEW-2026-11-06.md. */
@@ -18,16 +30,7 @@ export const currentProjects = [
     image: { src: '/futureproof-companion-dark.webp', alt: 'The Festival Companion programme in dark mode, with day tabs, search, and the My Plan sidebar.' },
     link: { label: 'Visit Futureproof', href: 'https://www.futureproof.website/' },
   },
-  {
-    id: 'fishmail',
-    name: 'FishMail',
-    category: 'Interactive ocean',
-    status: 'Playable demo',
-    summary: 'An interactive aquarium built into the Futureproof Festival Companion. Attendees choose a fish and send private notes that travel across the ocean before arriving in the recipient’s inbox.',
-    detail: 'Try the Shadewater Labs demo. Pick a nickname, choose a fish, and send a note to another swimmer.',
-    image: { src: '/fishmail-demo-hero.webp', alt: 'Illustrated fish swimming through the FishMail aquarium among kelp and coral.' },
-    link: { label: 'Try FishMail', href: '/fishmail' },
-  },
+  fishMail,
   {
     id: 'eink-device',
     name: 'E-ink desk device',

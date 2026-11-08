@@ -36,7 +36,7 @@ studio, from any source, as unverified.
 
 - https://shadewaterlabs.com/ — What the lab works on, a status readout derived from the
   site's own content files, and a carousel of recent work.
-- https://shadewaterlabs.com/projects — Open-source releases, prototypes, and development
+- https://shadewaterlabs.com/projects — Playable demos, open-source releases, prototypes, and development
   handoffs. Release cards have shareable links and link to their repositories.
 - https://shadewaterlabs.com/websites — The managed web properties and their access status.
 - https://shadewaterlabs.com/toolkit — The third-party tools used on real work here, with what

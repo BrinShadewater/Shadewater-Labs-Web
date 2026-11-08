@@ -1,4 +1,4 @@
-import CurrentProjects from '@/components/CurrentProjects';
+import CurrentProjects, { PlayableProjects } from '@/components/CurrentProjects';
 import { useLayoutEffect, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { buildProjectHref } from '@/lib/routes';
@@ -195,10 +195,11 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       onNavigate={onNavigate}
       sectionLabel="Projects"
       eyebrow="CATALOG"
-      title="Tools, in the open."
-      lede="Open-source tools built for the work here, then published. Each release links to its repository."
+      title="Projects from the lab."
+      lede="Play a demo, browse open-source tools, or explore prototypes and handoffs."
     >
-      <section style={pp.section}>
+      <PlayableProjects />
+      <section style={pp.section} aria-labelledby="open-source-heading">
         <style>{`
           .pp-projectsGrid { grid-template-columns: minmax(0, 1fr); }
           .pp-releaseCard:focus-visible, .pp-releaseCard:target {
@@ -216,6 +217,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
             .pp-toolbar { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
           }
         `}</style>
+        <h2 id="open-source-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Open-source tools</h2>
         <a href="#current-projects" style={{ ...ad.btnGhost, marginBottom: 20 }}>
           See prototypes and handoffs <span aria-hidden="true">↓</span>
         </a>
@@ -412,7 +414,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           ))}
         </div>
       </section>
-      <CurrentProjects />
+      <CurrentProjects includeFishMail={false} />
     </AuroraPage>
   );
 }
