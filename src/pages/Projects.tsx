@@ -1,5 +1,5 @@
 import CurrentProjects, { PlayableProjects } from '@/components/CurrentProjects';
-import { useLayoutEffect, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { buildProjectHref, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
 import {
@@ -45,7 +45,12 @@ export default function Projects({ onNavigate }: ProjectsProps) {
 
   const [activeFilter, setActiveFilter] = useState('all');
   const [linkedSlug, setLinkedSlug] = useState<string | null>(null);
-  const [shareFeedback, setShareFeedback] = useState<{ slug: string; manualUrl?: string } | null>(null);
+  const [shareFeedback, setShareFeedback] = useState<{
+    slug: string;
+    manualUrl?: string;
+    trigger?: HTMLButtonElement;
+  } | null>(null);
+  const manualCopyInput = useRef<HTMLInputElement>(null);
 
   useLayoutEffect(() => {
     const followFragment = () => {
@@ -75,13 +80,19 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     card?.scrollIntoView({ block: 'start' });
   }, [linkedSlug]);
 
-  const copyProjectLink = async (slug: string) => {
+  useLayoutEffect(() => {
+    if (shareFeedback?.manualUrl && document.activeElement === shareFeedback.trigger) {
+      manualCopyInput.current?.focus();
+    }
+  }, [shareFeedback]);
+
+  const copyProjectLink = async (slug: string, trigger: HTMLButtonElement) => {
     const url = new URL(buildProjectHref(slug), window.location.origin);
     try {
       await navigator.clipboard.writeText(url.href);
       setShareFeedback({ slug });
     } catch {
-      setShareFeedback({ slug, manualUrl: url.href });
+      setShareFeedback({ slug, manualUrl: url.href, trigger });
     }
   };
 
@@ -260,9 +271,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
         </div>
 
         <p className="sr-only" role="status">
-          {shareFeedback && (shareFeedback.manualUrl
-            ? 'Automatic copying is unavailable. The project URL is ready to select.'
-            : 'Project link copied.')}
+          {shareFeedback && !shareFeedback.manualUrl && 'Project link copied.'}
         </p>
         <div id="open-source-results" style={pp.projectsGrid} className="pp-projectsGrid">
           {visibleCards.map((p) => (
@@ -371,7 +380,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                   type="button"
                   className="pp-copyProjectLink"
                   aria-label={`Copy link to ${p.name}`}
-                  onClick={() => void copyProjectLink(p.slug)}
+                  onClick={(event) => void copyProjectLink(p.slug, event.currentTarget)}
                   style={{ color: TG_MUTED, fontSize: 14, cursor: 'pointer', minHeight: 32 }}
                 >
                   Copy link {shareFeedback?.slug === p.slug && !shareFeedback.manualUrl && <span aria-hidden="true">✓</span>}
@@ -408,14 +417,21 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                 )}
               </div>
               {shareFeedback?.slug === p.slug && shareFeedback.manualUrl && (
-                <input
-                  type="url"
-                  aria-label={`Project URL for ${p.name}`}
-                  readOnly
-                  value={shareFeedback.manualUrl}
-                  onFocus={(event) => event.currentTarget.select()}
-                  style={{ position: 'relative', width: '100%', marginTop: 8, padding: 8, border: '1px solid currentColor', borderRadius: 6, fontSize: 14 }}
-                />
+                <div style={{ position: 'relative', marginTop: 8 }}>
+                  <p id={`${p.slug}-copy-help`} style={{ color: TG_MUTED, fontSize: 13, marginBottom: 6 }}>
+                    Automatic copying is unavailable. Select the link and use your device’s Copy command.
+                  </p>
+                  <input
+                    ref={manualCopyInput}
+                    type="url"
+                    aria-label={`Project URL for ${p.name}`}
+                    aria-describedby={`${p.slug}-copy-help`}
+                    readOnly
+                    value={shareFeedback.manualUrl}
+                    onFocus={(event) => event.currentTarget.select()}
+                    style={{ width: '100%', padding: 8, border: '1px solid currentColor', borderRadius: 6, fontSize: 14 }}
+                  />
+                </div>
               )}
             </article>
           ))}
