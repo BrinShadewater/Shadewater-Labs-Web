@@ -20,10 +20,10 @@ export const SHADEWATER_LABS_MARK_HEIGHT = 712;
 
 export const SHADEWATER_LABS_TEXT_LOGO_ALT = 'Shadewater Labs';
 export const SHADEWATER_LABS_TEXT_LOGO_SRC = '/shadewater-labs-text-logo.webp';
-export const SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC = '/shadewater-labs-text-logo-cropped.webp';
+export const SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC = '/shadewater-labs-hero-logo.webp';
 // Responsive lockup sources for the homepage hero.
 export const SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET =
-  '/shadewater-labs-text-logo-cropped-245w.webp 245w, /shadewater-labs-text-logo-cropped-490w.webp 490w, /shadewater-labs-text-logo-cropped.webp 602w';
+  '/shadewater-labs-hero-logo-245w.webp 245w, /shadewater-labs-hero-logo-320w.webp 320w, /shadewater-labs-hero-logo-490w.webp 490w, /shadewater-labs-hero-logo.webp 602w';
 export const SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES = '(max-width: 362px) 145px, (max-width: 512px) 40vw, 205px';
 export const SHADEWATER_LABS_TEXT_LOGO_SRCSET =
   '/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w, /shadewater-labs-text-logo.webp 1200w';

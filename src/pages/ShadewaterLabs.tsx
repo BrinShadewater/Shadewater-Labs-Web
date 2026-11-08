@@ -10,6 +10,8 @@ import {
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET,
+  SHADEWATER_LABS_TEXT_LOGO_HEIGHT,
+  SHADEWATER_LABS_TEXT_LOGO_WIDTH,
 } from '@/lib/brandAssets';
 import {
   ad,
@@ -85,8 +87,8 @@ function ADHero() {
           srcSet={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET}
           sizes={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES}
           alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
-          width={245}
-          height={350}
+          width={SHADEWATER_LABS_TEXT_LOGO_WIDTH}
+          height={SHADEWATER_LABS_TEXT_LOGO_HEIGHT}
           fetchPriority="high"
           decoding="async"
           style={home.heroLogo}
