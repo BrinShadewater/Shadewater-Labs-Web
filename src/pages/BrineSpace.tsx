@@ -95,6 +95,17 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
               </section>
             </div>
           </section>
+          <section className="brine-release-notes" aria-labelledby="brine-release-heading">
+            <h2 id="brine-release-heading">What’s new in 0.4.0 RC1</h2>
+            <ul>
+              <li><strong>Desalination Unit.</strong> Use power to turn seawater into a new water supply.</li>
+              <li><strong>Redesigned Expedition Report.</strong> Review your rewards and open Upgrades &amp; Unlocks directly from the report.</li>
+              <li><strong>Improved checkpoint recovery.</strong> Continue Loop can load a backup if your main checkpoint is damaged.</li>
+            </ul>
+            <a className="brine-text-link" href={`${brineSpace.url}/devlog/1758959/brinespace-040-rc1-windows-preview`}>
+              Read the full changelog <span aria-hidden="true">↗</span>
+            </a>
+          </section>
         </div>
       </header>
 

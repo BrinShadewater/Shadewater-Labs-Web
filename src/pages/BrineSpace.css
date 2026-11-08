@@ -118,11 +118,13 @@
   color: var(--brine-copy);
 }
 
-.brine-download-notes {
+.brine-download-notes,
+.brine-release-notes {
   margin-top: clamp(24px, 4vw, 40px);
 }
 
-.brine-download-notes h2 {
+.brine-download-notes h2,
+.brine-release-notes h2 {
   color: #f5fbfc;
   font-size: clamp(1.3rem, 2.6vw, 1.8rem);
   font-weight: 700;
@@ -171,6 +173,16 @@
 .brine-platforms p + p { margin-top: 8px; }
 .brine-platforms ol { list-style: decimal; padding-left: 20px; }
 .brine-platforms li + li { margin-top: 4px; }
+
+.brine-release-notes {
+  padding-top: 20px;
+  border-top: 1px solid var(--brine-line);
+  color: var(--brine-copy);
+}
+
+.brine-release-notes ul { list-style: disc; padding-left: 20px; }
+.brine-release-notes li + li { margin-top: 6px; }
+.brine-release-notes .brine-text-link { display: inline-block; margin-top: 12px; }
 
 .brine-content {
   padding-block: clamp(42px, 7vw, 82px) 0;
