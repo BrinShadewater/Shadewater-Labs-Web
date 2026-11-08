@@ -22,6 +22,13 @@ interface ProjectsProps {
 const jumpLinkStyle = { ...ad.btnGhost, padding: '9px 13px', fontSize: 14 };
 const filters = ['all', ...Array.from(new Set(openSourceReleases.flatMap((release) => release.categories))).sort()];
 
+function applyCategory(url: URL, filter: string) {
+  if (filter === 'all') url.searchParams.delete('category');
+  else url.searchParams.set('category', filter);
+  url.hash = OPEN_SOURCE_SECTION_ID;
+  return url;
+}
+
 interface ProjectCard {
   slug: string;
   /** Internal route, for products with a page on this site. */
@@ -49,11 +56,12 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   const [activeFilter, setActiveFilter] = useState('all');
   const [linkedSlug, setLinkedSlug] = useState<string | null>(null);
   const [shareFeedback, setShareFeedback] = useState<{
-    slug: string;
+    key: string;
     manualUrl?: string;
     trigger?: HTMLButtonElement;
   } | null>(null);
   const manualCopyInput = useRef<HTMLInputElement>(null);
+  const copyRequestId = useRef(0);
 
   useLayoutEffect(() => {
     const followLocation = () => {
@@ -94,15 +102,33 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     }
   }, [shareFeedback]);
 
-  const copyProjectLink = async (slug: string, trigger: HTMLButtonElement) => {
-    const url = new URL(buildProjectHref(slug), window.location.origin);
+  const copyLink = async (key: string, url: URL, trigger: HTMLButtonElement) => {
+    const requestId = ++copyRequestId.current;
     try {
       await navigator.clipboard.writeText(url.href);
-      setShareFeedback({ slug });
+      if (requestId === copyRequestId.current) setShareFeedback({ key });
     } catch {
-      setShareFeedback({ slug, manualUrl: url.href, trigger });
+      if (requestId === copyRequestId.current) setShareFeedback({ key, manualUrl: url.href, trigger });
     }
   };
+
+  const manualCopy = (url: string, helpId: string, label: string) => (
+    <div style={{ position: 'relative', marginTop: 8, width: '100%' }}>
+      <p id={helpId} style={{ color: TG_MUTED, fontSize: 13, marginBottom: 6 }}>
+        Automatic copying is unavailable. Select the link and use your device’s Copy command.
+      </p>
+      <input
+        ref={manualCopyInput}
+        type="url"
+        aria-label={label}
+        aria-describedby={helpId}
+        readOnly
+        value={url}
+        onFocus={(event) => event.currentTarget.select()}
+        style={{ width: '100%', padding: 8, border: '1px solid currentColor', borderRadius: 6, fontSize: 14 }}
+      />
+    </div>
+  );
 
   const cards: ProjectCard[] = [
     ...openSourceReleases.map((r): ProjectCard => ({
@@ -123,10 +149,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
 
   const selectFilter = (filter: string) => {
     if (filter === activeFilter) return;
-    const url = new URL(window.location.href);
-    if (filter === 'all') url.searchParams.delete('category');
-    else url.searchParams.set('category', filter);
-    url.hash = OPEN_SOURCE_SECTION_ID;
+    const url = applyCategory(new URL(window.location.href), filter);
     window.history.pushState({}, '', url);
     setActiveFilter(filter);
     setLinkedSlug(null);
@@ -137,6 +160,13 @@ export default function Projects({ onNavigate }: ProjectsProps) {
 
   const resultCount = visibleCards.length;
   const filterLabel = activeFilter === 'seo' ? 'SEO' : activeFilter;
+  const viewCopyKey = `view:${activeFilter}`;
+  const viewCopied = shareFeedback?.key === viewCopyKey && !shareFeedback.manualUrl;
+
+  const copyViewLink = (trigger: HTMLButtonElement) => {
+    const url = applyCategory(new URL(buildPath('projects'), window.location.origin), activeFilter);
+    void copyLink(viewCopyKey, url, trigger);
+  };
 
   const handleCardNav = (page: string) => (e: MouseEvent) => {
     e.preventDefault();
@@ -265,12 +295,22 @@ export default function Projects({ onNavigate }: ProjectsProps) {
         `}</style>
         <h2 id="open-source-heading" style={pp.sectionTitle}>Open-source tools</h2>
         <div style={pp.toolbar} className="pp-toolbar">
-          <p role="status" aria-atomic="true" style={{ ...pp.toolbarChip, margin: 0 }}>
-            {resultCount} {resultCount === 1 ? 'tool' : 'tools'} shown
-            <span className="sr-only">
-              {activeFilter === 'all' ? ' across all categories.' : ` for ${filterLabel}.`}
-            </span>
-          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 12px' }}>
+            <p role="status" aria-atomic="true" style={{ ...pp.toolbarChip, margin: 0 }}>
+              {resultCount} {resultCount === 1 ? 'tool' : 'tools'} shown
+              <span className="sr-only">
+                {activeFilter === 'all' ? ' across all categories.' : ` for ${filterLabel}.`}
+              </span>
+            </p>
+            <button
+              type="button"
+              className="pp-copyProjectLink"
+              onClick={(event) => copyViewLink(event.currentTarget)}
+              style={{ ...pp.filterPill, fontWeight: 500 }}
+            >
+              {viewCopied ? 'Link copied' : 'Copy this view'}
+            </button>
+          </div>
           <div role="group" aria-label="Filter open-source tools" style={pp.toolbarFilters}>
             {filters.map((f) => (
               <button
@@ -289,10 +329,11 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               </button>
             ))}
           </div>
+          {shareFeedback?.key === viewCopyKey && shareFeedback.manualUrl && manualCopy(shareFeedback.manualUrl, 'view-copy-help', 'Filtered tools URL')}
         </div>
 
         <p className="sr-only" role="status">
-          {shareFeedback && !shareFeedback.manualUrl && 'Project link copied.'}
+          {viewCopied ? 'Link copied.' : shareFeedback && !shareFeedback.manualUrl && !shareFeedback.key.startsWith('view:') && 'Project link copied.'}
         </p>
         <div id="open-source-results" style={pp.projectsGrid} className="pp-projectsGrid">
           {visibleCards.map((p) => (
@@ -405,10 +446,10 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                   type="button"
                   className="pp-copyProjectLink"
                   aria-label={`Copy link to ${p.name}`}
-                  onClick={(event) => void copyProjectLink(p.slug, event.currentTarget)}
+                  onClick={(event) => void copyLink(p.slug, new URL(buildProjectHref(p.slug), window.location.origin), event.currentTarget)}
                   style={{ color: TG_MUTED, fontSize: 14, cursor: 'pointer', minHeight: 32 }}
                 >
-                  Copy link {shareFeedback?.slug === p.slug && !shareFeedback.manualUrl && <span aria-hidden="true">✓</span>}
+                  Copy link {shareFeedback?.key === p.slug && !shareFeedback.manualUrl && <span aria-hidden="true">✓</span>}
                 </button>
                 {p.page ? (
                   <a
@@ -441,23 +482,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                   </span>
                 )}
               </div>
-              {shareFeedback?.slug === p.slug && shareFeedback.manualUrl && (
-                <div style={{ position: 'relative', marginTop: 8 }}>
-                  <p id={`${p.slug}-copy-help`} style={{ color: TG_MUTED, fontSize: 13, marginBottom: 6 }}>
-                    Automatic copying is unavailable. Select the link and use your device’s Copy command.
-                  </p>
-                  <input
-                    ref={manualCopyInput}
-                    type="url"
-                    aria-label={`Project URL for ${p.name}`}
-                    aria-describedby={`${p.slug}-copy-help`}
-                    readOnly
-                    value={shareFeedback.manualUrl}
-                    onFocus={(event) => event.currentTarget.select()}
-                    style={{ width: '100%', padding: 8, border: '1px solid currentColor', borderRadius: 6, fontSize: 14 }}
-                  />
-                </div>
-              )}
+              {shareFeedback?.key === p.slug && shareFeedback.manualUrl && manualCopy(shareFeedback.manualUrl, `${p.slug}-copy-help`, `Project URL for ${p.name}`)}
             </article>
           ))}
         </div>
