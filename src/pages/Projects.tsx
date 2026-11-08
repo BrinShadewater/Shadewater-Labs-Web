@@ -20,6 +20,7 @@ interface ProjectsProps {
 }
 
 const jumpLinkStyle = { ...ad.btnGhost, padding: '9px 13px', fontSize: 14 };
+const filters = ['all', ...Array.from(new Set(openSourceReleases.flatMap((release) => release.categories))).sort()];
 
 interface ProjectCard {
   slug: string;
@@ -55,13 +56,14 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   const manualCopyInput = useRef<HTMLInputElement>(null);
 
   useLayoutEffect(() => {
-    const followFragment = () => {
+    const followLocation = () => {
       const slug = window.location.hash.slice(1);
       const release = openSourceReleases.find((item) => item.id === slug);
+      const category = new URLSearchParams(window.location.search).get('category');
+      const filter = category && filters.includes(category) ? category : 'all';
+      // An exact card link takes precedence over a filter that would hide it.
+      setActiveFilter(release && !release.categories.includes(filter) ? 'all' : filter);
       setLinkedSlug(release?.id ?? null);
-      if (release) {
-        setActiveFilter((filter) => release.categories.includes(filter) ? filter : 'all');
-      }
       if (slug === OPEN_SOURCE_SECTION_ID || slug === CASE_STUDIES_SECTION_ID) {
         // Restore the target after React replaces the prerendered section.
         const section = document.getElementById(slug);
@@ -70,9 +72,13 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       }
     };
 
-    followFragment();
-    window.addEventListener('hashchange', followFragment);
-    return () => window.removeEventListener('hashchange', followFragment);
+    followLocation();
+    window.addEventListener('popstate', followLocation);
+    window.addEventListener('hashchange', followLocation);
+    return () => {
+      window.removeEventListener('popstate', followLocation);
+      window.removeEventListener('hashchange', followLocation);
+    };
   }, []);
 
   useLayoutEffect(() => {
@@ -115,9 +121,16 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     })),
   ];
 
-  // Only offer a filter that returns something; a control that always shows
-  // "no results" is worse than no control.
-  const filters = ['all', ...Array.from(new Set(cards.flatMap((c) => c.categories))).sort()];
+  const selectFilter = (filter: string) => {
+    if (filter === activeFilter) return;
+    const url = new URL(window.location.href);
+    if (filter === 'all') url.searchParams.delete('category');
+    else url.searchParams.set('category', filter);
+    url.hash = OPEN_SOURCE_SECTION_ID;
+    window.history.pushState({}, '', url);
+    setActiveFilter(filter);
+    setLinkedSlug(null);
+  };
 
   const visibleCards =
     activeFilter === 'all' ? cards : cards.filter((p) => p.categories.includes(activeFilter));
@@ -265,7 +278,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                 type="button"
                 aria-pressed={activeFilter === f}
                 aria-controls="open-source-results"
-                onClick={() => setActiveFilter(f)}
+                onClick={() => selectFilter(f)}
                 style={{
                   ...pp.filterPill,
                   ...(activeFilter === f ? pp.filterActive : null),
