@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
 import { webpExample } from '@/content/webpExample';
 import { buildProjectHref, LABS_ORIGIN } from '@/lib/routes';
@@ -20,8 +20,22 @@ const formatSize = (bytes: number) => `${(bytes / 1000).toFixed(1)} kB`;
 const cellStyle = { padding: '10px 8px', borderBottom: 'var(--ad-card-border)', textAlign: 'left' } as const;
 const imageStyle = { display: 'block', width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'contain', borderRadius: 10, background: '#08131d' } as const;
 
+function findLoadedVariant(image: HTMLImageElement) {
+  if (!image.complete || !image.naturalWidth || !image.currentSrc) return undefined;
+  const path = new URL(image.currentSrc).pathname;
+  return variants.find(variant => variant.src === path);
+}
+
 export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate }) {
   const [copyStatus, setCopyStatus] = useState('');
+  const [loadedVariant, setLoadedVariant] = useState<(typeof variants)[number]>();
+  const previewImage = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    // A cached image can finish before React attaches its load handler.
+    const image = previewImage.current;
+    if (image) setLoadedVariant(findLoadedVariant(image));
+  }, []);
 
   const copyHtml = async () => {
     try {
@@ -45,8 +59,21 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
             <figcaption style={{ ...pp.projectBlurb, marginTop: 12 }}>Original JPEG · {source.width} × {source.height} · {formatSize(source.bytes)}</figcaption>
           </figure>
           <figure style={{ ...pp.projectCard, padding: 14 }}>
-            <img {...preview} srcSet={srcSet} sizes="auto, (max-width: 717px) calc(100vw - 70px), (max-width: 768px) calc(50vw - 59px), (max-width: 960px) calc(50vw - 71px), 409px" loading="lazy" decoding="async" style={imageStyle} />
-            <figcaption style={{ ...pp.projectBlurb, marginTop: 12 }}>Responsive WebP · the browser picks a width for this display</figcaption>
+            <img
+              {...preview}
+              ref={previewImage}
+              srcSet={srcSet}
+              sizes="auto, (max-width: 717px) calc(100vw - 70px), (max-width: 768px) calc(50vw - 59px), (max-width: 960px) calc(50vw - 71px), 409px"
+              loading="lazy"
+              decoding="async"
+              onLoad={(event) => setLoadedVariant(findLoadedVariant(event.currentTarget))}
+              style={imageStyle}
+            />
+            <figcaption style={{ ...pp.projectBlurb, marginTop: 12 }}>
+              {loadedVariant
+                ? <>WebP loaded · {loadedVariant.width} × {loadedVariant.height} · {formatSize(loadedVariant.bytes)}</>
+                : 'Responsive WebP · the browser picks a width for this display'}
+            </figcaption>
           </figure>
         </div>
         <section aria-labelledby="webp-example-files" style={{ marginTop: 32 }}>
