@@ -2,7 +2,7 @@ import CurrentProjects, { PlayableProjects } from '@/components/CurrentProjects'
 import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { brineSpaceAssetCase, futureproofCompanion } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
-import { buildPath, buildProjectHref, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
+import { buildPath, buildProjectHref, CASE_STUDIES_SECTION_ID, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
 import {
   AuroraPage,
   MONO,
@@ -19,7 +19,6 @@ interface ProjectsProps {
 }
 
 const jumpLinkStyle = { ...ad.btnGhost, padding: '9px 13px', fontSize: 14 };
-const caseStudiesId = 'case-studies';
 const caseStudies = [
   {
     ...brineSpaceAssetCase,
@@ -75,7 +74,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       if (release) {
         setActiveFilter((filter) => release.categories.includes(filter) ? filter : 'all');
       }
-      if (slug === OPEN_SOURCE_SECTION_ID || slug === caseStudiesId) {
+      if (slug === OPEN_SOURCE_SECTION_ID || slug === CASE_STUDIES_SECTION_ID) {
         // Restore the target after React replaces the prerendered section.
         const section = document.getElementById(slug);
         section?.focus({ preventScroll: true });
@@ -233,12 +232,12 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     >
       <nav aria-label="On this page" style={{ ...pp.section, paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         <a href="#play-and-explore" style={jumpLinkStyle}>Play &amp; explore</a>
-        <a href={`#${caseStudiesId}`} style={jumpLinkStyle}>Case studies</a>
+        <a href={`#${CASE_STUDIES_SECTION_ID}`} style={jumpLinkStyle}>Case studies</a>
         <a href={`#${OPEN_SOURCE_SECTION_ID}`} style={jumpLinkStyle}>Open-source tools</a>
         <a href="#current-projects" style={jumpLinkStyle}>Prototypes &amp; handoffs</a>
       </nav>
       <PlayableProjects />
-      <section id={caseStudiesId} tabIndex={-1} style={pp.section} aria-labelledby="case-studies-heading">
+      <section id={CASE_STUDIES_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="case-studies-heading">
         <h2 id="case-studies-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Case studies</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: 16 }}>
           {caseStudies.map(({ title, description, image, page, clickAction }) => (

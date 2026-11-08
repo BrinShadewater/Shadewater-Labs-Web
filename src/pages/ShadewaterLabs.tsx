@@ -4,7 +4,7 @@ import { managedWebsites } from '@/content/websites';
 import { brineSpace, fishMail } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
-import { buildPath, buildProjectHref, OPEN_SOURCE_SECTION_ID, PAGE_HEADING_ID } from '@/lib/routes';
+import { buildPath, buildProjectHref, CASE_STUDIES_SECTION_ID, OPEN_SOURCE_SECTION_ID, PAGE_HEADING_ID } from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES,
@@ -530,6 +530,9 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
           </a>
           <a href="/websites" onClick={(event) => navigateCatalogue(event, 'websites')} style={home.catalogueBtn}>
             All websites <span style={home.catalogueArrow}>{'→'}</span>
+          </a>
+          <a href={buildProjectHref(CASE_STUDIES_SECTION_ID)} style={home.catalogueBtn}>
+            Read the case studies <span aria-hidden="true" style={home.catalogueArrow}>→</span>
           </a>
         </div>
       </div>
