@@ -112,14 +112,20 @@ html {
 :root {
   --ad-gutter: 32px;
   --ad-nav-padding: 14px;
-  --ad-section-space: 40px;
+  --ad-section-space: clamp(36px, 4.5vw, 64px);
+  --ad-section-title: clamp(1.85rem, 3.8vw, 2.8rem);
+  --ad-copy: #ccd9df;
+  --ad-panel: linear-gradient(155deg, #102630, #0a1720 76%);
+  --ad-card-border: 1px solid hsl(186 42% 48% / 0.3);
+  --ad-card-radius: 18px;
+  --ad-card-shadow: 0 14px 36px hsl(210 80% 4% / 0.32), inset 0 1px hsl(186 70% 70% / 0.045);
 }
 
 @media (max-width: 768px) {
   :root {
     --ad-gutter: 20px;
     --ad-nav-padding: 12px;
-    --ad-section-space: 24px;
+    --ad-section-space: 34px;
   }
 
   .ad-footerInner {
@@ -127,6 +133,29 @@ html {
     align-items: flex-start !important;
     gap: 20px !important;
   }
+}
+
+.home-heroLead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .48fr);
+  grid-template-areas: 'copy art';
+  gap: clamp(24px, 5vw, 72px);
+  align-items: center;
+}
+
+.home-heroCopy { grid-area: copy; }
+
+.home-heroLogo {
+  grid-area: art;
+  justify-self: center;
+  width: clamp(168px, 21vw, 232px);
+  height: auto;
+  filter: drop-shadow(0 16px 40px hsl(186 90% 50% / 0.34));
+}
+
+@media (max-width: 768px) {
+  .home-heroLead { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'art' 'copy'; gap: 16px; }
+  .home-heroLogo { width: 96px; }
 }
 
 button:focus-visible,

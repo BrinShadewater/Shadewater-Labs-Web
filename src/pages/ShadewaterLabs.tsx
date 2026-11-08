@@ -22,6 +22,7 @@ import {
   HeroMesh,
   MONO,
   ParticleField,
+  pp,
   TG_DIM,
   TG_MUTED,
 } from '@/components/aurora/chrome';
@@ -75,68 +76,69 @@ function ADHero() {
       <ConstellationField />
       <ParticleField />
       <div style={home.heroInner} className="home-heroInner">
-        <div style={home.heroChip}>
-          <span style={home.heroChipPulse} className="ad-pulse" />
-          <span style={home.heroChipText}>Shadewater Labs</span>
-          <span style={home.heroChipMono}>Vancouver, BC</span>
+        <div className="home-heroLead">
+          {/* The responsive lockup is the primary image in the hero. */}
+          <img
+            src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
+            srcSet={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET}
+            sizes={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES}
+            alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
+            width={SHADEWATER_LABS_TEXT_LOGO_WIDTH}
+            height={SHADEWATER_LABS_TEXT_LOGO_HEIGHT}
+            fetchPriority="high"
+            decoding="async"
+            className="home-heroLogo"
+          />
+          <div className="home-heroCopy">
+            <div style={home.heroChip}>
+              <span style={home.heroChipPulse} className="ad-pulse" />
+              <span style={home.heroChipText}>Shadewater Labs</span>
+              <span style={home.heroChipMono}>Vancouver, BC</span>
+            </div>
+
+            <h1 id={PAGE_HEADING_ID} tabIndex={-1} style={home.heroTitle} className="home-heroTitle">
+              The studio for <span style={home.heroAccent}>weird-good</span> AI tools and tech experiments.
+            </h1>
+
+            <p style={home.heroLede}>
+              Brin Shadewater builds games, agent tools, websites, and hardware experiments.{' '}
+              <a href="#current-projects" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+                See prototypes and handoffs
+              </a>.
+            </p>
+
+            <div style={home.heroCtas}>
+              <a
+                href={brineSpace.url}
+                data-project-click="play-brinespace"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={ad.btnPrimary}
+              >
+                <span>Play BrineSpace</span>
+                <span aria-hidden="true" style={home.btnArrow}>↗</span>
+              </a>
+              <a
+                href={buildProjectHref(OPEN_SOURCE_SECTION_ID)}
+                data-project-click="browse-open-source"
+                style={ad.btnGhost}
+              >
+                <span style={{ fontFamily: MONO, fontSize: 12, opacity: 0.7 }}>›</span>
+                Browse open-source tools
+              </a>
+            </div>
+
+            <a
+              href={fishMail.link.href}
+              data-project-click={fishMail.link.clickAction}
+              style={home.heroDemoLink}
+            >
+              {fishMail.link.label} <span aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
 
-        {/* The responsive lockup is the primary image in the hero. */}
-        <img
-          src={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC}
-          srcSet={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET}
-          sizes={SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES}
-          alt={SHADEWATER_LABS_TEXT_LOGO_ALT}
-          width={SHADEWATER_LABS_TEXT_LOGO_WIDTH}
-          height={SHADEWATER_LABS_TEXT_LOGO_HEIGHT}
-          fetchPriority="high"
-          decoding="async"
-          style={home.heroLogo}
-        />
-
-        <h1 id={PAGE_HEADING_ID} tabIndex={-1} style={home.heroTitle} className="home-heroTitle">
-          The studio for <span style={home.heroAccent}>weird-good</span>
-          <br />
-          AI tools and tech experiments.
-        </h1>
-
-        <p style={home.heroLede}>
-          Brin Shadewater builds games, agent tools, websites, and hardware experiments.{' '}
-          <a href="#current-projects" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>
-            See prototypes and handoffs
-          </a>.
-        </p>
-
-        <div style={home.heroCtas}>
-          <a
-            href={brineSpace.url}
-            data-project-click="play-brinespace"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={ad.btnPrimary}
-          >
-            <span>Play BrineSpace</span>
-            <span aria-hidden="true" style={home.btnArrow}>↗</span>
-          </a>
-          <a
-            href={buildProjectHref(OPEN_SOURCE_SECTION_ID)}
-            data-project-click="browse-open-source"
-            style={ad.btnGhost}
-          >
-            <span style={{ fontFamily: MONO, fontSize: 12, opacity: 0.7 }}>›</span>
-            Browse open-source tools
-          </a>
-        </div>
-
-        <a
-          href={fishMail.link.href}
-          data-project-click={fishMail.link.clickAction}
-          style={home.heroDemoLink}
-        >
-          {fishMail.link.label} <span aria-hidden="true">→</span>
-        </a>
-
-        <div style={home.hud}>
+        <div style={home.hud} className="home-hud">
           <div style={home.hudHead}>
             <div style={home.hudTitle}>
               <span style={home.hudPulse} className="ad-pulse" />
@@ -580,7 +582,6 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
           .home-heroTitle { font-size: clamp(2rem, 9vw, 3.5rem) !important; line-height: 1.08 !important; }
           .home-hudGrid { grid-template-columns: repeat(2, 1fr) !important; }
           .home-trackGrid { grid-template-columns: 1fr !important; }
-          .home-section { padding: 48px 20px 0 !important; }
         }
         @media (max-width: 480px) {
           .home-hudGrid { grid-template-columns: 1fr !important; }
@@ -602,7 +603,7 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
 
 const home: Record<string, CSSProperties> = {
   hero: { position: 'relative', overflow: 'hidden', paddingBottom: 0 },
-  heroInner: { position: 'relative', zIndex: 1, maxWidth: 1180, margin: '0 auto', padding: 'clamp(24px, 4vw, 48px) var(--ad-gutter) clamp(56px, 7vw, 88px)', textAlign: 'center' },
+  heroInner: { position: 'relative', zIndex: 1, maxWidth: 1180, margin: '0 auto', padding: 'clamp(24px, 5vw, 68px) var(--ad-gutter) clamp(30px, 5vw, 64px)' },
   heroChip: {
     display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', gap: '4px 10px',
     padding: '8px 14px', borderRadius: 999,
@@ -619,23 +620,19 @@ const home: Record<string, CSSProperties> = {
   },
   heroChipText: { color: '#fff', fontWeight: 600 },
   heroChipMono: { color: 'hsl(186 25% 60%)' },
-  heroLogo: {
-    width: 'clamp(145px, 40vw, 205px)', height: 'auto', display: 'block', margin: '0 auto 6px',
-    filter: 'drop-shadow(0 30px 80px hsl(186 95% 55% / 0.5)) drop-shadow(0 6px 24px hsl(220 80% 60% / 0.35))',
-  },
   heroTitle: {
-    fontSize: 'clamp(2.25rem, 6.2vw, 4.25rem)', lineHeight: 1.02, letterSpacing: '-0.03em', fontWeight: 700,
-    margin: '12px auto 0', maxWidth: 980, textWrap: 'balance' as CSSProperties['textWrap'], color: '#fff',
+    fontSize: 'clamp(2.25rem, 5.6vw, 4.25rem)', lineHeight: 1.04, letterSpacing: '-0.045em', fontWeight: 700,
+    margin: 0, maxWidth: '18ch', textWrap: 'balance' as CSSProperties['textWrap'], color: '#fff',
   },
   heroAccent: {
     background: 'linear-gradient(135deg, hsl(186 95% 75%) 0%, hsl(220 85% 78%) 50%, hsl(150 70% 65%) 100%)',
-    WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
+    WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', whiteSpace: 'nowrap',
   },
   heroLede: {
-    margin: '18px auto 0', maxWidth: 720, color: 'hsl(45 22% 86%)',
+    margin: '18px 0 0', maxWidth: '56ch', color: 'var(--ad-copy)',
     fontSize: 'clamp(1rem, 2vw, 1.125rem)', lineHeight: 1.55, textWrap: 'pretty' as CSSProperties['textWrap'],
   },
-  heroCtas: { display: 'flex', gap: 12, justifyContent: 'center', marginTop: 24, flexWrap: 'wrap' },
+  heroCtas: { display: 'flex', gap: 10, marginTop: 22, flexWrap: 'wrap' },
   heroDemoLink: {
     display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 44,
     color: 'hsl(186 60% 82%)', fontSize: 14, fontWeight: 500, textDecoration: 'underline', textUnderlineOffset: 3,
@@ -643,13 +640,12 @@ const home: Record<string, CSSProperties> = {
   btnArrow: { transform: 'translateY(-1px)' },
 
   hud: {
-    position: 'relative', margin: '60px auto 0', maxWidth: 920, padding: '20px 24px 18px',
-    borderRadius: 22, background: 'hsl(200 30% 7% / 0.7)',
-    border: '1px solid hsl(186 70% 55% / 0.25)',
-    boxShadow: '0 24px 60px hsl(210 80% 4% / 0.6), inset 0 1px 0 hsl(0 0% 100% / 0.06)',
+    position: 'relative', margin: 'clamp(26px, 5vw, 54px) 0 0', padding: 'clamp(16px, 2vw, 24px)',
+    borderRadius: 'var(--ad-card-radius)', background: 'var(--ad-panel)',
+    border: 'var(--ad-card-border)', boxShadow: 'var(--ad-card-shadow)',
     backdropFilter: 'blur(10px)',
   },
-  hudHead: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
+  hudHead: { display: 'flex', flexWrap: 'wrap', gap: '5px 16px', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
   hudTitle: { display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: MONO, fontSize: 11, letterSpacing: '0.28em', color: 'hsl(186 60% 80%)' },
   hudPulse: {
     width: 7, height: 7, borderRadius: 999, background: 'hsl(150 80% 60%)',
@@ -665,13 +661,13 @@ const home: Record<string, CSSProperties> = {
   hudVal: { fontSize: 26, fontWeight: 700, letterSpacing: '-0.02em', color: '#fff' },
   hudSub: { fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.06em', color: 'hsl(36 30% 70%)' },
 
-  section: { position: 'relative', maxWidth: 1180, margin: '0 auto', padding: '80px 32px 0', zIndex: 1 },
+  section: pp.section,
   sectionHead: { textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' },
   kicker: { display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 14 },
   kickerLine: { display: 'block', width: 28, height: 1, background: 'hsl(186 70% 60% / 0.4)' },
   kickerText: { fontFamily: MONO, fontSize: 11, letterSpacing: '0.32em', color: 'hsl(186 60% 78%)' },
   h2: {
-    fontSize: 50, lineHeight: 1.04, letterSpacing: '-0.025em', fontWeight: 700, margin: 0,
+    fontSize: 'var(--ad-section-title)', lineHeight: 1.08, letterSpacing: '-0.03em', fontWeight: 650, margin: 0,
     background: 'linear-gradient(180deg, #fff 30%, hsl(186 30% 80%) 100%)',
     WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
   },
@@ -679,11 +675,7 @@ const home: Record<string, CSSProperties> = {
 
   trackGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 },
   trackCard: {
-    position: 'relative', padding: 26, borderRadius: 22,
-    background: 'linear-gradient(180deg, hsl(200 30% 12% / 0.7), hsl(200 30% 8% / 0.85))',
-    border: '1px solid hsl(186 50% 40% / 0.25)',
-    boxShadow: '0 16px 40px hsl(210 80% 4% / 0.5), inset 0 1px 0 hsl(186 70% 70% / 0.06)',
-    overflow: 'hidden',
+    ...pp.projectCard, padding: 26,
   },
   trackHalo: { position: 'absolute', inset: 0, pointerEvents: 'none' },
   trackTitle: { position: 'relative', fontSize: 24, fontWeight: 700, letterSpacing: '-0.01em', margin: 0, color: '#fff' },
@@ -692,12 +684,7 @@ const home: Record<string, CSSProperties> = {
 
   projectGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 },
   projectCard: {
-    position: 'relative', display: 'flex', flexDirection: 'column',
-    padding: 24, borderRadius: 24,
-    background: 'linear-gradient(180deg, hsl(200 30% 11% / 0.85), hsl(200 30% 7% / 0.95))',
-    border: '1px solid hsl(186 50% 40% / 0.3)',
-    boxShadow: '0 20px 50px hsl(210 80% 4% / 0.5), inset 0 1px 0 hsl(186 70% 70% / 0.06)',
-    overflow: 'hidden',
+    ...pp.projectCard,
   },
   projectGlow: { position: 'absolute', inset: 0, pointerEvents: 'none' },
   projectScan: {

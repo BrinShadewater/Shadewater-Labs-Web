@@ -44,16 +44,17 @@ export default function Toolkit({ onNavigate }: ToolkitProps) {
                   marginBottom: 14,
                 }}
               >
-                <span
+                <h2
                   style={{
                     fontFamily: MONO,
-                    fontSize: 11,
-                    letterSpacing: '0.28em',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    letterSpacing: '0.15em',
                     color: `hsl(${accent})`,
                   }}
                 >
                   {cat.toUpperCase()}
-                </span>
+                </h2>
                 <span
                   style={{
                     flex: 1,
@@ -73,8 +74,8 @@ export default function Toolkit({ onNavigate }: ToolkitProps) {
                         display: 'flex',
                         flexDirection: 'column',
                         padding: '20px 22px',
-                        borderRadius: 18,
-                        background: 'hsl(200 30% 8% / 0.72)',
+                        borderRadius: 'var(--ad-card-radius)',
+                        background: 'var(--ad-panel)',
                         border: `1px solid hsl(${accent} / 0.22)`,
                       }}
                     >
@@ -84,8 +85,8 @@ export default function Toolkit({ onNavigate }: ToolkitProps) {
                       <p
                         style={{
                           margin: '10px 0 0',
-                          color: 'hsl(45 18% 82%)',
-                          fontSize: 14.5,
+                          color: 'var(--ad-copy)',
+                          fontSize: 15,
                           lineHeight: 1.6,
                         }}
                       >

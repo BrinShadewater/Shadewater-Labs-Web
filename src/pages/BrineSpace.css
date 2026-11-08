@@ -1,7 +1,7 @@
 .brine-page {
   --brine-accent: #92e5e3;
   --brine-amber: #e5bd86;
-  --brine-copy: #bed0d8;
+  --brine-copy: var(--ad-copy);
   --brine-line: hsl(186 40% 55% / 0.26);
 }
 
@@ -98,8 +98,8 @@
 .brine-notes > section {
   margin: 0;
   border: 1px solid var(--brine-line);
-  border-radius: 16px;
-  background: #0a1e29;
+  border-radius: var(--ad-card-radius);
+  background: var(--ad-panel);
 }
 
 .brine-hero-art {

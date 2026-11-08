@@ -24,7 +24,7 @@ export const SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRC = '/shadewater-labs-hero-logo
 // Responsive lockup sources for the homepage hero.
 export const SHADEWATER_LABS_TEXT_LOGO_CROPPED_SRCSET =
   '/shadewater-labs-hero-logo-245w.webp 245w, /shadewater-labs-hero-logo-320w.webp 320w, /shadewater-labs-hero-logo-490w.webp 490w, /shadewater-labs-hero-logo.webp 602w';
-export const SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES = '(max-width: 362px) 145px, (max-width: 512px) 40vw, 205px';
+export const SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES = '(max-width: 768px) 96px, (max-width: 800px) 168px, (max-width: 1105px) 21vw, 232px';
 export const SHADEWATER_LABS_TEXT_LOGO_SRCSET =
   '/shadewater-labs-text-logo-320w.webp 320w, /shadewater-labs-text-logo-640w.webp 640w, /shadewater-labs-text-logo-900w.webp 900w, /shadewater-labs-text-logo.webp 1200w';
 export const SHADEWATER_LABS_TEXT_LOGO_WIDTH = 602;

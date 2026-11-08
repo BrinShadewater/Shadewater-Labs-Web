@@ -488,7 +488,6 @@ function PageHero({
       <ConstellationField />
       <div style={pp.heroInner} className="pp-heroInner">
         <div style={pp.crumb}>
-          <span style={pp.crumbDot} className="ad-pulse" />
           <a
             href="/"
             onClick={(e) => {
@@ -519,12 +518,12 @@ export const pp: Record<string, CSSProperties> = {
   blob: { position: 'absolute', borderRadius: '50%', filter: 'blur(64px)', willChange: 'transform' },
   blob1: {
     width: 620, height: 620, top: -180, left: -120,
-    background: 'radial-gradient(circle, hsl(186 95% 55% / 0.55), transparent 60%)',
+    background: 'radial-gradient(circle, hsl(183 80% 46% / 0.32), transparent 67%)',
     animation: 'adDrift1 28s ease-in-out infinite alternate',
   },
   blob2: {
     width: 540, height: 540, top: -120, right: -120,
-    background: 'radial-gradient(circle, hsl(220 90% 55% / 0.5), transparent 60%)',
+    background: 'radial-gradient(circle, hsl(216 76% 49% / 0.33), transparent 67%)',
     animation: 'adDrift2 32s ease-in-out infinite alternate',
   },
   heroBeam: {
@@ -534,30 +533,22 @@ export const pp: Record<string, CSSProperties> = {
   heroInner: {
     position: 'relative', zIndex: 1,
     maxWidth: 1180, margin: '0 auto',
-    padding: 'clamp(28px, 4vw, 52px) var(--ad-gutter) clamp(24px, 3vw, 40px)',
+    padding: 'clamp(26px, 4.5vw, 62px) var(--ad-gutter) clamp(28px, 4vw, 50px)',
     textAlign: 'left',
   },
   crumb: {
-    display: 'inline-flex', alignItems: 'center', gap: 10,
-    fontFamily: MONO, fontSize: 11, letterSpacing: '0.22em',
-    padding: '7px 14px', borderRadius: 999,
-    background: 'hsl(200 30% 8% / 0.65)',
-    border: '1px solid hsl(186 60% 50% / 0.25)',
+    display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '4px 8px',
+    fontFamily: MONO, fontSize: 11, letterSpacing: '0.08em',
     color: 'hsl(186 35% 70%)',
-    marginBottom: 22,
-  },
-  crumbDot: {
-    width: 6, height: 6, borderRadius: 999, background: 'hsl(150 80% 60%)',
-    boxShadow: '0 0 10px hsl(150 80% 60% / 0.7)',
-    animation: 'adPulse 2.4s ease-in-out infinite',
+    marginBottom: 'clamp(18px, 2.5vw, 30px)',
   },
   crumbHome: { color: 'hsl(186 35% 70%)', cursor: 'pointer' },
   crumbCur: { color: '#fff', fontWeight: 600 },
   crumbSep: { color: 'hsl(186 25% 32%)' },
 
   eyebrow: {
-    fontFamily: MONO, fontSize: 11, letterSpacing: '0.32em',
-    color: 'hsl(186 60% 78%)', margin: '0 0 14px',
+    fontFamily: MONO, fontSize: 11, letterSpacing: '0.19em',
+    color: 'hsl(186 60% 78%)', margin: '0 0 10px',
   },
   h1: {
     fontSize: 'clamp(2.25rem, 6.4vw, 4rem)', lineHeight: 1.05, letterSpacing: '-0.03em', fontWeight: 700,
@@ -568,11 +559,12 @@ export const pp: Record<string, CSSProperties> = {
     textWrap: 'balance' as CSSProperties['textWrap'],
   },
   lede: {
-    margin: '16px 0 0', maxWidth: 720,
-    color: 'hsl(45 22% 86%)', fontSize: 'clamp(1rem, 2vw, 1.125rem)', lineHeight: 1.55,
+    margin: '16px 0 0', maxWidth: '62ch',
+    color: 'var(--ad-copy)', fontSize: 'clamp(1rem, 2vw, 1.125rem)', lineHeight: 1.6,
   },
 
   section: { position: 'relative', maxWidth: 1180, margin: '0 auto', padding: 'var(--ad-section-space) var(--ad-gutter) 0', zIndex: 1 },
+  sectionTitle: { color: '#fff', fontSize: 'var(--ad-section-title)', lineHeight: 1.12, fontWeight: 650, letterSpacing: '-0.025em', margin: '12px 0' },
 
   toolbar: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -605,10 +597,8 @@ export const pp: Record<string, CSSProperties> = {
     // cards to equal height, and marginTop:auto on the footer keeps the links on
     // one line across the row instead of floating up with short copy.
     position: 'relative', display: 'flex', flexDirection: 'column',
-    padding: 24, borderRadius: 24,
-    background: 'linear-gradient(180deg, hsl(200 30% 11% / 0.85), hsl(200 30% 7% / 0.95))',
-    border: '1px solid hsl(186 50% 40% / 0.3)',
-    boxShadow: '0 20px 50px hsl(210 80% 4% / 0.5), inset 0 1px 0 hsl(186 70% 70% / 0.06)',
+    padding: 24, borderRadius: 'var(--ad-card-radius)',
+    background: 'var(--ad-panel)', border: 'var(--ad-card-border)', boxShadow: 'var(--ad-card-shadow)',
     overflow: 'hidden',
   },
   projectGlow: { position: 'absolute', inset: 0, pointerEvents: 'none' },
@@ -668,7 +658,7 @@ export const pp: Record<string, CSSProperties> = {
     boxShadow: 'inset 0 1px 0 hsl(0 0% 100% / 0.4), 0 12px 28px hsl(186 80% 40% / 0.45)',
   },
   projectName: { position: 'relative', fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', margin: 0, color: '#fff' },
-  projectBlurb: { position: 'relative', color: 'hsl(45 18% 82%)', fontSize: 14, lineHeight: 1.6, marginTop: 10 },
+  projectBlurb: { position: 'relative', color: 'var(--ad-copy)', fontSize: 15, lineHeight: 1.62, marginTop: 10 },
 
   progressRow: { position: 'relative', marginTop: 18, display: 'flex', alignItems: 'center', gap: 12 },
   progressTrack: {
@@ -693,10 +683,8 @@ export const pp: Record<string, CSSProperties> = {
   siteCard: {
     position: 'relative', overflow: 'hidden',
     display: 'flex', flexDirection: 'column',
-    padding: '26px 28px', borderRadius: 24,
-    background: 'linear-gradient(180deg, hsl(200 30% 11% / 0.85), hsl(200 30% 7% / 0.95))',
-    border: '1px solid hsl(186 50% 40% / 0.3)',
-    boxShadow: '0 20px 50px hsl(210 80% 4% / 0.5)',
+    padding: '26px 28px', borderRadius: 'var(--ad-card-radius)',
+    background: 'var(--ad-panel)', border: 'var(--ad-card-border)', boxShadow: 'var(--ad-card-shadow)',
   },
   siteGlow: { position: 'absolute', inset: 0, pointerEvents: 'none' },
   siteTop: {
@@ -956,7 +944,7 @@ export const ad: Record<string, CSSProperties> = {
   },
 
   footer: {
-    position: 'relative', marginTop: 80,
+    position: 'relative', marginTop: 'clamp(48px, 7vw, 88px)',
     borderTop: '1px solid hsl(186 50% 40% / 0.15)',
     background: 'hsl(210 66% 4% / 0.8)',
   },
@@ -974,5 +962,5 @@ export const ad: Record<string, CSSProperties> = {
   footerWord: { fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em', color: '#fff' },
   footerEyebrow: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.22em', color: 'hsl(186 50% 70%)', marginTop: 3 },
   footerMono: { display: 'flex', gap: 24, flexWrap: 'wrap' as CSSProperties['flexWrap'] },
-  footerCell: { fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', color: TG_DIM },
+  footerCell: { fontFamily: MONO, fontSize: 12, letterSpacing: '0.08em', color: TG_MUTED },
 };

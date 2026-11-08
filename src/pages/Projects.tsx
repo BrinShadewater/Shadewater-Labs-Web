@@ -226,7 +226,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       </nav>
       <PlayableProjects />
       <section id={CASE_STUDIES_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="case-studies-heading">
-        <h2 id="case-studies-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Case studies</h2>
+        <h2 id="case-studies-heading" style={pp.sectionTitle}>Case studies</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: 16 }}>
           <CaseStudyCard study={brineSpaceAssetCase} />
           <CaseStudyCard study={futureproofCase} clickAction="read-case-study" />
@@ -250,7 +250,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
             .pp-toolbar { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
           }
         `}</style>
-        <h2 id="open-source-heading" style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>Open-source tools</h2>
+        <h2 id="open-source-heading" style={pp.sectionTitle}>Open-source tools</h2>
         <div style={pp.toolbar} className="pp-toolbar">
           <p role="status" aria-atomic="true" style={{ ...pp.toolbarChip, margin: 0 }}>
             {resultCount} {resultCount === 1 ? 'tool' : 'tools'} shown

@@ -1,9 +1,10 @@
-:root { color-scheme: dark; font: 16px/1.65 system-ui, sans-serif; color: #e1e8f2; background: #101621; }
+:root { color-scheme: dark; font: 16px/1.72 system-ui, sans-serif; color: #ccd9df; background: #08131d; }
 body { margin: 0; }
 main { box-sizing: border-box; max-width: 46rem; margin: auto; padding: clamp(1.25rem, 5vw, 3.5rem); }
-header, nav { border-block-end: 1px solid #384456; padding-block-end: 1rem; }
-header p { margin-block: 2rem .25rem; color: #b9c6d8; }
-h1 { font: 500 clamp(2rem, 6vw, 3rem)/1.15 Georgia, serif; margin: 0; }
-a { color: #b6d1ff; overflow-wrap: anywhere; text-underline-offset: .18em; }
+header { border-block-end: 1px solid #284451; padding-block-end: 1.5rem; }
+header p { margin-block: 1.75rem .3rem; color: #8ecbd1; font: 600 .8rem/1.5 ui-monospace, monospace; letter-spacing: .08em; }
+h1 { font: 650 clamp(2rem, 6vw, 3rem)/1.1 system-ui, sans-serif; letter-spacing: -.035em; color: #f5fbfc; margin: 0; }
+a { color: #a5e4e7; overflow-wrap: anywhere; text-underline-offset: .18em; }
+a:focus-visible { outline: 2px solid #a5e4e7; outline-offset: 4px; }
 p { margin-block: 1rem; }
-nav { border-block: 1px solid #384456; padding-block: 1rem; margin-block-start: 2rem; }
+nav { border-block: 1px solid #284451; padding-block: 1rem; margin-block-start: 2rem; }

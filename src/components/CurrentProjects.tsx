@@ -77,7 +77,7 @@ function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, p
       style={pp.section}
     >
       {eyebrow && <p style={{ fontFamily: MONO, color: TG_MUTED, fontSize: 12 }}>{eyebrow}</p>}
-      <h2 id={`${id}-heading`} style={{ color: '#fff', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', margin: '12px 0' }}>{title}</h2>
+      <h2 id={`${id}-heading`} style={pp.sectionTitle}>{title}</h2>
       {description && <p style={{ color: TG_MUTED, lineHeight: 1.6, maxWidth: 720 }}>{description}</p>}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: description ? 28 : 16 }}>
         {projects.map(project => (
