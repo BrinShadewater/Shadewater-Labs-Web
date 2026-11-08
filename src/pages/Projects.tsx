@@ -21,6 +21,11 @@ interface ProjectsProps {
 
 const jumpLinkStyle = { ...ad.btnGhost, padding: '9px 13px', fontSize: 14 };
 const filters = ['all', ...Array.from(new Set(openSourceReleases.flatMap((release) => release.categories))).sort()];
+const toolTasks = [
+  { label: 'Optimize website images', slug: 'webp-me-daddy-skill' },
+  { label: 'Build and check game assets', slug: 'game-asset-pipeline' },
+  { label: 'Audit a website’s SEO', slug: 'shadewater-seo-skill' },
+];
 
 function applyCategory(url: URL, filter: string) {
   if (filter === 'all') url.searchParams.delete('category');
@@ -294,6 +299,18 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           }
         `}</style>
         <h2 id="open-source-heading" style={pp.sectionTitle}>Open-source tools</h2>
+        <nav aria-labelledby="tool-tasks-heading" style={{ margin: '0 0 16px' }}>
+          <h3 id="tool-tasks-heading" style={{ color: 'var(--ad-copy)', fontSize: 16, fontWeight: 650, marginBottom: 8 }}>
+            Choose a tool by task
+          </h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {toolTasks.map(({ label, slug }) => (
+              <a key={slug} href={`#${slug}`} style={{ ...jumpLinkStyle, minHeight: 44 }}>
+                {label} <span aria-hidden="true">↓</span>
+              </a>
+            ))}
+          </div>
+        </nav>
         <div style={pp.toolbar} className="pp-toolbar">
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 12px' }}>
             <p role="status" aria-atomic="true" style={{ ...pp.toolbarChip, margin: 0 }}>
