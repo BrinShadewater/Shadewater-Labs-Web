@@ -41,6 +41,8 @@ function pageHead(shell: string, page: string) {
     'og:type': cfg.type,
     'og:url': cfg.canonical,
     'og:image': cfg.image,
+    'og:image:width': String(cfg.imageWidth),
+    'og:image:height': String(cfg.imageHeight),
     'og:image:alt': cfg.imageAlt,
     'og:site_name': cfg.siteName,
     'twitter:title': cfg.title,

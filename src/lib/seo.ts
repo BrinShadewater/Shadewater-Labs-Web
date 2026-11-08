@@ -6,15 +6,17 @@ import { brineSpace, futureproofCompanion } from '../content/currentProjects';
 import { tools } from '../content/tools';
 import { managedWebsites } from '../content/websites';
 import { openSourceReleases } from '../content/openSource';
-import { SHADEWATER_LABS_MARK_ALT, SHADEWATER_LABS_MARK_SRC } from './brandAssets';
+import { SHADEWATER_LABS_MARK_ALT, SHADEWATER_LABS_MARK_HEIGHT, SHADEWATER_LABS_MARK_SRC, SHADEWATER_LABS_MARK_WIDTH } from './brandAssets';
 import { BRIN_ORIGIN, CONTACT_EMAIL, LABS_ORIGIN, buildCanonicalUrl, buildPath, getOrigin, type SiteKey } from './routes';
 
-type SeoConfig = {
+export type SeoConfig = {
   title: string;
   description: string;
   canonical: string;
   image: string;
   imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
   siteName: string;
   type: 'website' | 'article';
   author?: string;
@@ -28,6 +30,12 @@ type SeoConfig = {
 
 const BRAND_NAME = 'Brin Shadewater';
 const ORGANIZATION_NAME = 'Shadewater Labs';
+const labsShareImage = {
+  image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
+  imageAlt: SHADEWATER_LABS_MARK_ALT,
+  imageWidth: SHADEWATER_LABS_MARK_WIDTH,
+  imageHeight: SHADEWATER_LABS_MARK_HEIGHT,
+};
 const LABS_DESCRIPTION =
   'Games, open-source agent tools, managed websites, and creative technology prototypes from Shadewater Labs in Vancouver.';
 const SAME_AS_LINKS = [
@@ -105,8 +113,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         title: `Shadewater Labs | AI Tools, Web Apps & Tech Experiments`,
         description: LABS_DESCRIPTION,
         canonical: buildCanonicalUrl('labs', undefined, 'labs'),
-        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
-        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        ...labsShareImage,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         keywords: 'Shadewater Labs, AI tools, coding projects, creative technology, Brin Shadewater',
@@ -139,8 +146,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         description:
           'Play BrineSpace and FishMail, then browse open-source tools, prototypes, and development handoffs from Shadewater Labs.',
         canonical: buildCanonicalUrl('projects', undefined, 'labs'),
-        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
-        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        ...labsShareImage,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         keywords: 'Shadewater Labs projects, AI tools, coding projects, product experiments',
@@ -174,6 +180,8 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         canonical: buildCanonicalUrl('brinespace'),
         image: `${LABS_ORIGIN}/brinespace-expedition-draft.webp`,
         imageAlt: 'A BrineSpace station with three room cards ready to draft.',
+        imageWidth: 1200,
+        imageHeight: 675,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         jsonLd: [websiteSchema(), organizationSchema()],
@@ -185,6 +193,8 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         canonical: buildCanonicalUrl('futureproof'),
         image: `${LABS_ORIGIN}${futureproofCompanion.image.src}`,
         imageAlt: futureproofCompanion.image.alt,
+        imageWidth: 960,
+        imageHeight: 540,
         siteName: ORGANIZATION_NAME,
         type: 'article',
         jsonLd: [websiteSchema(), organizationSchema()],
@@ -195,8 +205,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         description:
           'Websites designed and maintained through Shadewater Labs, including Data Goblin, InkMaster Studio, and the official Strange Harvest film site.',
         canonical: buildCanonicalUrl('websites', undefined, 'labs'),
-        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
-        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        ...labsShareImage,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         keywords: 'Shadewater Labs websites, managed websites, Brin Shadewater, InkMaster Studio',
@@ -224,8 +233,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         description:
           'Third-party tools actually used at Shadewater Labs, what each one is reached for, and where it falls short.',
         canonical: buildCanonicalUrl('toolkit', undefined, 'labs'),
-        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
-        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        ...labsShareImage,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         keywords: 'creative tech tools, AI video tools, agent tooling, Shadewater Labs toolkit',
@@ -255,8 +263,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         description:
           'Shadewater Labs is run by Brin Shadewater, a Vancouver-based filmmaker and creative technologist working across film production, AI tooling, and interactive media.',
         canonical: buildCanonicalUrl('about', undefined, 'labs'),
-        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
-        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        ...labsShareImage,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         keywords: 'Brin Shadewater, Shadewater Labs, Vancouver, filmmaker, creative technologist, Directors Guild of Canada',
@@ -279,8 +286,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         title: `Page not found | ${ORGANIZATION_NAME}`,
         description: 'That address does not match anything on shadewaterlabs.com.',
         canonical: `${LABS_ORIGIN}/`,
-        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
-        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        ...labsShareImage,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         noindex: true,
@@ -292,8 +298,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         title: `Shadewater Labs | AI Tools, Web Apps & Tech Experiments`,
         description: LABS_DESCRIPTION,
         canonical: `${LABS_ORIGIN}/`,
-        image: `${LABS_ORIGIN}${SHADEWATER_LABS_MARK_SRC}`,
-        imageAlt: SHADEWATER_LABS_MARK_ALT,
+        ...labsShareImage,
         siteName: ORGANIZATION_NAME,
         type: 'website',
         keywords: 'Shadewater Labs, AI tools, coding projects, creative technology, Brin Shadewater',

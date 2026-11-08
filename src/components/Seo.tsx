@@ -1,20 +1,5 @@
 import { useEffect } from 'react';
-
-type SeoProps = {
-  title: string;
-  description: string;
-  canonical: string;
-  image: string;
-  imageAlt: string;
-  siteName: string;
-  type: 'website' | 'article';
-  author?: string;
-  publishedTime?: string;
-  modifiedTime?: string;
-  keywords?: string;
-  noindex?: boolean;
-  jsonLd: object[];
-};
+import type { SeoConfig } from '@/lib/seo';
 
 function upsertMeta(selector: string, attributes: Record<string, string>) {
   let node = document.head.querySelector<HTMLMetaElement>(selector);
@@ -56,6 +41,8 @@ export default function Seo({
   canonical,
   image,
   imageAlt,
+  imageWidth,
+  imageHeight,
   siteName,
   type,
   author,
@@ -64,7 +51,7 @@ export default function Seo({
   keywords,
   noindex,
   jsonLd,
-}: SeoProps) {
+}: SeoConfig) {
   useEffect(() => {
     document.title = title;
 
@@ -80,8 +67,8 @@ export default function Seo({
     upsertMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'en_CA' });
     upsertMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
     upsertMeta('meta[property="og:image"]', { property: 'og:image', content: image });
-    upsertMeta('meta[property="og:image:width"]', { property: 'og:image:width', content: '1200' });
-    upsertMeta('meta[property="og:image:height"]', { property: 'og:image:height', content: '630' });
+    upsertMeta('meta[property="og:image:width"]', { property: 'og:image:width', content: String(imageWidth) });
+    upsertMeta('meta[property="og:image:height"]', { property: 'og:image:height', content: String(imageHeight) });
     upsertMeta('meta[property="og:image:alt"]', { property: 'og:image:alt', content: imageAlt });
     upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: siteName });
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
@@ -139,7 +126,7 @@ export default function Seo({
       script.text = JSON.stringify(entry);
       document.head.appendChild(script);
     });
-  }, [author, canonical, description, image, imageAlt, jsonLd, keywords, modifiedTime, noindex, publishedTime, siteName, title, type]);
+  }, [author, canonical, description, image, imageAlt, imageWidth, imageHeight, jsonLd, keywords, modifiedTime, noindex, publishedTime, siteName, title, type]);
 
   return null;
 }

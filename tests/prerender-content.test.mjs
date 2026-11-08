@@ -54,3 +54,18 @@ test('homepage description and share descriptions come from the runtime SEO conf
     assert.equal(tag?.[1], description);
   }
 });
+
+test('prerendered share cards declare the dimensions of the image they use', async () => {
+  for (const [route, image, width, height] of [
+    ['', 'shadewater-labs-logo.webp', '408', '712'],
+    ['projects/brinespace/', 'brinespace-expedition-draft.webp', '1200', '675'],
+    ['projects/futureproof/', 'futureproof-companion-dark.webp', '960', '540'],
+  ]) {
+    const html = await readFile(new URL(`../dist/${route}index.html`, import.meta.url), 'utf8');
+    const tags = new Map([...html.matchAll(/<meta property="(og:image(?::width|:height)?)" content="([^"]+)"/g)]
+      .map(([, key, value]) => [key, value]));
+    assert.equal(tags.get('og:image'), `https://shadewaterlabs.com/${image}`);
+    assert.equal(tags.get('og:image:width'), width);
+    assert.equal(tags.get('og:image:height'), height);
+  }
+});
