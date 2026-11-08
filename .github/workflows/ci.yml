@@ -20,11 +20,13 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
-      - name: Build
-        run: npm run build
       # Guards the pre-render shell in index.html. Without this, the shell can be deleted
       # and the site goes invisible to AI crawlers with nothing turning red — Googlebot
       # renders JS, so Search Console stays green either way. `test` rebuilds first because
       # the assertions read dist/.
       - name: Test
         run: npm test
+      - name: Install Chromium
+        run: npx playwright install --with-deps --only-shell chromium
+      - name: Test mobile navigation
+        run: npm run test:browser
