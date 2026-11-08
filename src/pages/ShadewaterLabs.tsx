@@ -126,6 +126,14 @@ function ADHero() {
           </a>
         </div>
 
+        <a
+          href={fishMail.link.href}
+          data-project-click={fishMail.link.clickAction}
+          style={home.heroDemoLink}
+        >
+          {fishMail.link.label} <span aria-hidden="true">→</span>
+        </a>
+
         <div style={home.hud}>
           <div style={home.hudHead}>
             <div style={home.hudTitle}>
@@ -614,6 +622,10 @@ const home: Record<string, CSSProperties> = {
     fontSize: 'clamp(1rem, 2vw, 1.125rem)', lineHeight: 1.55, textWrap: 'pretty' as CSSProperties['textWrap'],
   },
   heroCtas: { display: 'flex', gap: 12, justifyContent: 'center', marginTop: 24, flexWrap: 'wrap' },
+  heroDemoLink: {
+    display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 44,
+    color: 'hsl(186 60% 82%)', fontSize: 14, fontWeight: 500, textDecoration: 'underline', textUnderlineOffset: 3,
+  },
   btnArrow: { transform: 'translateY(-1px)' },
 
   hud: {
