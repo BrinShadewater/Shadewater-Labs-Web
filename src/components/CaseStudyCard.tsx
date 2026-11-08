@@ -8,7 +8,7 @@ type CaseStudy = {
   image: { src: string; alt: string; width: number; height: number };
 };
 
-export function CaseStudyCard({ study, clickAction }: { study: CaseStudy; clickAction?: string }) {
+export function CaseStudyCard({ study, clickAction, linkLabel = 'Read the case study' }: { study: CaseStudy; clickAction?: string; linkLabel?: string }) {
   const { page, title, description, image } = study;
   const headingId = `${page}-case-heading`;
 
@@ -17,8 +17,8 @@ export function CaseStudyCard({ study, clickAction }: { study: CaseStudy; clickA
       <img {...image} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'contain', borderRadius: 12, background: '#0a1e29' }} />
       <h3 id={headingId} style={{ ...pp.projectName, marginTop: 20 }}>{title}</h3>
       <p style={{ ...pp.projectBlurb, paddingBottom: 16 }}>{description}</p>
-      <a href={buildPath(page)} data-project-click={clickAction} aria-label={`Read the case study – ${title}`} style={{ ...ad.btnGhost, alignSelf: 'flex-start', marginTop: 'auto' }}>
-        Read the case study <span aria-hidden="true">→</span>
+      <a href={buildPath(page)} data-project-click={clickAction} aria-label={`${linkLabel} – ${title}`} style={{ ...ad.btnGhost, alignSelf: 'flex-start', marginTop: 'auto' }}>
+        {linkLabel} <span aria-hidden="true">→</span>
       </a>
     </article>
   );

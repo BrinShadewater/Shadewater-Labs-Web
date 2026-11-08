@@ -3,6 +3,7 @@ import { CaseStudyCard } from '@/components/CaseStudyCard';
 import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { brineSpaceAssetCase, futureproofCase } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
+import { webpExample } from '@/content/webpExample';
 import { buildPath, buildProjectHref, CASE_STUDIES_SECTION_ID, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
 import {
   AuroraPage,
@@ -270,16 +271,20 @@ export default function Projects({ onNavigate }: ProjectsProps) {
     >
       <nav aria-label="On this page" style={{ ...pp.section, paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         <a href="#play-and-explore" style={jumpLinkStyle}>Play &amp; explore</a>
-        <a href={`#${CASE_STUDIES_SECTION_ID}`} style={jumpLinkStyle}>Case studies</a>
+        <a href={`#${CASE_STUDIES_SECTION_ID}`} style={jumpLinkStyle}>Case studies &amp; examples</a>
         <a href={`#${OPEN_SOURCE_SECTION_ID}`} style={jumpLinkStyle}>Open-source tools</a>
         <a href="#current-projects" style={jumpLinkStyle}>Prototypes &amp; handoffs</a>
       </nav>
       <PlayableProjects />
       <section id={CASE_STUDIES_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="case-studies-heading">
-        <h2 id="case-studies-heading" style={pp.sectionTitle}>Case studies</h2>
+        <h2 id="case-studies-heading" style={pp.sectionTitle}>Case studies &amp; examples</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: 16 }}>
           <CaseStudyCard study={brineSpaceAssetCase} />
           <CaseStudyCard study={futureproofCase} clickAction="read-case-study" />
+          <CaseStudyCard
+            study={{ page: 'webp-example', title: 'Webp Me Daddy', description: webpExample.description, image: webpExample.preview }}
+            linkLabel="See the example"
+          />
         </div>
       </section>
       <section id={OPEN_SOURCE_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="open-source-heading">
