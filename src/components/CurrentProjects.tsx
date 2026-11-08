@@ -11,7 +11,7 @@ type StatusProject = {
   summary: string;
   detail: string;
   image?: { src: string; alt: string };
-  link?: { label: string; href: string };
+  link?: { label: string; href: string; clickAction?: string };
 };
 
 export function PlayableProjects() {
@@ -25,7 +25,7 @@ export function PlayableProjects() {
           ...brineSpace,
           category: 'Underwater survival',
           status: 'Playable preview',
-          link: { label: 'Play BrineSpace', href: brineSpace.url },
+          link: { label: 'Play BrineSpace', href: brineSpace.url, clickAction: 'play-brinespace' },
         },
         fishMail,
       ]}
@@ -106,11 +106,11 @@ function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, p
             <p style={{ color: TG_MUTED, lineHeight: 1.6, fontSize: 14, paddingBottom: project.link ? 16 : 0 }}>{project.detail}</p>
             {project.link && (
               <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '12px 16px', marginTop: 'auto' }}>
-                <a href={project.link.href} style={ad.btnGhost}>
+                <a href={project.link.href} data-project-click={project.link.clickAction} style={ad.btnGhost}>
                   {project.link.label} <span aria-hidden="true">{project.link.href.startsWith('/') ? '→' : '↗'}</span>
                 </a>
                 {project.id === caseStudyProjectId && (
-                  <a href={buildPath('futureproof')} style={{ color: TG_MUTED, fontSize: 14, textUnderlineOffset: 3 }}>
+                  <a href={buildPath('futureproof')} data-project-click="read-case-study" style={{ color: TG_MUTED, fontSize: 14, textUnderlineOffset: 3 }}>
                     Read the case study
                   </a>
                 )}

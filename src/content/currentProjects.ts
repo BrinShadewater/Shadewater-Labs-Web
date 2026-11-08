@@ -15,7 +15,7 @@ export const fishMail = {
   summary: 'An interactive aquarium built into the Futureproof Festival Companion. Attendees choose a fish and send private notes that travel across the ocean before arriving in the recipient’s inbox.',
   detail: 'Try the Shadewater Labs demo. Pick a nickname, choose a fish, and send a note to another swimmer.',
   image: { src: '/fishmail-demo-hero.webp', alt: 'Illustrated fish swimming through the FishMail aquarium among kelp and coral.' },
-  link: { label: 'Try FishMail', href: '/fishmail' },
+  link: { label: 'Try FishMail', href: '/fishmail', clickAction: 'try-fishmail' },
 } as const;
 
 export const futureproofCompanion = {

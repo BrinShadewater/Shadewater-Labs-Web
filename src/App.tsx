@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Seo from './components/Seo';
 import { MotionContext, useMotionPreference } from './lib/motion';
+import { recordProjectClick } from './lib/projectClicks';
 import { buildRouteHref, PAGE_HEADING_ID, parseLocation } from './lib/routes';
 import { getSeoConfig } from './lib/seo';
 
@@ -178,7 +179,11 @@ function App() {
   return (
     <div className="relative min-h-screen flex flex-col" data-motion={motion.paused ? 'paused' : 'running'}>
       <Seo {...seo} />
-      <main className="flex-grow">
+      <main
+        className="flex-grow"
+        onClick={event => recordProjectClick(event, currentPage)}
+        onAuxClick={event => recordProjectClick(event, currentPage)}
+      >
         <MotionContext.Provider value={motion}>
           <Suspense fallback={<DelayedPageFallback />}>
             {renderPage()}

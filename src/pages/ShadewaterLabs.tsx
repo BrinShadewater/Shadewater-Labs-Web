@@ -108,6 +108,7 @@ function ADHero() {
         <div style={home.heroCtas}>
           <a
             href={brineSpace.url}
+            data-project-click="play-brinespace"
             target="_blank"
             rel="noopener noreferrer"
             style={ad.btnPrimary}
@@ -117,6 +118,7 @@ function ADHero() {
           </a>
           <a
             href={buildProjectHref(OPEN_SOURCE_SECTION_ID)}
+            data-project-click="browse-open-source"
             style={ad.btnGhost}
           >
             <span style={{ fontFamily: MONO, fontSize: 12, opacity: 0.7 }}>›</span>
@@ -216,6 +218,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     statusLabel: string;
     statusTone: string;
     ctaLabel: string;
+    clickAction?: string;
     /** Real destination, so the card title is a focusable link and not a click-only div. */
     href: string;
     external?: boolean;
@@ -297,6 +300,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       statusLabel: 'PLAYABLE PREVIEW',
       statusTone: 'hsl(150 70% 55%)',
       ctaLabel: 'Play on itch.io',
+      clickAction: 'play-brinespace',
       href: brineSpace.url,
       external: true,
     },
@@ -312,6 +316,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       statusLabel: fishMail.status.toUpperCase(),
       statusTone: 'hsl(150 70% 55%)',
       ctaLabel: fishMail.link.label,
+      clickAction: 'try-fishmail',
       href: fishMail.link.href,
       projectHref: buildProjectHref(fishMail.id),
     },
@@ -412,6 +417,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                   <div style={home.projectActions}>
                     <a
                       href={c.href}
+                      data-project-click={c.clickAction}
                       {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       aria-label={c.repoUrl ? `View project: ${c.name}` : undefined}
                       style={{

@@ -44,7 +44,11 @@ export default function Futureproof({ onNavigate }: { onNavigate: AuroraNavigate
               />
               <figcaption style={{ color: TG_MUTED, fontSize: 14, marginTop: 8 }}>{caption}</figcaption>
             </figure>
-            <a href={project.link.href} style={ad.btnGhost}>
+            <a
+              href={project.link.href}
+              data-project-click={'clickAction' in project.link ? project.link.clickAction : undefined}
+              style={ad.btnGhost}
+            >
               {project.link.label} <span aria-hidden="true">{index === 0 ? '↗' : '→'}</span>
             </a>
           </section>
