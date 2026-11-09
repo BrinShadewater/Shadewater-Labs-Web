@@ -125,6 +125,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           <ul role="list" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, listStyle: 'none', margin: 0, padding: 0 }}>
             {[
               ['start-here', 'Start here'],
+              ['figure-1', 'Figure 1'],
               ['what-would-change-our-minds', 'What would change our minds?'],
               ['source-notes', 'Source notes'],
               ['cite-this-paper', 'Cite this paper'],
@@ -155,6 +156,27 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             </li>
           ))}
         </ul>
+      </section>
+      <section id="figure-1" aria-labelledby="figure-1-heading" style={{ ...pp.section, maxWidth: 800 }}>
+        <h2 id="figure-1-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Figure 1. The same drop can have different effects</h2>
+        <figure style={{ margin: '20px 0 0' }}>
+          <img
+            src="/research/adhd-v34-figure-1.jpg"
+            alt="Line chart showing three hypothetical changes in task performance against a 60-point requirement."
+            width={2025}
+            height={1181}
+            loading="lazy"
+            decoding="async"
+            style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12 }}
+          />
+          <figcaption style={{ marginTop: 10, color: TG_MUTED, fontSize: 14 }}>
+            Hypothetical values for illustration. A, B, and C do not represent diagnostic groups.{' '}
+            <a href={`${paperPdf}#page=10`} className="underline underline-offset-4">View Figure 1 in v34 (PDF, p. 10)</a>
+          </figcaption>
+        </figure>
+        <p style={pp.projectBlurb}>
+          The task requires 60 points. A and B both lose 10 points, but A goes from 85 to 75 and still meets the requirement, while B goes from 65 to 55 and falls below it. C starts at 65, just like B, but drops to 45. B had less room to lose points than A, while C’s score was more sensitive to the same change.
+        </p>
       </section>
       <section id="what-would-change-our-minds" aria-labelledby="what-would-change-our-minds-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="what-would-change-our-minds-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>What would change our minds?</h2>
