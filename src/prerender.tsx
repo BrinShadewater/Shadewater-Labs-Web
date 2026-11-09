@@ -8,6 +8,7 @@ import WebpExample from './pages/WebpExample';
 import Futureproof from './pages/Futureproof';
 import Websites from './pages/Websites';
 import Toolkit from './pages/Toolkit';
+import Research from './pages/Research';
 import About from './pages/About';
 
 const pages = {
@@ -19,6 +20,7 @@ const pages = {
   futureproof: Futureproof,
   websites: Websites,
   toolkit: Toolkit,
+  research: Research,
   about: About,
 };
 

@@ -15,6 +15,7 @@ const WebpExample = lazy(pageImports['webp-example']);
 const Futureproof = lazy(pageImports.futureproof);
 const Websites = lazy(pageImports.websites);
 const Toolkit = lazy(pageImports.toolkit);
+const Research = lazy(pageImports.research);
 const About = lazy(pageImports.about);
 const NotFound = lazy(pageImports['not-found']);
 
@@ -146,6 +147,8 @@ function App({ initialPage, InitialPage }: {
         return <Websites onNavigate={handleNavigate} />;
       case 'toolkit':
         return <Toolkit onNavigate={handleNavigate} />;
+      case 'research':
+        return <Research onNavigate={handleNavigate} />;
       case 'about':
         return <About onNavigate={handleNavigate} />;
       default:

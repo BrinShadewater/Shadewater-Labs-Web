@@ -17,6 +17,7 @@ const LABS_STATIC_PATHS: Record<string, string> = {
   futureproof: '/projects/futureproof',
   websites: '/websites',
   toolkit: '/toolkit',
+  research: '/research',
   about: '/about',
 };
 
@@ -29,6 +30,7 @@ const LABS_PAGES = new Set([
   'futureproof',
   'websites',
   'toolkit',
+  'research',
   'about',
 ]);
 
@@ -74,6 +76,8 @@ export function parseLocation(pathname: string, _hash = '') {
       return { page: 'websites', noteId: '' };
     case 'toolkit':
       return { page: 'toolkit', noteId: '' };
+    case 'research':
+      return { page: 'research', noteId: '' };
     case 'about':
       return { page: 'about', noteId: '' };
     default:

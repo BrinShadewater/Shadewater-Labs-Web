@@ -290,6 +290,24 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
           personSchema(),
         ],
       };
+    case 'research': {
+      const title = `Research | ${ORGANIZATION_NAME}`;
+      const description = 'Research perspectives from Shadewater Labs, starting with physiological state and executive function in ADHD.';
+      const canonical = buildCanonicalUrl('research');
+      return {
+        title,
+        description,
+        canonical,
+        ...labsShareCard,
+        siteName: ORGANIZATION_NAME,
+        type: 'website',
+        jsonLd: [
+          { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, url: canonical, description },
+          websiteSchema(),
+          organizationSchema(),
+        ],
+      };
+    }
     case 'about':
       return {
         title: `About | ${ORGANIZATION_NAME}`,
@@ -345,7 +363,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
  * index.html itself, so it is not listed here; everything else in LABS_PAGES is.
  */
 export function getLabsPrerenderTargets(): { path: string; page: string }[] {
-  return ['projects', 'brinespace', 'brinespace-asset-case', 'webp-example', 'futureproof', 'websites', 'toolkit', 'about'].map((page) => ({
+  return ['projects', 'brinespace', 'brinespace-asset-case', 'webp-example', 'futureproof', 'websites', 'toolkit', 'research', 'about'].map((page) => ({
     path: buildPath(page, undefined, 'labs'),
     page,
   }));
@@ -361,6 +379,7 @@ export function getLabsSitemapPaths() {
     buildPath('futureproof'),
     buildPath('websites', undefined, 'labs'),
     buildPath('toolkit', undefined, 'labs'),
+    buildPath('research'),
     buildPath('about', undefined, 'labs'),
   ];
 }

@@ -131,6 +131,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/research",
+      "destination": "/research/index.html"
+    },
+    {
       "source": "/about",
       "destination": "/index.html"
     },

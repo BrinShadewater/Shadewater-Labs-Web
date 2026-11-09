@@ -11,6 +11,7 @@ const routes = [
   ['projects/futureproof', /Futureproof Festival Companion &amp; FishMail/, /Sending a note through the aquarium/],
   ['websites', /Managed web properties\./, /InkMaster Studio/],
   ['toolkit', /The toolkit\./, /Third-party tools/],
+  ['research', /Physiological State and Executive Function in ADHD/, /no original participant data/],
   ['about', /The person behind the lab\./, /Vancouver/],
 ];
 const bodyText = html => html.split('<body>')[1]
