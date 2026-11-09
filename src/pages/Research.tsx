@@ -39,6 +39,49 @@ const readingGuide = [
   },
 ] as const;
 
+const sourceNotes = [
+  {
+    reference: 126,
+    title: 'Exenatide trial in Parkinson’s disease',
+    page: 47,
+    note: 'The Lancet published an expression of concern about this trial after a regulatory inspection raised concerns about trial conduct and oversight at one study site. Read the result in v34 alongside that notice.',
+    notice: 'Expression of concern',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/42330995/',
+  },
+  {
+    reference: 190,
+    title: 'RECOVER-VITAL trial',
+    page: 113,
+    note: 'PubMed links an October 2026 correction to this trial, but the notice’s title gives a different article DOI. The scope of the correction is unresolved here, including whether it affects the estimates in Figure 42.',
+    notice: 'Indexed correction record',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/42962684/',
+  },
+  {
+    reference: 215,
+    title: 'PROMOTe trial',
+    page: 65,
+    note: 'The paper discusses the correction. This is the link to the journal’s notice.',
+    notice: 'Author correction',
+    url: 'https://doi.org/10.1038/s41467-025-58771-w',
+  },
+  {
+    reference: 223,
+    title: 'Microplastics in human brain tissue',
+    page: 67,
+    note: 'The paper discusses the correction. This is the link to the journal’s notice.',
+    notice: 'Author correction',
+    url: 'https://doi.org/10.1038/s41591-025-03675-x',
+  },
+  {
+    reference: 238,
+    title: 'Dietary preferences and the autism microbiome',
+    page: 72,
+    note: 'The journal’s correction updates analyses and supplementary material. The authors report that their overall conclusions are unchanged.',
+    notice: 'Published correction',
+    url: 'https://doi.org/10.1016/j.cell.2023.12.001',
+  },
+] as const;
+
 export default function Research({ onNavigate }: { onNavigate: AuroraNavigate }) {
   const [copyStatus, setCopyStatus] = useState('');
 
@@ -76,6 +119,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 20px', marginTop: 20 }}>
             <a href={paperPdf} style={ad.btnPrimary}>Read the paper (PDF, 6.9 MB)</a>
             <a href="#start-here" className="underline underline-offset-4">Jump to the reading guide</a>
+            <a href="#source-notes" className="underline underline-offset-4">Source notes for v34</a>
           </div>
         </article>
       </section>
@@ -95,6 +139,22 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
                 {entry.summary}
                 {'source' in entry && <> (<a href={entry.source} className="underline underline-offset-4">Becker et al., 2019</a>)</>}
               </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section id="source-notes" aria-labelledby="source-notes-heading" style={{ ...pp.section, maxWidth: 800 }}>
+        <h2 id="source-notes-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Source notes for v34</h2>
+        <p style={pp.projectBlurb}>Read these journal notices alongside the cited studies in the illustrated edition.</p>
+        <ul role="list" style={{ listStyle: 'none', padding: 0, margin: '20px 0 0' }}>
+          {sourceNotes.map(({ reference, title, page, note, notice, url }) => (
+            <li key={reference} style={{ padding: '16px 0', borderTop: '1px solid hsl(186 50% 40% / 0.28)' }}>
+              <h3 style={{ margin: 0, color: '#fff', fontSize: 18 }}>{title}</h3>
+              <p style={{ ...pp.projectBlurb, margin: '8px 0' }}>{note}</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', fontSize: 15 }}>
+                <a href={url} className="underline underline-offset-4" aria-label={`${notice} for ${title}`}>{notice}</a>
+                <a href={`${paperPdf}#page=${page}`} className="underline underline-offset-4">Reference {reference} discussion (PDF, p. {page})</a>
+              </div>
             </li>
           ))}
         </ul>

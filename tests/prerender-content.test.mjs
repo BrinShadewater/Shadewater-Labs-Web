@@ -51,7 +51,8 @@ for (const [route, heading, detail] of routes) {
 test('the research reading guide links to the verified pages of the v34 PDF', async () => {
   const html = await readFile(new URL('../dist/research/index.html', import.meta.url), 'utf8');
   const pdf = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
-  const links = [...html.matchAll(/<a\b[^>]*\bhref="([^"]+#page=\d+)"/g)].map(([, href]) => href);
+  const guide = html.match(/<section id="start-here"[^>]*>([\s\S]*?)<\/section>/)?.[1] ?? '';
+  const links = [...guide.matchAll(/<a\b[^>]*\bhref="([^"]+#page=\d+)"/g)].map(([, href]) => href);
   assert.deepEqual(links, [2, 5, 15, 74].map(page => `${pdf}#page=${page}`));
 });
 
