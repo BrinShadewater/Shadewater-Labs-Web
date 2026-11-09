@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
-import { LABS_ORIGIN } from '@/lib/routes';
+import { CONTACT_EMAIL, LABS_ORIGIN } from '@/lib/routes';
 
 const paperPdf = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
 const paperUrl = `${LABS_ORIGIN}${paperPdf}`;
@@ -10,6 +10,7 @@ const paperDate = '6 September 2026';
 const paperEdition = 'Illustrated research edition v34';
 const citationTitle = `${paperTitle}: An integrated brain–body hypothesis of fluctuating attention, effort and recovery`;
 const citationDetails = `${paperAuthor}. (${paperDate}). ${citationTitle} (${paperEdition}). Shadewater Labs.`;
+const correctionEmail = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('ADHD research paper v34: Suggested correction')}`;
 
 const readingGuide = [
   {
@@ -129,6 +130,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
               ['key-terms', 'Key terms'],
               ['what-would-change-our-minds', 'What would change our minds?'],
               ['source-notes', 'Source notes'],
+              ['suggest-a-correction', 'Suggest a correction'],
               ['cite-this-paper', 'Cite this paper'],
             ].map(([id, label]) => (
               <li key={id}>
@@ -227,6 +229,13 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             </li>
           ))}
         </ul>
+      </section>
+      <section id="suggest-a-correction" aria-labelledby="suggest-a-correction-heading" style={{ ...pp.section, maxWidth: 800 }}>
+        <h2 id="suggest-a-correction-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Suggest a correction</h2>
+        <p style={pp.projectBlurb}>
+          If you spot an issue in v34, include the PDF page or reference number, what needs correcting, and a link to the source if you have one.
+        </p>
+        <a href={correctionEmail} style={{ ...ad.btnGhost, marginTop: 16 }}>Email a correction</a>
       </section>
       <section id="cite-this-paper" aria-labelledby="cite-this-paper-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="cite-this-paper-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Cite this paper</h2>
