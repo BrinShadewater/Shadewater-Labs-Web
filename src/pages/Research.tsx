@@ -116,12 +116,25 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           <p style={pp.projectBlurb}>
             The paper draws on existing studies and proposes hypotheses for future research. It has not been peer reviewed and contains no original participant data.
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 20px', marginTop: 20 }}>
+          <div style={{ marginTop: 20 }}>
             <a href={paperPdf} style={ad.btnPrimary}>Read the paper (PDF, 6.9 MB)</a>
-            <a href="#start-here" className="underline underline-offset-4">Jump to the reading guide</a>
-            <a href="#source-notes" className="underline underline-offset-4">Source notes for v34</a>
           </div>
         </article>
+        <nav aria-labelledby="research-contents" style={{ marginTop: 24 }}>
+          <h2 id="research-contents" style={{ margin: '0 0 12px', color: '#fff', fontSize: 18 }}>On this page</h2>
+          <ul role="list" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, listStyle: 'none', margin: 0, padding: 0 }}>
+            {[
+              ['start-here', 'Start here'],
+              ['what-would-change-our-minds', 'What would change our minds?'],
+              ['source-notes', 'Source notes'],
+              ['cite-this-paper', 'Cite this paper'],
+            ].map(([id, label]) => (
+              <li key={id}>
+                <a href={`#${id}`} style={{ ...ad.btnGhost, minHeight: 44, padding: '8px 13px', fontSize: 14 }}>{label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </section>
       <section id="start-here" aria-labelledby="start-here-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="start-here-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Start here</h2>
