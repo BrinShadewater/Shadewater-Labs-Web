@@ -52,7 +52,7 @@ const sourceNotes = [
     reference: 190,
     title: 'RECOVER-VITAL trial',
     page: 113,
-    note: 'The Lancet Infectious Diseases added Marta Cerda as an author in its October 2026 correction. The estimates and confidence intervals in Figure 42 match the corrected article.',
+    note: 'The October 2026 correction in The Lancet Infectious Diseases only added Marta Cerda to the author list. Figure 42’s estimates and confidence intervals are unchanged.',
     notice: 'Publisher correction',
     url: 'https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(26)00586-4/fulltext',
   },
