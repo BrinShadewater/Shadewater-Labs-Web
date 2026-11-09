@@ -1,6 +1,15 @@
+import { useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
+import { LABS_ORIGIN } from '@/lib/routes';
 
 const paperPdf = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
+const paperUrl = `${LABS_ORIGIN}${paperPdf}`;
+const paperAuthor = 'Alex Yesilcimen';
+const paperTitle = 'Physiological State and Executive Function in ADHD';
+const paperDate = '6 September 2026';
+const paperEdition = 'Illustrated research edition v34';
+const citationTitle = `${paperTitle}: An integrated brain–body hypothesis of fluctuating attention, effort and recovery`;
+const citationDetails = `${paperAuthor}. (${paperDate}). ${citationTitle} (${paperEdition}). Shadewater Labs.`;
 
 const readingGuide = [
   {
@@ -31,6 +40,17 @@ const readingGuide = [
 ] as const;
 
 export default function Research({ onNavigate }: { onNavigate: AuroraNavigate }) {
+  const [copyStatus, setCopyStatus] = useState('');
+
+  const copyCitation = async () => {
+    try {
+      await navigator.clipboard.writeText(`${citationDetails} ${paperUrl}`);
+      setCopyStatus('Citation copied.');
+    } catch {
+      setCopyStatus('Select the citation above and copy it manually.');
+    }
+  };
+
   return (
     <AuroraPage
       active="research"
@@ -44,9 +64,9 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
         <article style={{ padding: 'clamp(1.25rem, 4vw, 2.25rem)', borderRadius: 'var(--ad-card-radius)', background: 'var(--ad-panel)', border: '1px solid hsl(186 50% 40% / 0.28)' }}>
           <p style={{ ...pp.projectBlurb, margin: '0 0 10px' }}>Research perspective · ADHD</p>
           <h2 id="adhd" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)', lineHeight: 1.15 }}>
-            Physiological State and Executive Function in ADHD
+            {paperTitle}
           </h2>
-          <p style={pp.projectBlurb}>Alex Yesilcimen · 6 September 2026 · Illustrated edition v34</p>
+          <p style={pp.projectBlurb}>{paperAuthor} · {paperDate} · {paperEdition}</p>
           <p style={pp.projectBlurb}>
             The paper asks whether changes in the body can help explain day-to-day shifts in attention, mental effort, and recovery. It lays out ways to test that idea while accounting for sleep, medication timing, and context.
           </p>
@@ -78,6 +98,18 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             </li>
           ))}
         </ul>
+      </section>
+      <section id="cite-this-paper" aria-labelledby="cite-this-paper-heading" style={{ ...pp.section, maxWidth: 800 }}>
+        <h2 id="cite-this-paper-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Cite this paper</h2>
+        <p style={{ ...pp.projectBlurb, overflowWrap: 'anywhere', userSelect: 'text' }}>
+          {citationDetails}{' '}
+          <a href={paperUrl} className="underline underline-offset-4">{paperUrl}</a>
+        </p>
+        <style>{'[data-prerender-route] .research-copy-citation { display: none !important; }'}</style>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px 14px', marginTop: 16 }}>
+          <button type="button" className="research-copy-citation" onClick={() => void copyCitation()} style={ad.btnGhost}>Copy citation</button>
+          <span role="status" style={{ color: TG_MUTED, fontSize: 14 }}>{copyStatus}</span>
+        </div>
       </section>
     </AuroraPage>
   );
