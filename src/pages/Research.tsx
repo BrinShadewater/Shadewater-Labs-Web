@@ -143,6 +143,22 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           ))}
         </ul>
       </section>
+      <section id="what-would-change-our-minds" aria-labelledby="what-would-change-our-minds-heading" style={{ ...pp.section, maxWidth: 800 }}>
+        <h2 id="what-would-change-our-minds-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>What would change our minds?</h2>
+        <ul style={{ ...pp.projectBlurb, listStyle: 'disc', paddingInlineStart: '1.25em', display: 'grid', gap: 14 }}>
+          <li>
+            <strong>What would support it.</strong> Measures like pain and fatigue would need to improve predictions of later changes in attention or daily functioning beyond what usual performance, recent sleep, and medication timing can already explain.{' '}
+            <a href={`${paperPdf}#page=74`} className="underline underline-offset-4">Proposed study design (PDF, p. 74)</a>
+          </li>
+          <li>
+            <strong>What would weaken it.</strong> If the simpler model predicts later changes just as well, or the pattern disappears when tested in new observations, the broader hypothesis loses support.{' '}
+            <a href={`${paperPdf}#page=83`} className="underline underline-offset-4">Table 7. Results that would weaken the hypothesis (PDF, p. 83)</a>
+          </li>
+          <li>
+            <strong>What’s still open.</strong> The existing studies leave open whether people with ADHD start from a different baseline, experience a larger change, or recover more slowly under comparable conditions.
+          </li>
+        </ul>
+      </section>
       <section id="source-notes" aria-labelledby="source-notes-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="source-notes-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Source notes for v34</h2>
         <p style={pp.projectBlurb}>Read these journal notices alongside the cited studies in the illustrated edition.</p>
