@@ -110,15 +110,20 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           <h2 id="adhd" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)', lineHeight: 1.15 }}>
             {paperTitle}
           </h2>
-          <p style={pp.projectBlurb}>{paperAuthor} · {paperDate} · {paperEdition}</p>
+          <p style={pp.projectBlurb}>{paperAuthor}</p>
           <p style={pp.projectBlurb}>
             The paper asks whether changes in the body can help explain day-to-day shifts in attention, mental effort, and recovery. It lays out ways to test that idea while accounting for sleep, medication timing, and context.
           </p>
           <p style={pp.projectBlurb}>
             The paper draws on existing studies and proposes hypotheses for future research. It has not been peer reviewed and contains no original participant data.
           </p>
-          <div style={{ marginTop: 20 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 20px', marginTop: 20 }}>
             <a href={paperPdf} style={ad.btnPrimary}>Read the paper (PDF, 6.9 MB)</a>
+            <div style={{ color: TG_MUTED, fontSize: 14 }}>
+              <strong style={{ display: 'block', color: '#fff' }}>Version &amp; updates</strong>
+              <span>Illustrated edition v34 · <time dateTime="2026-09-06">September 6, 2026</time></span>
+              <div>See <a href="#source-notes" className="underline underline-offset-4">Source notes</a> for later clarifications.</div>
+            </div>
           </div>
         </article>
         <nav aria-labelledby="research-contents" style={{ marginTop: 24 }}>
