@@ -1,4 +1,34 @@
-import { AuroraPage, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
+import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
+
+const paperPdf = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
+
+const readingGuide = [
+  {
+    title: 'The idea in plain language',
+    label: 'Proposed hypothesis',
+    page: 2,
+    summary: 'The paper asks whether changes in the body could help explain why attention and mental effort vary from day to day for the same person.',
+  },
+  {
+    title: 'How to read the evidence',
+    label: 'Reading guide',
+    page: 5,
+    summary: 'Learn to tell published results and calculations based on them apart from explanatory diagrams, and check what each chart actually measures.',
+  },
+  {
+    title: 'Sleep, alertness, and effort in ADHD',
+    label: 'Existing studies',
+    page: 15,
+    summary: 'In one sleep study of teens with ADHD, parents reported more inattention after shorter sleep, while scores on a sustained-attention task did not show a clear change.',
+    source: 'https://pubmed.ncbi.nlm.nih.gov/30768404/',
+  },
+  {
+    title: 'How the hypothesis could be tested',
+    label: 'Proposed research',
+    page: 74,
+    summary: 'The paper proposes repeated daily measurements of attention, sleep, symptoms, and everyday functioning to test whether the added measures improve on simpler explanations.',
+  },
+] as const;
 
 export default function Research({ onNavigate }: { onNavigate: AuroraNavigate }) {
   return (
@@ -23,13 +53,31 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           <p style={pp.projectBlurb}>
             The paper draws on existing studies and proposes hypotheses for future research. It has not been peer reviewed and contains no original participant data.
           </p>
-          <a
-            href="/research/physiological-state-and-executive-function-in-adhd-v34.pdf"
-            style={{ ...ad.btnPrimary, marginTop: 16 }}
-          >
-            Read the paper (PDF, 6.9 MB)
-          </a>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 20px', marginTop: 20 }}>
+            <a href={paperPdf} style={ad.btnPrimary}>Read the paper (PDF, 6.9 MB)</a>
+            <a href="#start-here" className="underline underline-offset-4">Jump to the reading guide</a>
+          </div>
         </article>
+      </section>
+      <section id="start-here" aria-labelledby="start-here-heading" style={{ ...pp.section, maxWidth: 800 }}>
+        <h2 id="start-here-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Start here</h2>
+        <p style={pp.projectBlurb}>Four places to begin in the illustrated edition. Each link includes the page number so you can also find it in a downloaded copy.</p>
+        <ul role="list" style={{ listStyle: 'none', padding: 0, margin: '20px 0 0' }}>
+          {readingGuide.map((entry) => (
+            <li key={entry.page} style={{ padding: '18px 0', borderTop: '1px solid hsl(186 50% 40% / 0.28)' }}>
+              <p style={{ margin: '0 0 6px', color: TG_MUTED, fontSize: 14 }}>{entry.label}</p>
+              <h3 style={{ margin: 0, color: '#fff', fontSize: 20 }}>
+                <a href={`${paperPdf}#page=${entry.page}`} className="underline underline-offset-4">
+                  {entry.title} <span style={{ color: TG_MUTED, fontSize: 15 }}>(PDF, p. {entry.page})</span>
+                </a>
+              </h3>
+              <p style={{ ...pp.projectBlurb, margin: '8px 0 0' }}>
+                {entry.summary}
+                {'source' in entry && <> (<a href={entry.source} className="underline underline-offset-4">Becker et al., 2019</a>)</>}
+              </p>
+            </li>
+          ))}
+        </ul>
       </section>
     </AuroraPage>
   );
