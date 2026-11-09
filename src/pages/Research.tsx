@@ -126,6 +126,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             {[
               ['start-here', 'Start here'],
               ['figure-1', 'Figure 1'],
+              ['key-terms', 'Key terms'],
               ['what-would-change-our-minds', 'What would change our minds?'],
               ['source-notes', 'Source notes'],
               ['cite-this-paper', 'Cite this paper'],
@@ -177,6 +178,23 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
         <p style={pp.projectBlurb}>
           The task requires 60 points. A and B both lose 10 points, but A goes from 85 to 75 and still meets the requirement, while B goes from 65 to 55 and falls below it. C starts at 65, just like B, but drops to 45. B had less room to lose points than A, while C’s score was more sensitive to the same change.
         </p>
+      </section>
+      <section id="key-terms" aria-labelledby="key-terms-heading" style={{ ...pp.section, maxWidth: 800 }}>
+        <h2 id="key-terms-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Key terms</h2>
+        <dl style={{ ...pp.projectBlurb, display: 'grid', gap: 14 }}>
+          {[
+            ['Functional margin', 'A person’s margin is the gap between their current performance and what a specific task requires.'],
+            ['Bodily reactivity', 'This describes how strongly the body responds to a given challenge.'],
+            ['Cognitive sensitivity', 'This describes how much thinking or task performance changes for a given amount of bodily change.'],
+            ['Recovery', 'This describes how a measured outcome returns toward a defined level after a disturbance.'],
+          ].map(([term, definition]) => (
+            <div key={term}>
+              <dt style={{ fontWeight: 700, color: '#fff' }}>{term}</dt>
+              <dd style={{ margin: 0 }}>{definition}</dd>
+            </div>
+          ))}
+        </dl>
+        <a href={`${paperPdf}#page=88`} className="underline underline-offset-4">Read the full v34 glossary (PDF, p. 88)</a>
       </section>
       <section id="what-would-change-our-minds" aria-labelledby="what-would-change-our-minds-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="what-would-change-our-minds-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>What would change our minds?</h2>
