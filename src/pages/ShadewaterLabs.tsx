@@ -101,7 +101,7 @@ function ADHero() {
             </h1>
 
             <p style={home.heroLede}>
-              Brin Shadewater builds games, agent tools, websites, and hardware experiments.{' '}
+              Brin Shadewater builds games like BrineSpace, open-source tools, websites, and hardware experiments.{' '}
               <a href="#current-projects" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>
                 See prototypes and handoffs
               </a>.

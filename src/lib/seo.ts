@@ -44,7 +44,7 @@ const labsShareCard = {
   imageHeight: 630,
 };
 const LABS_DESCRIPTION =
-  'Games, open-source agent tools, managed websites, and creative technology prototypes from Shadewater Labs in Vancouver.';
+  'Shadewater Labs is a Vancouver creative tech studio. Explore BrineSpace, open-source tools for WebP images, SEO and game assets, and our ADHD research.';
 const SAME_AS_LINKS = [
   'https://www.youtube.com/@brinshadewater',
   'https://x.com/brinshadewater',
@@ -149,9 +149,9 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       };
     case 'projects':
       return {
-        title: `Projects | ${ORGANIZATION_NAME}`,
+        title: `Games & Open-Source Tools | ${ORGANIZATION_NAME}`,
         description:
-          'Play BrineSpace and FishMail, then browse open-source tools, prototypes, and development handoffs from Shadewater Labs.',
+          'Play BrineSpace and FishMail, find open-source tools for WebP conversion, game assets and SEO audits, and read how the projects were built.',
         canonical: buildCanonicalUrl('projects', undefined, 'labs'),
         ...labsShareCard,
         siteName: ORGANIZATION_NAME,
@@ -182,7 +182,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       };
     case 'brinespace':
       return {
-        title: `BrineSpace | ${ORGANIZATION_NAME}`,
+        title: `BrineSpace: Underwater Colony Builder | ${ORGANIZATION_NAME}`,
         description: 'Explore BrineSpace, a card-driven underwater colony builder. See how expeditions work and find the Windows and Mac preview on itch.io.',
         canonical: buildCanonicalUrl('brinespace'),
         image: `${LABS_ORIGIN}/brinespace-expedition-draft.webp`,
@@ -208,7 +208,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       };
     case 'webp-example':
       return {
-        title: `${webpExample.title} | ${ORGANIZATION_NAME}`,
+        title: `Webp Me Daddy: Responsive WebP Example | ${ORGANIZATION_NAME}`,
         description: webpExample.description,
         canonical: buildCanonicalUrl('webp-example'),
         image: `${LABS_ORIGIN}${webpExample.preview.src}`,
@@ -291,8 +291,8 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         ],
       };
     case 'research': {
-      const title = `Research | ${ORGANIZATION_NAME}`;
-      const description = 'Read the November 2026 research edition on physiological state and executive function in ADHD, with an illustrated guide and proposed sleep study.';
+      const title = `ADHD Research on Sleep & Executive Function | ${ORGANIZATION_NAME}`;
+      const description = 'Read Alex Yesilcimen’s November 2026 paper on physiological state and executive function in ADHD, with an illustrated guide and proposed adult sleep study.';
       const canonical = buildCanonicalUrl('research');
       return {
         title,
