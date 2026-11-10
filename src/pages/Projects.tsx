@@ -278,7 +278,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       <PlayableProjects />
       <section id={CASE_STUDIES_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="case-studies-heading">
         <h2 id="case-studies-heading" style={pp.sectionTitle}>Case studies &amp; examples</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 'var(--ad-grid-gap)', marginTop: 16 }}>
           <CaseStudyCard study={brineSpaceAssetCase} />
           <CaseStudyCard study={futureproofCase} clickAction="read-case-study" />
           <CaseStudyCard

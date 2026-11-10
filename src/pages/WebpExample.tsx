@@ -18,7 +18,7 @@ const htmlSnippet = `<img
 >`;
 const formatSize = (bytes: number) => `${(bytes / 1000).toFixed(1)} kB`;
 const cellStyle = { padding: '10px 8px', borderBottom: 'var(--ad-card-border)', textAlign: 'left' } as const;
-const imageStyle = { display: 'block', width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'contain', borderRadius: 10, background: '#08131d' } as const;
+const imageStyle = { ...pp.figureImage, aspectRatio: '16 / 9', objectFit: 'contain' } as const;
 
 function findLoadedVariant(image: HTMLImageElement) {
   if (!image.complete || !image.naturalWidth || !image.currentSrc) return undefined;
@@ -47,13 +47,13 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
   };
 
   return (
-    <AuroraPage active="projects" onNavigate={onNavigate} sectionLabel="Webp Me Daddy example" eyebrow="WORKED EXAMPLE · IMAGE OPTIMIZATION" title={title} lede={description}>
-      <article style={{ ...pp.section, maxWidth: 960 }}>
+    <AuroraPage layout="article" active="projects" onNavigate={onNavigate} sectionLabel="Webp Me Daddy example" eyebrow="WORKED EXAMPLE · IMAGE OPTIMIZATION" title={title} lede={description}>
+      <article style={pp.section}>
         <h2 style={pp.sectionTitle}>Original and optimized</h2>
         <p style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 20 }}>
           I started with a desktop screenshot and ran Webp Me Daddy’s card thumbnail recipe. It cropped the screenshot to 16:9 and exported four widths so a small card can load a smaller file.
         </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 330px), 1fr))', gap: 18 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 330px), 1fr))', gap: 'var(--ad-grid-gap)' }}>
           <figure style={{ ...pp.projectCard, padding: 14 }}>
             <img src={source.src} alt={source.alt} width={source.width} height={source.height} loading="lazy" decoding="async" style={imageStyle} />
             <figcaption style={{ ...pp.projectBlurb, marginTop: 12 }}>Original JPEG · {source.width} × {source.height} · {formatSize(source.bytes)}</figcaption>

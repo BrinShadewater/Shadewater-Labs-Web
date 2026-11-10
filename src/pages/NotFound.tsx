@@ -48,10 +48,10 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
                 flexWrap: 'wrap',
                 gap: 10,
                 padding: '18px 22px',
-                borderRadius: 14,
+                borderRadius: 'var(--ad-card-radius)',
                 textDecoration: 'none',
-                background: 'hsl(200 30% 7% / 0.7)',
-                border: '1px solid hsl(186 50% 40% / 0.25)',
+                background: 'var(--ad-panel)',
+                border: 'var(--ad-card-border)',
               }}
             >
               <span style={{ fontSize: 18, fontWeight: 700, color: '#fff' }}>{r.label}</span>

@@ -211,8 +211,8 @@ export default function Websites({ onNavigate }: WebsitesProps) {
 
   const sitesGrid: CSSProperties = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: 18,
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gap: 'var(--ad-grid-gap)',
   };
 
   return (

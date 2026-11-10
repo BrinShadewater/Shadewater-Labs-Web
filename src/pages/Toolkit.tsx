@@ -24,11 +24,10 @@ export default function Toolkit({ onNavigate }: ToolkitProps) {
       sectionLabel="Toolkit"
       eyebrow="WHAT WE ACTUALLY USE"
       title="The toolkit."
-      lede="Third-party tools that survived contact with real work here. The bar is used on something that shipped, not looks interesting — and where a tool has a limitation worth knowing, it says so."
+      lede="Third-party tools we use for code, design, and production, with examples of where they fit and what to watch for."
     >
       <section style={pp.section}>
         <style>{`
-          .toolkit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
           @media (max-width: 760px) { .toolkit-grid { grid-template-columns: 1fr !important; } }
         `}</style>
 
@@ -64,18 +63,14 @@ export default function Toolkit({ onNavigate }: ToolkitProps) {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }} className="toolkit-grid">
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 'var(--ad-grid-gap)' }} className="toolkit-grid">
                 {tools
                   .filter((t) => t.category === cat)
                   .map((t) => (
                     <article
                       key={t.id}
                       style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        padding: '20px 22px',
-                        borderRadius: 'var(--ad-card-radius)',
-                        background: 'var(--ad-panel)',
+                        ...pp.projectCard,
                         border: `1px solid hsl(${accent} / 0.22)`,
                       }}
                     >

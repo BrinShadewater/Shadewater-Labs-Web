@@ -110,16 +110,23 @@ html {
 }
 
 :root {
+  --ad-frame-width: 1180px;
   --ad-gutter: 32px;
   --ad-nav-padding: 14px;
-  --ad-section-space: clamp(36px, 4.5vw, 64px);
+  --ad-section-space: clamp(32px, 4vw, 56px);
   --ad-section-title: clamp(1.85rem, 3.8vw, 2.8rem);
   --ad-copy: #ccd9df;
   --ad-panel: linear-gradient(155deg, #102630, #0a1720 76%);
   --ad-card-border: 1px solid hsl(186 42% 48% / 0.3);
   --ad-card-radius: 18px;
+  --ad-card-padding: clamp(18px, 2.4vw, 26px);
+  --ad-media-radius: 12px;
+  --ad-grid-gap: clamp(14px, 1.6vw, 20px);
   --ad-card-shadow: 0 14px 36px hsl(210 80% 4% / 0.32), inset 0 1px hsl(186 70% 70% / 0.045);
 }
+
+.ad-reading { --ad-content-width: 800px; }
+.ad-article { --ad-content-width: 960px; }
 
 @media (max-width: 768px) {
   :root {
@@ -154,8 +161,8 @@ html {
 }
 
 @media (max-width: 768px) {
-  .home-heroLead { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'art' 'copy'; gap: 16px; }
-  .home-heroLogo { width: 96px; }
+  .home-heroLead { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'art' 'copy'; gap: 12px; }
+  .home-heroLogo { width: 80px; }
 }
 
 button:focus-visible,

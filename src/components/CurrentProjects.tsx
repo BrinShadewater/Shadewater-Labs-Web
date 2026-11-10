@@ -79,14 +79,14 @@ function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, p
       {eyebrow && <p style={{ fontFamily: MONO, color: TG_MUTED, fontSize: 12 }}>{eyebrow}</p>}
       <h2 id={`${id}-heading`} style={pp.sectionTitle}>{title}</h2>
       {description && <p style={{ color: TG_MUTED, lineHeight: 1.6, maxWidth: 720 }}>{description}</p>}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20, marginTop: description ? 28 : 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 'var(--ad-grid-gap)', marginTop: description ? 28 : 16 }}>
         {projects.map(project => (
           <article
             key={project.id}
             id={project.id}
             aria-labelledby={`${project.id}-heading`}
             tabIndex={-1}
-            style={{ ...pp.projectCard, padding: 26 }}
+            style={pp.projectCard}
           >
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'space-between', fontFamily: MONO, fontSize: 11, color: TG_MUTED }}>
               <span>{project.category}</span>
@@ -102,7 +102,7 @@ function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, p
                 height={540}
                 loading="lazy"
                 decoding="async"
-                style={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'cover', borderRadius: 12, marginTop: 16 }}
+                style={{ ...pp.figureImage, aspectRatio: '16 / 9', objectFit: 'cover', marginTop: 16 }}
               />
             )}
             <h3 id={`${project.id}-heading`} style={{ ...pp.projectName, marginTop: 20 }}>{project.name}</h3>

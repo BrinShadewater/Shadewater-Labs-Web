@@ -128,13 +128,6 @@ function ADHero() {
               </a>
             </div>
 
-            <a
-              href={fishMail.link.href}
-              data-project-click={fishMail.link.clickAction}
-              style={home.heroDemoLink}
-            >
-              {fishMail.link.label} <span aria-hidden="true">→</span>
-            </a>
           </div>
         </div>
 
@@ -181,16 +174,15 @@ function HudCell({ k, v, sub }: { k: string; v: string; sub: string }) {
 }
 
 
-function SectionHead({ kicker, title, sub, align = 'center' }: { kicker: string; title: string; sub: string; align?: 'center' | 'left' }) {
+function SectionHead({ kicker, title, sub }: { kicker: string; title: string; sub: string }) {
   return (
-    <div style={{ ...home.sectionHead, textAlign: align, margin: align === 'left' ? '0 0 32px' : '0 auto 40px' }}>
-      <div style={{ ...home.kicker, justifyContent: align === 'left' ? 'flex-start' : 'center' }}>
-        <span style={home.kickerLine} />
+    <div style={home.sectionHead}>
+      <div style={home.kicker}>
         <span style={home.kickerText}>{kicker}</span>
         <span style={home.kickerLine} />
       </div>
       <h2 style={home.h2}>{title}</h2>
-      <p style={{ ...home.sub, maxWidth: align === 'left' ? 'unset' : 720, margin: align === 'left' ? '12px 0 0' : '14px auto 0' }}>{sub}</p>
+      <p style={home.sub}>{sub}</p>
     </div>
   );
 }
@@ -526,7 +518,6 @@ function ADComing() {
             kicker="Now"
             title="Work in progress"
             sub="Development and maintenance underway."
-            align="left"
           />
         </div>
         <ul style={home.comingList}>
@@ -577,7 +568,7 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
 
 const home: Record<string, CSSProperties> = {
   hero: { position: 'relative', overflow: 'hidden', paddingBottom: 0 },
-  heroInner: { position: 'relative', zIndex: 1, maxWidth: 1180, margin: '0 auto', padding: 'clamp(24px, 5vw, 68px) var(--ad-gutter) clamp(30px, 5vw, 64px)' },
+  heroInner: { position: 'relative', zIndex: 1, maxWidth: 'var(--ad-frame-width)', margin: '0 auto', padding: 'clamp(24px, 4vw, 52px) var(--ad-gutter) clamp(22px, 3vw, 38px)' },
   heroChip: {
     display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center', gap: '4px 10px',
     padding: '8px 14px', borderRadius: 999,
@@ -607,10 +598,6 @@ const home: Record<string, CSSProperties> = {
     fontSize: 'clamp(1rem, 2vw, 1.125rem)', lineHeight: 1.55, textWrap: 'pretty' as CSSProperties['textWrap'],
   },
   heroCtas: { display: 'flex', gap: 10, marginTop: 22, flexWrap: 'wrap' },
-  heroDemoLink: {
-    display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 44,
-    color: 'hsl(186 60% 82%)', fontSize: 14, fontWeight: 500, textDecoration: 'underline', textUnderlineOffset: 3,
-  },
   btnArrow: { transform: 'translateY(-1px)' },
 
   hud: {
@@ -636,21 +623,15 @@ const home: Record<string, CSSProperties> = {
   hudSub: { fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.06em', color: 'hsl(36 30% 70%)' },
 
   section: pp.section,
-  sectionHead: { textAlign: 'center', maxWidth: 720, margin: '0 auto 40px' },
+  sectionHead: { maxWidth: 720, margin: '0 0 clamp(20px, 3vw, 32px)' },
   kicker: { display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 14 },
   kickerLine: { display: 'block', width: 28, height: 1, background: 'hsl(186 70% 60% / 0.4)' },
   kickerText: { fontFamily: MONO, fontSize: 11, letterSpacing: '0.32em', color: 'hsl(186 60% 78%)' },
-  h2: {
-    fontSize: 'var(--ad-section-title)', lineHeight: 1.08, letterSpacing: '-0.03em', fontWeight: 650, margin: 0,
-    background: 'linear-gradient(180deg, #fff 30%, hsl(186 30% 80%) 100%)',
-    WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
-  },
-  sub: { color: TG_MUTED, fontSize: 17, lineHeight: 1.55 },
+  h2: { ...pp.sectionTitle, margin: 0 },
+  sub: { ...pp.projectBlurb, fontSize: 16 },
 
-  trackGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 },
-  trackCard: {
-    ...pp.projectCard, padding: 26,
-  },
+  trackGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--ad-grid-gap)' },
+  trackCard: pp.projectCard,
   trackHalo: { position: 'absolute', inset: 0, pointerEvents: 'none' },
   trackTitle: { position: 'relative', fontSize: 24, fontWeight: 700, letterSpacing: '-0.01em', margin: 0, color: '#fff' },
   trackBody: { position: 'relative', color: 'hsl(45 18% 84%)', fontSize: 15, lineHeight: 1.6, marginTop: 12 },

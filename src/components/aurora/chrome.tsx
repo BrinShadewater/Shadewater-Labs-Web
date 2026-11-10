@@ -430,6 +430,7 @@ export interface AuroraPageProps {
   eyebrow: string;
   title: ReactNode;
   lede: string;
+  layout?: 'reading' | 'article';
   children: ReactNode;
 }
 
@@ -440,6 +441,7 @@ export function AuroraPage({
   eyebrow,
   title,
   lede,
+  layout,
   children,
 }: AuroraPageProps) {
   return (
@@ -454,14 +456,16 @@ export function AuroraPage({
       `}</style>
       <ADTicker />
       <ADNav onNavigate={onNavigate} active={active} />
-      <PageHero
-        eyebrow={eyebrow}
-        title={title}
-        lede={lede}
-        sectionLabel={sectionLabel}
-        onNavigate={onNavigate}
-      />
-      <div>{children}</div>
+      <div className={layout && `ad-${layout}`}>
+        <PageHero
+          eyebrow={eyebrow}
+          title={title}
+          lede={lede}
+          sectionLabel={sectionLabel}
+          onNavigate={onNavigate}
+        />
+        {children}
+      </div>
       <ADFooter />
     </div>
   );
@@ -528,13 +532,14 @@ export const pp: Record<string, CSSProperties> = {
     animation: 'adDrift2 32s ease-in-out infinite alternate',
   },
   heroBeam: {
-    height: 1, margin: '0 auto', maxWidth: 1180,
-    background: 'linear-gradient(90deg, transparent, hsl(186 90% 60% / 0.5), transparent)',
+    height: 1, margin: '0 auto', width: 'calc(100% - 2 * var(--ad-gutter))',
+    maxWidth: 'calc(var(--ad-content-width, var(--ad-frame-width)) - 2 * var(--ad-gutter))',
+    background: 'linear-gradient(90deg, hsl(186 65% 62% / 0.36), hsl(186 42% 48% / 0.1))',
   },
   heroInner: {
     position: 'relative', zIndex: 1,
-    maxWidth: 1180, margin: '0 auto',
-    padding: 'clamp(26px, 4.5vw, 62px) var(--ad-gutter) clamp(28px, 4vw, 50px)',
+    maxWidth: 'var(--ad-content-width, var(--ad-frame-width))', margin: '0 auto',
+    padding: 'clamp(24px, 4vw, 52px) var(--ad-gutter) clamp(24px, 3vw, 38px)',
     textAlign: 'left',
   },
   crumb: {
@@ -564,8 +569,12 @@ export const pp: Record<string, CSSProperties> = {
     color: 'var(--ad-copy)', fontSize: 'clamp(1rem, 2vw, 1.125rem)', lineHeight: 1.6,
   },
 
-  section: { position: 'relative', maxWidth: 1180, margin: '0 auto', padding: 'var(--ad-section-space) var(--ad-gutter) 0', zIndex: 1 },
+  section: { position: 'relative', maxWidth: 'var(--ad-content-width, var(--ad-frame-width))', margin: '0 auto', padding: 'var(--ad-section-space) var(--ad-gutter) 0', zIndex: 1 },
   sectionTitle: { color: '#fff', fontSize: 'var(--ad-section-title)', lineHeight: 1.12, fontWeight: 650, letterSpacing: '-0.025em', margin: '12px 0' },
+  figureImage: {
+    display: 'block', width: '100%', height: 'auto',
+    borderRadius: 'var(--ad-media-radius)', border: 'var(--ad-card-border)', background: '#0a1e29',
+  },
 
   toolbar: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -590,13 +599,13 @@ export const pp: Record<string, CSSProperties> = {
     borderColor: 'hsl(186 80% 65%)',
   },
 
-  projectsGrid: { display: 'grid', gap: 18 },
+  projectsGrid: { display: 'grid', gap: 'var(--ad-grid-gap)' },
   projectCard: {
     // Column layout so the footer can be pinned to the bottom: grid stretches the
     // cards to equal height, and marginTop:auto on the footer keeps the links on
     // one line across the row instead of floating up with short copy.
     position: 'relative', display: 'flex', flexDirection: 'column',
-    padding: 24, borderRadius: 'var(--ad-card-radius)',
+    padding: 'var(--ad-card-padding)', borderRadius: 'var(--ad-card-radius)',
     background: 'var(--ad-panel)', border: 'var(--ad-card-border)', boxShadow: 'var(--ad-card-shadow)',
     overflow: 'hidden',
   },
@@ -629,7 +638,7 @@ export const pp: Record<string, CSSProperties> = {
   statusDot: { width: 7, height: 7, borderRadius: 999 },
   projectArt: {
     position: 'relative',
-    height: 180, borderRadius: 16, marginBottom: 16,
+    height: 180, borderRadius: 'var(--ad-media-radius)', marginBottom: 16,
     background: 'linear-gradient(180deg, hsl(200 35% 14% / 0.85), hsl(200 30% 8% / 0.95))',
     border: '1px solid hsl(186 40% 35% / 0.3)',
     display: 'grid', placeItems: 'center', overflow: 'hidden',
@@ -677,7 +686,7 @@ export const pp: Record<string, CSSProperties> = {
   siteCard: {
     position: 'relative', overflow: 'hidden',
     display: 'flex', flexDirection: 'column',
-    padding: '26px 28px', borderRadius: 'var(--ad-card-radius)',
+    padding: 'var(--ad-card-padding)', borderRadius: 'var(--ad-card-radius)',
     background: 'var(--ad-panel)', border: 'var(--ad-card-border)', boxShadow: 'var(--ad-card-shadow)',
   },
   siteGlow: { position: 'absolute', inset: 0, pointerEvents: 'none' },
@@ -871,7 +880,7 @@ export const ad: Record<string, CSSProperties> = {
     borderBottom: '1px solid hsl(186 50% 40% / 0.18)',
   },
   navInner: {
-    maxWidth: 1180, margin: '0 auto', padding: 'var(--ad-nav-padding) var(--ad-gutter)',
+    maxWidth: 'var(--ad-frame-width)', margin: '0 auto', padding: 'var(--ad-nav-padding) var(--ad-gutter)',
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     flexWrap: 'wrap', gap: 16,
   },
@@ -921,19 +930,18 @@ export const ad: Record<string, CSSProperties> = {
 
   btnPrimary: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
-    padding: '14px 26px', borderRadius: 999,
+    minHeight: 44, padding: '11px 20px', borderRadius: 999,
     color: '#04101b', fontWeight: 600, fontSize: 15,
     background: 'linear-gradient(135deg, hsl(186 95% 78%), hsl(192 80% 60%) 50%, hsl(220 85% 70%))',
-    boxShadow: '0 18px 48px hsl(186 90% 50% / 0.45), inset 0 1px 0 hsl(0 0% 100% / 0.5)',
+    boxShadow: '0 8px 24px hsl(186 90% 50% / 0.22), inset 0 1px 0 hsl(0 0% 100% / 0.5)',
     cursor: 'pointer', textDecoration: 'none',
   },
   btnGhost: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
-    padding: '13px 24px', borderRadius: 999,
+    minHeight: 44, padding: '10px 19px', borderRadius: 999,
     color: 'hsl(186 60% 82%)', fontWeight: 500, fontSize: 15,
     background: 'hsl(186 50% 20% / 0.12)',
     border: '1px solid hsl(186 60% 55% / 0.28)',
-    boxShadow: '0 4px 20px hsl(186 90% 50% / 0.10)',
     cursor: 'pointer', textDecoration: 'none',
   },
 
@@ -947,7 +955,7 @@ export const ad: Record<string, CSSProperties> = {
     background: 'linear-gradient(90deg, transparent, hsl(186 90% 60% / 0.5), transparent)',
   },
   footerInner: {
-    maxWidth: 1180, margin: '0 auto', padding: '32px var(--ad-gutter) 28px',
+    maxWidth: 'var(--ad-frame-width)', margin: '0 auto', padding: '32px var(--ad-gutter) 28px',
     display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24,
     flexWrap: 'wrap' as CSSProperties['flexWrap'],
   },

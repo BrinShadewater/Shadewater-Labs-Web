@@ -105,14 +105,15 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
   return (
     <AuroraPage
       active="research"
+      layout="reading"
       onNavigate={onNavigate}
       sectionLabel="Research"
       eyebrow="SHADEWATER LABS"
       title="Research"
       lede="Research from Shadewater Labs on how attention, effort, and daily functioning change from one day to the next in ADHD."
     >
-      <section aria-labelledby="adhd" style={{ ...pp.section, maxWidth: 800 }}>
-        <article style={{ padding: 'clamp(1.25rem, 4vw, 2.25rem)', borderRadius: 'var(--ad-card-radius)', background: 'var(--ad-panel)', border: '1px solid hsl(186 50% 40% / 0.28)' }}>
+      <section aria-labelledby="adhd" style={pp.section}>
+        <article style={pp.projectCard}>
           <p style={{ ...pp.projectBlurb, margin: '0 0 10px' }}>Research perspective · ADHD</p>
           <h2 id="adhd" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)', lineHeight: 1.15 }}>
             {paperTitle}
@@ -157,9 +158,9 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           </ul>
         </nav>
       </section>
-      <section id="study-at-a-glance" aria-labelledby="study-at-a-glance-heading" style={{ ...pp.section, maxWidth: 800 }}>
+      <section id="study-at-a-glance" aria-labelledby="study-at-a-glance-heading" style={pp.section}>
         <p style={{ ...pp.projectBlurb, margin: '0 0 10px' }}>Proposed research</p>
-        <h2 id="study-at-a-glance-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Study at a glance</h2>
+        <h2 id="study-at-a-glance-heading" style={{ ...pp.sectionTitle, margin: 0 }}>Study at a glance</h2>
         <ol style={{ ...pp.projectBlurb, paddingInlineStart: '1.5em', listStyle: 'decimal', display: 'grid', gap: 10 }}>
           <li><strong>14-day pilot.</strong> Check whether adults can record their sleep and complete brief attention tests reliably in everyday life.</li>
           <li><strong>28-day study, if the pilot checks pass.</strong> Compare how missed targets on the attention test change after shorter nights in adults with ADHD and in the comparison group.</li>
@@ -173,7 +174,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             height={669}
             loading="lazy"
             decoding="async"
-            style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12 }}
+            style={pp.figureImage}
           />
           <figcaption style={{ marginTop: 10, color: TG_MUTED, fontSize: 14 }}>
             <a href={`${paperPdf}#page=21`} className="underline underline-offset-4">Study sequence in the manuscript (Figure 30, PDF p. 21)</a>
@@ -181,8 +182,8 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
         </figure>
         <a href={`${paperPdf}#page=130`} className="underline underline-offset-4">Read the pilot methods (Appendix L, PDF p. 130)</a>
       </section>
-      <section id="start-here" aria-labelledby="start-here-heading" style={{ ...pp.section, maxWidth: 800 }}>
-        <h2 id="start-here-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Start here</h2>
+      <section id="start-here" aria-labelledby="start-here-heading" style={pp.section}>
+        <h2 id="start-here-heading" style={{ ...pp.sectionTitle, margin: 0 }}>Start here</h2>
         <p style={pp.projectBlurb}>Start with the example, then follow the evidence and the proposed study. These page numbers match the November PDF.</p>
         <ul role="list" style={{ listStyle: 'none', padding: 0, margin: '20px 0 0' }}>
           {readingGuide.map((entry) => (
@@ -201,8 +202,8 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           ))}
         </ul>
       </section>
-      <section id="figure-1" aria-labelledby="figure-1-heading" style={{ ...pp.section, maxWidth: 800 }}>
-        <h2 id="figure-1-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Figure 1. The same drop can have different effects</h2>
+      <section id="figure-1" aria-labelledby="figure-1-heading" style={pp.section}>
+        <h2 id="figure-1-heading" style={{ ...pp.sectionTitle, margin: 0 }}>Figure 1. The same drop can have different effects</h2>
         <figure style={{ margin: '20px 0 0' }}>
           <img
             src="/research/adhd-v34-figure-1.jpg"
@@ -211,7 +212,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             height={1181}
             loading="lazy"
             decoding="async"
-            style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12 }}
+            style={pp.figureImage}
           />
           <figcaption style={{ marginTop: 10, color: TG_MUTED, fontSize: 14 }}>
             Hypothetical values for illustration. A, B, and C do not represent diagnostic groups.{' '}
@@ -222,8 +223,8 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           The task requires 60 points. A and B both lose 10 points, but A goes from 85 to 75 and still meets the requirement, while B goes from 65 to 55 and falls below it. C starts at 65, just like B, but drops to 45. B had less room to lose points than A, while C’s score was more sensitive to the same change.
         </p>
       </section>
-      <section id="key-terms" aria-labelledby="key-terms-heading" style={{ ...pp.section, maxWidth: 800 }}>
-        <h2 id="key-terms-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Key terms</h2>
+      <section id="key-terms" aria-labelledby="key-terms-heading" style={pp.section}>
+        <h2 id="key-terms-heading" style={{ ...pp.sectionTitle, margin: 0 }}>Key terms</h2>
         <dl style={{ ...pp.projectBlurb, display: 'grid', gap: 14 }}>
           {[
             ['Functional margin', 'A person’s margin is the gap between their current performance and what a specific task requires.'],
@@ -245,7 +246,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             height={902}
             loading="lazy"
             decoding="async"
-            style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12 }}
+            style={pp.figureImage}
           />
           <figcaption style={{ marginTop: 10, color: TG_MUTED, fontSize: 14 }}>
             The chart uses invented times to show how attention and a bodily measure could recover at different rates.{' '}
@@ -254,8 +255,8 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
         </figure>
         <a href={`${paperPdf}#page=102`} className="underline underline-offset-4">Read the full glossary (PDF, p. 102)</a>
       </section>
-      <section id="what-would-change-our-minds" aria-labelledby="what-would-change-our-minds-heading" style={{ ...pp.section, maxWidth: 800 }}>
-        <h2 id="what-would-change-our-minds-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>What would change our minds?</h2>
+      <section id="what-would-change-our-minds" aria-labelledby="what-would-change-our-minds-heading" style={pp.section}>
+        <h2 id="what-would-change-our-minds-heading" style={{ ...pp.sectionTitle, margin: 0 }}>What would change our minds?</h2>
         <ul style={{ ...pp.projectBlurb, listStyle: 'disc', paddingInlineStart: '1.25em', display: 'grid', gap: 14 }}>
           <li>
             <strong>What would warrant a follow-up.</strong> A clear, meaningful difference in how missed targets change after shorter nights would justify testing the sleep question under controlled conditions.{' '}
@@ -270,8 +271,8 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           </li>
         </ul>
       </section>
-      <section id="source-notes" aria-labelledby="source-notes-heading" style={{ ...pp.section, maxWidth: 800 }}>
-        <h2 id="source-notes-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Source notes</h2>
+      <section id="source-notes" aria-labelledby="source-notes-heading" style={pp.section}>
+        <h2 id="source-notes-heading" style={{ ...pp.sectionTitle, margin: 0 }}>Source notes</h2>
         <p style={pp.projectBlurb}>Appendix I records which sources were checked and where questions remain. Read these journal notices alongside the studies.</p>
         <a href={`${paperPdf}#page=120`} className="underline underline-offset-4">Read the source audit (PDF, p. 120)</a>
         <ul role="list" style={{ listStyle: 'none', padding: 0, margin: '20px 0 0' }}>
@@ -287,15 +288,15 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           ))}
         </ul>
       </section>
-      <section id="suggest-a-correction" aria-labelledby="suggest-a-correction-heading" style={{ ...pp.section, maxWidth: 800 }}>
-        <h2 id="suggest-a-correction-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Suggest a correction</h2>
+      <section id="suggest-a-correction" aria-labelledby="suggest-a-correction-heading" style={pp.section}>
+        <h2 id="suggest-a-correction-heading" style={{ ...pp.sectionTitle, margin: 0 }}>Suggest a correction</h2>
         <p style={pp.projectBlurb}>
           Include the edition, PDF page or reference number, what needs correcting, and a source link if you have one.
         </p>
         <a href={correctionEmail} style={{ ...ad.btnGhost, marginTop: 16 }}>Email a correction</a>
       </section>
-      <section id="cite-this-paper" aria-labelledby="cite-this-paper-heading" style={{ ...pp.section, maxWidth: 800 }}>
-        <h2 id="cite-this-paper-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Cite this paper</h2>
+      <section id="cite-this-paper" aria-labelledby="cite-this-paper-heading" style={pp.section}>
+        <h2 id="cite-this-paper-heading" style={{ ...pp.sectionTitle, margin: 0 }}>Cite this paper</h2>
         <p style={{ ...pp.projectBlurb, overflowWrap: 'anywhere', userSelect: 'text' }}>
           {citationDetails}{' '}
           <a href={paperUrl} className="underline underline-offset-4">{paperUrl}</a>

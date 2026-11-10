@@ -42,19 +42,20 @@ export default function BrineSpaceAssetCase({ onNavigate }: { onNavigate: Aurora
   return (
     <AuroraPage
       active="projects"
+      layout="article"
       onNavigate={onNavigate}
       sectionLabel="BrineSpace asset case study"
       eyebrow="CASE STUDY · BRINESPACE"
       title={brineSpaceAssetCase.title}
       lede={brineSpaceAssetCase.description}
     >
-      <article style={{ ...pp.section, maxWidth: 960 }}>
+      <article style={pp.section}>
         {stages.map(({ id, title, copy, image, caption }) => (
-          <section key={id} aria-labelledby={`asset-${id}`} style={{ marginBottom: 36 }}>
-            <h2 id={`asset-${id}`} style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#fff' }}>{title}</h2>
+          <section key={id} aria-labelledby={`asset-${id}`} style={{ marginBottom: 'var(--ad-section-space)' }}>
+            <h2 id={`asset-${id}`} style={pp.sectionTitle}>{title}</h2>
             <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>{copy}</p>
             <figure style={{ margin: '16px 0 0' }}>
-              <img {...image} loading="lazy" decoding="async" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12, background: '#0a1e29' }} />
+              <img {...image} loading="lazy" decoding="async" style={pp.figureImage} />
               <figcaption style={{ color: TG_MUTED, fontSize: 14, marginTop: 8 }}>{caption}</figcaption>
             </figure>
             {id === 'checks' && <a href={image.src} style={{ ...pp.projectLink, marginTop: 8, textDecoration: 'underline' }}>Open the full rotation board</a>}

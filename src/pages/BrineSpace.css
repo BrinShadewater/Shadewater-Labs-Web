@@ -6,13 +6,13 @@
 }
 
 .brine-wrap {
-  max-width: 1180px;
+  max-width: var(--ad-frame-width);
   margin-inline: auto;
   padding-inline: var(--ad-gutter);
 }
 
 .brine-hero {
-  padding: clamp(26px, 5vw, 64px) 0 clamp(28px, 5vw, 56px);
+  padding: clamp(24px, 4vw, 52px) 0 clamp(24px, 3vw, 38px);
   border-bottom: 1px solid var(--brine-line);
   background:
     radial-gradient(ellipse at 74% 35%, hsl(189 72% 19% / 0.6), transparent 60%),
@@ -104,7 +104,7 @@
 
 .brine-hero-art {
   overflow: hidden;
-  box-shadow: 0 20px 70px hsl(188 75% 4% / 0.62);
+  box-shadow: var(--ad-card-shadow);
 }
 
 .brine-hero-art img,

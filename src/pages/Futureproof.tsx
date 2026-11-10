@@ -21,16 +21,17 @@ export default function Futureproof({ onNavigate }: { onNavigate: AuroraNavigate
   return (
     <AuroraPage
       active="projects"
+      layout="article"
       onNavigate={onNavigate}
       sectionLabel="Futureproof"
       eyebrow="CASE STUDY · VANCOUVER · OCTOBER 28–30, 2026"
       title={futureproofCase.title}
       lede="A festival companion for planning what to see and a shared aquarium for sending notes to other attendees."
     >
-      <article style={{ ...pp.section, maxWidth: 960 }}>
+      <article style={pp.section}>
         {features.map(({ project, title, copy, caption }, index) => (
-          <section key={project.id} aria-labelledby={`${project.id}-feature`} style={{ marginBottom: 40 }}>
-            <h2 id={`${project.id}-feature`} style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#fff' }}>
+          <section key={project.id} aria-labelledby={`${project.id}-feature`} style={{ marginBottom: 'var(--ad-section-space)' }}>
+            <h2 id={`${project.id}-feature`} style={pp.sectionTitle}>
               {title}
             </h2>
             <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>{copy}</p>
@@ -40,7 +41,7 @@ export default function Futureproof({ onNavigate }: { onNavigate: AuroraNavigate
                 alt={project.image.alt}
                 loading={index === 0 ? 'eager' : 'lazy'}
                 decoding="async"
-                style={{ width: '100%', aspectRatio: '16 / 9', objectFit: 'contain', borderRadius: 12, background: 'hsl(205 35% 8%)' }}
+                style={{ ...pp.figureImage, aspectRatio: '16 / 9', objectFit: 'contain' }}
               />
               <figcaption style={{ color: TG_MUTED, fontSize: 14, marginTop: 8 }}>{caption}</figcaption>
             </figure>

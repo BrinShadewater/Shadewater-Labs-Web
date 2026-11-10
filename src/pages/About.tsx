@@ -35,7 +35,7 @@ export default function About({ onNavigate }: AboutProps) {
 
   const photoWrap: CSSProperties = {
     position: 'relative',
-    borderRadius: 20,
+    borderRadius: 'var(--ad-card-radius)',
     overflow: 'hidden',
     boxShadow: '0 24px 60px hsl(' + ACCENT + ' / 0.22), 0 0 0 1px hsl(' + ACCENT + ' / 0.18)',
     width: '100%',
@@ -305,8 +305,8 @@ export default function About({ onNavigate }: AboutProps) {
               tabIndex={-1}
               style={{
                 marginTop: 34,
-                padding: '22px 24px',
-                borderRadius: 18,
+                padding: 'var(--ad-card-padding)',
+                borderRadius: 'var(--ad-card-radius)',
                 background: 'hsl(200 30% 8% / 0.7)',
                 border: '1px solid hsl(186 50% 40% / 0.28)',
               }}
