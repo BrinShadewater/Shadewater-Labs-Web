@@ -90,8 +90,12 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
                 </ol>
               </section>
               <section aria-labelledby="brine-mac-heading">
-                <h3 id="brine-mac-heading">Mac <span>2.5 GB</span></h3>
+                <h3 id="brine-mac-heading">macOS 0.4.0 RC1 <span>2.5 GB</span></h3>
                 <p className="brine-platform-status">Signed and notarized preview</p>
+                <ol>
+                  <li>Download <code>brinespace-mac-alpha.zip</code> from itch.io and extract it.</li>
+                  <li>Open the extracted BrineSpace app. Keep the app bundle intact.</li>
+                </ol>
                 <p>Tested on Apple M4. The download includes Intel binaries, and testing on physical Intel Macs is still pending.</p>
                 <p>Large stations can use several gigabytes of memory and may stutter, especially at higher simulation speeds.</p>
               </section>

@@ -51,7 +51,7 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
       <article style={pp.section}>
         <h2 style={pp.sectionTitle}>Original and optimized</h2>
         <p style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 20 }}>
-          I ran a screenshot of the Shadewater Labs homepage through Webp Me Daddy’s card thumbnail recipe. It cropped the screenshot to 16:9 and exported four widths.
+          Webp Me Daddy turned one screenshot of the Shadewater Labs homepage into four downloadable WebP widths. Compare the file sizes below and copy the HTML to try them in your own layout.
         </p>
         <p style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 20 }}>
           In the preview below, <code>srcset</code> lists those four WebP files and their pixel widths. <code>sizes</code> tells the browser how wide the image will appear in the layout. The browser uses that width and the screen’s pixel density to choose a file.
@@ -101,6 +101,13 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
           <h2 id="webp-example-html" style={pp.sectionTitle}>Use responsive WebP images with <code>srcset</code> and <code>sizes</code></h2>
           <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
             This example uses a card up to 400 pixels wide, with 20 pixels of space on each side on narrow screens. If you host the files yourself, replace the image URLs and adjust <code>sizes</code> to match your layout.
+          </p>
+          <h3 style={{ ...pp.sectionTitle, fontSize: '1.15rem', marginTop: 24 }}>Which WebP file will the browser pick?</h3>
+          <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
+            On a 360-pixel-wide phone, the copied example gives the image 320 CSS pixels of space. At 1× pixel density, the 320-pixel WebP is a likely choice. At 2×, the browser aims for about 640 image pixels, so it may pick the 768-pixel file from the available widths.
+          </p>
+          <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
+            The browser can also reuse a cached image. Check the <strong>WebP loaded</strong> caption above to see which file the on-page preview actually uses.
           </p>
           <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
             The ZIP includes the original JPEG, all four WebPs, and a standalone demo. Unzip it and open <code>index.html</code> to try the example offline.
