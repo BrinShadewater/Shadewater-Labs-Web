@@ -113,8 +113,8 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
               <li><strong>Redesigned Expedition Report.</strong> Review your rewards and open Upgrades &amp; Unlocks directly from the report.</li>
               <li><strong>Improved checkpoint recovery.</strong> Continue Loop can load a backup if your main checkpoint is damaged.</li>
             </ul>
-            <a className="brine-text-link" href={`${brineSpace.url}/devlog/1758959/brinespace-040-rc1-windows-preview`}>
-              Read the full changelog <span aria-hidden="true">↗</span>
+            <a className="brine-text-link" href={`${brineSpace.url}/devlog/1758959/brinespace-040-rc1-windows-and-macos-preview`}>
+              BrineSpace 0.4.0 RC1 for Windows and macOS <span aria-hidden="true">↗</span>
             </a>
           </section>
         </div>
