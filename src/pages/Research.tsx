@@ -141,6 +141,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           <h2 id="research-contents" style={{ margin: '0 0 12px', color: '#fff', fontSize: 18 }}>On this page</h2>
           <ul role="list" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, listStyle: 'none', margin: 0, padding: 0 }}>
             {[
+              ['study-at-a-glance', 'Study at a glance'],
               ['start-here', 'Start here'],
               ['figure-1', 'Figure 1'],
               ['key-terms', 'Key terms'],
@@ -155,6 +156,30 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             ))}
           </ul>
         </nav>
+      </section>
+      <section id="study-at-a-glance" aria-labelledby="study-at-a-glance-heading" style={{ ...pp.section, maxWidth: 800 }}>
+        <p style={{ ...pp.projectBlurb, margin: '0 0 10px' }}>Proposed research</p>
+        <h2 id="study-at-a-glance-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Study at a glance</h2>
+        <ol style={{ ...pp.projectBlurb, paddingInlineStart: '1.5em', listStyle: 'decimal', display: 'grid', gap: 10 }}>
+          <li><strong>14-day pilot.</strong> Check whether adults can record their sleep and complete brief attention tests reliably in everyday life.</li>
+          <li><strong>28-day study, if the pilot checks pass.</strong> Compare how missed targets on the attention test change after shorter nights in adults with ADHD and in the comparison group.</li>
+        </ol>
+        <p style={pp.projectBlurb}><strong>Optional deadline task.</strong> Track a recurring task participants already do and test whether estimated time to spare helps predict missed deadlines.</p>
+        <figure style={{ margin: '20px 0' }}>
+          <img
+            src="/research/adhd-study-sequence.png"
+            alt="Proposed study sequence. The team reviews pilot measurements without seeing the difference between groups, then finalizes the design or revises it before proceeding."
+            width={1458}
+            height={669}
+            loading="lazy"
+            decoding="async"
+            style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12 }}
+          />
+          <figcaption style={{ marginTop: 10, color: TG_MUTED, fontSize: 14 }}>
+            <a href={`${paperPdf}#page=21`} className="underline underline-offset-4">Study sequence in the manuscript (Figure 30, PDF p. 21)</a>
+          </figcaption>
+        </figure>
+        <a href={`${paperPdf}#page=130`} className="underline underline-offset-4">Read the pilot methods (Appendix L, PDF p. 130)</a>
       </section>
       <section id="start-here" aria-labelledby="start-here-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="start-here-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Start here</h2>
@@ -212,6 +237,21 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             </div>
           ))}
         </dl>
+        <figure style={{ margin: '20px 0' }}>
+          <img
+            src="/research/adhd-recovery-example.png"
+            alt="Hypothetical example. A bodily measure returns to its starting level in one hour for both people. Attention returns in one hour for one person and three hours for the other."
+            width={1540}
+            height={902}
+            loading="lazy"
+            decoding="async"
+            style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12 }}
+          />
+          <figcaption style={{ marginTop: 10, color: TG_MUTED, fontSize: 14 }}>
+            The chart uses invented times to show how attention and a bodily measure could recover at different rates.{' '}
+            <a href={`${paperPdf}#page=12`} className="underline underline-offset-4">Read the worked example (PDF, p. 12)</a>
+          </figcaption>
+        </figure>
         <a href={`${paperPdf}#page=102`} className="underline underline-offset-4">Read the full glossary (PDF, p. 102)</a>
       </section>
       <section id="what-would-change-our-minds" aria-labelledby="what-would-change-our-minds-heading" style={{ ...pp.section, maxWidth: 800 }}>

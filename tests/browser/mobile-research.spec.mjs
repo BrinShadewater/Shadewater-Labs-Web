@@ -7,6 +7,7 @@ test('mobile Research jumps clear the header and copy the current citation', asy
   const contents = page.getByRole('navigation', { name: 'On this page' });
   const header = page.getByRole('navigation', { name: 'Primary' });
   const destinations = [
+    ['Study at a glance', 'study-at-a-glance'],
     ['Start here', 'start-here'],
     ['Figure 1', 'figure-1'],
     ['Key terms', 'key-terms'],
