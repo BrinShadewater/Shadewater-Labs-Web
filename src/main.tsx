@@ -4,10 +4,12 @@ import './index.css'
 import './pages/BrineSpace.css'
 import App from './App.tsx'
 import { pageImports } from './lib/pageImports'
+import { recordChatgptVisit } from './lib/projectClicks'
 import { parseLocation } from './lib/routes'
 
 async function mount() {
   const { page } = parseLocation(window.location.pathname);
+  recordChatgptVisit(page);
   const loadPage = pageImports[page as keyof typeof pageImports] ?? pageImports['not-found'];
   // Keep the prerendered page usable while its interactive module downloads.
   const { default: Page } = await loadPage();

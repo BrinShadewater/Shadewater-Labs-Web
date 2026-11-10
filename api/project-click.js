@@ -6,6 +6,10 @@ const pagesByAction = {
   'try-fishmail': ['/', '/projects', '/projects/futureproof'],
   'browse-open-source': ['/'],
   'read-case-study': ['/projects'],
+  'chatgpt-visit': [
+    '/', '/projects', '/projects/brinespace', '/projects/brinespace/asset-pipeline',
+    '/projects/webp-example', '/projects/futureproof', '/websites', '/toolkit', '/research', '/about',
+  ],
 };
 
 let ready;
@@ -30,6 +34,12 @@ async function initialize() {
         source_page text NOT NULL,
         clicks bigint NOT NULL,
         PRIMARY KEY (day, action, source_page)
+      );
+      CREATE TABLE IF NOT EXISTS labs_analytics.chatgpt_visits_daily (
+        day date NOT NULL,
+        landing_page text NOT NULL,
+        visits bigint NOT NULL,
+        PRIMARY KEY (day, landing_page)
       );
     `);
     return pool;
@@ -62,11 +72,19 @@ export default async function projectClick(req, res) {
       throw error;
     });
     const pool = await ready;
-    await pool.query(`
-      INSERT INTO labs_analytics.project_clicks_daily AS daily (day, action, source_page, clicks)
-      VALUES ((CURRENT_TIMESTAMP AT TIME ZONE 'UTC')::date, $1, $2, 1)
-      ON CONFLICT (day, action, source_page) DO UPDATE SET clicks = daily.clicks + 1
-    `, [payload.action, payload.sourcePage]);
+    if (payload.action === 'chatgpt-visit') {
+      await pool.query(`
+        INSERT INTO labs_analytics.chatgpt_visits_daily AS daily (day, landing_page, visits)
+        VALUES ((CURRENT_TIMESTAMP AT TIME ZONE 'UTC')::date, $1, 1)
+        ON CONFLICT (day, landing_page) DO UPDATE SET visits = daily.visits + 1
+      `, [payload.sourcePage]);
+    } else {
+      await pool.query(`
+        INSERT INTO labs_analytics.project_clicks_daily AS daily (day, action, source_page, clicks)
+        VALUES ((CURRENT_TIMESTAMP AT TIME ZONE 'UTC')::date, $1, $2, 1)
+        ON CONFLICT (day, action, source_page) DO UPDATE SET clicks = daily.clicks + 1
+      `, [payload.action, payload.sourcePage]);
+    }
     return res.status(204).end();
   } catch {
     console.error('Project click counter unavailable');
