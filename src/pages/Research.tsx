@@ -1,15 +1,10 @@
 import { useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
-import { CONTACT_EMAIL, LABS_ORIGIN } from '@/lib/routes';
+import { researchPaper } from '@/content/researchPaper';
+import { CONTACT_EMAIL } from '@/lib/routes';
 
-const paperPdf = '/research/physiological-state-and-executive-function-in-adhd-2026-11-09.pdf';
+const { pdf: paperPdf, url: paperUrl, author: paperAuthor, title: paperTitle, date: paperDate, edition: paperEdition, citationTitle } = researchPaper;
 const archivePdf = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
-const paperUrl = `${LABS_ORIGIN}${paperPdf}`;
-const paperAuthor = 'Alex Yesilcimen';
-const paperTitle = 'Physiological State and Executive Function in ADHD';
-const paperDate = 'November 9, 2026';
-const paperEdition = 'Full integrated research edition';
-const citationTitle = `${paperTitle}: A framework for measuring attention and daily function across interventions`;
 const citationDetails = `${paperAuthor}. (${paperDate}). ${citationTitle} (${paperEdition}). Shadewater Labs.`;
 const correctionEmail = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('ADHD research paper, November 2026 edition: Suggested correction')}`;
 
@@ -123,7 +118,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             <a href={paperPdf} style={ad.btnPrimary}>Read the paper (PDF)</a>
             <div style={{ color: TG_MUTED, fontSize: 14 }}>
               <strong style={{ display: 'block', color: '#fff' }}>{paperEdition}</strong>
-              <span><time dateTime="2026-11-09">{paperDate}</time> · 188 pages · 10.2 MB</span>
+              <span><time dateTime={researchPaper.datePublished}>{paperDate}</time> · 188 pages · 10.2 MB</span>
               <div>
                 <a href="#source-notes" className="underline underline-offset-4">Source notes</a>
                 {' · '}

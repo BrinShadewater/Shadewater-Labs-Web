@@ -2,8 +2,9 @@
 // per-route shells and the runtime <Seo> read one source of truth, and Vite's config loader
 // resolves relative paths only — a "@/" specifier there reads as a bare package and the build
 // fails. Same reason brinshadewater.com's seo.ts is relative.
-import { brineSpace, brineSpaceAssetCase, futureproofCompanion } from '../content/currentProjects';
+import { brineSpace, brineSpaceAssetCase, futureproofCase } from '../content/currentProjects';
 import { webpExample } from '../content/webpExample';
+import { researchPaper } from '../content/researchPaper';
 import { tools } from '../content/tools';
 import { managedWebsites } from '../content/websites';
 import { openSourceReleases } from '../content/openSource';
@@ -112,6 +113,21 @@ function websiteSchema() {
   };
 }
 
+function articleSchema(url: string, article: { title: string; description: string }, image: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    url,
+    mainEntityOfPage: url,
+    headline: article.title,
+    description: article.description,
+    image,
+    inLanguage: 'en-CA',
+    publisher: { '@id': `${LABS_ORIGIN}#organization` },
+  };
+}
+
 export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'): SeoConfig {
 
   switch (page) {
@@ -193,45 +209,54 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         type: 'website',
         jsonLd: [websiteSchema(), organizationSchema()],
       };
-    case 'brinespace-asset-case':
+    case 'brinespace-asset-case': {
+      const canonical = buildCanonicalUrl(page);
+      const image = `${LABS_ORIGIN}${brineSpaceAssetCase.image.src}`;
       return {
         title: `${brineSpaceAssetCase.title} | ${ORGANIZATION_NAME}`,
         description: brineSpaceAssetCase.description,
-        canonical: buildCanonicalUrl('brinespace-asset-case'),
-        image: `${LABS_ORIGIN}${brineSpaceAssetCase.image.src}`,
+        canonical,
+        image,
         imageAlt: brineSpaceAssetCase.image.alt,
         imageWidth: brineSpaceAssetCase.image.width,
         imageHeight: brineSpaceAssetCase.image.height,
         siteName: ORGANIZATION_NAME,
         type: 'article',
-        jsonLd: [websiteSchema(), organizationSchema()],
+        jsonLd: [articleSchema(canonical, brineSpaceAssetCase, image), websiteSchema(), organizationSchema()],
       };
-    case 'webp-example':
+    }
+    case 'webp-example': {
+      const canonical = buildCanonicalUrl(page);
+      const image = `${LABS_ORIGIN}${webpExample.preview.src}`;
       return {
         title: `Webp Me Daddy: Responsive WebP Example | ${ORGANIZATION_NAME}`,
         description: webpExample.description,
-        canonical: buildCanonicalUrl('webp-example'),
-        image: `${LABS_ORIGIN}${webpExample.preview.src}`,
+        canonical,
+        image,
         imageAlt: webpExample.preview.alt,
         imageWidth: webpExample.preview.width,
         imageHeight: webpExample.preview.height,
         siteName: ORGANIZATION_NAME,
         type: 'article',
-        jsonLd: [websiteSchema(), organizationSchema()],
+        jsonLd: [articleSchema(canonical, webpExample, image), websiteSchema(), organizationSchema()],
       };
-    case 'futureproof':
+    }
+    case 'futureproof': {
+      const canonical = buildCanonicalUrl(page);
+      const image = `${LABS_ORIGIN}${futureproofCase.image.src}`;
       return {
-        title: `Futureproof Festival Companion & FishMail | ${ORGANIZATION_NAME}`,
+        title: `${futureproofCase.title} | ${ORGANIZATION_NAME}`,
         description: 'A look at the programme, personal schedule, and FishMail aquarium built for Vancouver’s 2026 Futureproof Festival.',
-        canonical: buildCanonicalUrl('futureproof'),
-        image: `${LABS_ORIGIN}${futureproofCompanion.image.src}`,
-        imageAlt: futureproofCompanion.image.alt,
-        imageWidth: 960,
-        imageHeight: 540,
+        canonical,
+        image,
+        imageAlt: futureproofCase.image.alt,
+        imageWidth: futureproofCase.image.width,
+        imageHeight: futureproofCase.image.height,
         siteName: ORGANIZATION_NAME,
         type: 'article',
-        jsonLd: [websiteSchema(), organizationSchema()],
+        jsonLd: [articleSchema(canonical, futureproofCase, image), websiteSchema(), organizationSchema()],
       };
+    }
     case 'websites':
       return {
         title: `Websites | ${ORGANIZATION_NAME}`,
@@ -294,6 +319,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       const title = `ADHD Research on Sleep & Executive Function | ${ORGANIZATION_NAME}`;
       const description = 'Read Alex Yesilcimen’s November 2026 paper on physiological state and executive function in ADHD, with an illustrated guide and proposed adult sleep study.';
       const canonical = buildCanonicalUrl('research');
+      const paperId = `${canonical}#adhd`;
       return {
         title,
         description,
@@ -301,8 +327,34 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         ...labsShareCard,
         siteName: ORGANIZATION_NAME,
         type: 'website',
+        author: researchPaper.author,
         jsonLd: [
-          { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, url: canonical, description },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            '@id': canonical,
+            name: title,
+            url: canonical,
+            description,
+            mainEntity: { '@id': paperId },
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ScholarlyArticle',
+            '@id': paperId,
+            headline: researchPaper.citationTitle,
+            description: 'A research perspective on attention, effort, and daily functioning in ADHD, with a proposed adult sleep study.',
+            author: { '@type': 'Person', name: researchPaper.author },
+            datePublished: researchPaper.datePublished,
+            version: researchPaper.edition,
+            mainEntityOfPage: canonical,
+            publisher: { '@id': `${LABS_ORIGIN}#organization` },
+            encoding: {
+              '@type': 'MediaObject',
+              encodingFormat: 'application/pdf',
+              contentUrl: researchPaper.url,
+            },
+          },
           websiteSchema(),
           organizationSchema(),
         ],

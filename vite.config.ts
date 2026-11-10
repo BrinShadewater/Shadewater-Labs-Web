@@ -51,6 +51,7 @@ function pageHead(shell: string, page: string) {
     'twitter:image:alt': cfg.imageAlt,
   }
   if (cfg.keywords) tags.keywords = cfg.keywords
+  if (cfg.author) tags.author = cfg.author
   for (const [key, value] of Object.entries(tags)) html = setMeta(html, key, value)
   // data-seo-jsonld marks them so Seo.tsx replaces rather than duplicates them on mount.
   const jsonLd = cfg.jsonLd
