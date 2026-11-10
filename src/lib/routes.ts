@@ -14,6 +14,7 @@ const LABS_STATIC_PATHS: Record<string, string> = {
   brinespace: '/projects/brinespace',
   'brinespace-asset-case': '/projects/brinespace/asset-pipeline',
   'webp-example': '/projects/webp-example',
+  'seo-audit-example': '/projects/seo-audit-example',
   futureproof: '/projects/futureproof',
   websites: '/websites',
   toolkit: '/toolkit',
@@ -27,6 +28,7 @@ const LABS_PAGES = new Set([
   'brinespace',
   'brinespace-asset-case',
   'webp-example',
+  'seo-audit-example',
   'futureproof',
   'websites',
   'toolkit',
@@ -70,6 +72,8 @@ export function parseLocation(pathname: string, _hash = '') {
       return { page: 'brinespace-asset-case', noteId: '' };
     case 'projects/webp-example':
       return { page: 'webp-example', noteId: '' };
+    case 'projects/seo-audit-example':
+      return { page: 'seo-audit-example', noteId: '' };
     case 'projects/futureproof':
       return { page: 'futureproof', noteId: '' };
     case 'websites':

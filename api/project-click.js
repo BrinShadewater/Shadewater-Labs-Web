@@ -8,7 +8,8 @@ const pagesByAction = {
   'read-case-study': ['/projects'],
   'chatgpt-visit': [
     '/', '/projects', '/projects/brinespace', '/projects/brinespace/asset-pipeline',
-    '/projects/webp-example', '/projects/futureproof', '/websites', '/toolkit', '/research', '/about',
+    '/projects/webp-example', '/projects/seo-audit-example', '/projects/futureproof',
+    '/websites', '/toolkit', '/research', '/about',
   ],
 };
 

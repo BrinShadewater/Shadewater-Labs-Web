@@ -119,6 +119,10 @@
       "destination": "/projects/webp-example/index.html"
     },
     {
+      "source": "/projects/seo-audit-example",
+      "destination": "/projects/seo-audit-example/index.html"
+    },
+    {
       "source": "/projects/futureproof",
       "destination": "/projects/futureproof/index.html"
     },

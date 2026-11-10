@@ -5,6 +5,7 @@ import Projects from './pages/Projects';
 import BrineSpace from './pages/BrineSpace';
 import BrineSpaceAssetCase from './pages/BrineSpaceAssetCase';
 import WebpExample from './pages/WebpExample';
+import SeoAuditExample from './pages/SeoAuditExample';
 import Futureproof from './pages/Futureproof';
 import Websites from './pages/Websites';
 import Toolkit from './pages/Toolkit';
@@ -17,6 +18,7 @@ const pages = {
   brinespace: BrineSpace,
   'brinespace-asset-case': BrineSpaceAssetCase,
   'webp-example': WebpExample,
+  'seo-audit-example': SeoAuditExample,
   futureproof: Futureproof,
   websites: Websites,
   toolkit: Toolkit,

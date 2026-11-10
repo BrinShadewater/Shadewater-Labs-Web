@@ -4,6 +4,7 @@ export const pageImports = {
   brinespace: () => import('../pages/BrineSpace'),
   'brinespace-asset-case': () => import('../pages/BrineSpaceAssetCase'),
   'webp-example': () => import('../pages/WebpExample'),
+  'seo-audit-example': () => import('../pages/SeoAuditExample'),
   futureproof: () => import('../pages/Futureproof'),
   websites: () => import('../pages/Websites'),
   toolkit: () => import('../pages/Toolkit'),

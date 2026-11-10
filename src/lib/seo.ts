@@ -4,6 +4,7 @@
 // fails. Same reason brinshadewater.com's seo.ts is relative.
 import { brineSpace, brineSpaceAssetCase, futureproofCase } from '../content/currentProjects';
 import { webpExample } from '../content/webpExample';
+import { seoAuditExample } from '../content/seoAuditExample';
 import { researchPaper } from '../content/researchPaper';
 import { tools } from '../content/tools';
 import { managedWebsites } from '../content/websites';
@@ -241,6 +242,22 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
         jsonLd: [articleSchema(canonical, webpExample, image), websiteSchema(), organizationSchema()],
       };
     }
+    case 'seo-audit-example': {
+      const canonical = buildCanonicalUrl(page);
+      const image = `${LABS_ORIGIN}${seoAuditExample.image.src}`;
+      return {
+        title: `SEO Audit Example: OAI-SearchBot | ${ORGANIZATION_NAME}`,
+        description: seoAuditExample.description,
+        canonical,
+        image,
+        imageAlt: seoAuditExample.image.alt,
+        imageWidth: seoAuditExample.image.width,
+        imageHeight: seoAuditExample.image.height,
+        siteName: ORGANIZATION_NAME,
+        type: 'article',
+        jsonLd: [articleSchema(canonical, seoAuditExample, image), websiteSchema(), organizationSchema()],
+      };
+    }
     case 'futureproof': {
       const canonical = buildCanonicalUrl(page);
       const image = `${LABS_ORIGIN}${futureproofCase.image.src}`;
@@ -415,7 +432,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
  * index.html itself, so it is not listed here; everything else in LABS_PAGES is.
  */
 export function getLabsPrerenderTargets(): { path: string; page: string }[] {
-  return ['projects', 'brinespace', 'brinespace-asset-case', 'webp-example', 'futureproof', 'websites', 'toolkit', 'research', 'about'].map((page) => ({
+  return ['projects', 'brinespace', 'brinespace-asset-case', 'webp-example', 'seo-audit-example', 'futureproof', 'websites', 'toolkit', 'research', 'about'].map((page) => ({
     path: buildPath(page, undefined, 'labs'),
     page,
   }));
@@ -428,6 +445,7 @@ export function getLabsSitemapPaths() {
     buildPath('brinespace'),
     buildPath('brinespace-asset-case'),
     buildPath('webp-example'),
+    buildPath('seo-audit-example'),
     buildPath('futureproof'),
     buildPath('websites', undefined, 'labs'),
     buildPath('toolkit', undefined, 'labs'),

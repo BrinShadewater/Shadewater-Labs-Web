@@ -2,6 +2,7 @@ import CurrentProjects, { PlayableProjects } from '@/components/CurrentProjects'
 import { CaseStudyCard } from '@/components/CaseStudyCard';
 import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import { brineSpaceAssetCase, futureproofCase } from '@/content/currentProjects';
+import { seoAuditExample } from '@/content/seoAuditExample';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { webpExample } from '@/content/webpExample';
 import { buildPath, buildProjectHref, CASE_STUDIES_SECTION_ID, OPEN_SOURCE_SECTION_ID } from '@/lib/routes';
@@ -278,13 +279,14 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       <PlayableProjects />
       <section id={CASE_STUDIES_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="case-studies-heading">
         <h2 id="case-studies-heading" style={pp.sectionTitle}>Case studies &amp; examples</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 'var(--ad-grid-gap)', marginTop: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 390px), 1fr))', gap: 'var(--ad-grid-gap)', marginTop: 16 }}>
           <CaseStudyCard study={brineSpaceAssetCase} />
           <CaseStudyCard study={futureproofCase} clickAction="read-case-study" />
           <CaseStudyCard
             study={{ page: 'webp-example', title: 'Webp Me Daddy', description: webpExample.description, image: webpExample.preview }}
             linkLabel="See the example"
           />
+          <CaseStudyCard study={seoAuditExample} linkLabel="See a sample audit" />
         </div>
       </section>
       <section id={OPEN_SOURCE_SECTION_ID} tabIndex={-1} style={pp.section} aria-labelledby="open-source-heading">
@@ -418,7 +420,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               )}
 
               <p style={pp.projectBlurb}>{p.summary}</p>
-              {(p.guide || p.slug === 'game-asset-pipeline' || p.slug === 'webp-me-daddy-skill') && (
+              {(p.guide || p.slug === 'game-asset-pipeline' || p.slug === 'webp-me-daddy-skill' || p.slug === 'shadewater-seo-skill') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: 10, color: `hsl(${p.accent})` }}>
                   {p.guide && (
                     <a href={p.guide.href} target="_blank" rel="noopener noreferrer" style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
@@ -433,6 +435,11 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                   {p.slug === 'webp-me-daddy-skill' && (
                     <a href={buildPath('webp-example')} style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
                       See a real example <span aria-hidden="true">→</span>
+                    </a>
+                  )}
+                  {p.slug === 'shadewater-seo-skill' && (
+                    <a href={buildPath(seoAuditExample.page)} style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
+                      See a sample audit <span aria-hidden="true">→</span>
                     </a>
                   )}
                 </div>
