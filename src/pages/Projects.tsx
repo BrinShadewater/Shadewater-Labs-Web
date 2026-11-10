@@ -52,7 +52,7 @@ interface ProjectCard {
   accent: string;
   glyph?: string;
   logo?: { src: string; srcSet?: string };
-  thumbnail?: { src: string; srcSet: string };
+  thumbnail?: { src: string; srcSet: string; alt?: string };
   status: string;
   tone: AdToneKey;
   categories: string[];
@@ -147,7 +147,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
       summary: r.summary,
       meta: [`${r.licence} licence`, r.language, r.repo],
       accent: r.accent,
-      thumbnail: r.thumb ? { src: `/${r.thumb}.webp`, srcSet: thumbSrcSet(r.thumb) } : undefined,
+      thumbnail: r.thumb ? { src: `/${r.thumb}.webp`, srcSet: thumbSrcSet(r.thumb), alt: r.thumbAlt } : undefined,
       glyph: r.glyph,
       status: 'RELEASED',
       tone: 'green',
@@ -227,7 +227,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
         srcSet={p.thumbnail.srcSet}
         // The 180px-tall cover crop needs a 320px-wide 16:9 source even in narrow slots.
         sizes="(min-width: 1024px) 320px, (min-width: 640px) max(320px, calc((100vw - 186px) / 2)), max(320px, calc(100vw - 116px))"
-        alt=""
+        alt={p.thumbnail.alt ?? ''}
         loading="lazy"
         decoding="async"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}

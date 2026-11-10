@@ -27,6 +27,7 @@ export interface OpenSourceRelease {
   accent: string;
   /** Base name of the thumbnail in public/, without the width suffix or extension. */
   thumb?: string;
+  thumbAlt?: string;
   /** Text mark when no dedicated artwork is published. */
   glyph?: string;
   /** Drives the filter row on /projects, which renders only the tags in use. */
@@ -54,7 +55,8 @@ export const openSourceReleases: OpenSourceRelease[] = [
     summary: 'Three reusable agent skills and six offline Python helpers for 2D game assets, extracted from BrineSpace. Plan rooms and characters, track source art, slice animation strips, and check geometry before visual review.',
     updated: lastPush('game-asset-pipeline'),
     accent: '184 75% 62%',
-    glyph: '2D',
+    thumb: 'game-asset-pipeline-card',
+    thumbAlt: 'The Desalination Unit wall artwork beside the finished BrineSpace room in-game.',
     categories: ['games', 'pipelines', 'agents'],
     kicker: 'game assets',
   },
@@ -85,7 +87,8 @@ export const openSourceReleases: OpenSourceRelease[] = [
       'The image pipeline as an installable agent skill. You declare what an image is for — a hero, an avatar, a logo lockup — and it handles the rest: optimised variants, responsive sets, structured metadata, accessibility-safe alt text, and output contracts you can actually lint.',
     updated: lastPush('webp-me-daddy-skill'),
     accent: '184 85% 58%',
-    thumb: 'webpmedaddyskillthumb',
+    thumb: 'webp-me-daddy-card',
+    thumbAlt: 'The same website screenshot exported as 800-, 480-, and 320-pixel WebP images.',
     categories: ['pipelines', 'agents'],
     kicker: 'image pipeline',
   },

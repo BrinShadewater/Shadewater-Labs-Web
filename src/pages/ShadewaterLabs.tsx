@@ -250,6 +250,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     accent: r.accent,
     thumbnail: r.thumb ? `/${r.thumb}.webp` : undefined,
     thumbnailSrcSet: r.thumb ? thumbSrcSet(r.thumb) : undefined,
+    thumbnailAlt: r.thumbAlt,
     glyph: r.glyph,
     statusLabel: 'RELEASED',
     statusTone: 'hsl(150 70% 55%)',
