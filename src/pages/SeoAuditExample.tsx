@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
 import { seoAuditExample } from '@/content/seoAuditExample';
-import { buildProjectHref, LABS_ORIGIN } from '@/lib/routes';
+import { buildPath, buildProjectHref, LABS_ORIGIN } from '@/lib/routes';
 
 const robotsRule = 'User-agent: OAI-SearchBot\nAllow: /';
 const checkHeadingId = 'run-this-check';
@@ -52,6 +52,9 @@ export default function SeoAuditExample({ onNavigate }: { onNavigate: AuroraNavi
       lede={seoAuditExample.description}
     >
       <article style={pp.section}>
+        <a href={`#${checkHeadingId}`} style={{ ...ad.btnGhost, marginBottom: 20 }}>
+          Jump to the commands <span aria-hidden="true">↓</span>
+        </a>
         <section aria-labelledby="seo-audit-finding">
           <h2 id="seo-audit-finding" style={pp.sectionTitle}>What we found</h2>
           <p style={bodyStyle}>
@@ -75,7 +78,7 @@ export default function SeoAuditExample({ onNavigate }: { onNavigate: AuroraNavi
           <h2 id="seo-audit-verification" style={pp.sectionTitle}>How we verified it</h2>
           <ol style={{ ...bodyStyle, listStyle: 'decimal', paddingLeft: 22, display: 'grid', gap: 10 }}>
             <li><strong>Read the live rules.</strong> The site’s robots.txt returned HTTP 200 and contained the named allow rule. The sitemap also returned HTTP 200.</li>
-            <li><strong>Tested a public page.</strong> Requests to robots.txt and the WebP example with the OAI-SearchBot user agent returned HTTP 200.</li>
+            <li><strong>Tested a public page.</strong> Requests to robots.txt and the <a href={buildPath('webp-example')} className="underline underline-offset-4">WebP example</a> with the OAI-SearchBot user agent returned HTTP 200.</li>
             <li><strong>Checked the hosting path.</strong> Cloudflare’s OAI-SearchBot block switch was off, and the domain’s DNS record pointed directly to Vercel without proxying web traffic through Cloudflare.</li>
           </ol>
           <p style={bodyStyle}>

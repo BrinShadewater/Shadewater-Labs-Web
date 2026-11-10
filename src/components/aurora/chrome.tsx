@@ -14,7 +14,7 @@ import { MotionContext } from '@/lib/motion';
 /* Pulled from the Shadewater Labs Futurized design handoff bundle.   */
 /* ------------------------------------------------------------------ */
 
-export const SANS = "'Space Grotesk', ui-sans-serif, system-ui, sans-serif";
+export const SANS = 'var(--labs-sans)';
 export const MONO = "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace";
 export const TG_TEXT = 'hsl(45 25% 96%)';
 export const TG_MUTED = 'hsl(200 18% 70%)';

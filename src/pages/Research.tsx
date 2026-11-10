@@ -163,7 +163,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
         <p style={pp.projectBlurb}><strong>Optional deadline task.</strong> Track a recurring task participants already do and test whether estimated time to spare helps predict missed deadlines.</p>
         <figure style={{ margin: '20px 0' }}>
           <img
-            src="/research/adhd-study-sequence.png"
+            src="/research/adhd-study-sequence.webp"
             alt="Proposed study sequence. The team reviews pilot measurements without seeing the difference between groups, then finalizes the design or revises it before proceeding."
             width={1458}
             height={669}
@@ -235,7 +235,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
         </dl>
         <figure style={{ margin: '20px 0' }}>
           <img
-            src="/research/adhd-recovery-example.png"
+            src="/research/adhd-recovery-example.webp"
             alt="Hypothetical example. A bodily measure returns to its starting level in one hour for both people. Attention returns in one hour for one person and three hours for the other."
             width={1540}
             height={902}

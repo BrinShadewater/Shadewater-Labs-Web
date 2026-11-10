@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
 import { webpExample } from '@/content/webpExample';
-import { buildProjectHref, LABS_ORIGIN } from '@/lib/routes';
+import { buildPath, buildProjectHref, LABS_ORIGIN } from '@/lib/routes';
 
 const { title, description, source, preview, variants } = webpExample;
 const srcSet = variants.map(({ src, width }) => `${src} ${width}w`).join(', ');
@@ -75,7 +75,7 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
             <figcaption style={{ ...pp.projectBlurb, marginTop: 12 }}>
               {loadedVariant
                 ? <>WebP loaded · {loadedVariant.width} × {loadedVariant.height} · {formatSize(loadedVariant.bytes)}</>
-                : 'Responsive WebP · the browser picks a width for this display'}
+                : 'Responsive WebP · browser-selected width'}
             </figcaption>
           </figure>
         </div>
@@ -120,6 +120,9 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
           </div>
           <pre style={{ ...pp.projectCard, display: 'block', padding: 16, marginTop: 12, color: 'var(--ad-copy)', fontSize: 13, lineHeight: 1.6, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>{htmlSnippet}</code></pre>
         </section>
+        <p style={{ ...pp.projectBlurb, marginTop: 24 }}>
+          See how we used this page to <a href={buildPath('seo-audit-example')} className="underline underline-offset-4">test crawler access in the SEO audit</a>.
+        </p>
         <a href={buildProjectHref('webp-me-daddy-skill')} style={{ ...ad.btnGhost, marginTop: 24 }}><span aria-hidden="true">←</span> Back to Webp Me Daddy</a>
       </article>
     </AuroraPage>
