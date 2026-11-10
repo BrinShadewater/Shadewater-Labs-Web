@@ -4,7 +4,10 @@ import { managedWebsites } from '@/content/websites';
 import { brineSpace, fishMail } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
-import { buildPath, buildProjectHref, CASE_STUDIES_SECTION_ID, OPEN_SOURCE_SECTION_ID, PAGE_HEADING_ID } from '@/lib/routes';
+import {
+  buildPath, buildProjectHref, BRINESPACE_DOWNLOAD_HEADING_ID, CASE_STUDIES_SECTION_ID,
+  OPEN_SOURCE_SECTION_ID, PAGE_HEADING_ID, SEO_AUDIT_CHECK_HEADING_ID,
+} from '@/lib/routes';
 import {
   SHADEWATER_LABS_TEXT_LOGO_ALT,
   SHADEWATER_LABS_TEXT_LOGO_CROPPED_SIZES,
@@ -32,6 +35,11 @@ interface ShadewaterLabsProps {
   onNavigate: AuroraNavigate;
 }
 
+const projectGuides = [
+  { href: `${buildPath('brinespace')}#${BRINESPACE_DOWNLOAD_HEADING_ID}`, label: 'Install BrineSpace on Windows or macOS' },
+  { href: buildPath('webp-example'), label: 'Build responsive WebP images with srcset and sizes' },
+  { href: `${buildPath('seo-audit-example')}#${SEO_AUDIT_CHECK_HEADING_ID}`, label: 'Check whether OAI-SearchBot can reach your site' },
+];
 
 const AD_TRACKS = [
   {
@@ -504,6 +512,18 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
           </a>
         </div>
       </div>
+      <nav aria-labelledby="project-guides-heading" style={home.guideNav}>
+        <h3 id="project-guides-heading" style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 650 }}>Guides and examples</h3>
+        <ul role="list" style={home.guideList}>
+          {projectGuides.map(({ href, label }) => (
+            <li key={href}>
+              <a href={href} style={home.guideLink}>
+                {label} <span aria-hidden="true" style={{ flexShrink: 0 }}>→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </section>
   );
 }
@@ -701,6 +721,15 @@ const home: Record<string, CSSProperties> = {
     transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease',
   },
   catalogueArrow: { fontSize: 15, transform: 'translateY(-1px)' },
+  guideNav: { marginTop: 28, paddingTop: 20, borderTop: 'var(--ad-card-border)' },
+  guideList: {
+    margin: 0, padding: 0, listStyle: 'none', display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 235px), 1fr))', gap: 10,
+  },
+  guideLink: {
+    ...ad.btnGhost, display: 'flex', justifyContent: 'space-between', height: '100%',
+    borderRadius: 14, padding: '10px 14px', lineHeight: 1.4,
+  },
 
   comingPanel: {
     position: 'relative', overflow: 'hidden', padding: '36px 40px', borderRadius: 28,

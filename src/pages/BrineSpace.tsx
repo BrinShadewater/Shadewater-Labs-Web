@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { ADFooter, ADNav, ADTicker, ad, type AuroraNavigate } from '@/components/aurora/chrome';
 import { brineSpace } from '@/content/currentProjects';
-import { buildPath, buildProjectHref, PAGE_HEADING_ID } from '@/lib/routes';
+import { buildPath, buildProjectHref, PAGE_HEADING_ID, BRINESPACE_DOWNLOAD_HEADING_ID as downloadHeadingId } from '@/lib/routes';
 
-const downloadHeadingId = 'brine-download-heading';
 const expeditionHeadingId = 'expedition-heading';
 
 const expedition = [

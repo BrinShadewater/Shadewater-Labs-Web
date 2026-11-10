@@ -4,6 +4,8 @@ export const PAGE_HEADING_ID = 'page-heading';
 export const CONTACT_SECTION_ID = 'contact';
 export const OPEN_SOURCE_SECTION_ID = 'open-source-tools';
 export const CASE_STUDIES_SECTION_ID = 'case-studies';
+export const BRINESPACE_DOWNLOAD_HEADING_ID = 'brine-download-heading';
+export const SEO_AUDIT_CHECK_HEADING_ID = 'run-this-check';
 /** Public contact address. Already listed on the GitHub profile. */
 export const CONTACT_EMAIL = 'brinshadewater@gmail.com';
 export type SiteKey = 'brin' | 'labs';

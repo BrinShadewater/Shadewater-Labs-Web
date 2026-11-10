@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
 import { seoAuditExample } from '@/content/seoAuditExample';
-import { buildPath, buildProjectHref, LABS_ORIGIN } from '@/lib/routes';
+import { buildPath, buildProjectHref, LABS_ORIGIN, SEO_AUDIT_CHECK_HEADING_ID as checkHeadingId } from '@/lib/routes';
 
 const robotsRule = 'User-agent: OAI-SearchBot\nAllow: /';
-const checkHeadingId = 'run-this-check';
 const robotsCommand = `curl -sS -L -i "${LABS_ORIGIN}/robots.txt"`;
 const pageCommand = `curl -sS -L -o /dev/null -w "%{http_code} %{content_type} %{url_effective}\\n" -A "OAI-SearchBot/1.4" "${LABS_ORIGIN}/projects/webp-example"`;
 const bodyStyle = { ...pp.projectBlurb, maxWidth: '65ch' };

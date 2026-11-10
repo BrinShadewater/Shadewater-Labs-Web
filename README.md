@@ -4,6 +4,12 @@
 
 Standalone Vite/React site for [shadewaterlabs.com](https://shadewaterlabs.com/).
 
+## Guides and examples
+
+- [Install BrineSpace on Windows or macOS](https://shadewaterlabs.com/projects/brinespace#brine-download-heading)
+- [Build responsive WebP images with `srcset` and `sizes`](https://shadewaterlabs.com/projects/webp-example)
+- [Check whether OAI-SearchBot can reach your site](https://shadewaterlabs.com/projects/seo-audit-example#run-this-check)
+
 Shadewater Labs is the public home for Brin Shadewater's AI tooling, managed web properties, and creative-technical projects. The site is intentionally compact: a lab front door, the open-source releases, the managed sites, the toolkit actually used on real work, and an about page.
 
 This repo is both portfolio and operating surface: a small lab bench with clean labels, sharp tools, and a few strange instruments humming in the corner. Every claim on it should be checkable against the repo it points at — no star counts, no download figures, nothing that is stale the day after it ships.
