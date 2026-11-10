@@ -1,11 +1,46 @@
-import { AuroraPage, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
+import { useEffect, useState } from 'react';
+import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
 import { seoAuditExample } from '@/content/seoAuditExample';
-import { buildProjectHref } from '@/lib/routes';
+import { buildProjectHref, LABS_ORIGIN } from '@/lib/routes';
 
 const robotsRule = 'User-agent: OAI-SearchBot\nAllow: /';
+const checkHeadingId = 'run-this-check';
+const robotsCommand = `curl -sS -L -i "${LABS_ORIGIN}/robots.txt"`;
+const pageCommand = `curl -sS -L -o /dev/null -w "%{http_code} %{content_type} %{url_effective}\\n" -A "OAI-SearchBot/1.4" "${LABS_ORIGIN}/projects/webp-example"`;
 const bodyStyle = { ...pp.projectBlurb, maxWidth: '65ch' };
+const codeStyle = { ...pp.projectCard, display: 'block', padding: 16, marginTop: 12, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' } as const;
+
+function CopyableCommand({ command, label }: { command: string; label: string }) {
+  const [status, setStatus] = useState('');
+
+  const copyCommand = async () => {
+    try {
+      await navigator.clipboard.writeText(command);
+      setStatus('Command copied.');
+    } catch {
+      setStatus('Select the command below and copy it manually.');
+    }
+  };
+
+  return (
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px 14px', marginTop: 12 }}>
+        <button type="button" className="seo-copy-command" onClick={() => void copyCommand()} style={ad.btnGhost}>{label}</button>
+        <span role="status" style={{ color: TG_MUTED, fontSize: 14 }}>{status}</span>
+      </div>
+      <pre style={codeStyle}><code>{command}</code></pre>
+    </>
+  );
+}
 
 export default function SeoAuditExample({ onNavigate }: { onNavigate: AuroraNavigate }) {
+  useEffect(() => {
+    if (window.location.hash !== `#${checkHeadingId}`) return;
+    const heading = document.getElementById(checkHeadingId);
+    heading?.focus({ preventScroll: true });
+    heading?.scrollIntoView();
+  }, []);
+
   return (
     <AuroraPage
       layout="article"
@@ -29,7 +64,7 @@ export default function SeoAuditExample({ onNavigate }: { onNavigate: AuroraNavi
         <section aria-labelledby="seo-audit-change" style={{ marginTop: 32 }}>
           <h2 id="seo-audit-change" style={pp.sectionTitle}>What we changed</h2>
           <p style={bodyStyle}>We added a named rule that makes the site’s search crawler policy explicit.</p>
-          <pre style={{ ...pp.projectCard, display: 'block', padding: 16, marginTop: 12, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}><code>{robotsRule}</code></pre>
+          <pre style={codeStyle}><code>{robotsRule}</code></pre>
           <p style={bodyStyle}>
             <a href="/robots.txt" className="underline underline-offset-4">Inspect the live robots.txt</a>
             {' · '}
@@ -45,6 +80,20 @@ export default function SeoAuditExample({ onNavigate }: { onNavigate: AuroraNavi
           </ol>
           <p style={bodyStyle}>
             These checks verified the published policy and the response to a test request. An actual OpenAI crawl, indexing, and a ChatGPT citation are separate outcomes that require separate evidence.
+          </p>
+        </section>
+        <section aria-labelledby={checkHeadingId} style={{ marginTop: 32 }}>
+          <h2 id={checkHeadingId} tabIndex={-1} style={pp.sectionTitle}>Run this check on your site</h2>
+          <p style={bodyStyle}>
+            Run these in a terminal with curl. Use the Labs URLs to reproduce the example, then substitute your site’s domain and a public page you want crawled. In Windows PowerShell, use <code>curl.exe</code> and replace <code>/dev/null</code> with <code>NUL</code> in the second command.
+          </p>
+          <style>{'[data-prerender-route] .seo-copy-command { display: none; }'}</style>
+          <p style={bodyStyle}><strong>1. Read the published robots.txt.</strong> The command prints response headers and the file. Look for an <code>OAI-SearchBot</code> group, or the <code>*</code> group if there’s no named match. Check whether the rules in that group allow your page’s path. Labs returns <code>200</code> and explicitly allows the path we tested.</p>
+          <CopyableCommand command={robotsCommand} label="Copy robots.txt command" />
+          <p style={bodyStyle}><strong>2. Test the public page.</strong> This sends a GET request with the crawler’s user-agent name and prints the final HTTP status, content type, and URL after redirects.</p>
+          <CopyableCommand command={pageCommand} label="Copy OAI-SearchBot command" />
+          <p style={bodyStyle}>
+            For an HTML page, expect <code>200</code>, <code>text/html</code>, and the intended URL. A <code>403</code> or <code>429</code> is a reason to check access controls, firewall rules, or rate limits. A <code>200</code> can still be a challenge page, so remove <code>-o /dev/null</code> (or <code>-o NUL</code>) to inspect the body if needed. This measures how your site responds to a request bearing that user agent from your connection. Confirm a real OpenAI crawl separately using server logs and <a href="https://developers.openai.com/api/docs/bots" className="underline underline-offset-4">OpenAI’s published crawler IP ranges</a>.
           </p>
         </section>
         <a href={buildProjectHref('shadewater-seo-skill')} style={{ ...ad.btnGhost, marginTop: 24 }}>
