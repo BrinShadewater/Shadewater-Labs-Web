@@ -532,7 +532,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
           ))}
         </div>
       </section>
-      <CurrentProjects includeFishMail={false} />
+      <CurrentProjects showCaseStudy />
     </AuroraPage>
   );
 }

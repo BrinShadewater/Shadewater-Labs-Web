@@ -30,3 +30,9 @@ TypeScript, ESLint, the Vite production build, and all 17 tests passed. The home
 - The temporary Shadewater Labs Futureproof test route returns 404. A subsequent check confirmed the festival-hosted companion and FishMail. Their public entry points are recorded in [the Futureproof notes](./FUTUREPROOF-TESTING.md#festival-hosted-2026-edition). The e-ink copy describes the last documented build.
 - Checked the six Toolkit destinations and updated Claude Code to the final URL. The About contact and community links and both SL Notebook legal routes were reachable. The Letterboxd profile in structured data returned HTTP 403 to the automated check, so its status could not be confirmed. Sony Pictures confirms the Strange Harvest producer credit.
 - Aligned the public catalogue, page descriptions, and both crawler summaries.
+
+## Follow-up review on November 10, 2026
+
+- The [BrineSpace download page](https://brinshadewater.itch.io/brinespace) lists signed Windows and signed, notarized macOS 0.4.0 RC1 previews. The ZIPs are 2.1 GB and 2.5 GB respectively. The iPad build is in testing.
+- The festival still serves the companion and FishMail routes. The [festival homepage](https://www.futureproof.website/) hosts the 2026 programme and photos and announces its plans for 2027. FishMail appears with playable projects.
+- The Strange Harvest Shopify storefront returns HTTP 404 with “Store unavailable” at both its homepage and its password page. The Websites card records that status and shows an archived preview. The [official film site](https://strangeharvestmovie.com/) still loads.

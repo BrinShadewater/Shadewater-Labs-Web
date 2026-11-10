@@ -17,7 +17,7 @@ interface SiteRow {
   id: string;
   name: string;
   url: string;
-  fullUrl: string;
+  fullUrl?: string;
   role: string;
   status: string;
   tone: AdToneKey;
@@ -31,7 +31,7 @@ interface SiteRow {
 const TONE_BY_STATUS: Record<string, AdToneKey> = {
   Live: 'green',
   Beta: 'amber',
-  'Password protected': 'amber',
+  Unavailable: 'amber',
 };
 
 const ACCENTS: Record<string, string> = {
@@ -90,7 +90,7 @@ interface BrowserFrameProps {
   accent: string;
   thumbnail: string;
   thumbnailSrcSet: string;
-  fullUrl: string;
+  fullUrl?: string;
   eager: boolean;
 }
 
@@ -102,13 +102,16 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager 
     display: 'inline-block',
     flexShrink: 0,
   };
+  const Frame = fullUrl ? 'a' : 'div';
   return (
-    <a
-      href={fullUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Frame
+      {...(fullUrl && {
+        href: fullUrl,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        'aria-label': 'Visit ' + url,
+      })}
       style={{ display: 'block', textDecoration: 'none' }}
-      aria-label={'Visit ' + url}
     >
       <div
         style={{
@@ -149,7 +152,7 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager 
               textOverflow: 'ellipsis',
             }}
           >
-            {url}
+            {fullUrl ? url : 'Archived preview'}
           </div>
         </div>
         <div
@@ -185,7 +188,7 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager 
           />
         </div>
       </div>
-    </a>
+    </Frame>
   );
 }
 
@@ -197,7 +200,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
       id: s.id,
       name: s.name,
       url: s.url.replace(/^https?:\/\//, ''),
-      fullUrl: s.url,
+      fullUrl: s.status === 'Unavailable' ? undefined : s.url,
       role: s.role,
       status: s.status.toUpperCase(),
       tone: TONE_BY_STATUS[s.status] ?? 'cyan',
@@ -234,6 +237,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
           {sites.map((s, index) => (
             <article
               key={s.id}
+              aria-labelledby={`site-${s.id}-heading`}
               style={{ ...pp.siteCard, padding: 0, overflow: 'hidden' }}
             >
               <div
@@ -270,25 +274,30 @@ export default function Websites({ onNavigate }: WebsitesProps) {
                   </span>
                 </div>
 
-                <div style={pp.siteUrlRow}>
-                  <span style={pp.siteUrlPrefix}>https://</span>
-                  <span style={pp.siteUrl}>{s.url}</span>
-                </div>
+                {s.fullUrl && (
+                  <div style={pp.siteUrlRow}>
+                    <span style={pp.siteUrlPrefix}>https://</span>
+                    <span style={{ ...pp.siteUrl, overflowWrap: 'anywhere' }}>{s.url}</span>
+                  </div>
+                )}
 
                 {/* h2: the page's only heading above these is the h1; an h3 here skipped a level. */}
-                <h2 style={pp.siteName}>{s.name}</h2>
+                <h2 id={`site-${s.id}-heading`} style={pp.siteName}>{s.name}</h2>
                 <p style={pp.siteBlurb}>{s.blurb}</p>
 
                 <div style={pp.siteFoot}>
                   <span style={pp.siteSig}>// {s.sig}</span>
-                  <a
-                    href={s.fullUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ ...pp.siteVisit, color: 'hsl(' + s.accent + ')' }}
-                  >
-                    Visit <span style={{ marginLeft: 4 }}>&#8599;</span>
-                  </a>
+                  {s.fullUrl && (
+                    <a
+                      href={s.fullUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${s.name}`}
+                      style={{ ...pp.siteVisit, minHeight: 44, alignItems: 'center', color: 'hsl(' + s.accent + ')' }}
+                    >
+                      Visit <span aria-hidden="true" style={{ marginLeft: 4 }}>&#8599;</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </article>

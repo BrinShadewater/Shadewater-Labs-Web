@@ -82,15 +82,15 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
             <h2 id={downloadHeadingId} tabIndex={-1}>Before you download</h2>
             <div className="brine-platforms">
               <section aria-labelledby="brine-windows-heading">
-                <h3 id="brine-windows-heading">Windows <span>2.1 GB</span></h3>
+                <h3 id="brine-windows-heading">Windows {brineSpace.previewVersion} <span>2.1 GB</span></h3>
                 <p className="brine-platform-status">Signed preview</p>
                 <ol>
-                  <li>Download and extract the entire ZIP.</li>
+                  <li>Download <code>brinespace-windows.zip</code> from itch.io and extract the entire ZIP.</li>
                   <li>Open <code>BrineSpace.exe</code> from the extracted folder. Keep the included files together.</li>
                 </ol>
               </section>
               <section aria-labelledby="brine-mac-heading">
-                <h3 id="brine-mac-heading">macOS 0.4.0 RC1 <span>2.5 GB</span></h3>
+                <h3 id="brine-mac-heading">macOS {brineSpace.previewVersion} <span>2.5 GB</span></h3>
                 <p className="brine-platform-status">Signed and notarized preview</p>
                 <ol>
                   <li>Download <code>brinespace-mac-alpha.zip</code> from itch.io and extract it.</li>
@@ -102,7 +102,7 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
               <section aria-labelledby="brine-ipad-heading">
                 <h3 id="brine-ipad-heading">iPad</h3>
                 <p className="brine-platform-status">In testing</p>
-                <p>A public download date is yet to be announced.</p>
+                <p>The iPad preview has no public download yet.</p>
               </section>
             </div>
           </section>

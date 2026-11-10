@@ -290,7 +290,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
             '@type': 'CollectionPage',
             name: 'Managed Web Properties',
             url: buildCanonicalUrl('websites', undefined, 'labs'),
-            hasPart: managedWebsites.map((site) => ({
+            hasPart: managedWebsites.filter(site => site.status !== 'Unavailable').map((site) => ({
               '@type': 'WebSite',
               name: site.name,
               url: site.url,

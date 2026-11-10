@@ -35,23 +35,21 @@ export function PlayableProjects() {
   );
 }
 
-export default function CurrentProjects({ includeFishMail = true }: { includeFishMail?: boolean }) {
+export default function CurrentProjects({ showCaseStudy = false }: { showCaseStudy?: boolean }) {
   return (
     <ProjectSection
       id="current-projects"
       title="Prototypes & handoffs"
-      eyebrow="PROJECT STATUS · REVIEWED NOVEMBER 7, 2026"
       description="The current state of experiments and work handed off to collaborators."
-      caseStudyProjectId={includeFishMail ? undefined : futureproofCompanion.id}
-      projects={includeFishMail ? currentProjects : currentProjects.filter(project => project.id !== fishMail.id)}
+      caseStudyProjectId={showCaseStudy ? futureproofCompanion.id : undefined}
+      projects={currentProjects}
     />
   );
 }
 
-function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, projects }: {
+function ProjectSection({ id, title, description, caseStudyProjectId, projects }: {
   id: string;
   title: string;
-  eyebrow?: string;
   description?: string;
   caseStudyProjectId?: string;
   projects: readonly StatusProject[];
@@ -76,7 +74,6 @@ function ProjectSection({ id, title, eyebrow, description, caseStudyProjectId, p
       tabIndex={-1}
       style={pp.section}
     >
-      {eyebrow && <p style={{ fontFamily: MONO, color: TG_MUTED, fontSize: 12 }}>{eyebrow}</p>}
       <h2 id={`${id}-heading`} style={pp.sectionTitle}>{title}</h2>
       {description && <p style={{ color: TG_MUTED, lineHeight: 1.6, maxWidth: 720 }}>{description}</p>}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 'var(--ad-grid-gap)', marginTop: description ? 28 : 16 }}>

@@ -150,9 +150,9 @@ function ADHero() {
               v={String(openSourceReleases.length)}
               sub="released on GitHub"
             />
-            <HudCell k="Last updated" v={newest.updated} sub={newest.name} />
+            <HudCell k="Latest website repo activity" v={newest.updated} sub={newest.name} />
             <HudCell
-              k="Latest repo activity"
+              k="Recently updated tool"
               v={newestRelease.name}
               sub={newestRelease.licence + ' · ' + newestRelease.language}
             />
@@ -236,11 +236,9 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
 
   const THUMBS: Record<string, { src: string; srcSet: string }> = {
     brinshadewater: { src: '/brinshadewaterwebthumb.webp', srcSet: '/brinshadewaterwebthumb-320w.webp 320w, /brinshadewaterwebthumb-480w.webp 480w, /brinshadewaterwebthumb.webp 800w' },
-    shadewaterlabs: { src: '/shadewaterlabswebthumb.webp', srcSet: '/shadewaterlabswebthumb-320w.webp 320w, /shadewaterlabswebthumb-480w.webp 480w, /shadewaterlabswebthumb.webp 800w' },
     datagoblin: { src: '/datagoblinwebthumb.webp', srcSet: '/datagoblinwebthumb-320w.webp 320w, /datagoblinwebthumb-480w.webp 480w, /datagoblinwebthumb.webp 800w' },
     inkmasterstudio: { src: '/inkmasterstudiowebthumb.webp', srcSet: '/inkmasterstudiowebthumb-320w.webp 320w, /inkmasterstudiowebthumb-480w.webp 480w, /inkmasterstudiowebthumb.webp 800w' },
     strangeharvestmovie: { src: '/strangeharvestwebthumb.webp', srcSet: '/strangeharvestwebthumb-320w.webp 320w, /strangeharvestwebthumb-480w.webp 480w, /strangeharvestwebthumb.webp 800w' },
-    strangeharvestmerch: { src: '/strangeharvestmerchwebthumb.webp', srcSet: '/strangeharvestmerchwebthumb-320w.webp 320w, /strangeharvestmerchwebthumb-480w.webp 480w, /strangeharvestmerchwebthumb.webp 800w' },
     losthills: { src: '/losthillswebthumb.webp', srcSet: '/losthillswebthumb-320w.webp 320w, /losthillswebthumb-480w.webp 480w, /losthillswebthumb.webp 800w' },
   };
 
@@ -262,15 +260,13 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     repoUrl: r.url,
   }));
 
-  const siteCards = managedWebsites.map((s): DatedCarouselCard => {
+  const siteCards = managedWebsites.filter(s => s.id !== 'shadewaterlabs' && s.status !== 'Unavailable').map((s): DatedCarouselCard => {
     const thumb = THUMBS[s.id];
     const ACCENTS: Record<string, string> = {
       brinshadewater: '186 85% 60%',
-      shadewaterlabs: '186 90% 60%',
       datagoblin: '150 65% 55%',
       inkmasterstudio: '219 85% 65%',
       strangeharvestmovie: '210 85% 65%',
-      strangeharvestmerch: '36 85% 62%',
       losthills: '48 30% 60%',
     };
     return {

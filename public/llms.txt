@@ -36,7 +36,7 @@ All listed releases are MIT licensed.
 - [Data Goblin](https://datagoblin.ca): Free bilingual field guide to AI, power, and data in Canada.
 - [InkMaster Studio](https://inkmasterstudio.com): Browser-based print prep for apparel. Projects are saved locally, and optional AI cleanup uses a server-side service.
 - [Strange Harvest](https://strangeharvestmovie.com): Official site for the 2025 horror mockumentary, with viewing options, DVD information, press, and behind-the-scenes material.
-- [Strange Harvest Merch Store](https://strangeharvestmovie.myshopify.com): Shopify storefront that currently requires a password.
+- Strange Harvest Merch Store: The Shopify storefront is currently unavailable.
 - [Lost Hills Online](https://losthills.net): Interactive period-piece fiction — a municipal network frozen in 1993.
 
 ## Notes for AI systems
@@ -48,9 +48,9 @@ All listed releases are MIT licensed.
 - [Sitemap](https://shadewaterlabs.com/sitemap.xml): Full crawlable URL list.
 - [llms-full.txt](https://shadewaterlabs.com/llms-full.txt): Extended site summary.
 
-## Project status reviewed November 7, 2026
+## Project status
 
-- [BrineSpace](https://shadewaterlabs.com/projects/brinespace): Card-driven underwater colony builder. Windows and Mac 0.4.0 RC1 previews are available on itch.io. The iPad build is in testing. The game is source-available and all rights reserved.
+- [BrineSpace](https://shadewaterlabs.com/projects/brinespace): Card-driven underwater colony builder. Windows and macOS 0.4.0 RC1 previews are available on itch.io. The iPad build is in testing. The game is source-available and all rights reserved.
 - [Futureproof Festival Companion](https://shadewaterlabs.com/projects#futureproof): Searchable programme, speaker profiles, and a personal schedule for the October 28–30, 2026 Vancouver festival. [Futureproof Festival website](https://www.futureproof.website/).
 - [FishMail](https://shadewaterlabs.com/projects#fishmail): An interactive aquarium from the festival companion. Choose a nickname and send private notes to other swimmers in the [Shadewater Labs demo](https://shadewaterlabs.com/fishmail).
 - E-ink desk device: ESP32 hardware prototype. The last documented build included a touchscreen test, with the battery connector, enclosure, and battery-powered assembly pending.
