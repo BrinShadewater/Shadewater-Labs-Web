@@ -53,14 +53,14 @@ def crawler_rules(body):
 def allows(path, rules):
     matches = []
     for field, rule in rules:
-        pattern = rule.removesuffix("$")
+        pattern = rule
         # The checked paths are ASCII. Encoded unreserved characters match their literal forms.
         for encoded in set(re.findall(r"%[0-9a-fA-F]{2}", pattern)):
             character = chr(int(encoded[1:], 16))
             if character in UNRESERVED:
                 pattern = pattern.replace(encoded, character)
-        regex = re.escape(pattern).replace(r"\*", ".*")
-        if re.match(regex + (r"\Z" if rule.endswith("$") else ""), path):
+        regex = re.escape(pattern.removesuffix("$")).replace(r"\*", ".*")
+        if re.match(regex + (r"\Z" if pattern.endswith("$") else ""), path):
             matches.append((len(pattern.encode("utf-8")), field == "allow"))
     # The longest match wins, and Allow wins a tie.
     return max(matches, default=(0, True))[1]
