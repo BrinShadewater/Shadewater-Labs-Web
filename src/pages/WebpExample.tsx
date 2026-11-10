@@ -51,7 +51,10 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
       <article style={pp.section}>
         <h2 style={pp.sectionTitle}>Original and optimized</h2>
         <p style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 20 }}>
-          I started with a desktop screenshot and ran Webp Me Daddy’s card thumbnail recipe. It cropped the screenshot to 16:9 and exported four widths so a small card can load a smaller file.
+          I ran a screenshot of the Shadewater Labs homepage through Webp Me Daddy’s card thumbnail recipe. It cropped the screenshot to 16:9 and exported four widths.
+        </p>
+        <p style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 20 }}>
+          In the preview below, <code>srcset</code> lists those four WebP files and their pixel widths. <code>sizes</code> tells the browser how wide the image will appear in the layout. The browser uses that width and the screen’s pixel density to choose a file.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 330px), 1fr))', gap: 'var(--ad-grid-gap)' }}>
           <figure style={{ ...pp.projectCard, padding: 14 }}>
@@ -95,10 +98,7 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
           <p style={{ color: TG_MUTED, fontSize: 14, marginTop: 12 }}>These are the sizes from this run. The best file for a visitor depends on the display width and pixel density.</p>
         </section>
         <section aria-labelledby="webp-example-html" style={{ marginTop: 32 }}>
-          <h2 id="webp-example-html" style={pp.sectionTitle}>Use this on your site</h2>
-          <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
-            <code>srcset</code> lists the four files and their pixel widths. <code>sizes</code> tells the browser how wide the image will appear in your layout. Together they help it choose a file for the available space and screen pixel density.
-          </p>
+          <h2 id="webp-example-html" style={pp.sectionTitle}>Use responsive WebP images with <code>srcset</code> and <code>sizes</code></h2>
           <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
             This example uses a card up to 400 pixels wide, with 20 pixels of space on each side on narrow screens. If you host the files yourself, replace the image URLs and adjust <code>sizes</code> to match your layout.
           </p>

@@ -201,6 +201,9 @@ function ADTracks() {
           </article>
         ))}
       </div>
+      <p style={{ ...pp.projectBlurb, marginTop: 'var(--ad-grid-gap)' }}>
+        Read our <a href={buildPath('research')} className="underline underline-offset-4">ADHD, sleep, and executive function research</a> for an illustrated guide to the paper and the proposed study.
+      </p>
     </section>
   );
 }
