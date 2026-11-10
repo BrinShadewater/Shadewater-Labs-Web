@@ -2,81 +2,88 @@ import { useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
 import { CONTACT_EMAIL, LABS_ORIGIN } from '@/lib/routes';
 
-const paperPdf = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
+const paperPdf = '/research/physiological-state-and-executive-function-in-adhd-2026-11-09.pdf';
+const archivePdf = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
 const paperUrl = `${LABS_ORIGIN}${paperPdf}`;
 const paperAuthor = 'Alex Yesilcimen';
 const paperTitle = 'Physiological State and Executive Function in ADHD';
-const paperDate = '6 September 2026';
-const paperEdition = 'Illustrated research edition v34';
-const citationTitle = `${paperTitle}: An integrated brain–body hypothesis of fluctuating attention, effort and recovery`;
+const paperDate = 'November 9, 2026';
+const paperEdition = 'Full integrated research edition';
+const citationTitle = `${paperTitle}: A framework for measuring attention and daily function across interventions`;
 const citationDetails = `${paperAuthor}. (${paperDate}). ${citationTitle} (${paperEdition}). Shadewater Labs.`;
-const correctionEmail = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('ADHD research paper v34: Suggested correction')}`;
+const correctionEmail = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('ADHD research paper, November 2026 edition: Suggested correction')}`;
 
 const readingGuide = [
   {
     title: 'The idea in plain language',
-    label: 'Proposed hypothesis',
-    page: 2,
-    summary: 'The paper asks whether changes in the body could help explain why attention and mental effort vary from day to day for the same person.',
+    label: 'Overview',
+    page: 4,
+    summary: 'A fictional noon deadline shows why the same lapse in attention can have different consequences for two people.',
   },
   {
-    title: 'How to read the evidence',
-    label: 'Reading guide',
-    page: 5,
-    summary: 'Learn to tell published results and calculations based on them apart from explanatory diagrams, and check what each chart actually measures.',
+    title: 'What this framework adds',
+    label: 'Proposed framework',
+    page: 12,
+    summary: 'The paper separates how much performance changes from whether that change makes someone miss a real task requirement.',
   },
   {
-    title: 'Sleep, alertness, and effort in ADHD',
-    label: 'Existing studies',
-    page: 15,
+    title: 'What ADHD studies have found',
+    label: 'Existing evidence',
+    page: 13,
     summary: 'In one sleep study of teens with ADHD, parents reported more inattention after shorter sleep, while scores on a sustained-attention task did not show a clear change.',
     source: 'https://pubmed.ncbi.nlm.nih.gov/30768404/',
   },
   {
-    title: 'How the hypothesis could be tested',
-    label: 'Proposed research',
-    page: 74,
-    summary: 'The paper proposes repeated daily measurements of attention, sleep, symptoms, and everyday functioning to test whether the added measures improve on simpler explanations.',
+    title: 'Sleep and next-day attention',
+    label: 'Proposed study',
+    page: 21,
+    summary: 'The main study compares missed targets after shorter and usual nights. A separate optional task asks whether time to spare helps predict a missed deadline.',
+  },
+  {
+    title: 'How the pilot would work',
+    label: 'Appendix L',
+    page: 130,
+    summary: 'Read the proposed schedule, the rules for choosing the attention measure, and how the study would handle missed tests.',
   },
 ] as const;
 
 const sourceNotes = [
   {
     reference: 126,
+    page: 154,
     title: 'Exenatide trial in Parkinson’s disease',
-    page: 47,
-    note: 'The Lancet published an expression of concern about this trial after a regulatory inspection raised concerns about trial conduct and oversight at one study site. Read the result in v34 alongside that notice.',
+    note: 'The Lancet published an expression of concern about this trial after a regulatory inspection raised concerns about trial conduct and oversight at one study site.',
     notice: 'Expression of concern',
     url: 'https://pubmed.ncbi.nlm.nih.gov/42330995/',
   },
   {
     reference: 190,
+    page: 160,
     title: 'RECOVER-VITAL trial',
-    page: 113,
     note: 'The October 2026 correction in The Lancet Infectious Diseases only added Marta Cerda to the author list. Figure 42’s estimates and confidence intervals are unchanged.',
     notice: 'Publisher correction',
     url: 'https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(26)00586-4/fulltext',
   },
   {
     reference: 215,
+    page: 162,
     title: 'PROMOTe trial',
-    page: 65,
-    note: 'The paper discusses the correction. This is the link to the journal’s notice.',
+    note: 'Read the journal’s author correction alongside the trial report.',
     notice: 'Author correction',
     url: 'https://doi.org/10.1038/s41467-025-58771-w',
   },
   {
     reference: 223,
+    page: 163,
     title: 'Microplastics in human brain tissue',
-    page: 67,
-    note: 'The paper discusses the correction. This is the link to the journal’s notice.',
+    note: 'Read the journal’s author correction alongside the original article.',
     notice: 'Author correction',
     url: 'https://doi.org/10.1038/s41591-025-03675-x',
   },
   {
     reference: 238,
+    page: 164,
     title: 'Dietary preferences and the autism microbiome',
-    page: 72,
     note: 'The journal’s correction updates analyses and supplementary material. The authors report that their overall conclusions are unchanged.',
     notice: 'Published correction',
     url: 'https://doi.org/10.1016/j.cell.2023.12.001',
@@ -102,7 +109,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
       sectionLabel="Research"
       eyebrow="SHADEWATER LABS"
       title="Research"
-      lede="Research perspectives from Shadewater Labs, starting with a question about why attention and effort can vary from day to day for the same person with ADHD."
+      lede="Research from Shadewater Labs on how attention, effort, and daily functioning change from one day to the next in ADHD."
     >
       <section aria-labelledby="adhd" style={{ ...pp.section, maxWidth: 800 }}>
         <article style={{ padding: 'clamp(1.25rem, 4vw, 2.25rem)', borderRadius: 'var(--ad-card-radius)', background: 'var(--ad-panel)', border: '1px solid hsl(186 50% 40% / 0.28)' }}>
@@ -111,20 +118,24 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             {paperTitle}
           </h2>
           <p style={pp.projectBlurb}>{paperAuthor}</p>
-          <p style={pp.projectBlurb}>
-            The paper asks whether changes in the body can help explain day-to-day shifts in attention, mental effort, and recovery. It lays out ways to test that idea while accounting for sleep, medication timing, and context.
-          </p>
-          <p style={pp.projectBlurb}>
-            The paper draws on existing studies and proposes hypotheses for future research. It has not been peer reviewed and contains no original participant data.
-          </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 20px', marginTop: 20 }}>
-            <a href={paperPdf} style={ad.btnPrimary}>Read the paper (PDF, 6.9 MB)</a>
+            <a href={paperPdf} style={ad.btnPrimary}>Read the paper (PDF)</a>
             <div style={{ color: TG_MUTED, fontSize: 14 }}>
-              <strong style={{ display: 'block', color: '#fff' }}>Version &amp; updates</strong>
-              <span>Illustrated edition v34 · <time dateTime="2026-09-06">September 6, 2026</time></span>
-              <div>See <a href="#source-notes" className="underline underline-offset-4">Source notes</a> for later clarifications.</div>
+              <strong style={{ display: 'block', color: '#fff' }}>{paperEdition}</strong>
+              <span><time dateTime="2026-11-09">{paperDate}</time> · 188 pages · 10.2 MB</span>
+              <div>
+                <a href="#source-notes" className="underline underline-offset-4">Source notes</a>
+                {' · '}
+                <a href={archivePdf} className="underline underline-offset-4">Archived v34 PDF</a>
+              </div>
             </div>
           </div>
+          <p style={{ ...pp.projectBlurb, marginTop: 22 }}>
+            Why might the same person find a task harder on one day than another? The paper proposes a way to measure changes in attention, effort, and daily functioning. It starts with a proposed sleep study in adults with ADHD and a comparison group.
+          </p>
+          <p style={{ ...pp.projectBlurb, marginBottom: 0 }}>
+            The full edition includes the illustrated manuscript, evidence reviews, and proposed study methods. It is a research perspective with no original participant data or independent peer review.
+          </p>
         </article>
         <nav aria-labelledby="research-contents" style={{ marginTop: 24 }}>
           <h2 id="research-contents" style={{ margin: '0 0 12px', color: '#fff', fontSize: 18 }}>On this page</h2>
@@ -147,7 +158,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
       </section>
       <section id="start-here" aria-labelledby="start-here-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="start-here-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Start here</h2>
-        <p style={pp.projectBlurb}>Four places to begin in the illustrated edition. Each link includes the page number so you can also find it in a downloaded copy.</p>
+        <p style={pp.projectBlurb}>Start with the example, then follow the evidence and the proposed study. These page numbers match the November PDF.</p>
         <ul role="list" style={{ listStyle: 'none', padding: 0, margin: '20px 0 0' }}>
           {readingGuide.map((entry) => (
             <li key={entry.page} style={{ padding: '18px 0', borderTop: '1px solid hsl(186 50% 40% / 0.28)' }}>
@@ -179,7 +190,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
           />
           <figcaption style={{ marginTop: 10, color: TG_MUTED, fontSize: 14 }}>
             Hypothetical values for illustration. A, B, and C do not represent diagnostic groups.{' '}
-            <a href={`${paperPdf}#page=10`} className="underline underline-offset-4">View Figure 1 in v34 (PDF, p. 10)</a>
+            <a href={`${paperPdf}#page=10`} className="underline underline-offset-4">View Figure 1 in the paper (PDF, p. 10)</a>
           </figcaption>
         </figure>
         <p style={pp.projectBlurb}>
@@ -201,27 +212,28 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
             </div>
           ))}
         </dl>
-        <a href={`${paperPdf}#page=88`} className="underline underline-offset-4">Read the full v34 glossary (PDF, p. 88)</a>
+        <a href={`${paperPdf}#page=102`} className="underline underline-offset-4">Read the full glossary (PDF, p. 102)</a>
       </section>
       <section id="what-would-change-our-minds" aria-labelledby="what-would-change-our-minds-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="what-would-change-our-minds-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>What would change our minds?</h2>
         <ul style={{ ...pp.projectBlurb, listStyle: 'disc', paddingInlineStart: '1.25em', display: 'grid', gap: 14 }}>
           <li>
-            <strong>What would support it.</strong> Measures like pain and fatigue would need to improve predictions of later changes in attention or daily functioning beyond what usual performance, recent sleep, and medication timing can already explain.{' '}
-            <a href={`${paperPdf}#page=74`} className="underline underline-offset-4">Proposed study design (PDF, p. 74)</a>
+            <strong>What would warrant a follow-up.</strong> A clear, meaningful difference in how missed targets change after shorter nights would justify testing the sleep question under controlled conditions.{' '}
+            <a href={`${paperPdf}#page=25`} className="underline underline-offset-4">What the results would justify (PDF, p. 25)</a>
           </li>
           <li>
-            <strong>What would weaken it.</strong> If the simpler model predicts later changes just as well, or the pattern disappears when tested in new observations, the broader hypothesis loses support.{' '}
-            <a href={`${paperPdf}#page=83`} className="underline underline-offset-4">Table 7. Results that would weaken the hypothesis (PDF, p. 83)</a>
+            <strong>What would weaken the predictions.</strong> A precise, negligible sleep difference would narrow the attention claim. For the optional task, use the simpler model if the comparison rules out a worthwhile gain from estimating time to spare.{' '}
+            <a href={`${paperPdf}#page=23`} className="underline underline-offset-4">Table 7A. How to interpret both results (PDF, p. 23)</a>
           </li>
           <li>
-            <strong>What’s still open.</strong> The existing studies leave open whether people with ADHD start from a different baseline, experience a larger change, or recover more slowly under comparable conditions.
+            <strong>What’s still open.</strong> Unreliable measurements or too few observations would leave either study question open. How strongly the body responds to a challenge and how long recovery takes require separate tests.
           </li>
         </ul>
       </section>
       <section id="source-notes" aria-labelledby="source-notes-heading" style={{ ...pp.section, maxWidth: 800 }}>
-        <h2 id="source-notes-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Source notes for v34</h2>
-        <p style={pp.projectBlurb}>Read these journal notices alongside the cited studies in the illustrated edition.</p>
+        <h2 id="source-notes-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Source notes</h2>
+        <p style={pp.projectBlurb}>Appendix I records which sources were checked and where questions remain. Read these journal notices alongside the studies.</p>
+        <a href={`${paperPdf}#page=120`} className="underline underline-offset-4">Read the source audit (PDF, p. 120)</a>
         <ul role="list" style={{ listStyle: 'none', padding: 0, margin: '20px 0 0' }}>
           {sourceNotes.map(({ reference, title, page, note, notice, url }) => (
             <li key={reference} style={{ padding: '16px 0', borderTop: '1px solid hsl(186 50% 40% / 0.28)' }}>
@@ -229,7 +241,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
               <p style={{ ...pp.projectBlurb, margin: '8px 0' }}>{note}</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', fontSize: 15 }}>
                 <a href={url} className="underline underline-offset-4" aria-label={`${notice} for ${title}`}>{notice}</a>
-                <a href={`${paperPdf}#page=${page}`} className="underline underline-offset-4">Reference {reference} discussion (PDF, p. {page})</a>
+                <a href={`${paperPdf}#page=${page}`} className="underline underline-offset-4">Reference {reference} (PDF, p. {page})</a>
               </div>
             </li>
           ))}
@@ -238,7 +250,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
       <section id="suggest-a-correction" aria-labelledby="suggest-a-correction-heading" style={{ ...pp.section, maxWidth: 800 }}>
         <h2 id="suggest-a-correction-heading" style={{ margin: 0, color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)' }}>Suggest a correction</h2>
         <p style={pp.projectBlurb}>
-          If you spot an issue in v34, include the PDF page or reference number, what needs correcting, and a link to the source if you have one.
+          Include the edition, PDF page or reference number, what needs correcting, and a source link if you have one.
         </p>
         <a href={correctionEmail} style={{ ...ad.btnGhost, marginTop: 16 }}>Email a correction</a>
       </section>

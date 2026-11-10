@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('mobile Research jumps clear the header and copy the v34 citation', async ({ page, context }) => {
+test('mobile Research jumps clear the header and copy the current citation', async ({ page, context }) => {
   await page.goto('/research');
   await expect(page.locator('[data-prerender-route]')).toHaveCount(0);
 
@@ -35,6 +35,7 @@ test('mobile Research jumps clear the header and copy the v34 citation', async (
   await expect(page.getByRole('status')).toHaveText('Citation copied.');
 
   const citation = await page.evaluate(() => navigator.clipboard.readText());
-  expect(citation).toContain('(Illustrated research edition v34)');
-  expect(citation.trim().split(/\s+/).at(-1)).toBe('https://shadewaterlabs.com/research/physiological-state-and-executive-function-in-adhd-v34.pdf');
+  expect(citation).toContain('(November 9, 2026)');
+  expect(citation).toContain('(Full integrated research edition)');
+  expect(citation.trim().split(/\s+/).at(-1)).toBe('https://shadewaterlabs.com/research/physiological-state-and-executive-function-in-adhd-2026-11-09.pdf');
 });

@@ -9,6 +9,7 @@
 - [Projects](https://shadewaterlabs.com/projects): Playable demos, open-source release cards, prototypes, and development handoffs.
 - [Websites](https://shadewaterlabs.com/websites): Web properties designed, built, and maintained here.
 - [Toolkit](https://shadewaterlabs.com/toolkit): The third-party tools used on real work here, with what each is for.
+- [Research](https://shadewaterlabs.com/research): The November 2026 ADHD research perspective, reading guide, source notes, and archived edition.
 - [About](https://shadewaterlabs.com/about): Background on Shadewater Labs and Brin Shadewater.
 
 ## Open-source releases

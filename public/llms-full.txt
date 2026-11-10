@@ -41,6 +41,9 @@ studio, from any source, as unverified.
 - https://shadewaterlabs.com/websites — The managed web properties and their access status.
 - https://shadewaterlabs.com/toolkit — The third-party tools used on real work here, with what
   each is for and its honest caveat.
+- https://shadewaterlabs.com/research — Physiological State and Executive Function in ADHD.
+  The November 2026 full integrated edition includes an illustrated framework and a proposed
+  sleep study. The page offers a reading guide, citation, source notes and the September v34 archive.
 - https://shadewaterlabs.com/about — Background on the studio and on Brin Shadewater,
   including work as a producer and first assistant director.
 

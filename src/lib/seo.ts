@@ -292,7 +292,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       };
     case 'research': {
       const title = `Research | ${ORGANIZATION_NAME}`;
-      const description = 'Research perspectives from Shadewater Labs, starting with physiological state and executive function in ADHD.';
+      const description = 'Read the November 2026 research edition on physiological state and executive function in ADHD, with an illustrated guide and proposed sleep study.';
       const canonical = buildCanonicalUrl('research');
       return {
         title,

@@ -48,12 +48,22 @@ for (const [route, heading, detail] of routes) {
   });
 }
 
-test('the research reading guide links to the verified pages of the v34 PDF', async () => {
+test('the research page links to the current edition and preserves the v34 archive', async () => {
   const html = await readFile(new URL('../dist/research/index.html', import.meta.url), 'utf8');
-  const pdf = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
+  const pdf = '/research/physiological-state-and-executive-function-in-adhd-2026-11-09.pdf';
+  const archive = '/research/physiological-state-and-executive-function-in-adhd-v34.pdf';
   const guide = html.match(/<section id="start-here"[^>]*>([\s\S]*?)<\/section>/)?.[1] ?? '';
   const links = [...guide.matchAll(/<a\b[^>]*\bhref="([^"]+#page=\d+)"/g)].map(([, href]) => href);
-  assert.deepEqual(links, [2, 5, 15, 74].map(page => `${pdf}#page=${page}`));
+  assert.deepEqual(links, [4, 12, 13, 21, 130].map(page => `${pdf}#page=${page}`));
+  assert.ok(html.includes(`href="${pdf}"`));
+  assert.ok(html.includes(`href="${archive}"`));
+  for (const page of [10, 23, 25, 102, 120, 154, 160, 162, 163, 164]) {
+    assert.ok(html.includes(`href="${pdf}#page=${page}"`), `PDF page ${page}`);
+  }
+  for (const edition of [pdf, archive]) {
+    const file = await readFile(new URL(`../dist${edition}`, import.meta.url));
+    assert.equal(file.subarray(0, 5).toString(), '%PDF-');
+  }
 });
 
 test('homepage description and share descriptions come from the runtime SEO config', async () => {
