@@ -51,7 +51,7 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
             <div>
               <p className="brine-kicker">Card-driven colony builder</p>
               <h1 id={PAGE_HEADING_ID} tabIndex={-1}>BrineSpace</h1>
-              <p className="brine-intro">You’re BRINE, a damaged AI core on an underwater station. Draft room cards, connect the station one module at a time, and keep the colony alive.</p>
+              <p className="brine-intro">{brineSpace.installIntro}</p>
               <div className="brine-actions">
                 <a href={brineSpace.url} data-project-click="play-brinespace" style={ad.btnPrimary}>
                   Download on itch.io <span aria-hidden="true">↗</span>
@@ -61,7 +61,6 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
                   <a href={`#${expeditionHeadingId}`} className="brine-text-link">See how it plays <span aria-hidden="true">↓</span></a>
                 </div>
               </div>
-              <p className="brine-build-note">{brineSpace.previewVersion} preview · Free to download</p>
             </div>
             <figure className="brine-hero-art">
               <img
@@ -123,7 +122,8 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
         <section aria-labelledby={expeditionHeadingId}>
           <p className="brine-kicker">The gameplay loop</p>
           <h2 id={expeditionHeadingId} tabIndex={-1}>How an expedition works</h2>
-          <p className="brine-section-intro">Three moments from the Windows 0.4.0 RC1 preview, from your first room choice to the upgrades you take into the next run.</p>
+          <p className="brine-section-intro">You’re BRINE, a damaged AI core on an underwater station. Draft room cards, connect the station one module at a time, and keep the colony alive.</p>
+          <p className="brine-section-intro">These screenshots follow the Windows {brineSpace.previewVersion} preview from your first room choice to the upgrades you take into the next run.</p>
           <div className="brine-expedition">
             {expedition.map(({ id, title, alt, caption, detail }, index) => (
               <figure className="brine-step" key={id}>

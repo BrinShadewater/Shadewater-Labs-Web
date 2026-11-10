@@ -1,7 +1,7 @@
 export const seoAuditExample = {
   page: 'seo-audit-example',
   title: 'Shadewater Labs SEO audit',
-  description: 'See how Shadewater Labs checked crawler access, then use two curl commands to inspect robots.txt and test OAI-SearchBot on your own site.',
+  description: 'Copy two curl commands to inspect your robots.txt and test how a public page responds to a request with the OAI-SearchBot user agent.',
   image: {
     src: '/shadewaterseoskillthumb.webp',
     alt: 'The Shadewater SEO Skill repository on GitHub.',

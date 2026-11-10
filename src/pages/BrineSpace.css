@@ -37,7 +37,6 @@
 }
 
 .brine-kicker,
-.brine-build-note,
 .brine-hero-art figcaption,
 .brine-step-number {
   font-family: 'JetBrains Mono', monospace;
@@ -86,11 +85,6 @@
   align-items: center;
   gap: 5px;
   min-height: 44px;
-}
-
-.brine-build-note {
-  margin-top: 14px;
-  color: var(--brine-copy);
 }
 
 .brine-hero-art,

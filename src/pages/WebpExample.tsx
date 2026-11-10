@@ -51,7 +51,7 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
       <article style={pp.section}>
         <h2 style={pp.sectionTitle}>Original and optimized</h2>
         <p style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 20 }}>
-          Webp Me Daddy turned one screenshot of the Shadewater Labs homepage into four downloadable WebP widths. Compare the file sizes below and copy the HTML to try them in your own layout.
+          Webp Me Daddy exported four widths from one Shadewater Labs homepage screenshot. Compare the original JPEG with the WebP your browser chooses below.
         </p>
         <p style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 20 }}>
           In the preview below, <code>srcset</code> lists those four WebP files and their pixel widths. <code>sizes</code> tells the browser how wide the image will appear in the layout. The browser uses that width and the screen’s pixel density to choose a file.

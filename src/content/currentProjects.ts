@@ -5,6 +5,7 @@ export const brineSpace = {
   name: 'BrineSpace',
   summary: 'Draft room cards and keep an underwater colony alive as BRINE, a damaged AI core. Earn Archived Data on expeditions to unlock blueprints, crew, and companions.',
   previewVersion: brineSpacePreview,
+  installIntro: `Download the free BrineSpace ${brineSpacePreview} preview for Windows and macOS. Find the file sizes and install steps below. The iPad build is in testing.`,
   detail: `Version ${brineSpacePreview} is available on itch.io for Windows and macOS. Both builds are signed, and the macOS build is notarized. The iPad build is in testing.`,
   url: 'https://brinshadewater.itch.io/brinespace',
   image: {

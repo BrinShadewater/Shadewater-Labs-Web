@@ -3,7 +3,7 @@ const alt = 'Shadewater Labs homepage with its headline, flask logo, and links t
 
 export const webpExample = {
   title: 'From one screenshot to four WebPs',
-  description: 'A worked Webp Me Daddy example showing how to serve responsive WebP images with srcset and sizes.',
+  description: 'Copy a responsive image HTML snippet with srcset and sizes. Download four WebP widths and try the example in your own layout.',
   source: { src: `${base}-source.jpg`, width: 1440, height: 850, bytes: 96423, alt },
   preview: { src: `${base}.webp`, width: 800, height: 450, alt },
   variants: [

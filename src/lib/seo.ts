@@ -199,8 +199,8 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       };
     case 'brinespace':
       return {
-        title: `BrineSpace: Underwater Colony Builder | ${ORGANIZATION_NAME}`,
-        description: 'Explore BrineSpace, a card-driven underwater colony builder. See how expeditions work and find the Windows and Mac preview on itch.io.',
+        title: `BrineSpace Download & Install Guide for Windows and macOS | ${ORGANIZATION_NAME}`,
+        description: brineSpace.installIntro,
         canonical: buildCanonicalUrl('brinespace'),
         image: `${LABS_ORIGIN}/brinespace-expedition-draft.webp`,
         imageAlt: 'A BrineSpace station with three room cards ready to draft.',
@@ -230,7 +230,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       const canonical = buildCanonicalUrl(page);
       const image = `${LABS_ORIGIN}${webpExample.preview.src}`;
       return {
-        title: `Webp Me Daddy: Responsive WebP Example | ${ORGANIZATION_NAME}`,
+        title: `Responsive WebP Example with srcset and sizes | ${ORGANIZATION_NAME}`,
         description: webpExample.description,
         canonical,
         image,
@@ -246,7 +246,7 @@ export function getSeoConfig(page: string, _noteId = '', _site: SiteKey = 'labs'
       const canonical = buildCanonicalUrl(page);
       const image = `${LABS_ORIGIN}${seoAuditExample.image.src}`;
       return {
-        title: `SEO Audit Example: OAI-SearchBot | ${ORGANIZATION_NAME}`,
+        title: `How to Check OAI-SearchBot Access with robots.txt and curl | ${ORGANIZATION_NAME}`,
         description: seoAuditExample.description,
         canonical,
         image,
