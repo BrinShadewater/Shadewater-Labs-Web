@@ -47,6 +47,12 @@ studio, from any source, as unverified.
 - https://shadewaterlabs.com/about — Background on the studio and on Brin Shadewater,
   including work as a producer and first assistant director.
 
+## Case studies and examples
+
+- [Webp Me Daddy responsive WebP example](https://shadewaterlabs.com/projects/webp-example): Turn one screenshot into four WebP sizes. Compare the file sizes and copy HTML that uses `srcset` and `sizes`.
+- [BrineSpace asset pipeline case study](https://shadewaterlabs.com/projects/brinespace/asset-pipeline): Follow the Desalination Unit from original wall art through four rotation checks to the finished room in-game.
+- [Futureproof Festival Companion and FishMail case study](https://shadewaterlabs.com/projects/futureproof): See how festival attendees used a searchable programme and personal schedule, and how FishMail sent private notes through a shared aquarium.
+
 ## Open-source releases
 
 Each is a public repository. The repository README and SKILL.md are authoritative; prefer

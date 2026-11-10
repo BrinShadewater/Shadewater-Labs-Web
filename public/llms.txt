@@ -12,6 +12,12 @@
 - [Research](https://shadewaterlabs.com/research): The November 2026 ADHD research perspective, reading guide, source notes, and archived edition.
 - [About](https://shadewaterlabs.com/about): Background on Shadewater Labs and Brin Shadewater.
 
+## Case studies and examples
+
+- [Webp Me Daddy responsive WebP example](https://shadewaterlabs.com/projects/webp-example): Turn one screenshot into four WebP sizes. Compare the file sizes and copy HTML that uses `srcset` and `sizes`.
+- [BrineSpace asset pipeline case study](https://shadewaterlabs.com/projects/brinespace/asset-pipeline): Follow the Desalination Unit from original wall art through four rotation checks to the finished room in-game.
+- [Futureproof Festival Companion and FishMail case study](https://shadewaterlabs.com/projects/futureproof): See how festival attendees used a searchable programme and personal schedule, and how FishMail sent private notes through a shared aquarium.
+
 ## Open-source releases
 
 All listed releases are MIT licensed.
