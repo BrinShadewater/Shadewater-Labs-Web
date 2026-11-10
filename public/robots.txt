@@ -1,7 +1,10 @@
 User-agent: *
 Allow: /
 
-# AI crawlers — explicitly allowed for discoverability in AI search
+# OpenAI search and training crawlers have separate controls.
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
