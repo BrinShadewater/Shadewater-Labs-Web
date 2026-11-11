@@ -173,9 +173,9 @@ function ADHero() {
 
 function HudCell({ k, v, sub }: { k: string; v: string; sub: string }) {
   return (
-    <div style={home.hudCell}>
+    <div style={home.hudCell} className="home-hudCell">
       <div style={home.hudKey}>{k}</div>
-      <div style={home.hudVal}>{v}</div>
+      <div style={home.hudVal} className="home-hudValue">{v}</div>
       <div style={home.hudSub}>{sub}</div>
     </div>
   );
@@ -569,7 +569,9 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
           .home-trackGrid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 480px) {
-          .home-hudGrid { grid-template-columns: 1fr !important; }
+          .home-hudGrid { gap: 10px 16px !important; }
+          .home-hudCell:nth-child(n + 3) { grid-column: 1 / -1; padding-block: 8px !important; }
+          .home-hudCell:nth-child(n + 3) .home-hudValue { font-size: 20px !important; }
         }
       `}</style>
       <ADTicker />

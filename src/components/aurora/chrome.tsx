@@ -661,7 +661,7 @@ export const pp: Record<string, CSSProperties> = {
     boxShadow: 'inset 0 1px 0 hsl(0 0% 100% / 0.4), 0 12px 28px hsl(186 80% 40% / 0.45)',
   },
   projectName: { position: 'relative', fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', margin: 0, color: '#fff' },
-  projectBlurb: { position: 'relative', color: 'var(--ad-copy)', fontSize: 15, lineHeight: 1.62, marginTop: 10 },
+  projectBlurb: { position: 'relative', color: 'var(--ad-copy)', fontSize: 'var(--ad-body-size, 15px)', lineHeight: 'var(--ad-body-leading, 1.62)', marginTop: 10 },
 
   progressRow: { position: 'relative', marginTop: 18, display: 'flex', alignItems: 'center', gap: 12 },
   progressTrack: {
