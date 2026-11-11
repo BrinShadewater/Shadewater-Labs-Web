@@ -577,8 +577,8 @@ export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
       <ADTicker />
       <ADNav onNavigate={onNavigate} active="labs" />
       <ADHero />
-      <ADTracks />
       <ADProjects onNavigate={onNavigate} />
+      <ADTracks />
       <CurrentProjects />
       <ADComing />
       <ADFooter />
