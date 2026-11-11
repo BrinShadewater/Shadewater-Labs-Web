@@ -18,7 +18,25 @@ const htmlSnippet = `<img
 >`;
 const formatSize = (bytes: number) => `${(bytes / 1000).toFixed(1)} kB`;
 const cellStyle = { padding: '10px 8px', borderBottom: 'var(--ad-card-border)', textAlign: 'left' } as const;
+const tableStyle = { width: '100%', borderCollapse: 'collapse', color: 'var(--ad-copy)', fontSize: 14 } as const;
+const fileLinkStyle = { color: 'hsl(186 70% 77%)', textDecoration: 'underline', textUnderlineOffset: 3 } as const;
 const imageStyle = { ...pp.figureImage, aspectRatio: '16 / 9', objectFit: 'contain' } as const;
+
+// Fresh Chromium 158 contexts at each viewport and DPR. File widths come from
+// currentSrc after decoding and a successful image response. Preview widths are rounded.
+const browserMeasurements = [
+  { viewport: 360, previewWidth: 290, density: 1, fileWidth: 320 },
+  { viewport: 360, previewWidth: 290, density: 2, fileWidth: 768 },
+  { viewport: 360, previewWidth: 290, density: 3, fileWidth: 800 },
+  { viewport: 390, previewWidth: 320, density: 1, fileWidth: 320 },
+  { viewport: 390, previewWidth: 320, density: 2, fileWidth: 768 },
+  { viewport: 640, previewWidth: 570, density: 1, fileWidth: 768 },
+  { viewport: 768, previewWidth: 327, density: 1, fileWidth: 480 },
+  { viewport: 768, previewWidth: 327, density: 2, fileWidth: 768 },
+  { viewport: 1440, previewWidth: 408, density: 1, fileWidth: 480 },
+  { viewport: 1440, previewWidth: 408, density: 2, fileWidth: 800 },
+] as const;
+const filePathsByWidth = new Map(variants.map(({ width, src }) => [width, src]));
 
 function findLoadedVariant(image: HTMLImageElement) {
   if (!image.complete || !image.naturalWidth || !image.currentSrc) return undefined;
@@ -81,14 +99,14 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
         </div>
         <section aria-labelledby="webp-example-files" style={{ marginTop: 32 }}>
           <h2 id="webp-example-files" style={pp.sectionTitle}>The exported files</h2>
-          <table aria-labelledby="webp-example-files" style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--ad-copy)', fontSize: 14 }}>
+          <table aria-labelledby="webp-example-files" style={tableStyle}>
             <thead>
               <tr><th scope="col" style={cellStyle}>WebP dimensions</th><th scope="col" style={cellStyle}>File size</th><th scope="col" style={cellStyle}>Example use</th></tr>
             </thead>
             <tbody>
               {variants.map(({ src, width, height, bytes, use }) => (
                 <tr key={width}>
-                  <th scope="row" style={cellStyle}><a href={src} style={{ color: 'hsl(186 70% 77%)', textDecoration: 'underline', textUnderlineOffset: 3 }}>{width} × {height}</a></th>
+                  <th scope="row" style={cellStyle}><a href={src} style={fileLinkStyle}>{width} × {height}</a></th>
                   <td style={{ ...cellStyle, whiteSpace: 'nowrap' }}>{formatSize(bytes)}</td>
                   <td style={cellStyle}>{use}</td>
                 </tr>
@@ -97,17 +115,42 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
           </table>
           <p style={{ color: TG_MUTED, fontSize: 14, marginTop: 12 }}>These are the sizes from this run. The best file for a visitor depends on the display width and pixel density.</p>
         </section>
+        <section aria-labelledby="webp-example-browser-selection" style={{ marginTop: 32 }}>
+          <h2 id="webp-example-browser-selection" style={pp.sectionTitle}>Which WebP did the browser load?</h2>
+          <p id="webp-example-browser-method" style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 12 }}>
+            We loaded the on-page preview in a fresh Chromium 158 session for each viewport width and device pixel ratio (DPR), then checked the image URL the browser actually loaded. Viewport and preview widths are in CSS pixels.
+          </p>
+          <table aria-labelledby="webp-example-browser-selection" aria-describedby="webp-example-browser-method" style={tableStyle}>
+            <thead>
+              <tr>
+                <th scope="col" style={cellStyle}>Viewport</th>
+                <th scope="col" style={cellStyle}>Preview</th>
+                <th scope="col" style={cellStyle}>DPR</th>
+                <th scope="col" style={cellStyle}>WebP loaded</th>
+              </tr>
+            </thead>
+            <tbody>
+              {browserMeasurements.map(({ viewport, previewWidth, density, fileWidth }) => (
+                <tr key={`${viewport}-${density}`}>
+                  <th scope="row" style={cellStyle}>{viewport} px</th>
+                  <td style={cellStyle}>{previewWidth} px</td>
+                  <td style={cellStyle}>{density}×</td>
+                  <td style={{ ...cellStyle, whiteSpace: 'nowrap' }}><a href={filePathsByWidth.get(fileWidth)} style={fileLinkStyle}>{fileWidth}w WebP</a></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p style={{ color: TG_MUTED, fontSize: 14, marginTop: 12 }}>
+            At 640 px the preview fills one column. At 768 px the two images sit side by side, so the preview gets narrower and Chromium loads a smaller file at 1×. Your browser may choose differently or reuse a cached file. Check the <strong>WebP loaded</strong> caption above for your result.
+          </p>
+        </section>
         <section aria-labelledby="webp-example-html" style={{ marginTop: 32 }}>
           <h2 id="webp-example-html" style={pp.sectionTitle}>Use responsive WebP images with <code>srcset</code> and <code>sizes</code></h2>
           <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
             This example uses a card up to 400 pixels wide, with 20 pixels of space on each side on narrow screens. If you host the files yourself, replace the image URLs and adjust <code>sizes</code> to match your layout.
           </p>
-          <h3 style={{ ...pp.sectionTitle, fontSize: '1.15rem', marginTop: 24 }}>Which WebP file will the browser pick?</h3>
           <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
-            On a 360-pixel-wide phone, the copied example gives the image 320 CSS pixels of space. At 1× pixel density, the 320-pixel WebP is a likely choice. At 2×, the browser aims for about 640 image pixels, so it may pick the 768-pixel file from the available widths.
-          </p>
-          <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
-            The browser can also reuse a cached image. Check the <strong>WebP loaded</strong> caption above to see which file the on-page preview actually uses.
+            At a 360 px viewport, the copied snippet gives the image 320 CSS pixels of space. At 2× pixel density, that calls for about 640 image pixels. The on-page preview uses its own layout, so use the measurements above for that preview.
           </p>
           <p style={{ ...pp.projectBlurb, maxWidth: '65ch' }}>
             The ZIP includes the original JPEG, all four WebPs, and a standalone demo. Unzip it and open <code>index.html</code> to try the example offline.
