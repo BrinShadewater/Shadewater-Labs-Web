@@ -377,12 +377,12 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                   background:
                     'radial-gradient(90% 68% at 50% 0%, hsl(' +
                     p.accent +
-                    ' / 0.19), transparent 72%)',
+                    ' / 0.12), transparent 72%)',
                 }}
               />
-              <div style={pp.projectTop}>
-                <span style={pp.projectStage}>{p.stage}</span>
-                <span style={pp.statusPill}>
+              <div style={{ ...pp.projectTop, flexWrap: 'wrap' }}>
+                <span style={{ ...pp.projectStage, letterSpacing: '0.12em' }}>{p.stage}</span>
+                <span style={{ ...pp.statusPill, gap: 6, letterSpacing: '0.08em', padding: 0, border: 0, background: 'none' }}>
                   <span style={{ ...pp.statusDot, background: adTone[p.tone] }} />
                   <span style={{ color: adTone[p.tone] }}>{p.status}</span>
                 </span>
