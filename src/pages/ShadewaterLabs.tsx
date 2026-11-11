@@ -441,7 +441,7 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
                   transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 }}
               >
-                <div style={{ ...home.projectGlow, background: 'radial-gradient(90% 68% at 50% 0%, hsl(' + c.accent + ' / 0.19), transparent 72%)' }} />
+                <div style={{ ...home.projectGlow, background: 'radial-gradient(90% 68% at 50% 0%, hsl(' + c.accent + ' / 0.12), transparent 72%)' }} />
                 <div style={home.projectTop}>
                   <span style={home.projectBadge}>{c.badge}</span>
                   <span style={home.projectStatus}>
@@ -698,13 +698,11 @@ const home: Record<string, CSSProperties> = {
     ...pp.projectCard,
   },
   projectGlow: { position: 'absolute', inset: 0, pointerEvents: 'none' },
-  projectTop: { position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 },
-  projectBadge: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.28em', color: 'hsl(36 50% 75%)' },
+  projectTop: { position: 'relative', display: 'flex', flexWrap: 'wrap', gap: '6px 12px', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 },
+  projectBadge: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.12em', color: 'hsl(36 50% 75%)' },
   projectStatus: {
-    display: 'inline-flex', alignItems: 'center', gap: 8,
-    fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.18em',
-    padding: '5px 11px', borderRadius: 999,
-    background: 'hsl(0 0% 0% / 0.5)', border: '1px solid hsl(0 0% 100% / 0.1)',
+    display: 'inline-flex', alignItems: 'center', gap: 6,
+    fontFamily: MONO, fontSize: 10.5, letterSpacing: '0.08em',
   },
   statusDot: { width: 7, height: 7, borderRadius: 999 },
   projectArt: {
