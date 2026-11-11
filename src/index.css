@@ -150,6 +150,12 @@ html {
 .ad-reading { --ad-content-width: 800px; }
 .ad-article { --ad-content-width: 960px; }
 
+.ad-reading,
+.ad-article {
+  --ad-body-size: 16px;
+  --ad-body-leading: 1.7;
+}
+
 @media (max-width: 768px) {
   :root {
     --ad-gutter: 20px;
