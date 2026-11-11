@@ -4,6 +4,8 @@ import { managedWebsites } from '@/content/websites';
 import { brineSpace, fishMail } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
 import { queueItems } from '@/content/queue';
+import { webpExample } from '@/content/webpExample';
+import { seoAuditExample } from '@/content/seoAuditExample';
 import {
   buildPath, buildProjectHref, BRINESPACE_DOWNLOAD_HEADING_ID, CASE_STUDIES_SECTION_ID,
   OPEN_SOURCE_SECTION_ID, PAGE_HEADING_ID, SEO_AUDIT_CHECK_HEADING_ID,
@@ -36,9 +38,30 @@ interface ShadewaterLabsProps {
 }
 
 const projectGuides = [
-  { href: `${buildPath('brinespace')}#${BRINESPACE_DOWNLOAD_HEADING_ID}`, label: 'Install BrineSpace on Windows or macOS' },
-  { href: buildPath('webp-example'), label: 'Build responsive WebP images with srcset and sizes' },
-  { href: `${buildPath('seo-audit-example')}#${SEO_AUDIT_CHECK_HEADING_ID}`, label: 'Check whether OAI-SearchBot can reach your site' },
+  {
+    id: 'brinespace',
+    href: `${buildPath('brinespace')}#${BRINESPACE_DOWNLOAD_HEADING_ID}`,
+    title: 'Install BrineSpace',
+    summary: 'Windows and macOS setup, file sizes and release notes.',
+    image: { ...brineSpace.image, width: 800, height: 400 },
+  },
+  {
+    id: 'webp',
+    href: buildPath('webp-example'),
+    title: 'Responsive WebP example',
+    summary: 'Four WebP downloads, copyable HTML and measured file choices.',
+    image: {
+      ...webpExample.preview,
+      srcSet: webpExample.variants.map(({ src, width }) => `${src} ${width}w`).join(', '),
+    },
+  },
+  {
+    id: 'seo',
+    href: `${buildPath('seo-audit-example')}#${SEO_AUDIT_CHECK_HEADING_ID}`,
+    title: 'Test OAI-SearchBot access',
+    summary: 'Copy two commands and compare them with a real deploy result.',
+    image: { ...seoAuditExample.image, srcSet: thumbSrcSet('shadewaterseoskillthumb') },
+  },
 ];
 
 const AD_TRACKS = [
@@ -514,11 +537,22 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
       </div>
       <nav aria-labelledby="project-guides-heading" style={home.guideNav}>
         <h3 id="project-guides-heading" style={{ margin: '0 0 12px', fontSize: 18, fontWeight: 650 }}>Guides and examples</h3>
-        <ul role="list" style={home.guideList}>
-          {projectGuides.map(({ href, label }) => (
-            <li key={href}>
-              <a href={href} style={home.guideLink}>
-                {label} <span aria-hidden="true" style={{ flexShrink: 0 }}>→</span>
+        <ul role="list" className="home-guideList">
+          {projectGuides.map(({ id, href, title, summary, image }) => (
+            <li key={id}>
+              <a href={href} className="home-guideLink" aria-labelledby={`home-guide-${id}-title`}>
+                <img
+                  {...image}
+                  alt=""
+                  sizes="auto, (min-width: 1024px) 33vw, (min-width: 360px) 80px, 64px"
+                  loading="lazy"
+                  decoding="async"
+                  className="home-guideImage"
+                />
+                <div className="home-guideText">
+                  <h4 id={`home-guide-${id}-title`} className="home-guideTitle">{title}</h4>
+                  <p className="home-guideSummary">{summary}</p>
+                </div>
               </a>
             </li>
           ))}
@@ -724,14 +758,6 @@ const home: Record<string, CSSProperties> = {
   },
   catalogueArrow: { fontSize: 15, transform: 'translateY(-1px)' },
   guideNav: { marginTop: 28, paddingTop: 20, borderTop: 'var(--ad-card-border)' },
-  guideList: {
-    margin: 0, padding: 0, listStyle: 'none', display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 235px), 1fr))', gap: 10,
-  },
-  guideLink: {
-    ...ad.btnGhost, display: 'flex', justifyContent: 'space-between', height: '100%',
-    borderRadius: 14, padding: '10px 14px', lineHeight: 1.4,
-  },
 
   comingPanel: {
     position: 'relative', overflow: 'hidden', padding: '36px 40px', borderRadius: 28,
