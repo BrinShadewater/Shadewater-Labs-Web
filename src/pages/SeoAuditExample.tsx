@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AuroraPage, TG_MUTED, ad, pp, type AuroraNavigate } from '@/components/aurora/chrome';
 import { seoAuditExample } from '@/content/seoAuditExample';
-import { buildPath, buildProjectHref, LABS_ORIGIN, SEO_AUDIT_CHECK_HEADING_ID as checkHeadingId } from '@/lib/routes';
+import { buildPath, buildProjectHref, LABS_ORIGIN, BRINESPACE_DOWNLOAD_HEADING_ID, SEO_AUDIT_CHECK_HEADING_ID as checkHeadingId } from '@/lib/routes';
 
 const robotsRule = 'User-agent: OAI-SearchBot\nAllow: /';
 const robotsCommand = `curl -sS -L -i "${LABS_ORIGIN}/robots.txt"`;
@@ -82,6 +82,19 @@ export default function SeoAuditExample({ onNavigate }: { onNavigate: AuroraNavi
           </ol>
           <p style={bodyStyle}>
             These checks verified the published policy and the response to a test request. An actual OpenAI crawl, indexing, and a ChatGPT citation are separate outcomes that require separate evidence.
+          </p>
+        </section>
+        <section aria-labelledby="seo-audit-production-deploy" style={{ marginTop: 32 }}>
+          <h2 id="seo-audit-production-deploy" style={pp.sectionTitle}>A production deploy that passed</h2>
+          <p style={bodyStyle}>
+            The automated check ran after Vercel deployed commit <code>9af99f1</code> to production on <time dateTime="2026-11-11T00:42:44Z">November 11, 2026 at 00:42 UTC</time>. The workflow printed this line.
+          </p>
+          <pre style={codeStyle}><code>Production SEO passed for https://shadewaterlabs.com: robots.txt, sitemap, and 3 page canonicals.</code></pre>
+          <p style={bodyStyle}>
+            That pass means <code>robots.txt</code> allowed <code>OAI-SearchBot</code> on all three paths. The <a href={`${buildPath('brinespace')}#${BRINESPACE_DOWNLOAD_HEADING_ID}`} className="underline underline-offset-4">BrineSpace install guide</a>, <a href={buildPath('webp-example')} className="underline underline-offset-4">responsive WebP example</a>, and this SEO audit were all listed in the sitemap, returned HTTP 200 without a redirect, and declared one canonical URL matching the checked URL.
+          </p>
+          <p style={bodyStyle}>
+            <a href="https://github.com/BrinShadewater/Shadewater-Labs-Web/actions/runs/42933494295" className="underline underline-offset-4">View the production check on GitHub</a>
           </p>
         </section>
         <section aria-labelledby={checkHeadingId} style={{ marginTop: 32 }}>
