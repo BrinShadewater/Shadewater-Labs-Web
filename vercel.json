@@ -83,6 +83,11 @@
       "source": "/tech-news",
       "destination": "/toolkit",
       "permanent": true
+    },
+    {
+      "source": "/reviews-notes",
+      "destination": "https://brinshadewater.com/reviews-notes",
+      "permanent": true
     }
   ],
   "rewrites": [
