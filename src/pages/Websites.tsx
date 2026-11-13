@@ -87,14 +87,13 @@ const THUMBS: Record<string, { src: string; srcSet: string }> = {
 
 interface BrowserFrameProps {
   url: string;
-  accent: string;
   thumbnail: string;
   thumbnailSrcSet: string;
   fullUrl?: string;
   eager: boolean;
 }
 
-function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager }: BrowserFrameProps) {
+function BrowserFrame({ url, thumbnail, thumbnailSrcSet, fullUrl, eager }: BrowserFrameProps) {
   const dot: CSSProperties = {
     width: 8,
     height: 8,
@@ -117,9 +116,9 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager 
         style={{
           borderRadius: '12px 12px 0 0',
           overflow: 'hidden',
-          border: '1px solid hsl(' + accent + ' / 0.22)',
+          border: 'var(--ad-card-border)',
           borderBottom: 'none',
-          background: 'hsl(200 30% 6% / 0.9)',
+          background: 'var(--ocean-base)',
         }}
       >
         <div
@@ -128,8 +127,8 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager 
             alignItems: 'center',
             gap: 6,
             padding: '7px 12px',
-            background: 'hsl(200 30% 8% / 0.95)',
-            borderBottom: '1px solid hsl(' + accent + ' / 0.15)',
+            background: 'var(--ocean-base)',
+            borderBottom: 'var(--ad-card-border)',
           }}
         >
           <span style={{ ...dot, background: 'hsl(0 65% 58%)' }} />
@@ -139,8 +138,8 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager 
             style={{
               flex: 1,
               marginLeft: 8,
-              background: 'hsl(200 30% 12% / 0.8)',
-              border: '1px solid hsl(' + accent + ' / 0.15)',
+              background: 'var(--ocean-raised)',
+              border: 'var(--ad-card-border)',
               borderRadius: 6,
               padding: '3px 10px',
               fontFamily: MONO,
@@ -159,7 +158,7 @@ function BrowserFrame({ url, accent, thumbnail, thumbnailSrcSet, fullUrl, eager 
           style={{
             position: 'relative',
             height: 'clamp(180px, 42vw, 260px)',
-            background: 'hsl(200 30% 9%)',
+            background: 'var(--ocean-base)',
             overflow: 'hidden',
           }}
         >
@@ -220,6 +219,7 @@ export default function Websites({ onNavigate }: WebsitesProps) {
 
   return (
     <AuroraPage
+      theme="ocean"
       active="websites"
       onNavigate={onNavigate}
       sectionLabel="Websites"
@@ -243,13 +243,12 @@ export default function Websites({ onNavigate }: WebsitesProps) {
               <div
                 style={{
                   ...pp.siteGlow,
-                  background: 'radial-gradient(120% 80% at 50% -30%, hsl(' + s.accent + ' / 0.32), transparent 65%)',
+                  background: 'radial-gradient(120% 80% at 50% -30%, #252742, transparent 65%)',
                 }}
               />
 
               <BrowserFrame
                 url={s.url}
-                accent={s.accent}
                 thumbnail={s.thumbnail}
                 thumbnailSrcSet={s.thumbnailSrcSet}
                 fullUrl={s.fullUrl}

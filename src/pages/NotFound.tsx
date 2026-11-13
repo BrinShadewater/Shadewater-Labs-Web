@@ -20,6 +20,7 @@ export default function NotFound({ onNavigate }: NotFoundProps) {
 
   return (
     <AuroraPage
+      theme="ocean"
       active=""
       onNavigate={onNavigate}
       sectionLabel="404"

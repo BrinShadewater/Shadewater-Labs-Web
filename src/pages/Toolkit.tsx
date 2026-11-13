@@ -19,6 +19,7 @@ export default function Toolkit({ onNavigate }: ToolkitProps) {
 
   return (
     <AuroraPage
+      theme="ocean"
       active="toolkit"
       onNavigate={onNavigate}
       sectionLabel="Toolkit"
@@ -58,7 +59,7 @@ export default function Toolkit({ onNavigate }: ToolkitProps) {
                   style={{
                     flex: 1,
                     height: 1,
-                    background: `hsl(${accent} / 0.28)`,
+                    background: 'var(--ocean-border)',
                   }}
                 />
               </div>
@@ -71,7 +72,7 @@ export default function Toolkit({ onNavigate }: ToolkitProps) {
                       key={t.id}
                       style={{
                         ...pp.projectCard,
-                        border: `1px solid hsl(${accent} / 0.22)`,
+                        border: 'var(--ad-card-border)',
                       }}
                     >
                       <h3 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: '#fff' }}>

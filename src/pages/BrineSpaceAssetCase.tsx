@@ -41,6 +41,7 @@ const stages = [
 export default function BrineSpaceAssetCase({ onNavigate }: { onNavigate: AuroraNavigate }) {
   return (
     <AuroraPage
+      theme="ocean"
       active="projects"
       layout="article"
       onNavigate={onNavigate}

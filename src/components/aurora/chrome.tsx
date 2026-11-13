@@ -583,7 +583,7 @@ export const pp: Record<string, CSSProperties> = {
   sectionTitle: { color: '#fff', fontSize: 'var(--ad-section-title)', lineHeight: 1.12, fontWeight: 650, letterSpacing: '-0.025em', margin: '12px 0' },
   figureImage: {
     display: 'block', width: '100%', height: 'auto',
-    borderRadius: 'var(--ad-media-radius)', border: 'var(--ad-card-border)', background: '#0a1e29',
+    borderRadius: 'var(--ad-media-radius)', border: 'var(--ad-card-border)', background: 'var(--ocean-base, #0a1e29)',
   },
 
   toolbar: {
@@ -940,10 +940,10 @@ export const ad: Record<string, CSSProperties> = {
 
   btnPrimary: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
-    minHeight: 44, padding: '11px 20px', borderRadius: 999,
+    minHeight: 44, padding: '11px 20px', borderRadius: 'var(--ocean-control-radius, 999px)',
     color: '#04101b', fontWeight: 600, fontSize: 15,
-    background: 'linear-gradient(135deg, hsl(186 95% 78%), hsl(192 80% 60%) 50%, hsl(220 85% 70%))',
-    boxShadow: '0 8px 24px hsl(186 90% 50% / 0.22), inset 0 1px 0 hsl(0 0% 100% / 0.5)',
+    background: 'var(--ocean-button-fill, linear-gradient(135deg, hsl(186 95% 78%), hsl(192 80% 60%) 50%, hsl(220 85% 70%)))',
+    boxShadow: 'var(--ocean-button-shadow, 0 8px 24px hsl(186 90% 50% / 0.22), inset 0 1px 0 hsl(0 0% 100% / 0.5))',
     cursor: 'pointer', textDecoration: 'none',
   },
   btnGhost: {

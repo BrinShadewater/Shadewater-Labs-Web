@@ -20,6 +20,7 @@ const features = [
 export default function Futureproof({ onNavigate }: { onNavigate: AuroraNavigate }) {
   return (
     <AuroraPage
+      theme="ocean"
       active="projects"
       layout="article"
       onNavigate={onNavigate}

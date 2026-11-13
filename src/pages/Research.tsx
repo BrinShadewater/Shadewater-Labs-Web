@@ -99,6 +99,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
 
   return (
     <AuroraPage
+      theme="ocean"
       active="research"
       layout="reading"
       onNavigate={onNavigate}
@@ -182,7 +183,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
         <p style={pp.projectBlurb}>Start with the example, then follow the evidence and the proposed study. These page numbers match the November PDF.</p>
         <ul role="list" style={{ listStyle: 'none', padding: 0, margin: '20px 0 0' }}>
           {readingGuide.map((entry) => (
-            <li key={entry.page} style={{ padding: '18px 0', borderTop: '1px solid hsl(186 50% 40% / 0.28)' }}>
+            <li key={entry.page} style={{ padding: '18px 0', borderTop: 'var(--ad-card-border)' }}>
               <p style={{ margin: '0 0 6px', color: TG_MUTED, fontSize: 14 }}>{entry.label}</p>
               <h3 style={{ margin: 0, color: '#fff', fontSize: 20 }}>
                 <a href={`${paperPdf}#page=${entry.page}`} className="underline underline-offset-4">
@@ -272,7 +273,7 @@ export default function Research({ onNavigate }: { onNavigate: AuroraNavigate })
         <a href={`${paperPdf}#page=120`} className="underline underline-offset-4">Read the source audit (PDF, p. 120)</a>
         <ul role="list" style={{ listStyle: 'none', padding: 0, margin: '20px 0 0' }}>
           {sourceNotes.map(({ reference, title, page, note, notice, url }) => (
-            <li key={reference} style={{ padding: '16px 0', borderTop: '1px solid hsl(186 50% 40% / 0.28)' }}>
+            <li key={reference} style={{ padding: '16px 0', borderTop: 'var(--ad-card-border)' }}>
               <h3 style={{ margin: 0, color: '#fff', fontSize: 18 }}>{title}</h3>
               <p style={{ ...pp.projectBlurb, margin: '8px 0' }}>{note}</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', fontSize: 15 }}>
