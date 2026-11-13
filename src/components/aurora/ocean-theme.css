@@ -1,4 +1,6 @@
 .ocean-theme {
+  --ocean-control-radius: 6px;
+  --ocean-button-shadow: none;
   --ocean-base: #080f1c;
   --ocean-raised: #1c2942;
   --ocean-accent: #a1ddff;
@@ -49,7 +51,6 @@
     radial-gradient(ellipse at 82% 0%, #252742, transparent 75%);
 }
 
-.ocean-theme { --ocean-control-radius: 6px; }
 .ocean-theme .pp-toolbar {
   background: var(--ad-panel) !important;
   border: var(--ad-card-border) !important;
@@ -66,3 +67,5 @@
   background: var(--ocean-button-fill) !important;
   border-color: var(--ocean-accent) !important;
 }
+
+.ocean-theme :is(.ad-reading, .ad-article) a.underline { color: var(--ocean-accent); }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ADFooter, ADNav, ADTicker, ad, type AuroraNavigate } from '@/components/aurora/chrome';
+import { ADFooter, ADNav, ad, type AuroraNavigate } from '@/components/aurora/chrome';
 import { brineSpace } from '@/content/currentProjects';
 import { buildPath, buildProjectHref, PAGE_HEADING_ID, BRINESPACE_DOWNLOAD_HEADING_ID as downloadHeadingId } from '@/lib/routes';
 
@@ -39,10 +39,9 @@ export default function BrineSpace({ onNavigate }: { onNavigate: AuroraNavigate 
   }, []);
 
   return (
-    <div style={ad.root} className="brine-page">
-      <ADTicker />
+    <div className="ocean-theme brine-page">
       <ADNav active="projects" onNavigate={onNavigate} />
-      <header className="brine-hero">
+      <header className="ocean-pageHero brine-hero">
         <div className="brine-wrap">
           <a className="brine-back" href={buildProjectHref(brineSpace.id)}>
             <span aria-hidden="true">← </span>Back to Projects

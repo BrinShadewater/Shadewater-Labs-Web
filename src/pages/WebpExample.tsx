@@ -19,7 +19,7 @@ const htmlSnippet = `<img
 const formatSize = (bytes: number) => `${(bytes / 1000).toFixed(1)} kB`;
 const cellStyle = { padding: '10px 8px', borderBottom: 'var(--ad-card-border)', textAlign: 'left' } as const;
 const tableStyle = { width: '100%', borderCollapse: 'collapse', color: 'var(--ad-copy)', fontSize: 14 } as const;
-const fileLinkStyle = { color: 'hsl(186 70% 77%)', textDecoration: 'underline', textUnderlineOffset: 3 } as const;
+const fileLinkStyle = { color: 'var(--ocean-accent)', textDecoration: 'underline', textUnderlineOffset: 3 } as const;
 const imageStyle = { ...pp.figureImage, aspectRatio: '16 / 9', objectFit: 'contain' } as const;
 
 // Fresh Chromium 158 contexts at each viewport and DPR. File widths come from
@@ -65,7 +65,7 @@ export default function WebpExample({ onNavigate }: { onNavigate: AuroraNavigate
   };
 
   return (
-    <AuroraPage layout="article" active="projects" onNavigate={onNavigate} sectionLabel="Webp Me Daddy example" eyebrow="WORKED EXAMPLE · IMAGE OPTIMIZATION" title={title} lede={description}>
+    <AuroraPage theme="ocean" layout="article" active="projects" onNavigate={onNavigate} sectionLabel="Webp Me Daddy example" eyebrow="WORKED EXAMPLE · IMAGE OPTIMIZATION" title={title} lede={description}>
       <article style={pp.section}>
         <h2 style={pp.sectionTitle}>Original and optimized</h2>
         <p style={{ ...pp.projectBlurb, maxWidth: '65ch', marginBottom: 20 }}>

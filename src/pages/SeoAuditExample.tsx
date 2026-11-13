@@ -42,6 +42,7 @@ export default function SeoAuditExample({ onNavigate }: { onNavigate: AuroraNavi
 
   return (
     <AuroraPage
+      theme="ocean"
       layout="article"
       active="projects"
       onNavigate={onNavigate}

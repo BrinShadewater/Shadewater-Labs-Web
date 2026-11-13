@@ -65,8 +65,8 @@ export default function About({ onNavigate }: AboutProps) {
   const credGroup: CSSProperties = {
     padding: '14px 16px',
     borderRadius: 14,
-    background: 'hsl(200 30% 8% / 0.7)',
-    border: '1px solid hsl(' + ACCENT + ' / 0.14)',
+    background: 'var(--ad-panel)',
+    border: 'var(--ad-card-border)',
   };
 
   const credCat: CSSProperties = {
@@ -189,6 +189,7 @@ export default function About({ onNavigate }: AboutProps) {
 
   return (
     <AuroraPage
+      theme="ocean"
       active="about"
       onNavigate={onNavigate}
       sectionLabel="About"
@@ -307,8 +308,8 @@ export default function About({ onNavigate }: AboutProps) {
                 marginTop: 34,
                 padding: 'var(--ad-card-padding)',
                 borderRadius: 'var(--ad-card-radius)',
-                background: 'hsl(200 30% 8% / 0.7)',
-                border: '1px solid hsl(186 50% 40% / 0.28)',
+                background: 'var(--ad-panel)',
+                border: 'var(--ad-card-border)',
               }}
             >
               <h3
