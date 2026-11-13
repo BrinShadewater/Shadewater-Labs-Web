@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 
 const routes = [
-  ['', /The studio for weird-good/, /AI tools and tech experiments/],
+  ['', /Games, tools, and creative technology/, /Browse open-source tools/],
   ['projects', /Projects from the lab\./, /Lucid Sheep/],
   ['projects/brinespace', /BrineSpace/, /Archive the expedition/],
   ['projects/brinespace/asset-pipeline', /How BrineSpace assets are made/, /The finished room in-game/],

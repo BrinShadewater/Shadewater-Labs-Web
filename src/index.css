@@ -234,29 +234,6 @@ html {
   }
 }
 
-.home-heroLead {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, .48fr);
-  grid-template-areas: 'copy art';
-  gap: clamp(24px, 5vw, 72px);
-  align-items: center;
-}
-
-.home-heroCopy { grid-area: copy; }
-
-.home-heroLogo {
-  grid-area: art;
-  justify-self: center;
-  width: clamp(168px, 21vw, 232px);
-  height: auto;
-  filter: drop-shadow(0 16px 40px hsl(186 90% 50% / 0.34));
-}
-
-@media (max-width: 768px) {
-  .home-heroLead { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'art' 'copy'; gap: 12px; }
-  .home-heroLogo { width: 80px; }
-}
-
 button:focus-visible,
 a:focus-visible,
 select:focus-visible,
