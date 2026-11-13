@@ -1,45 +1,3 @@
-.deep-ocean {
-  --ocean-base: #080f1c;
-  --ocean-raised: #1c2942;
-  --ocean-accent: #a1ddff;
-  --ocean-border: #3a4667;
-  --ad-copy: #cbd5e8;
-  --ad-panel: #121c30;
-  --ad-card-border: 1px solid var(--ocean-border);
-  --ad-card-radius: 10px;
-  --ad-card-shadow: none;
-  min-height: 100%;
-  overflow: clip;
-  color: #f1f5ff;
-  background: var(--ocean-base);
-  font-family: var(--labs-sans);
-}
-
-.deep-ocean .ad-nav {
-  background: rgb(8 15 28 / 96%) !important;
-  border-color: var(--ocean-border) !important;
-}
-
-.deep-ocean .ad-nav a[aria-current='page'] {
-  background: var(--ocean-raised) !important;
-  box-shadow: inset 0 0 0 1px var(--ocean-border) !important;
-}
-
-.deep-ocean .ad-navLinks > a:last-child {
-  color: var(--ocean-base) !important;
-  background: var(--ocean-accent) !important;
-  box-shadow: none !important;
-}
-
-.deep-ocean .ad-nav img { filter: none !important; }
-
-.deep-ocean > footer {
-  background: var(--ad-panel) !important;
-  border-color: var(--ocean-border) !important;
-}
-
-.deep-ocean :is(a, button, select):focus-visible { outline-color: var(--ocean-accent); }
-
 .deep-ocean-hero {
   --ocean-banner-base: #090f20;
   border-bottom: var(--ad-card-border);
@@ -100,7 +58,7 @@
 
 .deep-ocean-button:hover { background: var(--ocean-raised); }
 .deep-ocean-buttonPrimary {
-  background: linear-gradient(120deg, #9be9f5, #a4c7ff);
+  background: var(--ocean-button-fill);
   border-color: var(--ocean-accent);
   color: var(--ocean-base);
 }

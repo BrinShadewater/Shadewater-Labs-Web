@@ -483,7 +483,7 @@ function ADComing() {
 
 export default function ShadewaterLabs({ onNavigate }: ShadewaterLabsProps) {
   return (
-    <div className="deep-ocean">
+    <div className="ocean-theme deep-ocean">
       <ADNav onNavigate={onNavigate} active="labs" />
       <ADHero />
       <ADProjects onNavigate={onNavigate} />

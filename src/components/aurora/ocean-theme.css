@@ -1,0 +1,68 @@
+.ocean-theme {
+  --ocean-base: #080f1c;
+  --ocean-raised: #1c2942;
+  --ocean-accent: #a1ddff;
+  --ocean-border: #3a4667;
+  --ocean-button-fill: linear-gradient(120deg, #9be9f5, #a4c7ff);
+  --ad-copy: #cbd5e8;
+  --ad-panel: #121c30;
+  --ad-card-border: 1px solid var(--ocean-border);
+  --ad-card-radius: 10px;
+  --ad-card-shadow: none;
+  min-height: 100%;
+  overflow: clip;
+  color: #f1f5ff;
+  background: var(--ocean-base);
+  font-family: var(--labs-sans);
+}
+
+.ocean-theme .ad-nav {
+  background: rgb(8 15 28 / 96%) !important;
+  border-color: var(--ocean-border) !important;
+}
+
+.ocean-theme .ad-nav a[aria-current='page'] {
+  background: var(--ocean-raised) !important;
+  box-shadow: inset 0 0 0 1px var(--ocean-border) !important;
+}
+
+.ocean-theme .ad-navLinks > a:last-child {
+  color: var(--ocean-base) !important;
+  background: var(--ocean-accent) !important;
+  box-shadow: none !important;
+}
+
+.ocean-theme .ad-nav img { filter: none !important; }
+
+.ocean-theme > footer {
+  background: var(--ad-panel) !important;
+  border-color: var(--ocean-border) !important;
+}
+
+.ocean-theme :is(a, button, select):focus-visible { outline-color: var(--ocean-accent); }
+
+.ocean-pageHero {
+  background:
+    linear-gradient(90deg, var(--ocean-base), transparent 75%),
+    linear-gradient(rgb(162 174 239 / 8%) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgb(162 174 239 / 8%) 1px, transparent 1px) 0 0 / 32px 32px,
+    radial-gradient(ellipse at 82% 0%, #252742, transparent 75%);
+}
+
+.ocean-theme { --ocean-control-radius: 6px; }
+.ocean-theme .pp-toolbar {
+  background: var(--ad-panel) !important;
+  border: var(--ad-card-border) !important;
+  border-radius: var(--ad-card-radius) !important;
+}
+
+.ocean-theme .pp-toolbar button {
+  background: var(--ocean-raised) !important;
+  border-radius: var(--ocean-control-radius) !important;
+}
+
+.ocean-theme .pp-toolbar button[aria-pressed='true'] {
+  color: var(--ocean-base) !important;
+  background: var(--ocean-button-fill) !important;
+  border-color: var(--ocean-accent) !important;
+}
