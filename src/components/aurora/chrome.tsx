@@ -137,10 +137,12 @@ export function ADNav({
       <style>{`
         .ad-hamburger {
           display: none;
-          background: none;
-          border: 1px solid hsl(186 50% 40% / 0.3);
-          color: hsl(186 60% 80%);
-          border-radius: 8px;
+          background: var(--ad-panel);
+          border: var(--ad-card-border);
+          color: var(--ocean-accent, hsl(186 60% 80%));
+          border-radius: var(--ocean-control-radius, 8px);
+          min-width: 44px;
+          min-height: 44px;
           padding: 7px 11px;
           cursor: pointer;
           font-size: 18px;
@@ -158,7 +160,7 @@ export function ADNav({
             flex-direction: column !important;
             gap: 4px !important;
             padding: 8px 0 12px !important;
-            border-top: 1px solid hsl(186 50% 40% / 0.15) !important;
+            border-top: var(--ad-card-border) !important;
             margin-top: 4px !important;
           }
           .ad-navLinks.ad-navOpen a { width: 100% !important; text-align: left !important; margin-left: 0 !important; }
@@ -183,7 +185,7 @@ export function ADNav({
             <span style={ad.brandWord}>
               <span
                 style={{
-                  background: 'linear-gradient(135deg, hsl(186 95% 75%), hsl(220 90% 78%))',
+                  background: 'var(--ocean-button-fill, linear-gradient(135deg, hsl(186 95% 75%), hsl(220 90% 78%)))',
                   WebkitBackgroundClip: 'text',
                   backgroundClip: 'text',
                   color: 'transparent',
@@ -558,7 +560,7 @@ export const pp: Record<string, CSSProperties> = {
     color: 'hsl(186 35% 70%)',
     marginBottom: 'clamp(18px, 2.5vw, 30px)',
   },
-  crumbHome: { color: 'hsl(186 35% 70%)', cursor: 'pointer' },
+  crumbHome: { color: 'var(--ocean-accent, hsl(186 35% 70%))', cursor: 'pointer' },
   crumbCur: { color: '#fff', fontWeight: 600 },
   crumbSep: { color: 'hsl(186 25% 32%)' },
 
@@ -900,7 +902,7 @@ export const ad: Record<string, CSSProperties> = {
   // stretches the mark to its full intrinsic width.
   brandMark: { height: 44, width: 'auto', filter: 'drop-shadow(0 6px 20px hsl(186 90% 50% / 0.5))' },
   brandText: { display: 'flex', flexDirection: 'column', gap: 4, lineHeight: 1 },
-  brandEyebrow: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.24em', color: 'hsl(186 50% 70%)' },
+  brandEyebrow: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.24em', color: 'var(--ocean-label, hsl(186 50% 70%))' },
   brandWord: { fontSize: 20, fontWeight: 700, letterSpacing: '-0.01em' },
   navLinks: { display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' },
   navLink: { padding: '8px 14px', borderRadius: 999, color: TG_MUTED, fontSize: 14, fontWeight: 500, cursor: 'pointer', textDecoration: 'none' },
@@ -962,7 +964,7 @@ export const ad: Record<string, CSSProperties> = {
   },
   footerBeam: {
     position: 'absolute', top: 0, left: '10%', right: '10%', height: 1,
-    background: 'linear-gradient(90deg, transparent, hsl(186 90% 60% / 0.5), transparent)',
+    background: 'linear-gradient(90deg, transparent, var(--ocean-border, hsl(186 90% 60% / 0.5)), transparent)',
   },
   footerInner: {
     maxWidth: 'var(--ad-frame-width)', margin: '0 auto', padding: '32px var(--ad-gutter) 28px',
@@ -972,7 +974,7 @@ export const ad: Record<string, CSSProperties> = {
   footerBrand: { display: 'flex', alignItems: 'center', gap: 12 },
   footerMark: { height: 36, width: 'auto', filter: 'drop-shadow(0 4px 12px hsl(186 90% 50% / 0.4))' },
   footerWord: { fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em', color: '#fff' },
-  footerEyebrow: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.22em', color: 'hsl(186 50% 70%)', marginTop: 3 },
+  footerEyebrow: { fontFamily: MONO, fontSize: 10, letterSpacing: '0.22em', color: 'var(--ocean-label, hsl(186 50% 70%))', marginTop: 3 },
   footerMono: { display: 'flex', gap: 24, flexWrap: 'wrap' as CSSProperties['flexWrap'] },
   footerCell: { fontFamily: MONO, fontSize: 12, letterSpacing: '0.08em', color: TG_MUTED },
 };
