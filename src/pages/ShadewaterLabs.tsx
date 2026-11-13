@@ -1,5 +1,5 @@
 import CurrentProjects from '@/components/CurrentProjects';
-import { useState, type CSSProperties, type MouseEvent } from 'react';
+import { useRef, useState, type CSSProperties, type MouseEvent } from 'react';
 import { managedWebsites } from '@/content/websites';
 import { brineSpace, fishMail } from '@/content/currentProjects';
 import { openSourceReleases, thumbSrcSet } from '@/content/openSource';
@@ -225,6 +225,18 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
     ...recentCards,
   ];
   const [idx, setIdx] = useState(0);
+  const leadCard = useRef<HTMLElement>(null);
+  const mobilePreviews = cards
+    .map((card, index) => ({ card, index }))
+    .filter(({ card }) => card.key === fishMail.id || card.key === featuredTool?.key);
+
+  const openPreview = (index: number) => {
+    setIdx(index);
+    requestAnimationFrame(() => {
+      leadCard.current?.focus({ preventScroll: true });
+      leadCard.current?.scrollIntoView({ block: 'start' });
+    });
+  };
   const total = cards.length;
 
   const prev = () => setIdx((i) => (i - 1 + total) % total);
@@ -283,6 +295,8 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
               <article
                 key={'slot-' + offset}
                 className={'carousel-slot-' + offset}
+                ref={offset === 0 ? leadCard : undefined}
+                tabIndex={offset === 0 ? -1 : undefined}
                 aria-labelledby={`featured-${c.key}-title`}
                 onClick={(event) => {
                   // Let title and action links handle their own navigation.
@@ -369,6 +383,30 @@ function ADProjects({ onNavigate }: { onNavigate: AuroraNavigate }) {
               </article>
             );
           })}
+        </div>
+
+        <div className="deep-ocean-mobilePreviews" role="group" aria-label="Featured project previews">
+          {mobilePreviews.map(({ card, index }) => (
+            <button
+              key={card.key}
+              type="button"
+              aria-controls="featured-work-track"
+              aria-pressed={idx === index}
+              onClick={() => openPreview(index)}
+            >
+              <img
+                src={card.thumbnail}
+                srcSet={card.thumbnailSrcSet}
+                sizes="auto, 72px"
+                width={72}
+                height={48}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span>{card.name}</span>
+            </button>
+          ))}
         </div>
 
         <div className="home-catalogue" style={{ marginTop: 20, display: 'flex', gap: 12, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
