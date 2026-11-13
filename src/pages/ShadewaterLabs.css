@@ -1,0 +1,187 @@
+.deep-ocean {
+  --ocean-base: #07120d;
+  --ocean-raised: #13291e;
+  --ocean-accent: #a1eac0;
+  --ocean-border: #2b4839;
+  --ad-copy: #c4d6cb;
+  --ad-panel: #102219;
+  --ad-card-border: 1px solid var(--ocean-border);
+  --ad-card-radius: 10px;
+  --ad-card-shadow: none;
+  min-height: 100%;
+  overflow: clip;
+  color: #f3faf6;
+  background: var(--ocean-base);
+  font-family: var(--labs-sans);
+}
+
+.deep-ocean .ad-nav {
+  background: rgb(7 18 13 / 96%) !important;
+  border-color: var(--ocean-border) !important;
+}
+
+.deep-ocean .ad-nav a[aria-current='page'] {
+  background: var(--ocean-raised) !important;
+  box-shadow: inset 0 0 0 1px var(--ocean-border) !important;
+}
+
+.deep-ocean .ad-navLinks > a:last-child {
+  color: var(--ocean-base) !important;
+  background: var(--ocean-accent) !important;
+  box-shadow: none !important;
+}
+
+.deep-ocean .ad-nav img { filter: none !important; }
+
+.deep-ocean > footer {
+  background: var(--ad-panel) !important;
+  border-color: var(--ocean-border) !important;
+}
+
+.deep-ocean :is(a, button, select):focus-visible { outline-color: var(--ocean-accent); }
+
+.deep-ocean-hero {
+  --ocean-banner-base: #060e17;
+  border-bottom: var(--ad-card-border);
+  background: linear-gradient(90deg, var(--ocean-banner-base), transparent 70%),
+    var(--ocean-banner-base) url('/project-gallery-water.webp') right center / cover no-repeat;
+}
+
+.deep-ocean-heroCopy {
+  max-width: var(--ad-frame-width);
+  margin-inline: auto;
+  padding: clamp(32px, 4.5vw, 64px) var(--ad-gutter);
+}
+
+.deep-ocean-heroCopy h1 {
+  margin: 0;
+  max-width: 16ch;
+  text-wrap: balance;
+  font-size: clamp(2.5rem, 5.1vw, 4.85rem);
+  line-height: 1.02;
+  letter-spacing: -.052em;
+  font-weight: 700;
+}
+
+.deep-ocean-heroCopy p {
+  max-width: 42ch;
+  margin: 18px 0 0;
+  color: var(--ad-copy);
+  font-size: clamp(1rem, 1.45vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.deep-ocean-heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.deep-ocean-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 46px;
+  padding: 9px 14px;
+  border: 1px solid #4f7962;
+  border-radius: 6px;
+  color: var(--ocean-accent);
+  background: var(--ad-panel);
+  font-size: .94rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.deep-ocean-button:hover { background: var(--ocean-raised); }
+.deep-ocean-buttonPrimary {
+  background: var(--ocean-accent);
+  border-color: var(--ocean-accent);
+  color: var(--ocean-base);
+}
+.deep-ocean-buttonPrimary:hover { background: #c0f4d5; }
+
+.deep-ocean-galleryHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-bottom: 18px;
+}
+
+.deep-ocean-sectionTitle {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  letter-spacing: -.035em;
+}
+
+.deep-ocean #labs-tracks { padding-top: 0 !important; }
+
+.deep-ocean .carousel-track {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--ad-grid-gap);
+}
+
+.deep-ocean-projectArt { aspect-ratio: 2 / 1; }
+.deep-ocean .carousel-slot-0 .deep-ocean-projectArt { aspect-ratio: 16 / 9; }
+
+.deep-ocean-cardBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px 18px;
+}
+
+.deep-ocean-cardMeta {
+  margin-bottom: 7px;
+  color: var(--ocean-accent);
+  font-size: .72rem;
+  letter-spacing: .055em;
+}
+
+.deep-ocean-cardMeta span { color: var(--ad-copy); }
+
+.deep-ocean .home-guideLink { border-radius: var(--ad-card-radius); }
+.deep-ocean .home-guideLink:hover,
+.deep-ocean .deep-ocean-research:hover { border-color: #6a9c80; }
+
+.deep-ocean-research {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 22px;
+  border: var(--ad-card-border);
+  border-radius: var(--ad-card-radius);
+  color: var(--ocean-accent);
+  background: var(--ad-panel);
+  text-decoration: none;
+}
+
+.deep-ocean-research h2 { margin: 0; font-size: 1.25rem; color: #f3faf6; }
+.deep-ocean-research p { margin: 6px 0 0; color: var(--ad-copy); }
+
+@media (min-width: 901px) {
+  .deep-ocean .carousel-slot-0 { grid-row: span 2; }
+  .deep-ocean :is(.carousel-slot-1, .carousel-slot-2) .deep-ocean-projectArt { aspect-ratio: 3 / 1; }
+}
+
+@media (max-width: 900px) {
+  .deep-ocean .carousel-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .deep-ocean .carousel-slot-2 { display: none; }
+}
+
+@media (max-width: 600px) {
+  .deep-ocean-hero {
+    background-image: linear-gradient(90deg, var(--ocean-banner-base) 12%, transparent), url('/project-gallery-water.webp');
+  }
+  .deep-ocean .carousel-track { grid-template-columns: minmax(0, 1fr); }
+  .deep-ocean .carousel-slot-1 { display: none; }
+}
+
+@media (max-width: 380px) {
+  .deep-ocean-heroActions > a { width: 100%; }
+}
