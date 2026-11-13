@@ -4,6 +4,7 @@
   --ocean-base: #080f1c;
   --ocean-raised: #1c2942;
   --ocean-accent: #a1ddff;
+  --ocean-label: #c4c9f2;
   --ocean-border: #3a4667;
   --ocean-button-fill: linear-gradient(120deg, #9be9f5, #a4c7ff);
   --ad-copy: #cbd5e8;
@@ -41,7 +42,15 @@
   border-color: var(--ocean-border) !important;
 }
 
-.ocean-theme :is(a, button, select):focus-visible { outline-color: var(--ocean-accent); }
+.ocean-theme :is(a, button, select, input, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--ocean-accent);
+  outline-offset: 3px;
+}
+
+.ocean-theme .ad-navLinks a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 
 .ocean-pageHero {
   background:
