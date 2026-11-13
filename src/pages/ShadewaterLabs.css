@@ -1,22 +1,22 @@
 .deep-ocean {
-  --ocean-base: #07120d;
-  --ocean-raised: #13291e;
-  --ocean-accent: #a1eac0;
-  --ocean-border: #2b4839;
-  --ad-copy: #c4d6cb;
-  --ad-panel: #102219;
+  --ocean-base: #080f1c;
+  --ocean-raised: #1c2942;
+  --ocean-accent: #a1ddff;
+  --ocean-border: #3a4667;
+  --ad-copy: #cbd5e8;
+  --ad-panel: #121c30;
   --ad-card-border: 1px solid var(--ocean-border);
   --ad-card-radius: 10px;
   --ad-card-shadow: none;
   min-height: 100%;
   overflow: clip;
-  color: #f3faf6;
+  color: #f1f5ff;
   background: var(--ocean-base);
   font-family: var(--labs-sans);
 }
 
 .deep-ocean .ad-nav {
-  background: rgb(7 18 13 / 96%) !important;
+  background: rgb(8 15 28 / 96%) !important;
   border-color: var(--ocean-border) !important;
 }
 
@@ -41,9 +41,13 @@
 .deep-ocean :is(a, button, select):focus-visible { outline-color: var(--ocean-accent); }
 
 .deep-ocean-hero {
-  --ocean-banner-base: #060e17;
+  --ocean-banner-base: #090f20;
   border-bottom: var(--ad-card-border);
-  background: linear-gradient(90deg, var(--ocean-banner-base), transparent 70%),
+  background:
+    linear-gradient(90deg, var(--ocean-banner-base) 12%, transparent 80%),
+    linear-gradient(rgb(162 174 239 / 8%) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgb(162 174 239 / 8%) 1px, transparent 1px) 0 0 / 32px 32px,
+    radial-gradient(ellipse at 85% 0%, rgb(101 99 170 / 35%), transparent 65%),
     var(--ocean-banner-base) url('/project-gallery-water.webp') right center / cover no-repeat;
 }
 
@@ -85,7 +89,7 @@
   gap: 10px;
   min-height: 46px;
   padding: 9px 14px;
-  border: 1px solid #4f7962;
+  border: 1px solid #687aa4;
   border-radius: 6px;
   color: var(--ocean-accent);
   background: var(--ad-panel);
@@ -96,11 +100,11 @@
 
 .deep-ocean-button:hover { background: var(--ocean-raised); }
 .deep-ocean-buttonPrimary {
-  background: var(--ocean-accent);
+  background: linear-gradient(120deg, #9be9f5, #a4c7ff);
   border-color: var(--ocean-accent);
   color: var(--ocean-base);
 }
-.deep-ocean-buttonPrimary:hover { background: #c0f4d5; }
+.deep-ocean-buttonPrimary:hover { background: #c4ebff; }
 
 .deep-ocean-galleryHeading {
   display: flex;
@@ -137,7 +141,7 @@
 
 .deep-ocean-cardMeta {
   margin-bottom: 7px;
-  color: var(--ocean-accent);
+  color: #c4c9f2;
   font-size: .72rem;
   letter-spacing: .055em;
 }
@@ -146,7 +150,7 @@
 
 .deep-ocean .home-guideLink { border-radius: var(--ad-card-radius); }
 .deep-ocean .home-guideLink:hover,
-.deep-ocean .deep-ocean-research:hover { border-color: #6a9c80; }
+.deep-ocean .deep-ocean-research:hover { border-color: #929ccd; }
 
 .deep-ocean-research {
   display: flex;
@@ -161,7 +165,7 @@
   text-decoration: none;
 }
 
-.deep-ocean-research h2 { margin: 0; font-size: 1.25rem; color: #f3faf6; }
+.deep-ocean-research h2 { margin: 0; font-size: 1.25rem; color: #f1f5ff; }
 .deep-ocean-research p { margin: 6px 0 0; color: var(--ad-copy); }
 
 @media (min-width: 901px) {
@@ -175,13 +179,59 @@
 }
 
 @media (max-width: 600px) {
-  .deep-ocean-hero {
-    background-image: linear-gradient(90deg, var(--ocean-banner-base) 12%, transparent), url('/project-gallery-water.webp');
-  }
   .deep-ocean .carousel-track { grid-template-columns: minmax(0, 1fr); }
   .deep-ocean .carousel-slot-1 { display: none; }
 }
 
 @media (max-width: 380px) {
   .deep-ocean-heroActions > a { width: 100%; }
+}
+
+.deep-ocean-mobilePreviews { display: none; }
+
+@media (max-width: 600px) {
+  .deep-ocean .carousel-slot-0 { scroll-margin-top: 8px; }
+
+  .deep-ocean .carousel-slot-0:focus-visible {
+    outline: 2px solid var(--ocean-accent);
+    outline-offset: 3px;
+  }
+
+  .deep-ocean-mobilePreviews {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .deep-ocean-mobilePreviews button {
+    display: grid;
+    grid-template-columns: minmax(32px, 36%) minmax(0, 1fr);
+    gap: 8px;
+    align-items: center;
+    min-height: 56px;
+    padding: 7px;
+    border: var(--ad-card-border);
+    border-radius: 6px;
+    background: var(--ad-panel);
+    color: inherit;
+    text-align: left;
+    font-size: .85rem;
+    font-weight: 650;
+    line-height: 1.2;
+    cursor: pointer;
+  }
+
+  .deep-ocean-mobilePreviews button[aria-pressed='true'] {
+    border-color: var(--ocean-accent);
+    background: var(--ocean-raised);
+  }
+
+  .deep-ocean-mobilePreviews img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    border-radius: 3px;
+    object-fit: cover;
+  }
 }
