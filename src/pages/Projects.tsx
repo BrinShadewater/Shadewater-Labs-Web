@@ -264,6 +264,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
   return (
     <AuroraPage
       active="projects"
+      theme="ocean"
       onNavigate={onNavigate}
       sectionLabel="Projects"
       eyebrow="CATALOG"
@@ -293,7 +294,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
         <style>{`
           .pp-projectsGrid { grid-template-columns: minmax(0, 1fr); }
           .pp-releaseCard:focus-visible, .pp-releaseCard:target {
-            outline: 2px solid hsl(186 80% 65%);
+            outline: 2px solid var(--ocean-accent);
             outline-offset: 3px;
           }
           [data-prerender-route] .pp-copyProjectLink { display: none; }
@@ -371,17 +372,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
               className="pp-releaseCard"
               style={pp.projectCard}
             >
-              <div
-                style={{
-                  ...pp.projectGlow,
-                  background:
-                    'radial-gradient(90% 68% at 50% 0%, hsl(' +
-                    p.accent +
-                    ' / 0.12), transparent 72%)',
-                }}
-              />
               <div style={{ ...pp.projectTop, flexWrap: 'wrap' }}>
-                <span style={{ ...pp.projectStage, letterSpacing: '0.12em' }}>{p.stage}</span>
+                <span style={{ ...pp.projectStage, color: '#c4c9f2', letterSpacing: '0.12em' }}>{p.stage}</span>
                 <span style={{ ...pp.statusPill, gap: 6, letterSpacing: '0.08em', padding: 0, border: 0, background: 'none' }}>
                   <span style={{ ...pp.statusDot, background: adTone[p.tone] }} />
                   <span style={{ color: adTone[p.tone] }}>{p.status}</span>
@@ -393,10 +385,8 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                 <div
                   style={{
                     ...pp.projectArt,
-                    boxShadow:
-                      '0 18px 50px hsl(' +
-                      p.accent +
-                      ' / 0.28), inset 0 1px 0 hsl(0 0% 100% / 0.06)',
+                    background: 'var(--ocean-base)',
+                    border: 'var(--ad-card-border)',
                     ...(p.page || p.externalUrl ? { cursor: 'pointer' } : null),
                   }}
                 >
@@ -421,7 +411,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
 
               <p style={pp.projectBlurb}>{p.summary}</p>
               {(p.guide || p.slug === 'game-asset-pipeline' || p.slug === 'webp-me-daddy-skill' || p.slug === 'shadewater-seo-skill') && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: 10, color: `hsl(${p.accent})` }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', marginTop: 10, color: 'var(--ocean-accent)' }}>
                   {p.guide && (
                     <a href={p.guide.href} target="_blank" rel="noopener noreferrer" style={{ ...pp.projectLink, marginLeft: 0, gap: 5 }}>
                       {p.guide.label} <span aria-hidden="true">↗</span>
@@ -500,7 +490,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                   <a
                     href={'/' + p.page}
                     onClick={handleCardNav(p.page)}
-                    style={{ ...pp.projectLink, color: 'hsl(' + p.accent + ')' }}
+                    style={{ ...pp.projectLink, color: 'var(--ocean-accent)' }}
                   >
                     Open project <span style={{ marginLeft: 4 }}>↗</span>
                   </a>
@@ -509,7 +499,7 @@ export default function Projects({ onNavigate }: ProjectsProps) {
                     href={p.externalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ ...pp.projectLink, color: 'hsl(' + p.accent + ')' }}
+                    style={{ ...pp.projectLink, color: 'var(--ocean-accent)' }}
                   >
                     View on GitHub <span style={{ marginLeft: 4 }}>↗</span>
                   </a>

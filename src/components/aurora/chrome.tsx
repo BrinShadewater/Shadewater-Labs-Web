@@ -1,3 +1,4 @@
+import './ocean-theme.css';
 /* eslint-disable react-refresh/only-export-components */
 import { useContext, useMemo, useState, useRef, useEffect, useLayoutEffect, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
 import {
@@ -431,6 +432,7 @@ export interface AuroraPageProps {
   title: ReactNode;
   lede: string;
   layout?: 'reading' | 'article';
+  theme?: 'ocean';
   children: ReactNode;
 }
 
@@ -442,10 +444,11 @@ export function AuroraPage({
   title,
   lede,
   layout,
+  theme,
   children,
 }: AuroraPageProps) {
   return (
-    <div style={ad.root}>
+    <div className={theme === 'ocean' ? 'ocean-theme' : undefined} style={theme === 'ocean' ? undefined : ad.root}>
       <style>{`
         /* ---- Aurora mobile pass ---- */
         @media (max-width: 768px) {
@@ -454,10 +457,11 @@ export function AuroraPage({
           .pp-trackGrid { grid-template-columns: 1fr !important; }
         }
       `}</style>
-      <ADTicker />
+      {theme !== 'ocean' && <ADTicker />}
       <ADNav onNavigate={onNavigate} active={active} />
       <div className={layout && `ad-${layout}`}>
         <PageHero
+          ocean={theme === 'ocean'}
           eyebrow={eyebrow}
           title={title}
           lede={lede}
@@ -472,12 +476,14 @@ export function AuroraPage({
 }
 
 function PageHero({
+  ocean,
   eyebrow,
   title,
   lede,
   sectionLabel,
   onNavigate,
 }: {
+  ocean: boolean;
   eyebrow: string;
   title: ReactNode;
   lede: string;
@@ -485,12 +491,16 @@ function PageHero({
   onNavigate: AuroraNavigate;
 }) {
   return (
-    <section style={pp.hero}>
-      <div style={pp.heroAurora} aria-hidden="true">
-        <div style={{ ...pp.blob, ...pp.blob1 }} className="ad-meshBlob" />
-        <div style={{ ...pp.blob, ...pp.blob2 }} className="ad-meshBlob" />
-      </div>
-      <ConstellationField />
+    <section style={pp.hero} className={ocean ? 'ocean-pageHero' : undefined}>
+      {!ocean && (
+        <>
+          <div style={pp.heroAurora} aria-hidden="true">
+            <div style={{ ...pp.blob, ...pp.blob1 }} className="ad-meshBlob" />
+            <div style={{ ...pp.blob, ...pp.blob2 }} className="ad-meshBlob" />
+          </div>
+          <ConstellationField />
+        </>
+      )}
       <div style={pp.heroInner} className="pp-heroInner">
         <div style={pp.crumb}>
           <a
@@ -938,10 +948,10 @@ export const ad: Record<string, CSSProperties> = {
   },
   btnGhost: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
-    minHeight: 44, padding: '10px 19px', borderRadius: 999,
-    color: 'hsl(186 60% 82%)', fontWeight: 500, fontSize: 15,
-    background: 'hsl(186 50% 20% / 0.12)',
-    border: '1px solid hsl(186 60% 55% / 0.28)',
+    minHeight: 44, padding: '10px 19px', borderRadius: 'var(--ocean-control-radius, 999px)',
+    color: 'var(--ocean-accent, hsl(186 60% 82%))', fontWeight: 500, fontSize: 15,
+    background: 'var(--ocean-raised, hsl(186 50% 20% / 0.12))',
+    border: '1px solid var(--ocean-border, hsl(186 60% 55% / 0.28))',
     cursor: 'pointer', textDecoration: 'none',
   },
 
